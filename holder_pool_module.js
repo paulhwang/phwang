@@ -48,11 +48,16 @@ function freeEntry(entry_val) {
     "use strict";
 
     abendIt("freeEntry start");
+    if (!entry_val) {
+        return;
+    }
 
+    abendIt("freeEntry 1000");
     size += 1;
     entry_val.next = head;
     head = entry_val;
 
+    abendIt("freeEntry end" + size);
     abendIt("freeEntry end");
 }
 
@@ -73,7 +78,7 @@ function abendIt(val) {
     }
 
     if (size > 5) {
-         abend("abendIt", val + "size=" + size);
+         abend("abendIt", val + " size=" + size);
     }
 
     //logit('abendIt', 'succeed');
