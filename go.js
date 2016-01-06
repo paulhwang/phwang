@@ -51,6 +51,14 @@ function processPost(req, res) {
 function processGet (req, res) {
     state = "get start";
     var acc = account_mgr.search(req.headers.name);
+    if (!acc) {
+        console.log("processGet() ", "name not found");
+        return;
+    }
+    if (!acc.queue) {
+        console.log("*****Abend:processGet() ", "null queue");
+        return;
+    }
     res.type('application/json');
     state = "get 2000";
     var data = queue.dequeue(acc.queue);
@@ -58,7 +66,11 @@ function processGet (req, res) {
     var data1 = ring.dequeue();
     state = "get 4000";
     if (data !== data1) {
-        console.log("get", "queue and ring not match");
+        console.log("*****Abend: get", "queue and ring not match");
+    }
+    if (!data) {
+        //console.log("processGet() ", "null data");
+        return;
     }
     state = "get 5000";
     console.log(data + " get");
