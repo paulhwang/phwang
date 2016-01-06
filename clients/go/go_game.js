@@ -488,7 +488,7 @@ function GoGameObject(container_val, str_val) {
             buf = buf + this.movesArray(turn1).yY();
 
             if (turn1 !== this.movesArray(turn1).turnIndex()) {
-                this.goAbend("encodeMoveList", "turn=" + turn1 + " " + this.movesArray(turn1).turnIndex_());
+                this.goAbend("encodeMoveList", "turn=" + turn1 + " " + this.movesArray(turn1).turnIndex());
             }
             turn1 += 1;
         }
