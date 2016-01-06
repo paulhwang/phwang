@@ -1,0 +1,97 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	width: 1000px;
+	background: yellow;
+	border: 1px solid red;
+}
+
+body {
+	margin: 10px;
+	background: white;
+	/* width: 877px; */
+	text-align: left;
+	border: 1px solid green;
+}
+
+header {
+	margin: 10px;
+	background: lightcyan;
+	border: 1px solid blue;
+	overflow: auto;
+}
+
+.header {
+	margin: 10px;
+	width: 500px;
+	border: 1px solid red;
+	float: right;
+}
+
+.header p:nth-child(odd) {
+	background: pink;
+}
+
+main {
+	margin: 10px;
+	background: lightcyan;
+	/* width: 855px; */
+	text-align: left;
+	border: 1px solid blue;
+	overflow: auto;
+}
+
+.comment-input {
+	margin: 10px;
+	width: 200px;
+	background: pink;
+	border: 1px solid red;
+	float: left;
+}
+
+.comments {
+	margin: 10px;
+	width: 500px;
+	background: white;
+	border: 1px solid red;
+	text-align: left;
+	float: right;
+}
+
+.comments p:nth-child(even) {
+	background: red;
+}
+
+
+.comments p:nth-child(odd) {
+	background: pink;
+}
+
+canvas {
+	margin: 10px;
+	background: lightcyan;
+	/* width: 855px; */
+	text-align: left;
+	border: 1px solid blue;
+}
+
+footer {
+	margin: 10px;
+	background: lightcyan;
+	border: 1px solid blue;
+	overflow: auto;
+}
+
+.footer {
+	margin: 10px;
+	width: 500px;
+	border: 1px solid red;
+	float: left;
+}
+
+.footer p:nth-child(odd) {
+	background: pink;
+}
