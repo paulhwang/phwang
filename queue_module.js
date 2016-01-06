@@ -42,7 +42,20 @@ function QueueObject () {
 function enqueueIt (queue_val, data_val) {
     "use strict";
 
+    if (!queue_val) {
+        abend('enqueueIt', 'null queue_val');
+        return;
+    }
+
+    if (!data_val) {
+        abend('enqueueIt', 'null data_val');
+        return;
+    }
+
     //logit("enqueueIt", "start");
+
+    abendIt(queue_val);
+
 
     var data_entry = holder_pool.malloc(data_val);
     if (!data_entry) {
@@ -52,16 +65,19 @@ function enqueueIt (queue_val, data_val) {
 
     queue_val.size += 1;
     if (!queue_val.head) {
+        //logit("enqueueIt", "1000");
         data_entry.prev = null;
         data_entry.next = null;
         queue_val.head = data_entry;
         queue_val.tail = data_entry;
     } else {
+        //logit("enqueueIt", "2000");
         queue_val.tail.next = data_entry;
         data_entry.prev = queue_val.tail;
         data_entry.next = null;
         queue_val.tail = data_entry;
     }
+    //logit("enqueueIt", "3000");
     abendIt(queue_val);
 
     //logit("enqueueIt", "end");
@@ -74,27 +90,45 @@ function dequeueIt (queue_val) {
 
     //logit("dequeueIt", "start");
 
+    if (!queue_val) {
+        return;
+    }
+
+    //logit("dequeueIt", "1000");
+
+    abendIt(queue_val);
+
     if (!queue_val.head) {
+        //logit("dequeueIt", "2000");
         data_entry = null;
         data = null;
-    } else if (head === tail) {
+    } else if (queue_val.head === queue_val.tail) {
+        //logit("dequeueIt", "3000");
         queue_val.size -= 1;
         data_entry = queue_val.head;
         data = data_entry.data;
         queue_val.head = null;
         queue_val.tail = null;
     } else {
+        //logit("dequeueIt", "4000");
         queue_val.size -= 1;
         data_entry = queue_val.head;
         data = data_entry.data;
-        queue_val.head = head.next;5
-        head.prev = null;
+        queue_val.head = queue_val.head.next;
+        queue_val.head.prev = null;
     }
 
-    //logit("dequeueIt", data_entry);
-    //logit("dequeueIt", data_entry.data);
+    //logit("dequeueIt", "5000");
+
+    if (data_entry) {
+        //logit("dequeueIt", "data=" + data_entry.data);
+        holder_pool.free(data_entry);
+    }
+    else {
+        //logit("dequeueIt", "6000");
+    }
+
     abendIt(queue_val);
-    holder_pool.free(data_entry);
 
     //logit("dequeueIt", "end");
     return data;
