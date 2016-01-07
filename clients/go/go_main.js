@@ -82,7 +82,7 @@ var main = function () {
         });
 
         var goUi = new GoUiObject("goCanvas");
-        var goContainer = new GoContainerObject(theMainGoConfigObject, goUi, "1");
+        var goContainer = new GoContainerObject(theMainRootObject, theMainGoConfigObject, goUi, "1");
         goUi.initElements();
         goUi.drawBoard(goContainer.engineObject());
 
@@ -92,7 +92,7 @@ var main = function () {
         } if (goTwoBoard) {
             var goUi2 = new GoUiObject("goCanvas2");
             var goConfig2 = theMainGoConfigObject.createTwoBoardOpponentConfig();
-            var goContainer2 = new GoContainerObject(goConfig2, goUi2, "2");
+            var goContainer2 = new GoContainerObject(theMainRootObject, goConfig2, goUi2, "2");
             goUi2.initElements();
             goUi2.drawBoard(goContainer2.engineObject());
 
