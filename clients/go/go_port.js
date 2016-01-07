@@ -32,6 +32,10 @@ function GoPortObject(container_val) {
         return this.theSessionObject;
     };
 
+    this.sessionEngineObject = function () {
+        return this.theSessionEngineObject;
+    };
+
     this.GoHandlerObject = function () {
         return this.containerObject().handlerObject();
     };
@@ -59,15 +63,11 @@ function GoPortObject(container_val) {
 
     this.transmitStringData = function (str_val) {
         //this.goLog("transmitStringData", str_val);
-        this.sessionObject().transmitStringData(str_val);
+        this.sessionEngineObject().transmitStringData(str_val);
     };
 
     this.receiveStringData = function (str_val) {
         //this.goLog("receiveStringData", str_val);
-
-        this.sessionObject().receiveQueue().enQueue(str_val);
-        str_val = this.sessionObject().receiveQueue().deQueue();
-        this.sessionObject().theReceiveFunction(this.sessionObject().portObject());
 
         if (str_val == null) {
             this.goAbend("receiveStringData", "null input");
@@ -105,10 +105,12 @@ function GoPortObject(container_val) {
     this.GO_PROTOCOL_CODE_SPECIAL_MOVE = "Special";
 
     this.theContainerObject = container_val;
-    this.theSessionObject = new SessionObject(this.rootObject(), this, goPortReceive);
+    this.theSessionObject = new SessionObject(this.rootObject(), goPortReceive, this);
+    this.theSessionEngineObject = new SessionEngineObject(this.rootObject(), this, this.sessionObject());
 }
 
-function goPortReceive (port_val) {
-    console.log("goPortReceive" + port_val.objectName());
+function goPortReceive (port_val, data_val) {
+    //console.log("goPortReceive" + port_val.objectName());
+    port_val.receiveStringData(data_val)
 }
 
