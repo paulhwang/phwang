@@ -23,8 +23,8 @@ function GoPortObject(container_val) {
         return this.containerObject().gameObject();
     };
 
-    this.sessionMgrObject = function () {
-        return this.theSessionMgrObject;
+    this.sessionObject = function () {
+        return this.theSessionObject;
     };
 
     this.GoHandlerObject = function () {
@@ -54,14 +54,14 @@ function GoPortObject(container_val) {
 
     this.transmitStringData = function (str_val) {
         //this.goLog("transmitStringData", str_val);
-        this.sessionMgrObject().transmitStringData(str_val);
+        this.sessionObject().transmitStringData(str_val);
     };
 
     this.receiveStringData = function (str_val) {
         //this.goLog("receiveStringData", str_val);
 
-        this.receiveQueue().enQueue(str_val);
-        this.receiveQueue().deQueue();
+        this.sessionObject().receiveQueue().enQueue(str_val);
+        this.sessionObject().receiveQueue().deQueue();
 
         if (str_val == null) {
             this.goAbend("receiveStringData", "null input");
@@ -99,8 +99,6 @@ function GoPortObject(container_val) {
     this.GO_PROTOCOL_CODE_SPECIAL_MOVE = "Special";
 
     this.theContainerObject = container_val;
-    this.theSessionMgrObject = new SessionObject(this.rootObject(), this);
-    this.theReceiveQueue = new QueueObject(this.utilObject());
-    this.theTransmitQueue = new QueueObject(this.utilObject());
+    this.theSessionObject = new SessionObject(this.rootObject(), this);
 }
 

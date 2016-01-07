@@ -22,6 +22,14 @@ function SessionObject(root_object_val, port_object_val) {
         return this.thePortObject;
     };
 
+    this.receiveQueue = function () {
+        return this.theReceiveQueue;
+    };
+
+    this.transmitQueue = function () {
+        return this.theTransmitQueue;
+    };
+
     this.containerObject = function () {
         return this.portObject().containerObject();
     };
@@ -86,6 +94,8 @@ function SessionObject(root_object_val, port_object_val) {
         return this.utilObject().logit(this.objectName() + "." + str1_val, str2_val);
     };
 
+    this.theReceiveQueue = new QueueObject(this.utilObject());
+    this.theTransmitQueue = new QueueObject(this.utilObject());
     this.theHttpGetRequest = this.ajxObject().newHttpRequest();
     this.theHttpPostRequest = this.ajxObject().newHttpRequest();
 }
