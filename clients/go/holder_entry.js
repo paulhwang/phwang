@@ -4,10 +4,9 @@
  * File name: holder_entry.js
  */
 
-function HolderEntryObject(util_val) {
+function HolderEntryObject() {
     "use strict";
     this.theObjectName = "HolderEntryObject";
-    This.this.theUtilObject = util_val;
 
     this.objectName = function () {
         return this.theObjectName;
@@ -29,7 +28,7 @@ function HolderEntryObject(util_val) {
         return this.thePrev;
     };
 
-    this.setPprev = function (val) {
+    this.setPrev = function (val) {
         this.thePrev = val;
     };
 

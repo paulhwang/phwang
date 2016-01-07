@@ -15,6 +15,10 @@ function GoPortObject(container_val) {
         return this.containerObject().rootObject();
     };
 
+    this.utilObject = function () {
+        return this.rootObject().utilObject();
+    };
+
     this.gameObject = function () {
         return this.containerObject().gameObject();
     };
@@ -25,6 +29,14 @@ function GoPortObject(container_val) {
 
     this.GoHandlerObject = function () {
         return this.containerObject().handlerObject();
+    };
+
+    this.receiveQueue = function () {
+        return this.theReceiveQueue;
+    };
+
+    this.transmitQueue = function () {
+        return this.theTransmitQueue;
     };
 
     this.transmitMoveData = function (move_val) {
@@ -47,6 +59,10 @@ function GoPortObject(container_val) {
 
     this.receiveStringData = function (str_val) {
         //this.goLog("receiveStringData", str_val);
+
+        this.receiveQueue().enQueue(str_val);
+        this.receiveQueue().deQueue();
+
         if (str_val == null) {
             this.goAbend("receiveStringData", "null input");
             return;
@@ -84,5 +100,7 @@ function GoPortObject(container_val) {
 
     this.theContainerObject = container_val;
     this.theSessionMgrObject = new SessionObject(this.rootObject(), this);
+    this.theReceiveQueue = new QueueObject(this.utilObject());
+    this.theTransmitQueue = new QueueObject(this.utilObject());
 }
 

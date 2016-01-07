@@ -21,8 +21,29 @@ function HolderPoolObject(util_val) {
         return this.theHead;
     };
 
+    this.setHead = function (val) {
+        this.theHead = val;
+    };
+
     this.tail = function () {
         return this.theTail;
+    };
+
+
+    this.setTail = function (val) {
+        this.theTail = val;
+    };
+
+    this.size = function () {
+        return this.theSize;
+    };
+
+    this.incrementSize = function () {
+        this.theSize += 1;
+    };
+
+    this.decrementSize = function () {
+        this.theSize -= 1;
     };
 
     this.mallocEntry = function (data_val) {
@@ -30,12 +51,12 @@ function HolderPoolObject(util_val) {
 
         this.abendIt("mallocEntry start");
 
-        if (!head) {
-            entry = holder_entry.malloc();
+        if (!this.head()) {
+            entry = new HolderEntryObject();
         } else {
-            entry = head;
-            head = entry.next;
-            size -= 1;
+            entry = this.head();
+            this.setHead(entry.next());
+            this.decrementSize();
         }
 
         this.abendIt("mallocEntry end");
@@ -43,7 +64,7 @@ function HolderPoolObject(util_val) {
         if (entry) {
             entry.data = data_val;
         } else {
-            abend('mallocEntry', 'null');
+            this.abend('mallocEntry', 'null');
         }
 
         return entry;
@@ -56,38 +77,38 @@ function HolderPoolObject(util_val) {
             return;
         }
 
-        abendIt("freeEntry 1000");
+        this.abendIt("freeEntry 1000");
 
-        size += 1;
-        entry_val.next = head;
-        head = entry_val;
+        this.incrementSize();
+        entry_val.setNext(this.head());
+        this.setHead(entry_val);
 
-        this.abendIt("freeEntry end " + size);
+        this.abendIt("freeEntry end " + this.size());
     };
 
     this.abendIt = function (val) {
         var i, p;
 
         i = 0;
-        p = head;
+        p = this.head();
         while (p) {
-            p = p.next;
+            p = p.next();
             i += 1;
         }
-        if (i !== size) {
-            abend("abendIt", val + "size=" + size + " i=" + i);
+        if (i !== this.size()) {
+            this.abend("abendIt", val + "size=" + this.size() + " i=" + i);
         }
 
-        if (size > 5) {
-            abend("abendIt", val + " size=" + size);
+        if (this.size() > 5) {
+            this.abend("abendIt", val + " size=" + this.size());
         }
     };
 
-    this.logit = function (s1_val, s2_val) {
+    this.logit = function (s1_val, str2_val) {
         return this.utilObject().utilLogit(this.objectName() + "." + str1_val, str2_val);
     };
 
-    this.abend = function (s1_val, s2_val) {
+    this.abend = function (s1_val, str2_val) {
         return this.utilObject().utilAbend(this.objectName() + "." + str1_val, str2_val);
     };
 
