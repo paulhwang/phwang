@@ -75,7 +75,7 @@ function SessionObject(root_object_val, port_object_val) {
 
         if (this.containerObject2()) {
             if (this.containerObject2().portObject()) {
-                this.containerObject2().portObject().sessionMgrObject().receiveStringData(str_val);
+                this.containerObject2().portObject().sessionObject().receiveStringData(str_val);
                 return;
             }
         }
