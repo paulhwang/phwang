@@ -7,7 +7,7 @@
 function HolderPoolObject(util_val) {
     "use strict";
     this.theObjectName = "HolderPoolObject";
-    This.this.theUtilObject = util_val;
+    this.theUtilObject = util_val;
 
     this.objectName = function () {
         return this.theObjectName;
@@ -94,30 +94,3 @@ function HolderPoolObject(util_val) {
     this.theHead = null;
     this.theSize = 0;
 }
-
-module.exports = {
-    malloc: function (data_val) {
-         return mallocEntry(data_val);
-    },
-
-    free: function (entry_val) {
-        freeEntry(entry_val);
-    },
-};
-
-var util = require("./util_module.js");
-var holder_entry = require("./holder_entry_module.js");
-
-
-
-function abend (str1_val, str2_val) {
-    "use strict";
-    util.abend("HolderPoolModule." + str1_val, str2_val);
-}
-
-function logit (str1_val, str2_val) {
-    "use strict";
-    util.logit("HolderPoolModule." + str1_val, str2_val);
-}
-
-S
