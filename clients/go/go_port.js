@@ -11,6 +11,10 @@ function GoPortObject(container_val) {
         return this.theContainerObject;
     };
 
+    this.rootObject = function () {
+        return this.containerObject().rootObject();
+    };
+
     this.gameObject = function () {
         return this.containerObject().gameObject();
     };
@@ -79,6 +83,6 @@ function GoPortObject(container_val) {
     this.GO_PROTOCOL_CODE_SPECIAL_MOVE = "Special";
 
     this.theContainerObject = container_val;
-    this.theSessionMgrObject = new SessionMgrObject(this);
+    this.theSessionMgrObject = new SessionMgrObject(this.rootObject(), this);
 }
 

@@ -4,8 +4,14 @@
  * File name: SessionMgrObject.js
  */
 
-function SessionMgrObject(port_object_val) {
+function SessionMgrObject(root_object_val, port_object_val) {
     "use strict";
+    this.theRootObject = root_object_val;
+    this.thePortObject = port_object_val;
+
+    this.rootObject = function () {
+        return this.theRootObject;
+    };
 
     this.portObject = function () {
         return this.thePortObject;
@@ -75,7 +81,6 @@ function SessionMgrObject(port_object_val) {
         return this.containerObject().goLog("SessionMgrObject." + str1_val, str2_val);
     };
 
-    this.thePortObject = port_object_val;
     this.theHttpGetRequest = this.ajxObject().newHttpRequest();
     this.theHttpPostRequest = this.ajxObject().newHttpRequest();
 }
