@@ -4,8 +4,8 @@ var main = function () {
     document.cookie="paul's cookie is here";
 
     var goTwoBoard = true;
-    var theMainUtilObject = new UtilObject();
-    var theMainPreludeObject = new PreludeObject(theMainUtilObject);
+    var theMainRootObject = new RootObject();
+    var theMainPreludeObject = new PreludeObject(theMainRootObject.utilObject());
     var theMainHtmlObject = new GoHtmlObject(theMainPreludeObject, goTwoBoard);
     var theMainGoConfigObject;
 
