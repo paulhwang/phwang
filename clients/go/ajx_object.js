@@ -4,8 +4,17 @@
  * File name: AjxObject.js
  */
 
-function AjxObject(util_object_val) {
+function AjxObject(root_object_val) {
     "use strict";
+    this.theRootObject = root_object_val;
+
+    this.rootObject = function () {
+        return this.theRootObject;
+    };
+
+    this.utilObject = function () {
+        return this.rootObject().utilObject();
+    };
 
     this.jsonContext = function () {
         return "application/json; charset=utf-8";
@@ -13,10 +22,6 @@ function AjxObject(util_object_val) {
     this.plainTextContext = function () {
         return "text/plain; charset=utf-8";
     }
-
-    this.utilObject = function () {
-        return this.theUtilObject;
-    };
 
     this.ajaxSeqNumber = function () {
         return this.theAjaxSeqNumber;
@@ -94,7 +99,6 @@ function AjxObject(util_object_val) {
         return this.utilObject().utilLogit("AjxObject." + str1_val, str2_val);
     };
 
-    this.theUtilObject = util_object_val;
     this.theAjaxSeqNumber = 0;
 }
 
