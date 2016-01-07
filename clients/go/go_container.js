@@ -6,10 +6,15 @@
 
 function GoContainerObject(root_object_val, config_object_val, ui_object_val, index_val) {
     "use strict";
+    this.theObjectName = "GoContainerObject";
     this.theRootObject = root_object_val;
     this.theConfigObject = config_object_val;
     this.theUiObject = ui_object_val;
     this.theContainerIndex = index_val;
+
+    this.objectName = function () {
+        return this.theObjectName;
+    };
 
     this.rootObject = function () {
         return this.theRootObject;
@@ -75,14 +80,20 @@ function GoContainerObject(root_object_val, config_object_val, ui_object_val, in
         this.engineObject().resetEngineObjectData();
     };
 
+    this.abend = function (str1_val, str2_val) {
+        return this.goAbend(this.objectName() + "." + str1_val, str2_val);
+    };
+
+    this.logit = function (str1_val, str2_val) {
+        return this.goLogit(this.objectName() + "." + str1_val, str2_val);
+    };
+
     this.goLog = function (s1_val, s2_val) {
-        window.console.log(this.containerIndex() + s1_val + "() " + s2_val);
+        this.utilObject().utilLogit(this.containerIndex() + s1_val, s2_val);
     };
 
     this.goAbend = function (s1_val, s2_val) {
-        window.console.log(this.containerIndex() + "goAbend: " + s1_val + "() " + s2_val);
-        window.alert("Abend: " + s1_val + "() " + s2_val);
-        var x = junk;
+        this.utilObject().utilAbend(this.containerIndex() + s1_val, s2_val);
     };
 
     this.utilObject().setUserIndex(this.containerIndex());

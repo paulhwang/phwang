@@ -4,9 +4,9 @@
  * File name: go_engine.js
  */
 
-"use strict";
-
 function GoEngineObject(container_object_val) {
+    "use strict";
+
     this.objectName = function () {
         return this.theObjectName;
     };
