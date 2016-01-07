@@ -4,12 +4,16 @@
  * File name: prelude.js
  */
 
-function PreludeObject(util_val) {
+function PreludeObject(root_val) {
     "use strict";
-    this.theUtilObject = util_val;
+    this.theRootObject = root_val;
+
+    this.rootObject = function () {
+        return this.theRootObject;
+    };
 
     this.utilObject = function () {
-        return this.theUtilObject;
+        return this.rootObject().utilObject();
     };
 
     this.languageUsed = function () {

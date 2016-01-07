@@ -5,7 +5,7 @@ var main = function () {
 
     var goTwoBoard = true;
     var theMainRootObject = new RootObject();
-    var theMainPreludeObject = new PreludeObject(theMainRootObject.utilObject());
+    var theMainPreludeObject = new PreludeObject(theMainRootObject);
     var theMainHtmlObject = new GoHtmlObject(theMainPreludeObject, goTwoBoard);
     var theMainGoConfigObject;
 
