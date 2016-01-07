@@ -28,7 +28,7 @@ function GoContainerObject(root_object_val, config_object_val, ui_object_val, in
     };
 
     this.utilObject = function () {
-        return this.theUtilObject;
+        return this.rootObject().utilObject();
     };
 
     this.boardObject = function () {
@@ -85,10 +85,10 @@ function GoContainerObject(root_object_val, config_object_val, ui_object_val, in
         var x = junk;
     };
 
+    this.utilObject().setUserIndex(this.containerIndex());
     this.theConfigObject.setContainerObject(this);
 
     //this.goLog("GoContainerObject", "color=" + this.configObject().myColor() + " board_size=" + this.configObject().boardSize());
-    this.theUtilObject = new UtilObject(this.containerIndex());
     this.theBoardObject = new GoBoardObject(this.configObject());
 
     this.theUiObject.setContainerObject(this);

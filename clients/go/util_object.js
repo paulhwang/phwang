@@ -4,10 +4,8 @@
  * File name: UtilObject.js
  */
 
-function UtilObject(index_val) {
+function UtilObject() {
 	"use strict";
-    this.theObjectName = "UtilObject";
-    this.theUserIndex = index_val;
 
     this.objectName = function () {
         return this.theObjectName;
@@ -21,12 +19,16 @@ function UtilObject(index_val) {
         return this.theUserIndex;
     };
 
+    this.setUserIndex = function (val) {
+        this.theUserIndex = val;
+    };
+
     this.logit = function (s1_val, s2_val) {
-        return this.utilLogit(this.objectName() + "." + str1_val, str2_val);
+        return this.utilLogit("UtilObject." + str1_val, str2_val);
     };
 
     this.abend = function (s1_val, s2_val) {
-        return this.utilAbend(this.objectName() + "." + str1_val, str2_val);
+        return this.utilAbend("UtilObject." + str1_val, str2_val);
     };
 
     this.utilLogit = function (s1_val, s2_val) {
