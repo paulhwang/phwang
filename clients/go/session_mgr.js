@@ -22,7 +22,7 @@ function SessionMgrObject(root_object_val, port_object_val) {
     };
 
     this.utilObject = function () {
-        return this.containerObject().utilObject();
+        return this.rootObject().utilObject();
     };
 
     this.ajxObject = function () {
