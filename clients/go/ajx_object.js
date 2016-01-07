@@ -14,10 +14,6 @@ function AjxObject(util_object_val) {
         return "text/plain; charset=utf-8";
     }
 
-    this.objectName = function () {
-        return this.theObjectName;
-    };
-
     this.utilObject = function () {
         return this.theUtilObject;
     };
@@ -91,14 +87,13 @@ function AjxObject(util_object_val) {
     };
 
     this.abend = function (str1_val, str2_val) {
-        return this.utilObject().utilAbend(this.objectName() + "." + str1_val, str2_val);
+        return this.utilObject().utilAbend("AjxObject." + str1_val, str2_val);
     };
 
     this.logit = function (str1_val, str2_val) {
-        return this.utilObject().utilLogit(this.objectName() + "." + str1_val, str2_val);
+        return this.utilObject().utilLogit("AjxObject." + str1_val, str2_val);
     };
 
-    this.theObjectName = "AjxObject";
     this.theUtilObject = util_object_val;
     this.theAjaxSeqNumber = 0;
 }
