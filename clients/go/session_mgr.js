@@ -21,6 +21,15 @@ function SessionMgrObject(root_object_val) {
         return this.rootObject().utilObject();
     };
 
+    this.mallocSession = function () {
+        var session;
+        return session;
+    };
+
+    this.freeSession = function (val) {
+
+    };
+
     this.goAbend = function (str1_val, str2_val) {
         return this.utilObject().abend(this.objectName() + "." + str1_val, str2_val);
     };
