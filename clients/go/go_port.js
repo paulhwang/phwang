@@ -4,12 +4,8 @@
  * File name: go_port.js
  */
 
-"use strict";
-
 function GoPortObject(container_val) {
-    this.objectName = function () {
-        return this.theObjectName;
-    };
+    "use strict";
 
     this.containerObject = function () {
         return this.theContainerObject;
@@ -68,11 +64,11 @@ function GoPortObject(container_val) {
     };
 
     this.goAbend = function (str1_val, str2_val) {
-        return this.containerObject().goAbend(this.objectName() + "." + str1_val, str2_val);
+        return this.containerObject().goAbend("GoPortObject." + str1_val, str2_val);
     };
 
     this.goLog = function (str1_val, str2_val) {
-        return this.containerObject().goLog(this.objectName() + "." + str1_val, str2_val);
+        return this.containerObject().goLog("GoPortObject." + str1_val, str2_val);
     };
 
     this.GO_PROTOCOL_CODE_SIZE = 7;
@@ -82,8 +78,7 @@ function GoPortObject(container_val) {
     this.GO_PROTOCOL_CODE_MOVE_DATA = "Move   ";
     this.GO_PROTOCOL_CODE_SPECIAL_MOVE = "Special";
 
-    this.theObjectName = "GoPortObject";
     this.theContainerObject = container_val;
-    this.theSessionMgrObject = new PhwangSessionMgrObject(this);
+    this.theSessionMgrObject = new SessionMgrObject(this);
 }
 

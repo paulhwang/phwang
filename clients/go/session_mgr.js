@@ -1,15 +1,11 @@
 /*
  * Copyrights phwang
  * Written by Paul Hwang
- * File name: PhwangSessionMgrObject.js
+ * File name: SessionMgrObject.js
  */
 
-function PhwangSessionMgrObject(port_object_val) {
+function SessionMgrObject(port_object_val) {
     "use strict";
-
-    this.objectName = function () {
-        return this.theObjectName;
-    };
 
     this.portObject = function () {
         return this.thePortObject;
@@ -72,14 +68,13 @@ function PhwangSessionMgrObject(port_object_val) {
     };
 
     this.goAbend = function (str1_val, str2_val) {
-        return this.containerObject().goAbend(this.objectName() + "." + str1_val, str2_val);
+        return this.containerObject().goAbend("SessionMgrObject." + str1_val, str2_val);
     };
 
     this.goLog = function (str1_val, str2_val) {
-        return this.containerObject().goLog(this.objectName() + "." + str1_val, str2_val);
+        return this.containerObject().goLog("SessionMgrObject." + str1_val, str2_val);
     };
 
-    this.theObjectName = "PhwangSessionMgrObject";
     this.thePortObject = port_object_val;
     this.theHttpGetRequest = this.ajxObject().newHttpRequest();
     this.theHttpPostRequest = this.ajxObject().newHttpRequest();
