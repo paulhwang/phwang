@@ -4,11 +4,12 @@
  * File name: SessionObject.js
  */
 
-function SessionObject(root_object_val, port_object_val) {
+function SessionObject(root_object_val, port_object_val, receive_func_val) {
     "use strict";
     this.theObjectName = "SessionObject";
     this.theRootObject = root_object_val;
     this.thePortObject = port_object_val;
+    this.theReceiveFunction = receive_func_val;
 
     this.objectName = function () {
         return this.theObjectName;
@@ -86,11 +87,11 @@ function SessionObject(root_object_val, port_object_val) {
         this.portObject().receiveStringData(str_val);
     };
 
-    this.goAbend = function (str1_val, str2_val) {
+    this.abend = function (str1_val, str2_val) {
         return this.utilObject().abend(this.objectName() + "." + str1_val, str2_val);
     };
 
-    this.goLog = function (str1_val, str2_val) {
+    this.logit = function (str1_val, str2_val) {
         return this.utilObject().logit(this.objectName() + "." + str1_val, str2_val);
     };
 

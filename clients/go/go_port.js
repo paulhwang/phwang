@@ -6,6 +6,11 @@
 
 function GoPortObject(container_val) {
     "use strict";
+    this.theObjectName = "GoPortObject";
+
+    this.objectName = function () {
+        return this.theObjectName;
+    };
 
     this.containerObject = function () {
         return this.theContainerObject;
@@ -61,7 +66,8 @@ function GoPortObject(container_val) {
         //this.goLog("receiveStringData", str_val);
 
         this.sessionObject().receiveQueue().enQueue(str_val);
-        this.sessionObject().receiveQueue().deQueue();
+        str_val = this.sessionObject().receiveQueue().deQueue();
+        this.sessionObject().theReceiveFunction(this.sessionObject().portObject());
 
         if (str_val == null) {
             this.goAbend("receiveStringData", "null input");
@@ -84,11 +90,11 @@ function GoPortObject(container_val) {
     };
 
     this.goAbend = function (str1_val, str2_val) {
-        return this.containerObject().goAbend("GoPortObject." + str1_val, str2_val);
+        return this.containerObject().goAbend(this.objectName() + "." + str1_val, str2_val);
     };
 
     this.goLog = function (str1_val, str2_val) {
-        return this.containerObject().goLog("GoPortObject." + str1_val, str2_val);
+        return this.containerObject().goLog(this.objectName() + "." + str1_val, str2_val);
     };
 
     this.GO_PROTOCOL_CODE_SIZE = 7;
@@ -99,6 +105,10 @@ function GoPortObject(container_val) {
     this.GO_PROTOCOL_CODE_SPECIAL_MOVE = "Special";
 
     this.theContainerObject = container_val;
-    this.theSessionObject = new SessionObject(this.rootObject(), this);
+    this.theSessionObject = new SessionObject(this.rootObject(), this, goPortReceive);
+}
+
+function goPortReceive (port_val) {
+    console.log("goPortReceive" + port_val.objectName());
 }
 
