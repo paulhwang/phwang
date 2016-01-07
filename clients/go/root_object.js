@@ -7,7 +7,6 @@
 function RootObject() {
     "use strict";
     this.theObjectName = "RootObject";
-    this.theAjxObject = new AjxObject(this);
 
     this.objectName = function () {
         return this.theObjectName;
@@ -15,6 +14,10 @@ function RootObject() {
 
     this.ajxObject = function () {
         return this.theAjxObject;
+    };
+
+    this.sessionMgrObject = function () {
+        return this.theSessionMgrObject;
     };
 
     this.utilObject = function () {
@@ -30,4 +33,6 @@ function RootObject() {
     };
 
     this.theUtilObject = new UtilObject();
+    this.theAjxObject = new AjxObject(this);
+    this.theSessionMgrObject = new SessionMgrObject(this);
 }

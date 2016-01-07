@@ -83,6 +83,6 @@ function GoPortObject(container_val) {
     this.GO_PROTOCOL_CODE_SPECIAL_MOVE = "Special";
 
     this.theContainerObject = container_val;
-    this.theSessionMgrObject = new SessionMgrObject(this.rootObject(), this);
+    this.theSessionMgrObject = new SessionObject(this.rootObject(), this);
 }
 
