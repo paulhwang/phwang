@@ -10,6 +10,8 @@ var bodyParser = require('body-parser');
 var app = express();
 var state;
 
+util.init();
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/clients/util"));
@@ -21,9 +23,10 @@ app.use(processFailure);
 app.listen(8080);
 
 function processPost(req, res) {
+    postLogit("processPost", "start");
     state = "post start";
     var acc = account_mgr.search(req.body.name);
-    console.log(req.body.data + " post " + req.body.seq + " " + acc.up_seq);
+    logit("processPost", req.body.data + " " + req.body.seq + " " + acc.up_seq);
     if (req.body.seq === acc.up_seq) {
         state = "post 1000";
         queue.enqueue(acc.queue, req.body.data);
@@ -73,7 +76,7 @@ function processGet (req, res) {
         return;
     }
     state = "get 5000";
-    console.log(data + " get");
+    logit("processGet ", data);
     state = "get 9000";
     res.send(data);
     state = "test start";
@@ -88,4 +91,19 @@ function processNotFount (req, res) {
 
 function processFailure (err, req, res, next) {
     console.log("express error: " + state);
+}
+
+function postLogit(str1_val, str2_val) {
+    var debugPost = false;
+    if (debugPost) {
+        logit(str1_val, str2_val);
+    }
+}
+
+function logit (str1_val, str2_val) {
+    return util.utilLogit("NodeMain." + str1_val, str2_val);
+}
+
+function abend (str1_val, str2_val) {
+    return util.utilAbend("NodeMain." + str1_val, str2_val);
 }
