@@ -111,8 +111,8 @@ function GoPortObject(container_val) {
     this.GO_PROTOCOL_CODE_SPECIAL_MOVE = "Special";
 
     this.theContainerObject = container_val;
-    this.theSessionObject = new SessionObject(this.rootObject(), goPortReceive, this);
-    this.theSessionEngineObject = new SessionEngineObject(this.rootObject(), this, this.sessionObject(), this.configObject().myName(), this.configObject().opponentName());
+    this.theSessionObject = new SessionObject(this.rootObject(), goPortReceive, this, this.configObject().myName(), this.configObject().opponentName());
+    this.theSessionEngineObject = new SessionEngineObject(this.rootObject(), this, this.sessionObject());
 }
 
 function goPortReceive (port_val, data_val) {
