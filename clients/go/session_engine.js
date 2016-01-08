@@ -59,10 +59,22 @@ function SessionEngineObject(root_object_val, port_object_val, session_object_va
         return "/go_msg";
     };
 
-    this.transmitData = function (queue_val) {
-        var str = queue_val.transmitQueue().deQueue();
-        //this.logit("transmitData", str);
-        this.transmitStringData(str);
+    this.transmitData = function () {
+        var queue, str;
+        while (true) {
+            queue = this.rootObject().sessionMgrObject().deQueue();
+            if (!queue) {
+                return;
+            }
+            str = queue.transmitQueue().deQueue();
+            if (str) {
+                //this.logit("transmitData", str);
+                this.transmitStringData(str);
+            }
+            else {
+                this.abend("transmitData", "null data");
+            }
+        }
     };
 
     this.transmitStringData = function (str_val) {

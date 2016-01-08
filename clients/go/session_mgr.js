@@ -21,13 +21,21 @@ function SessionMgrObject(root_object_val) {
         return this.rootObject().utilObject();
     };
 
-    this.mallocSession = function () {
-        var session;
-        return session;
+    this.sessionQueue = function () {
+        return this.theSessionQueue;
     };
 
-    this.freeSession = function (val) {
+    this.enQueue = function (session_val) {
+        if (!session_val) {
+            this.abend("enQueue", "null input");
+            return;
+        }
+        this.sessionQueue().enQueue(session_val);
+    };
 
+    this.deQueue = function () {
+        var session = this.sessionQueue().deQueue();
+        return session;
     };
 
     this.goAbend = function (str1_val, str2_val) {
@@ -37,5 +45,7 @@ function SessionMgrObject(root_object_val) {
     this.goLog = function (str1_val, str2_val) {
         return this.utilObject().logit(this.objectName() + "." + str1_val, str2_val);
     };
+
+    this.theSessionQueue = new QueueObject(this.utilObject());
 }
 
