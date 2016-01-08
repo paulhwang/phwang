@@ -24,6 +24,10 @@ function GoPortObject(container_val) {
         return this.rootObject().utilObject();
     };
 
+    this.configObject = function () {
+        return this.containerObject().configObject();
+    };
+
     this.gameObject = function () {
         return this.containerObject().gameObject();
     };
@@ -108,7 +112,7 @@ function GoPortObject(container_val) {
 
     this.theContainerObject = container_val;
     this.theSessionObject = new SessionObject(this.rootObject(), goPortReceive, this);
-    this.theSessionEngineObject = new SessionEngineObject(this.rootObject(), this, this.sessionObject());
+    this.theSessionEngineObject = new SessionEngineObject(this.rootObject(), this, this.sessionObject(), this.configObject().myName(), this.configObject().opponentName());
 }
 
 function goPortReceive (port_val, data_val) {
