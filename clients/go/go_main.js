@@ -32,6 +32,9 @@ var main = function () {
             theMainGoConfigObject.setKomiPoint($(".komi_section select").val());
             theMainGoConfigObject.setHandicapPoint($(".handicap_section select").val());
             theMainGoConfigObject.setOpponentName($(".opponent_section select").val());
+            if (theMainGoConfigObject.opponentName() === "Myself") {
+                theMainGoConfigObject.setOpponentName(theMainPreludeObject.myName());
+            }
             console.log("runConfig() ", "opponent=" + theMainGoConfigObject.opponentName() + " board_size=" + theMainGoConfigObject.boardSize() +
                             " color=" + theMainGoConfigObject.myColor() +
                             " komi=" + theMainGoConfigObject.komiPoint() +
@@ -86,10 +89,7 @@ var main = function () {
         goUi.initElements();
         goUi.drawBoard(goContainer.engineObject());
 
-        if (theMainGoConfigObject.opponentName() === "Myself") {
-            console.log("runGoGame() " + "Myself");
-            theMainGoConfigObject.setOpponentName(theMainPreludeObject.myName());
-        } if (goTwoBoard) {
+        if (goTwoBoard) {
             var goUi2 = new GoUiObject("goCanvas2");
             var goConfig2 = theMainGoConfigObject.createTwoBoardOpponentConfig();
             var goContainer2 = new GoContainerObject(theMainRootObject, goConfig2, goUi2, "2");
