@@ -99,11 +99,10 @@ function abendIt () {
 
 function abend (str1_val, str2_val) {
     "use strict";
-    util.abend("RingModule." + str1_val, str2_val);
+    util.utilAbend("RingModule." + str1_val, str2_val);
 }
 
 function logit (str1_val, str2_val) {
     "use strict";
-    util.logit("RingModule." + str1_val, str2_val);
+    util.utilLogit("RingModule." + str1_val, str2_val);
 }
-

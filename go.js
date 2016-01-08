@@ -11,7 +11,6 @@ var app = express();
 var state;
 
 util.init();
-//queue.init(util);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
