@@ -60,16 +60,17 @@ function SessionEngineObject(root_object_val, port_object_val, session_object_va
     };
 
     this.transmitData = function () {
-        var queue, str;
+        var session, str;
         while (true) {
-            queue = this.rootObject().sessionMgrObject().deQueue();
-            if (!queue) {
+            session = this.rootObject().sessionMgrObject().deQueue();
+            if (!session) {
                 return;
             }
-            str = queue.transmitQueue().deQueue();
+            str = session.transmitQueue().deQueue();
             if (str) {
                 //this.logit("transmitData", str);
-                this.transmitStringData(str);
+                this.ajxObject().postMessage(this.httpPostRequest(), this.ajxRoute(), this.ajxObject().jsonContext(), str, this.configObject().opponentName());
+                this.ajxObject().getMessage(this.httpGetRequest(), this.ajxRoute(), this.ajxObject().jsonContext(), this, this.configObject().myName());
             }
             else {
                 this.abend("transmitData", "null data");
