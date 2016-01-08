@@ -62,15 +62,16 @@ function GoPortObject(container_val) {
     };
 
     this.transmitStringData = function (str_val) {
-        //this.goLog("transmitStringData", str_val);
-        this.sessionEngineObject().transmitStringData(str_val);
+        //this.logit("transmitStringData", str_val);
+        this.sessionObject().transmitQueue().enQueue(str_val);
+        this.sessionEngineObject().transmitData(this.sessionObject());
     };
 
     this.receiveStringData = function (str_val) {
-        //this.goLog("receiveStringData", str_val);
+        //this.logit("receiveStringData", str_val);
 
         if (str_val == null) {
-            this.goAbend("receiveStringData", "null input");
+            this.abend("receiveStringData", "null input");
             return;
         }
 
@@ -89,11 +90,11 @@ function GoPortObject(container_val) {
         }
     };
 
-    this.goAbend = function (str1_val, str2_val) {
+    this.abend = function (str1_val, str2_val) {
         return this.containerObject().goAbend(this.objectName() + "." + str1_val, str2_val);
     };
 
-    this.goLog = function (str1_val, str2_val) {
+    this.logit = function (str1_val, str2_val) {
         return this.containerObject().goLog(this.objectName() + "." + str1_val, str2_val);
     };
 

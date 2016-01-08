@@ -59,6 +59,12 @@ function SessionEngineObject(root_object_val, port_object_val, session_object_va
         return "/go_msg";
     };
 
+    this.transmitData = function (queue_val) {
+        //var str = queue_val.transmitQueue().deQueue();
+        this.logit("transmitData", str);
+        this.transmitStringData(str);
+    };
+
     this.transmitStringData = function (str_val) {
         //GO.goLog("SessionMgrObject.transmitStringData", str_val);
         if (this.configObject().playBothSides()) {
@@ -90,11 +96,11 @@ function SessionEngineObject(root_object_val, port_object_val, session_object_va
     };
 
     this.abend = function (str1_val, str2_val) {
-        return this.utilObject().abend(this.objectName() + "." + str1_val, str2_val);
+        return this.utilObject().Utilabend(this.objectName() + "." + str1_val, str2_val);
     };
 
     this.logit = function (str1_val, str2_val) {
-        return this.utilObject().logit(this.objectName() + "." + str1_val, str2_val);
+        return this.utilObject().utilLogit(this.objectName() + "." + str1_val, str2_val);
     };
 
     this.theHttpGetRequest = this.ajxObject().newHttpRequest();
