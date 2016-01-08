@@ -60,8 +60,8 @@ function SessionEngineObject(root_object_val, port_object_val, session_object_va
     };
 
     this.transmitData = function (queue_val) {
-        //var str = queue_val.transmitQueue().deQueue();
-        this.logit("transmitData", str);
+        var str = queue_val.transmitQueue().deQueue();
+        //this.logit("transmitData", str);
         this.transmitStringData(str);
     };
 
