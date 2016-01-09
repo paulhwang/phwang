@@ -113,7 +113,7 @@ function GoPortObject(container_val) {
     this.theContainerObject = container_val;
     this.theSessionObject = new SessionObject(this.rootObject(), goPortReceive, this, this.configObject().myName(), this.configObject().opponentName());
     this.theSessionEngineObject = new SessionEngineObject(this.rootObject(), this, this.sessionObject());
-    this.theSessionEngineObject.setupLink(this.sessionObject());
+    this.theSessionEngineObject.setupSession(this.sessionObject());
     //if (this.containerObject().gameObject().nextColor() !== this.configObject().myColor()) {
         //this.sessionEngineObject().sendHttpGetRequest(this.sessionObject());
     //}

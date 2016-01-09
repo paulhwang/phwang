@@ -84,6 +84,11 @@ function processGet (req, res) {
         return;
     }
 
+    if (req.headers.setup_session === "yes") {
+        setupSession(req, res);
+        return;
+    }
+
     //logit("processGet ", "link=" + req.headers.link_id + " "  + req.headers.his_name + "=>" + req.headers.my_name);
     state = "get start";
     var link_id = Number(req.headers.link_id);
@@ -135,6 +140,18 @@ function setupLink (req, res) {
     link_id_str = "" + link.link_id;
     res.send(link_id_str);
     logit("setupLink  ", req.headers.his_name + "=>" + req.headers.my_name);
+}
+
+function setupSession (req, res) {
+    var link, link_id_str;
+    link = account_mgr.search_and_create(req.headers.my_name, req.headers.his_name, 0);
+    if (!link) {
+        abend("setupSession", "null session");
+        return;
+    }
+    link_id_str = "" + link.link_id;
+    res.send(link_id_str);
+    logit("setupSession  ", req.headers.his_name + "=>" + req.headers.my_name);
 }
 
 function processNotFount (req, res) {

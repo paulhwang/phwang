@@ -63,8 +63,8 @@ function SessionEngineObject(root_object_val, port_object_val, session_object_va
          this.ajxObject().getMessage(this.httpGetRequest(), this.ajxRoute(), this.ajxObject().jsonContext(), this, session_val);
     };
 
-    this.setupLink = function (session_val) {
-        this.ajxObject().setupLink(this.httpGetRequest(), this.ajxRoute(), this.ajxObject().jsonContext(), session_val);
+    this.setupSession = function (session_val) {
+        this.ajxObject().setupSession(this.httpGetRequest(), this.ajxRoute(), this.ajxObject().jsonContext(), session_val);
     };
 
     this.transmitData = function () {
