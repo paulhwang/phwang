@@ -1,36 +1,40 @@
 /*
  * Copyrights phwang
  * Written by Paul Hwang
- * File name: account_entry_module.js
+ * File name: link_entry_module.js
  */
 
 var queue = require("./queue_module.js");
+var ring = require("./ring_module.js");
 
 module.exports = {
-    reset: function (acc_val, my_name_val, his_name_val) {
-        resetIt(acc_val, my_name_val, his_name_val);
+    reset: function (link_val, my_name_val, his_name_val) {
+        resetIt(link_val, my_name_val, his_name_val);
    },
 
     malloc: function (my_name_val, his_name_val) {
-        acc = new AccountEntryObject();
-        resetIt(acc, my_name_val, his_name_val);
-        return acc;
+        link = new AccountEntryObject();
+        resetIt(link, my_name_val, his_name_val);
+        return link;
     },
 };
 
-function resetIt (acc_val, my_name_val, his_name_val) {
-    acc_val.my_name = my_name_val;
-    acc_val.his_name = his_name_val;
-    acc_val.up_seq = 0;
-    acc_val.down_seq = 0;
-    acc_val.queue = queue.malloc();
+function resetIt (link_val, my_name_val, his_name_val) {
+    link_val.my_name = my_name_val;
+    link_val.his_name = his_name_val;
+    link_val.up_seq = 0;
+    link_val.down_seq = 0;
+    link_val.queue = queue.malloc();
+    //link_val.ring = ring.malloc();
 }
 
 function AccountEntryObject() {
     "use strict";
 
-    var name;
+    var my_name;
+    var his_name;
     var up_seq;
     var down_seq;
     var queue;
+    var ring;
 }
