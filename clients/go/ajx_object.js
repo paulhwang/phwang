@@ -40,7 +40,7 @@ function AjxObject(root_object_val) {
         return s;
     };
 
-    this.setupLink = function (request_val, dir_val, context_val, session_val) {
+    this.setupLink = function (request_val, context_val, session_val) {
         var this0 = this;
         var request0 = request_val;
 
@@ -67,7 +67,7 @@ function AjxObject(root_object_val) {
     };
 
 
-    this.setupSession = function (request_val, dir_val, context_val, session_val) {
+    this.setupSession = function (request_val, context_val, session_val) {
         var this0 = this;
         var request0 = request_val;
 
