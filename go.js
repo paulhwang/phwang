@@ -84,7 +84,7 @@ function processGet (req, res) {
         return;
     }
 
-    logit("processGet ", req.headers.his_name + "=>" + req.headers.my_name + " link_id=" +  req.headers.link_id);
+    //logit("processGet ", "link=" + req.headers.link_id + " "  + req.headers.his_name + "=>" + req.headers.my_name);
     state = "get start";
     var link_id = Number(req.headers.link_id);
     var my_link = account_mgr.search(req.headers.my_name, req.headers.his_name, link_id);
@@ -119,7 +119,7 @@ function processGet (req, res) {
     }
 
     state = "get 5000";
-    logit("processGet ", req.headers.his_name + "=>" + req.headers.my_name + " " + data);
+    logit("processGet ", "link=" + req.headers.link_id + " "  + req.headers.his_name + "=>" + req.headers.my_name + " " + data);
     state = "get 9000";
     res.send(data);
     state = "get end";
