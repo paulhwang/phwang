@@ -38,7 +38,7 @@ function processPost(req, res) {
         abend("processPost", "null my_session = 0");
         return;
     }
-    logit("processPost", "session=" + req.body.session_id + " "  + req.body.my_name + "=>" + req.body.his_name + " " + req.body.data + " " + req.body.xmt_seq + "=" + my_session.up_seq);
+    logit("processPost", "link=" + req.body.link_id + " session=" + req.body.session_id + " "  + req.body.my_name + "=>" + req.body.his_name + " " + req.body.data + " " + req.body.xmt_seq + "=" + my_session.up_seq);
     if (req.body.my_name === req.body.his_name) {
         his_session = my_session;
     }
@@ -124,7 +124,7 @@ function processGet (req, res) {
     }
 
     state = "get 5000";
-    logit("processGet ", "session=" + req.headers.session_id + " "  + req.headers.his_name + "=>" + req.headers.my_name + " " + data);
+    logit("processGet ", "link=" + req.headers.link_id + " session=" + req.headers.session_id + " "  + req.headers.his_name + "=>" + req.headers.my_name + " " + data);
     state = "get 9000";
     res.send(data);
     state = "get end";
