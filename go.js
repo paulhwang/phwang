@@ -63,7 +63,7 @@ function processPost(req, res) {
 
 function processGet (req, res) {
     if (req.headers.setup_link === "yes") {
-        var link = setupLink(req, res);
+        setupLink(req, res);
         return;
     }
 
@@ -104,10 +104,11 @@ function processGet (req, res) {
 }
 
 function setupLink (req, res) {
-    var link;
-
+    var link, link_id_str;
+    link = account_mgr.search(req.body.my_name, req.body.his_name);
+    link_id_str = "" + link.link_id;
+    res.send(link_id_str);
     logit("setupLink  ", req.headers.his_name + "=>" + req.headers.my_name);
-    return link;
 }
 
 function processNotFount (req, res) {

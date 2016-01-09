@@ -29,7 +29,7 @@ function AjxObject(root_object_val) {
             my_name: session_val.myName(),
             data: msg_val,
             xmt_seq: session_val.xmtSeq(),
-            session_id: session_val.sessionId(),
+            link_id: session_val.linkId(),
         });
         session_val.incrementXmtSeq();
         return s;
@@ -49,7 +49,10 @@ function AjxObject(root_object_val) {
         request_val.onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
                 var context_type = request0.getResponseHeader("Content-Type");
-                this0.logit("getMessage", "session_id= " + request0.responseText);
+                var link_id = request0.responseText;
+                this0.logit("getMessage", "link_id= " + request0.responseText);
+                session_val.setLinkId(Number(link_id));
+                //this0.logit("getMessage", "link_id= " + session_val.linkId());
             }
             else {
                 //this0.logit("getMessage", "error=" + request0.readyState + ", " + request0.status);

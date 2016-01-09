@@ -6,6 +6,7 @@
 
 var queue = require("./queue_module.js");
 var ring = require("./ring_module.js");
+var global_link_id = 1;
 
 module.exports = {
     reset: function (link_val, my_name_val, his_name_val) {
@@ -26,6 +27,8 @@ function resetIt (link_val, my_name_val, his_name_val) {
     link_val.down_seq = 0;
     link_val.queue = queue.malloc();
     link_val.ring = ring.malloc();
+    link_val.link_id = global_link_id;
+    global_link_id += 1;
 }
 
 function AccountEntryObject() {
@@ -37,4 +40,5 @@ function AccountEntryObject() {
     var down_seq;
     var queue;
     var ring;
+    var link_id;
 }
