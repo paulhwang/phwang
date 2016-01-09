@@ -1,7 +1,7 @@
 /*
  * Copyrights phwang
  * Written by Paul Hwang
- * File name: account_mgr_module.js
+ * File name: link_mgr_module.js
  */
 
 module.exports = {
@@ -25,14 +25,14 @@ var account_pool = require("./account_pool_module.js");
 
 var account_queue = queue.malloc();
 
-function searchIt(his_name_val, my_name_val) {
+function searchIt(my_name_val, his_name_val) {
     "use strict";
-    var acc = queue.search(account_queue, his_name_val, compareIt);
-    if (!acc) {
-        acc = account_pool.malloc(his_name_val, my_name_val);
-        queue.enqueue(account_queue, acc);
+    var link = queue.search(account_queue, his_name_val, compareIt);
+    if (!link) {
+        link = account_pool.malloc(my_name_val, his_name_val);
+        queue.enqueue(account_queue, link);
     }
-    return acc;
+    return link;
 }
 
 function compareIt (his_name_val, account_val) {

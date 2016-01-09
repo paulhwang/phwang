@@ -5,8 +5,8 @@
  */
 
 module.exports = {
-    malloc: function (his_name_val, my_name_val) {
-         return mallocIt(his_name_val, my_name_val);
+    malloc: function (my_name_val, his_name_val) {
+         return mallocIt(my_name_val, his_name_val);
     },
 
     free: function (entry_val) {
@@ -19,15 +19,15 @@ var account = require("./account_entry_module.js");
 var head = null;
 var size = 0;
 
-function mallocIt(his_name_val, my_name_val) {
+function mallocIt(my_name_val, his_name_val) {
     "use strict";
     var entry;
 
     if (!head) {
-        entry = account.malloc(his_name_val, my_name_val);
+        entry = account.malloc(my_name_val, his_name_val);
     } else {
         entry = head;
-        account.reset(entry, his_name_val, my_name_val);
+        account.reset(entry, my_name_val, his_name_val);
         head = entry.next;
         size -= 1;
     }
