@@ -27,6 +27,14 @@ function AjxObject(root_object_val) {
         return "text/plain; charset=utf-8";
     }
 
+    this.httpGetRequest = function () {
+        return this.theHttpGetRequest;
+    };
+
+    this.httpPostRequest = function () {
+        return this.theHttpPostRequest;
+    };
+
     this.formJsonString = function (msg_val, session_val) {
         var s = JSON.stringify({
             his_name: session_val.hisName(),
@@ -42,16 +50,16 @@ function AjxObject(root_object_val) {
 
     this.setupLink = function (request_val, session_val) {
         var this0 = this;
-        var request0 = request_val;
+        var request0 = this.httpGetRequest();
 
         this.logit("setupLinkf", session_val.myName());
-        request_val.open("GET", this.ajxRoute(), false);
-        request_val.setRequestHeader("Content-Type", this.jsonContext());
-        request_val.setRequestHeader("setup_link", "yes");
-        request_val.setRequestHeader("my_name", session_val.myName());
-        request_val.setRequestHeader("his_name", session_val.hisName());
+        this.httpGetRequest().open("GET", this.ajxRoute(), false);
+        this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
+        this.httpGetRequest().setRequestHeader("setup_link", "yes");
+        this.httpGetRequest().setRequestHeader("my_name", session_val.myName());
+        this.httpGetRequest().setRequestHeader("his_name", session_val.hisName());
 
-        request_val.onreadystatechange = function() {
+        this.httpGetRequest().onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
                 var context_type = request0.getResponseHeader("Content-Type");
                 var link_id = request0.responseText;
@@ -63,22 +71,22 @@ function AjxObject(root_object_val) {
                 //this0.logit("getMessage", "error=" + request0.readyState + ", " + request0.status);
             }
         };
-        request_val.send(null);
+        this.httpGetRequest().send(null);
     };
 
 
     this.setupSession = function (request_val, session_val) {
         var this0 = this;
-        var request0 = request_val;
+        var request0 = this.httpGetRequest();
 
         this.logit("setupLinkf", session_val.myName());
-        request_val.open("GET", this.ajxRoute(), false);
-        request_val.setRequestHeader("Content-Type", this.jsonContext());
-        request_val.setRequestHeader("setup_session", "yes");
-        request_val.setRequestHeader("my_name", session_val.myName());
-        request_val.setRequestHeader("his_name", session_val.hisName());
+        this.httpGetRequest().open("GET", this.ajxRoute(), false);
+        this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
+        this.httpGetRequest().setRequestHeader("setup_session", "yes");
+        this.httpGetRequest().setRequestHeader("my_name", session_val.myName());
+        this.httpGetRequest().setRequestHeader("his_name", session_val.hisName());
 
-        request_val.onreadystatechange = function() {
+        this.httpGetRequest().onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
                 var context_type = request0.getResponseHeader("Content-Type");
                 var session_id = request0.responseText;
@@ -90,21 +98,21 @@ function AjxObject(root_object_val) {
                 //this0.logit("getMessage", "error=" + request0.readyState + ", " + request0.status);
             }
         };
-        request_val.send(null);
+        this.httpGetRequest().send(null);
     };
 
     this.getMessage = function (request_val, sesson_mgr_val, session_val) {
         var this0 = this;
-        var request0 = request_val;
+        var request0 = this.httpGetRequest();
 
-        request_val.open("GET", this.ajxRoute(), true);
-        request_val.setRequestHeader("Content-Type", this.jsonContext());
-        request_val.setRequestHeader("my_name", session_val.myName());
-        request_val.setRequestHeader("his_name", session_val.hisName());
-        request_val.setRequestHeader("link_id", this.rootObject().linkId());
-        request_val.setRequestHeader("session_id", session_val.sessionId());
+        this.httpGetRequest().open("GET", this.ajxRoute(), true);
+        this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
+        this.httpGetRequest().setRequestHeader("my_name", session_val.myName());
+        this.httpGetRequest().setRequestHeader("his_name", session_val.hisName());
+        this.httpGetRequest().setRequestHeader("link_id", this.rootObject().linkId());
+        this.httpGetRequest().setRequestHeader("session_id", session_val.sessionId());
 
-        request_val.onreadystatechange = function() {
+        this.httpGetRequest().onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
                 var context_type = request0.getResponseHeader("Content-Type");
                 this0.logit("getMessage", "data= " + request0.responseText);
@@ -115,7 +123,7 @@ function AjxObject(root_object_val) {
                 //this0.logit("getMessage", "error=" + request0.readyState + ", " + request0.status);
             }
         };
-        request_val.send(null);
+        this.httpGetRequest().send(null);
     };
 
     this.postMessage = function (request_val, msg_val, session_val) {
@@ -149,5 +157,8 @@ function AjxObject(root_object_val) {
     this.logit = function (str1_val, str2_val) {
         return this.utilObject().utilLogit("AjxObject." + str1_val, str2_val);
     };
+    
+    this.theHttpGetRequest = new XMLHttpRequest();
+    this.theHttpPostRequest = new XMLHttpRequest();
 }
 
