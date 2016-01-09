@@ -63,7 +63,7 @@ function processPost(req, res) {
 
 function processGet (req, res) {
     state = "get start";
-    var acc = account_mgr.search(req.headers.name);
+    var acc = account_mgr.search(req.headers.my_name, req.headers.his_name);
     if (!acc) {
         console.log("processGet() ", "name not found");
         return;
@@ -86,7 +86,7 @@ function processGet (req, res) {
         return;
     }
     state = "get 5000";
-    logit("processGet ", data);
+    logit("processGet ", req.headers.my_name + "<=" + req.headers.his_name + " " + data);
     state = "get 9000";
     res.send(data);
     state = "test start";
