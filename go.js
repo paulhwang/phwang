@@ -28,7 +28,8 @@ function processPost(req, res) {
     postLogit("processPost", "start");
     state = "post start";
 
-    my_link = account_mgr.search(req.body.my_name, req.body.his_name, -1);
+    var my_link_id = Number(req.body.link_id);
+    my_link = account_mgr.search(req.body.my_name, req.body.his_name, my_link_id);
     if (!my_link) {
         abend("processPost", "null my_link");
         return;
@@ -37,7 +38,7 @@ function processPost(req, res) {
         abend("processPost", "null my_link = 0");
         return;
     }
-    logit("processPost", req.body.my_name + "=>" + req.body.his_name + " " + req.body.data + " " + req.body.xmt_seq + "=" + my_link.up_seq);
+    logit("processPost", "link=" + req.body.link_id + " "  + req.body.my_name + "=>" + req.body.his_name + " " + req.body.data + " " + req.body.xmt_seq + "=" + my_link.up_seq);
     if (req.body.my_name === req.body.his_name) {
         his_link = my_link;
     }
@@ -83,9 +84,10 @@ function processGet (req, res) {
         return;
     }
 
-    logit("processGet ", req.headers.his_name + "=>" + req.headers.my_name);
+    logit("processGet ", req.headers.his_name + "=>" + req.headers.my_name + " link_id=" +  req.headers.link_id);
     state = "get start";
-    var my_link = account_mgr.search(req.headers.my_name, req.headers.his_name, -1);
+    var link_id = Number(req.headers.link_id);
+    var my_link = account_mgr.search(req.headers.my_name, req.headers.his_name, link_id);
     if (!my_link) {
         abend("processGet", "null my_link");
         return;

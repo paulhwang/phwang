@@ -69,6 +69,7 @@ function AjxObject(root_object_val) {
         request_val.setRequestHeader("Content-Type", context_val);
         request_val.setRequestHeader("my_name", session_val.myName());
         request_val.setRequestHeader("his_name", session_val.hisName());
+        request_val.setRequestHeader("link_id", session_val.linkId());
 
         request_val.onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
