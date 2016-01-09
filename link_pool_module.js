@@ -6,7 +6,6 @@
 
 module.exports = {
     malloc: function (my_name_val) {
-        console.log("malloc");
         return mallocIt(my_name_val);
     },
 
@@ -23,7 +22,6 @@ var size = 0;
 function mallocIt(my_name_val) {
     "use strict";
     var entry;
-logit("mallocIt", "100");
     if (!head) {
         entry = link.malloc(my_name_val);
     } else {

@@ -5,6 +5,7 @@ var queue = require("./queue_module.js");
 var ring = require("./ring_module.js");
 var account = require("./account_entry_module.js");
 var account_mgr = require("./account_mgr_module.js");
+var link_mgr = require("./link_mgr_module.js");
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
@@ -132,7 +133,7 @@ function processGet (req, res) {
 
 function setupLink (req, res) {
     var link, link_id_str;
-    link = account_mgr.search_and_create(req.headers.my_name, req.headers.his_name, 0);
+    link = link_mgr.search_and_create(req.headers.my_name, 0);
     if (!link) {
         abend("setupLink", "null link");
         return;
