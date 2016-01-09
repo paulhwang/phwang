@@ -17,7 +17,8 @@ var main = function () {
             theMainRootObject.setLanguageUsed($(".prelude_holder select").val());
             console.log("runPrelude() ", "name=" + theMainRootObject.myName() + " language=" + theMainRootObject.languageUsed());
             if (theMainRootObject.myName()) {
-               runGoConfig();
+                theMainRootObject.setupLink();
+                runGoConfig();
             }
         });
     }

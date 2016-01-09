@@ -139,7 +139,7 @@ function setupLink (req, res) {
     }
     link_id_str = "" + link.link_id;
     res.send(link_id_str);
-    logit("setupLink  ", req.headers.his_name + "=>" + req.headers.my_name);
+    logit("setupLink  ", "my_name=" + req.headers.my_name + " link=" + link.link_id);
 }
 
 function setupSession (req, res) {

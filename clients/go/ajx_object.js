@@ -48,7 +48,7 @@ function AjxObject(root_object_val) {
         return s;
     };
 
-    this.setupLink1 = function () {
+    this.setupLink = function () {
         var this0 = this;
         var request0 = this.httpGetRequest();
         var root0 = this.rootObject();
