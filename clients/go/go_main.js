@@ -5,8 +5,7 @@ var main = function () {
 
     var goTwoBoard = false;
     var theMainRootObject = new RootObject();
-    var theMainPreludeObject = new PreludeObject(theMainRootObject);
-    var theMainHtmlObject = new GoHtmlObject(theMainPreludeObject, goTwoBoard);
+    var theMainHtmlObject = new GoHtmlObject(theMainRootObject, goTwoBoard);
     var theMainGoConfigObject;
 
     runPrelude();
@@ -14,17 +13,17 @@ var main = function () {
     function runPrelude () {
         theMainHtmlObject.createPreludeHolder();
         $(".prelude_holder button").on("click", function() {
-            theMainPreludeObject.setMyName($(".prelude_holder input").val());
-            theMainPreludeObject.setLanguageUsed($(".prelude_holder select").val());
-            console.log("runPrelude() ", "name=" + theMainPreludeObject.myName() + " language=" + theMainPreludeObject.languageUsed());
-            if (theMainPreludeObject.myName()) {
+            theMainRootObject.setMyName($(".prelude_holder input").val());
+            theMainRootObject.setLanguageUsed($(".prelude_holder select").val());
+            console.log("runPrelude() ", "name=" + theMainRootObject.myName() + " language=" + theMainRootObject.languageUsed());
+            if (theMainRootObject.myName()) {
                runGoConfig();
             }
         });
     }
 
     function runGoConfig () {
-        theMainGoConfigObject = new GoConfigObject(theMainPreludeObject.myName());
+        theMainGoConfigObject = new GoConfigObject(theMainRootObject.myName());
         theMainHtmlObject.createConfigHolders();
         $(".config_holder button").on("click", function() {
             theMainGoConfigObject.setBoardSize($(".board_size_section select").val());
@@ -33,7 +32,7 @@ var main = function () {
             theMainGoConfigObject.setHandicapPoint($(".handicap_section select").val());
             theMainGoConfigObject.setOpponentName($(".opponent_section select").val());
             if (theMainGoConfigObject.opponentName() === "Myself") {
-                theMainGoConfigObject.setOpponentName(theMainPreludeObject.myName());
+                theMainGoConfigObject.setOpponentName(theMainRootObject.myName());
             }
             console.log("runConfig() ", "opponent=" + theMainGoConfigObject.opponentName() + " board_size=" + theMainGoConfigObject.boardSize() +
                             " color=" + theMainGoConfigObject.myColor() +

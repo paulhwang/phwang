@@ -48,24 +48,23 @@ function AjxObject(root_object_val) {
         return s;
     };
 
-    this.setupLink = function (session_val) {
+    this.setupLink1 = function () {
         var this0 = this;
         var request0 = this.httpGetRequest();
+        var root0 = this.rootObject();
 
-        this.logit("setupLinkf", session_val.myName());
+        this.logit("setupLink", this.rootObject().myName());
         this.httpGetRequest().open("GET", this.ajxRoute(), false);
         this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
         this.httpGetRequest().setRequestHeader("setup_link", "yes");
-        this.httpGetRequest().setRequestHeader("my_name", session_val.myName());
-        this.httpGetRequest().setRequestHeader("his_name", session_val.hisName());
+        this.httpGetRequest().setRequestHeader("my_name", this.rootObject().myName());
 
         this.httpGetRequest().onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
                 var context_type = request0.getResponseHeader("Content-Type");
                 var link_id = request0.responseText;
                 this0.logit("getMessage", "link_id= " + request0.responseText);
-                session_val.setLinkId(Number(link_id));
-                //this0.logit("getMessage", "link_id= " + session_val.linkId());
+                root0.setLinkId(Number(link_id));
             }
             else {
                 //this0.logit("getMessage", "error=" + request0.readyState + ", " + request0.status);
