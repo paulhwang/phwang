@@ -50,46 +50,51 @@ function processPost(req, res) {
             queue.enqueue(his_link.queue, req.body.data);
             ring.enqueue(his_link.ring, req.body.data);
             my_link.up_seq = 1;
-            console.log(req.body.data + " post " + req.body.xmt_seq + " reset");
+            logit("processPost", req.body.data + " post " + req.body.xmt_seq + " reset");
         } else {
-            console.log(req.body.data + " post " + req.body.xmt_seq + " dropped");
+            logit("processPost", req.body.data + " post " + req.body.xmt_seq + " dropped");
         }
     } else {
         state = "post 3000";
-        console.log("***abend: " + req.body.data + " post seq=" + req.body.xmt_seq + " dropped");
+        logit("***abend: processPost", req.body.data + " post seq=" + req.body.xmt_seq + " dropped");
     }
-    state = "post done";
+    state = "post end";
 }
 
 function processGet (req, res) {
     state = "get start";
-    var acc = account_mgr.search(req.headers.my_name, req.headers.his_name);
-    if (!acc) {
-        console.log("processGet() ", "name not found");
+    var my_link = account_mgr.search(req.headers.my_name, req.headers.his_name);
+    if (!my_link) {
+        logit("processGet", "name not found");
         return;
     }
-    if (!acc.queue) {
-        console.log("*****Abend:processGet() ", "null queue");
+    if (!my_link.queue) {
+        logit("*****Abend:processGet", "null queue");
         return;
     }
     res.type('application/json');
     state = "get 2000";
-    var data = queue.dequeue(acc.queue);
+    var data = queue.dequeue(my_link.queue);
     state = "get 3000";
-    var data1 = ring.dequeue(acc.ring);
+    var data1 = ring.dequeue(my_link.ring);
     state = "get 4000";
     if (data !== data1) {
-        //console.log("*****Abend: get", "queue and ring not match");
+        logit("*****Abend: processGet", "queue and ring not match");
     }
     if (!data) {
-        //console.log("processGet() ", "null data");
+        //logit("processGet", "null data");
         return;
     }
+    if (!data1) {
+        //logti("processGet", "null data1");
+        return;
+    }
+
     state = "get 5000";
     logit("processGet ", req.headers.my_name + "<=" + req.headers.his_name + " " + data);
     state = "get 9000";
     res.send(data);
-    state = "test start";
+    state = "get end";
 }
 
 function processNotFount (req, res) {

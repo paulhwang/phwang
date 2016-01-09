@@ -5,11 +5,6 @@
  */
 
 var util = require("./util_module.js");
-var input = 0;
-var output = 0;
-var size = 2;
-var left = size;
-var array = [size];
 
 module.exports = {
     malloc: function () {
@@ -72,7 +67,7 @@ function deQueue (ring_val) {
         return null;
     }
 
-    var data = ring_val.array[output];
+    var data = ring_val.array[ring_val.output];
     ring_val.output += 1;
     if (ring_val.output === ring_val.size) {
         ring_val.output = 0;
