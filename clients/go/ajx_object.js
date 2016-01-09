@@ -23,21 +23,13 @@ function AjxObject(root_object_val) {
         return "text/plain; charset=utf-8";
     }
 
-    this.ajaxSeqNumber = function () {
-        return this.theAjaxSeqNumber;
-    };
-
-    this.incrementAjaxSeqNumber = function () {
-        this.theAjaxSeqNumber += 1;
-    };
-
     this.formJsonString = function (msg_val, session_val) {
         var s = JSON.stringify({
             his_name: session_val.hisName(),
             data: msg_val,
-            xmt_seq: this.ajaxSeqNumber(),
+            xmt_seq: session_val.xmtSeq(),
         });
-        this.incrementAjaxSeqNumber();
+        session_val.incrementXmtSeq();
         return s;
     };
 
@@ -98,7 +90,5 @@ function AjxObject(root_object_val) {
     this.logit = function (str1_val, str2_val) {
         return this.utilObject().utilLogit("AjxObject." + str1_val, str2_val);
     };
-
-    this.theAjaxSeqNumber = 0;
 }
 
