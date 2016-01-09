@@ -124,7 +124,7 @@ function processGet (req, res) {
     }
 
     state = "get 5000";
-    logit("processGet ", "link=" + req.headers.link_id + " "  + req.headers.his_name + "=>" + req.headers.my_name + " " + data);
+    logit("processGet ", "session=" + req.headers.session_id + " "  + req.headers.his_name + "=>" + req.headers.my_name + " " + data);
     state = "get 9000";
     res.send(data);
     state = "get end";
@@ -151,7 +151,7 @@ function setupSession (req, res) {
     }
     session_id_str = "" + session.session_id;
     res.send(session_id_str);
-    logit("setupSession  ", req.headers.his_name + "=>" + req.headers.my_name);
+    logit("setupSession", req.headers.his_name + "=>" + req.headers.my_name);
 }
 
 function processNotFount (req, res) {
