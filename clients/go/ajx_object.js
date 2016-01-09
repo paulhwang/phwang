@@ -29,7 +29,7 @@ function AjxObject(root_object_val) {
             my_name: session_val.myName(),
             data: msg_val,
             xmt_seq: session_val.xmtSeq(),
-            link_id: session_val.linkId(),
+            link_id: this.rootObject().linkId(),
             session_id: session_val.sessionId(),
         });
         session_val.incrementXmtSeq();
@@ -97,7 +97,7 @@ function AjxObject(root_object_val) {
         request_val.setRequestHeader("Content-Type", context_val);
         request_val.setRequestHeader("my_name", session_val.myName());
         request_val.setRequestHeader("his_name", session_val.hisName());
-        request_val.setRequestHeader("link_id", session_val.linkId());
+        request_val.setRequestHeader("link_id", this.rootObject().linkId());
         request_val.setRequestHeader("session_id", session_val.sessionId());
 
         request_val.onreadystatechange = function() {
