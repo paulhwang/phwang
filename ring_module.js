@@ -5,6 +5,16 @@
  */
 
 module.exports = {
+    malloc: function () {
+        ring = new RingObject();
+        ring.input = 0;
+        ring.output = 0;
+        ring.size = 2;
+        ring.left = ring.size;
+        ring.array = [ring.size];
+        return ring;
+    },
+
     enqueue: function (data_val) {
         enqueueIt(data_val);
     },
@@ -20,6 +30,14 @@ var output = 0;
 var size = 2;
 var left = size;
 var array = [size];
+
+function RingObject () {
+    var input;
+    var output;
+    var size;
+    var left;
+    var array;
+}
 
 function enqueueIt (data_val) {
     "use strict";
