@@ -1,7 +1,7 @@
 /*
  * Copyrights phwang
  * Written by Paul Hwang
- * File name: session_mgr_module.js
+ * File name: link_mgr_module.js
  */
 
 module.exports = {

@@ -1,7 +1,7 @@
 /*
  * Copyrights phwang
  * Written by Paul Hwang
- * File name: session_pool_module.js
+ * File name: link_pool_module.js
  */
 
 module.exports = {
