@@ -52,6 +52,10 @@ function RootObject() {
         this.theLinkId = val;
     };
 
+    this.setupLink = function () {
+        this.ajxObject().setupLink();
+    };
+
     this.logit = function (s1_val, s2_val) {
         return this.utilObject().utilLogit(this.objectName() + "." + str1_val, str2_val);
     };
@@ -67,5 +71,4 @@ function RootObject() {
     this.theMyName = "dummy";
     this.theMyName2 = "";
     this.theLanguageUsed = "English";
-    //this.ajxObject().setupLink();
 }
