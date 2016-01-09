@@ -23,24 +23,24 @@ app.use(processFailure);
 app.listen(8080);
 
 function processPost(req, res) {
-    var my_link, his_link;
+    var my_session, his_link;
 
     postLogit("processPost", "start");
     state = "post start";
 
-    var my_link_id = Number(req.body.link_id);
-    my_link = account_mgr.search(req.body.my_name, req.body.his_name, my_link_id);
-    if (!my_link) {
-        abend("processPost", "null my_link");
+    var my_session_id = Number(req.body.link_id);
+    my_session = account_mgr.search(req.body.my_name, req.body.his_name, my_session_id);
+    if (!my_session) {
+        abend("processPost", "null my_session");
         return;
     }
-    if (my_link.link_id === 0) {
-        abend("processPost", "null my_link = 0");
+    if (my_session.link_id === 0) {
+        abend("processPost", "null my_session = 0");
         return;
     }
-    logit("processPost", "link=" + req.body.link_id + " "  + req.body.my_name + "=>" + req.body.his_name + " " + req.body.data + " " + req.body.xmt_seq + "=" + my_link.up_seq);
+    logit("processPost", "link=" + req.body.link_id + " "  + req.body.my_name + "=>" + req.body.his_name + " " + req.body.data + " " + req.body.xmt_seq + "=" + my_session.up_seq);
     if (req.body.my_name === req.body.his_name) {
-        his_link = my_link;
+        his_link = my_session;
     }
     else {
         his_link = account_mgr.search(req.body.his_name, req.body.my_name, -1);
@@ -54,19 +54,19 @@ function processPost(req, res) {
         }
     }
 
-    if (req.body.xmt_seq === my_link.up_seq) {
+    if (req.body.xmt_seq === my_session.up_seq) {
         state = "post 1000";
         queue.enqueue(his_link.queue, req.body.data);
         state = "post 1200";
         ring.enqueue(his_link.ring, req.body.data);
         state = "post 1900";
-        my_link.up_seq += 1;
-    } else if (req.body.xmt_seq < my_link.up_seq) {
+        my_session.up_seq += 1;
+    } else if (req.body.xmt_seq < my_session.up_seq) {
         state = "post 2000";
          if (req.body.xmt_seq === 0) {
             queue.enqueue(his_link.queue, req.body.data);
             ring.enqueue(his_link.ring, req.body.data);
-            my_link.up_seq = 1;
+            my_session.up_seq = 1;
             logit("processPost", req.body.data + " post " + req.body.xmt_seq + " reset");
         } else {
             logit("processPost", req.body.data + " post " + req.body.xmt_seq + " dropped");
