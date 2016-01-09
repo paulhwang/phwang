@@ -5,12 +5,12 @@
  */
 
 module.exports = {
-    search: function (name_val) {
-        return searchIt(name_val);
+    search: function (my_name_val, his_name_val) {
+        return searchIt(my_name_val, his_name_val);
     },
 
-    malloc: function (name_val) {
-         return mallocIt(name_val);
+    malloc: function (my_name_val, his_name_val) {
+         return mallocIt(my_name_val, his_name_val);
     },
 
     free: function (entry_val) {
@@ -38,11 +38,12 @@ function searchIt(my_name_val, his_name_val) {
 function compareIt (link_val, my_name_val, his_name_val) {
     //logit("compareIt", name_val + " " + link_val.name);
     return (my_name_val === link_val.my_name);
+    //return (my_name_val === link_val.my_name) && (his_name_val === link_val.his_name);
 }
 
-function mallocIt(name_val) {
+function mallocIt(my_name_val, his_name_val) {
     "use strict";
-    var acc = account_pool.malloc(name_val);
+    var acc = account_pool.malloc(my_name_val, his_name_val);
     return acc;
 }
 
