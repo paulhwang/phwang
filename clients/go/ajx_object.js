@@ -93,7 +93,7 @@ function AjxObject(root_object_val) {
         request_val.send(null);
     };
 
-    this.getMessage = function (request_val, context_val, sesson_mgr_val, session_val) {
+    this.getMessage = function (request_val, sesson_mgr_val, session_val) {
         var this0 = this;
         var request0 = request_val;
 

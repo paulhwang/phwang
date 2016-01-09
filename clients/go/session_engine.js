@@ -74,7 +74,7 @@ function SessionEngineObject(root_object_val, port_object_val, session_object_va
             if (str) {
                 //this.logit("transmitData", str);
                 this.ajxObject().postMessage(this.httpPostRequest(), this.ajxObject().jsonContext(), str, session);
-                this.ajxObject().getMessage(this.httpGetRequest(), this.ajxObject().jsonContext(), this, session);
+                this.ajxObject().getMessage(this.httpGetRequest(), this, session);
             }
             else {
                 this.abend("transmitData", "null data");
@@ -88,7 +88,7 @@ function SessionEngineObject(root_object_val, port_object_val, session_object_va
             //this.receiveStringData(str_val);
             if (this.ajxObject()) {
                 this.ajxObject().postMessage(this.httpPostRequest(), this.ajxObject().jsonContext(), str_val, session.hisName());
-                this.ajxObject().getMessage(this.httpGetRequest(), this.ajxObject().jsonContext(), this, session.myName());
+                this.ajxObject().getMessage(this.httpGetRequest(), this, session.myName());
              }
             return;
         }
