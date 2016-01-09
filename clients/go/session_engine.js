@@ -55,12 +55,12 @@ function SessionEngineObject(root_object_val, port_object_val, session_object_va
         return this.theHttpPostRequest;
     };
 
-    this.sendHttpGetRequest = function (session_val) {
-         this.ajxObject().getMessage(this.httpGetRequest(), this.ajxRoute(), this.ajxObject().jsonContext(), this, session_val);
+    this.sendHttpGetRequest______ = function (session_val) {
+         this.ajxObject().getMessage(this.httpGetRequest(),this.ajxObject().jsonContext(), this, session_val);
     };
 
     this.setupSession = function (session_val) {
-        this.ajxObject().setupSession(this.httpGetRequest(), this.ajxObject().jsonContext(), session_val);
+        this.ajxObject().setupSession(this.httpGetRequest(), session_val);
     };
 
     this.transmitData = function () {

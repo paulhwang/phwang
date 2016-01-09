@@ -40,13 +40,13 @@ function AjxObject(root_object_val) {
         return s;
     };
 
-    this.setupLink = function (request_val, context_val, session_val) {
+    this.setupLink = function (request_val, session_val) {
         var this0 = this;
         var request0 = request_val;
 
         this.logit("setupLinkf", session_val.myName());
         request_val.open("GET", this.ajxRoute(), false);
-        request_val.setRequestHeader("Content-Type", context_val);
+        request_val.setRequestHeader("Content-Type", this.jsonContext());
         request_val.setRequestHeader("setup_link", "yes");
         request_val.setRequestHeader("my_name", session_val.myName());
         request_val.setRequestHeader("his_name", session_val.hisName());
@@ -67,13 +67,13 @@ function AjxObject(root_object_val) {
     };
 
 
-    this.setupSession = function (request_val, context_val, session_val) {
+    this.setupSession = function (request_val, session_val) {
         var this0 = this;
         var request0 = request_val;
 
         this.logit("setupLinkf", session_val.myName());
         request_val.open("GET", this.ajxRoute(), false);
-        request_val.setRequestHeader("Content-Type", context_val);
+        request_val.setRequestHeader("Content-Type", this.jsonContext());
         request_val.setRequestHeader("setup_session", "yes");
         request_val.setRequestHeader("my_name", session_val.myName());
         request_val.setRequestHeader("his_name", session_val.hisName());
