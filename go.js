@@ -92,24 +92,24 @@ function processGet (req, res) {
     //logit("processGet ", "link=" + req.headers.link_id + " "  + req.headers.his_name + "=>" + req.headers.my_name);
     state = "get start";
     var link_id = Number(req.headers.link_id);
-    var my_link = account_mgr.search(req.headers.my_name, req.headers.his_name, link_id);
-    if (!my_link) {
-        abend("processGet", "null my_link");
+    var my_session = account_mgr.search(req.headers.my_name, req.headers.his_name, link_id);
+    if (!my_session) {
+        abend("processGet", "null my_session");
         return;
     }
-    if (my_link.link_id === 0) {
-        abend("processGet", "null my_link = 0");
+    if (my_session.link_id === 0) {
+        abend("processGet", "null my_session = 0");
         return;
     }
-    if (!my_link.queue) {
+    if (!my_session.queue) {
         abend("processGet", "null queue");
         return;
     }
     res.type('application/json');
     state = "get 2000";
-    var data = queue.dequeue(my_link.queue);
+    var data = queue.dequeue(my_session.queue);
     state = "get 3000";
-    var data1 = ring.dequeue(my_link.ring);
+    var data1 = ring.dequeue(my_session.ring);
     state = "get 4000";
     if (data !== data1) {
         logit("*****Abend: processGet", "queue and ring not match");
