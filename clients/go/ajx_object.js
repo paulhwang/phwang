@@ -35,17 +35,32 @@ function AjxObject(root_object_val) {
         return s;
     };
 
-    this.getSessionId = function (session_val) {
+    this.setupLink = function (request_val, dir_val, context_val, session_val) {
+        var this0 = this;
+        var request0 = request_val;
 
+        this.logit("setupLinkf", session_val.myName());
+        request_val.open("GET", dir_val);
+        request_val.setRequestHeader("Content-Type", context_val);
+        request_val.setRequestHeader("setup_link", "yes");
+        request_val.setRequestHeader("my_name", session_val.myName());
+        request_val.setRequestHeader("his_name", session_val.hisName());
+
+        request_val.onreadystatechange = function() {
+            if ((request0.readyState === 4) && (request0.status === 200)) {
+                var context_type = request0.getResponseHeader("Content-Type");
+                this0.logit("getMessage", "session_id= " + request0.responseText);
+            }
+            else {
+                //this0.logit("getMessage", "error=" + request0.readyState + ", " + request0.status);
+            }
+        };
+        request_val.send(null);
     };
 
     this.getMessage = function (request_val, dir_val, context_val, sesson_mgr_val, session_val) {
         var this0 = this;
         var request0 = request_val;
-
-        if (session_val.sessionId() === 0) {
-            this.getSessionId(session_val);
-        }
 
         request_val.open("GET", dir_val);
         request_val.setRequestHeader("Content-Type", context_val);
