@@ -28,17 +28,17 @@ function processPost(req, res) {
     postLogit("processPost", "start");
     state = "post start";
 
-    var my_session_id = Number(req.body.link_id);
+    var my_session_id = Number(req.body.session_id);
     my_session = account_mgr.search(req.body.my_name, req.body.his_name, my_session_id);
     if (!my_session) {
         abend("processPost", "null my_session");
         return;
     }
-    if (my_session.link_id === 0) {
+    if (my_session.session_id === 0) {
         abend("processPost", "null my_session = 0");
         return;
     }
-    logit("processPost", "link=" + req.body.link_id + " "  + req.body.my_name + "=>" + req.body.his_name + " " + req.body.data + " " + req.body.xmt_seq + "=" + my_session.up_seq);
+    logit("processPost", "session=" + req.body.session_id + " "  + req.body.my_name + "=>" + req.body.his_name + " " + req.body.data + " " + req.body.xmt_seq + "=" + my_session.up_seq);
     if (req.body.my_name === req.body.his_name) {
         his_session = my_session;
     }
@@ -48,7 +48,7 @@ function processPost(req, res) {
             abend("processPost", "null his_session");
             return;
         }
-        if (his_session.link_id === 0) {
+        if (his_session.session_id === 0) {
             abend("processPost", "null his_session = 0");
             return;
         }
@@ -89,15 +89,15 @@ function processGet (req, res) {
         return;
     }
 
-    //logit("processGet ", "link=" + req.headers.link_id + " "  + req.headers.his_name + "=>" + req.headers.my_name);
+    //logit("processGet ", "link=" + req.headers.session_id + " "  + req.headers.his_name + "=>" + req.headers.my_name);
     state = "get start";
-    var link_id = Number(req.headers.link_id);
-    var my_session = account_mgr.search(req.headers.my_name, req.headers.his_name, link_id);
+    var session_id = Number(req.headers.session_id);
+    var my_session = account_mgr.search(req.headers.my_name, req.headers.his_name, session_id);
     if (!my_session) {
         abend("processGet", "null my_session");
         return;
     }
-    if (my_session.link_id === 0) {
+    if (my_session.session_id === 0) {
         abend("processGet", "null my_session = 0");
         return;
     }

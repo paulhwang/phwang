@@ -79,7 +79,7 @@ function AjxObject(root_object_val) {
                 var context_type = request0.getResponseHeader("Content-Type");
                 var session_id = request0.responseText;
                 this0.logit("getMessage", "session_id= " + request0.responseText);
-                session_val.setLinkId(Number(session_id));
+                session_val.setSessionId(Number(session_id));
                 //this0.logit("getMessage", "session_id= " + session_val.linkId());
             }
             else {
