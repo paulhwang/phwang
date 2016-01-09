@@ -36,12 +36,12 @@ function searchIt(my_name_val, his_name_val, session_id_val) {
 
 function searchAndCreate(my_name_val, his_name_val, session_id_val) {
     "use strict";
-    var link = queue.search(account_queue, compareIt, my_name_val, his_name_val, session_id_val);
-    if (!link) {
-        link = account_pool.malloc(my_name_val, his_name_val);
-        queue.enqueue(account_queue, link);
+    var session = queue.search(account_queue, compareIt, my_name_val, his_name_val, session_id_val);
+    if (!session) {
+        session = account_pool.malloc(my_name_val, his_name_val);
+        queue.enqueue(account_queue, session);
     }
-    return link;
+    return session;
 }
 
 function compareIt (link_val, my_name_val, his_name_val, session_id_val) {
