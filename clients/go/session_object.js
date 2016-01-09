@@ -37,9 +37,25 @@ function SessionObject(root_object_val, receive_func_val, target_receive_val, my
         return this.theHisName;
     };
 
-    this.receiveQueue = function () {
-        return this.theReceiveQueue;
+    this.xmtSeq = function () {
+        return this.theXmtSeq;
     };
+
+    this.incrementXmtSeq = function () {
+        this.theXmtSeq += 1;
+    };
+
+    this.rcvSeq = function () {
+        return this.theRcvSeq;
+    };
+
+    this.incrementRcvSeq = function () {
+        this.theRcvSeq += 1;
+    };
+
+    //this.receiveQueue = function () {
+    //    return this.theReceiveQueue;
+    //};
 
     this.transmitQueue = function () {
         return this.theTransmitQueue;
@@ -61,7 +77,9 @@ function SessionObject(root_object_val, receive_func_val, target_receive_val, my
         return this.utilObject().logit(this.objectName() + "." + str1_val, str2_val);
     };
 
-    this.theReceiveQueue = new QueueObject(this.utilObject());
+    this.theXmtSeq = 0;
+    this.theRcvSeq = 0;
+    //this.theReceiveQueue = new QueueObject(this.utilObject());
     this.theTransmitQueue = new QueueObject(this.utilObject());
 }
 
