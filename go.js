@@ -23,7 +23,7 @@ app.use(processFailure);
 app.listen(8080);
 
 function processPost(req, res) {
-    var my_session, his_link;
+    var my_session, his_session;
 
     postLogit("processPost", "start");
     state = "post start";
@@ -40,32 +40,32 @@ function processPost(req, res) {
     }
     logit("processPost", "link=" + req.body.link_id + " "  + req.body.my_name + "=>" + req.body.his_name + " " + req.body.data + " " + req.body.xmt_seq + "=" + my_session.up_seq);
     if (req.body.my_name === req.body.his_name) {
-        his_link = my_session;
+        his_session = my_session;
     }
     else {
-        his_link = account_mgr.search(req.body.his_name, req.body.my_name, -1);
-        if (!his_link) {
-            abend("processPost", "null his_link");
+        his_session = account_mgr.search(req.body.his_name, req.body.my_name, -1);
+        if (!his_session) {
+            abend("processPost", "null his_session");
             return;
         }
-        if (his_link.link_id === 0) {
-            abend("processPost", "null his_link = 0");
+        if (his_session.link_id === 0) {
+            abend("processPost", "null his_session = 0");
             return;
         }
     }
 
     if (req.body.xmt_seq === my_session.up_seq) {
         state = "post 1000";
-        queue.enqueue(his_link.queue, req.body.data);
+        queue.enqueue(his_session.queue, req.body.data);
         state = "post 1200";
-        ring.enqueue(his_link.ring, req.body.data);
+        ring.enqueue(his_session.ring, req.body.data);
         state = "post 1900";
         my_session.up_seq += 1;
     } else if (req.body.xmt_seq < my_session.up_seq) {
         state = "post 2000";
          if (req.body.xmt_seq === 0) {
-            queue.enqueue(his_link.queue, req.body.data);
-            ring.enqueue(his_link.ring, req.body.data);
+            queue.enqueue(his_session.queue, req.body.data);
+            ring.enqueue(his_session.ring, req.body.data);
             my_session.up_seq = 1;
             logit("processPost", req.body.data + " post " + req.body.xmt_seq + " reset");
         } else {
