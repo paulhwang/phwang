@@ -29,12 +29,28 @@ function processPost(req, res) {
     state = "post start";
 
     my_link = account_mgr.search(req.body.my_name, req.body.his_name);
+    if (!my_link) {
+        abend("processPost", "null my_link");
+        return;
+    }
+    if (my_link.link_id === 0) {
+        abend("processPost", "null my_link = 0");
+        return;
+    }
     logit("processPost", req.body.my_name + "=>" + req.body.his_name + " " + req.body.data + " " + req.body.xmt_seq + "=" + my_link.up_seq);
     if (req.body.my_name === req.body.his_name) {
         his_link = my_link;
     }
     else {
         his_link = account_mgr.search(req.body.his_name, req.body.my_name);
+        if (!his_link) {
+            abend("processPost", "null his_link");
+            return;
+        }
+        if (his_link.link_id === 0) {
+            abend("processPost", "null his_link = 0");
+            return;
+        }
     }
 
     if (req.body.xmt_seq === my_link.up_seq) {
@@ -105,7 +121,7 @@ function processGet (req, res) {
 
 function setupLink (req, res) {
     var link, link_id_str;
-    link = account_mgr.search(req.body.my_name, req.body.his_name);
+    link = account_mgr.search_and_create(req.headers.my_name, req.headers.his_name);
     link_id_str = "" + link.link_id;
     res.send(link_id_str);
     logit("setupLink  ", req.headers.his_name + "=>" + req.headers.my_name);

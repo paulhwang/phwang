@@ -9,6 +9,10 @@ module.exports = {
         return searchIt(my_name_val, his_name_val);
     },
 
+    search_and_create: function (my_name_val, his_name_val) {
+        return searchAndCreate(my_name_val, his_name_val);
+    },
+
     malloc: function (my_name_val, his_name_val) {
          return mallocIt(my_name_val, his_name_val);
     },
@@ -27,7 +31,11 @@ var account_queue = queue.malloc();
 
 function searchIt(my_name_val, his_name_val) {
     "use strict";
-    //logit("searchIt", my_name_val + " " + his_name_val);
+    return queue.search(account_queue, compareIt, my_name_val, his_name_val);
+}
+
+function searchAndCreate(my_name_val, his_name_val) {
+    "use strict";
     var link = queue.search(account_queue, compareIt, my_name_val, his_name_val);
     if (!link) {
         link = account_pool.malloc(my_name_val, his_name_val);
