@@ -77,10 +77,10 @@ function AjxObject(root_object_val) {
         request_val.onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
                 var context_type = request0.getResponseHeader("Content-Type");
-                var link_id = request0.responseText;
-                this0.logit("getMessage", "link_id= " + request0.responseText);
-                session_val.setLinkId(Number(link_id));
-                //this0.logit("getMessage", "link_id= " + session_val.linkId());
+                var session_id = request0.responseText;
+                this0.logit("getMessage", "session_id= " + request0.responseText);
+                session_val.setLinkId(Number(session_id));
+                //this0.logit("getMessage", "session_id= " + session_val.linkId());
             }
             else {
                 //this0.logit("getMessage", "error=" + request0.readyState + ", " + request0.status);
