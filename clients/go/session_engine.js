@@ -77,7 +77,7 @@ function SessionEngineObject(root_object_val, port_object_val, session_object_va
             str = session.transmitQueue().deQueue();
             if (str) {
                 //this.logit("transmitData", str);
-                this.ajxObject().postMessage(this.httpPostRequest(), this.ajxRoute(), this.ajxObject().jsonContext(), str, session);
+                this.ajxObject().postMessage(this.httpPostRequest(), this.ajxObject().jsonContext(), str, session);
                 this.ajxObject().getMessage(this.httpGetRequest(), this.ajxRoute(), this.ajxObject().jsonContext(), this, session);
             }
             else {
@@ -91,7 +91,7 @@ function SessionEngineObject(root_object_val, port_object_val, session_object_va
         if (this.configObject().playBothSides()) {
             //this.receiveStringData(str_val);
             if (this.ajxObject()) {
-                this.ajxObject().postMessage(this.httpPostRequest(), this.ajxRoute(), this.ajxObject().jsonContext(), str_val, session.hisName());
+                this.ajxObject().postMessage(this.httpPostRequest(), this.ajxObject().jsonContext(), str_val, session.hisName());
                 this.ajxObject().getMessage(this.httpGetRequest(), this.ajxRoute(), this.ajxObject().jsonContext(), this, session.myName());
              }
             return;
