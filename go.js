@@ -143,14 +143,14 @@ function setupLink (req, res) {
 }
 
 function setupSession (req, res) {
-    var link, link_id_str;
-    link = account_mgr.search_and_create(req.headers.my_name, req.headers.his_name, 0);
-    if (!link) {
+    var session, session_id_str;
+    session = account_mgr.search_and_create(req.headers.my_name, req.headers.his_name, 0);
+    if (!session) {
         abend("setupSession", "null session");
         return;
     }
-    link_id_str = "" + link.link_id;
-    res.send(link_id_str);
+    session_id_str = "" + session.link_id;
+    res.send(session_id_str);
     logit("setupSession  ", req.headers.his_name + "=>" + req.headers.my_name);
 }
 
