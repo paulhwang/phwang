@@ -59,6 +59,10 @@ function SessionEngineObject(root_object_val, port_object_val, session_object_va
         return "/go_msg";
     };
 
+    this.sendHttpGetRequest = function (session_val) {
+         this.ajxObject().getMessage(this.httpGetRequest(), this.ajxRoute(), this.ajxObject().jsonContext(), this, session_val.myName(), session_val);
+    };
+
     this.transmitData = function () {
         var session, str;
         while (true) {
@@ -69,8 +73,8 @@ function SessionEngineObject(root_object_val, port_object_val, session_object_va
             str = session.transmitQueue().deQueue();
             if (str) {
                 //this.logit("transmitData", str);
-                this.ajxObject().postMessage(this.httpPostRequest(), this.ajxRoute(), this.ajxObject().jsonContext(), str, session.hisName());
-                this.ajxObject().getMessage(this.httpGetRequest(), this.ajxRoute(), this.ajxObject().jsonContext(), this, session.myName());
+                this.ajxObject().postMessage(this.httpPostRequest(), this.ajxRoute(), this.ajxObject().jsonContext(), str, session);
+                this.ajxObject().getMessage(this.httpGetRequest(), this.ajxRoute(), this.ajxObject().jsonContext(), this, session.myName(), session);
             }
             else {
                 this.abend("transmitData", "null data");

@@ -25,28 +25,28 @@ app.listen(8080);
 function processPost(req, res) {
     postLogit("processPost", "start");
     state = "post start";
-    var acc = account_mgr.search(req.body.name);
-    logit("processPost", req.body.data + " " + req.body.seq + " " + acc.up_seq);
-    if (req.body.seq === acc.up_seq) {
+    var acc = account_mgr.search(req.body.his_name);
+    logit("processPost", req.body.data + " " + req.body.xmt_seq + " " + acc.up_seq);
+    if (req.body.xmt_seq === acc.up_seq) {
         state = "post 1000";
         queue.enqueue(acc.queue, req.body.data);
         state = "post 1200";
         ring.enqueue(req.body.data);
         state = "post 1900";
         acc.up_seq += 1;
-    } else if (req.body.seq < acc.up_seq) {
+    } else if (req.body.xmt_seq < acc.up_seq) {
         state = "post 2000";
-         if (req.body.seq === 0) {
+         if (req.body.xmt_seq === 0) {
             queue.enqueue(acc.queue, req.body.data);
             ring.enqueue(req.body.data);
             acc.up_seq = 1;
-            console.log(req.body.data + " post " + req.body.seq + " reset");
+            console.log(req.body.data + " post " + req.body.xmt_seq + " reset");
         } else {
-            console.log(req.body.data + " post " + req.body.seq + " dropped");
+            console.log(req.body.data + " post " + req.body.xmt_seq + " dropped");
         }
-    } else {
+    } else {s
         state = "post 3000";
-        console.log("***abend: " + req.body.data + " post seq=" + req.body.seq + " dropped");
+        console.log("***abend: " + req.body.data + " post seq=" + req.body.xmt_seq + " dropped");
     }
     state = "post done";
 }

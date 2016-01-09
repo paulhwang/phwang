@@ -31,17 +31,17 @@ function AjxObject(root_object_val) {
         this.theAjaxSeqNumber += 1;
     };
 
-    this.formJsonString = function (msg_val, up_name_val) {
+    this.formJsonString = function (msg_val, session_val) {
         var s = JSON.stringify({
-            name: up_name_val,
+            his_name: session_val.hisName(),
             data: msg_val,
-            seq: this.ajaxSeqNumber(),
+            xmt_seq: this.ajaxSeqNumber(),
         });
         this.incrementAjaxSeqNumber();
         return s;
     };
 
-    this.getMessage = function (request_val, dir_val, context_val, sesson_mgr_val, down_name_val) {
+    this.getMessage = function (request_val, dir_val, context_val, sesson_mgr_val, down_name_val, session_val) {
         var this0 = this;
         var request0 = request_val;
 
@@ -63,12 +63,12 @@ function AjxObject(root_object_val) {
         request_val.send(null);
     };
 
-    this.postMessage = function (request_val, dir_val, context_val, msg_val, up_name_val) {
+    this.postMessage = function (request_val, dir_val, context_val, msg_val, session_val) {
         request_val.open("POST", dir_val);
         request_val.setRequestHeader("Content-Type", context_val);
 
         if (context_val === this.jsonContext()) {
-            var json_str = this.formJsonString(msg_val, up_name_val);
+            var json_str = this.formJsonString(msg_val, session_val);
             this.logit("postMessage", "dir=" + dir_val + " json=" + json_str);
             request_val.send(json_str);
         } else {

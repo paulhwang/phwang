@@ -3,7 +3,7 @@ var main = function () {
 
     document.cookie="paul's cookie is here";
 
-    var goTwoBoard = true;
+    var goTwoBoard = false;
     var theMainRootObject = new RootObject();
     var theMainPreludeObject = new PreludeObject(theMainRootObject);
     var theMainHtmlObject = new GoHtmlObject(theMainPreludeObject, goTwoBoard);
