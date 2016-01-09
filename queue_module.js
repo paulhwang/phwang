@@ -4,13 +4,10 @@
  * File name: queue_module.js
  */
 
-var theQueueObject;
+var util = require("./util_module.js");
+var holder_pool = require("./holder_pool_module.js");
 
 module.exports = {
-    init: function (util_val) {
-        theQueueObject = new queueObject(util_val);
-    },
-
     malloc: function () {
         que = new QueueObject();
         que.head = null;
@@ -20,11 +17,11 @@ module.exports = {
     },
 
     enqueue: function (queue_val, data_val) {
-        enqueueIt(queue_val, data_val);
+        enQueue(queue_val, data_val);
     },
 
     dequeue: function (queue_val) {
-        return dequeueIt(queue_val);
+        return deQueue(queue_val);
     },
 
     search: function (queue_val, input_val, func_val) {
@@ -33,19 +30,13 @@ module.exports = {
 
 };
 
-var util = require("./util_module.js");
-var holder_pool = require("./holder_pool_module.js");
-var head = null;
-var tail = null;
-var size = 0;
-
 function QueueObject () {
-    var head;
-    var tail;
-    var size;
+    //var head;
+    //var tail;
+    //var size;
 }
 
-function enqueueIt (queue_val, data_val) {
+function enQueue (queue_val, data_val) {
     "use strict";
 
     if (!queue_val) {
@@ -61,7 +52,6 @@ function enqueueIt (queue_val, data_val) {
     //logit("enqueueIt", "start");
 
     abendIt(queue_val);
-
 
     var data_entry = holder_pool.malloc(data_val);
     if (!data_entry) {
@@ -86,12 +76,12 @@ function enqueueIt (queue_val, data_val) {
     abendIt(queue_val);
 }
 
-function dequeueIt (queue_val) {
+function deQueue (queue_val) {
     "use strict";
     var data_entry;
     var data;
 
-    logit("dequeueIt", "start");
+    //logit("deQueue", "start");
 
     if (!queue_val) {
         return;

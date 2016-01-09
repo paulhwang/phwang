@@ -32,7 +32,7 @@ function processPost(req, res) {
         state = "post 1000";
         queue.enqueue(my_link.queue, req.body.data);
         state = "post 1200";
-        ring.enqueue(req.body.data);
+        ring.enqueue(my_link.ring, req.body.data);
         state = "post 1900";
         my_link.up_seq += 1;
     } else if (req.body.xmt_seq < my_link.up_seq) {
@@ -67,10 +67,10 @@ function processGet (req, res) {
     state = "get 2000";
     var data = queue.dequeue(acc.queue);
     state = "get 3000";
-    var data1 = ring.dequeue();
+    var data1 = ring.dequeue(acc.ring);
     state = "get 4000";
     if (data !== data1) {
-        console.log("*****Abend: get", "queue and ring not match");
+        //console.log("*****Abend: get", "queue and ring not match");
     }
     if (!data) {
         //console.log("processGet() ", "null data");

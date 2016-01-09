@@ -4,6 +4,13 @@
  * File name: ring_module.js
  */
 
+var util = require("./util_module.js");
+var input = 0;
+var output = 0;
+var size = 2;
+var left = size;
+var array = [size];
+
 module.exports = {
     malloc: function () {
         ring = new RingObject();
@@ -15,102 +22,102 @@ module.exports = {
         return ring;
     },
 
-    enqueue: function (data_val) {
-        enqueueIt(data_val);
+    enqueue: function (ring_val, data_val) {
+        enQueue(ring_val, data_val);
     },
 
-    dequeue: function () {
-        return dequeueIt();
+    dequeue: function (ring_val) {
+        return deQueue(ring_val);
     },
 };
 
-var util = require("./util_module.js");
-var input = 0;
-var output = 0;
-var size = 2;
-var left = size;
-var array = [size];
-
 function RingObject () {
-    var input;
-    var output;
-    var size;
-    var left;
-    var array;
+    //var input;
+    //var output;
+    //var size;
+    //ar left;
+    //var array;
 }
 
-function enqueueIt (data_val) {
+function enQueue (ring_val, data_val) {
     "use strict";
 
-    if (left < 0) {
-        abend("enqueueIt", "left=" + left);
+    //logit("enQueue", "start");
+
+    if (ring_val.left < 0) {
+        abend("enQueue", "left=" + ring_val.left);
         return;
     }
 
-    if (left <= (size / 2)) {
-        increaseSize();
+    if (ring_val.left <= (ring_val.size / 2)) {
+        increaseSize(ring_val);
     }
 
-    array[input] = data_val;
-    input += 1;
-    if (input === size) {
-        input = 0;
+    ring_val.array[ring_val.input] = data_val;
+    ring_val.input += 1;
+    if (ring_val.input === ring_val.size) {
+        ring_val.input = 0;
     }
-    left -= 1;
+    ring_val.left -= 1;
 
-    abendIt();
+    abendIt(ring_val);
 }
 
-function dequeueIt () {
+function deQueue (ring_val) {
     "use strict";
 
-    if (left === size) {
+    //logit("deQueue", "start");
+
+    if (ring_val.left === ring_val.size) {
         return null;
     }
 
-    var data = array[output];
-    output += 1;
-    if (output === size) {
-        output = 0;
+    var data = ring_val.array[output];
+    ring_val.output += 1;
+    if (ring_val.output === ring_val.size) {
+        ring_val.output = 0;
     }
-    left += 1;
-    abendIt();
+    ring_val.left += 1;
+
+    abendIt(ring_val);
 
     return data;
 }
 
-function increaseSize () {
-    logit("increaseSize", size);
+function increaseSize (ring_val) {
+    //logit("increaseSize", ring_val.size);
 
-    var i = size;
-    while (i < size * 2) {
-        array[i] = null;
+    var i = ring_val.size;
+    while (i < ring_val.size * 2) {
+        ring_val.array[i] = null;
         i += 1;
     }
 
-    if (input < output) {
+    if (ring_val.input < ring_val.output) {
         i = 0;
-        while (i <= input) {
-            array[size + i] = i;
+        while (i <= ring_val.input) {
+            ring_val.array[ring_val.size + i] = i;
             i += 1;
         }
-        input += size;
+        ring_val.input += ring_val.size;
     }
 
-    left += size;
-    size *= 2;
+    ring_val.left += ring_val.size;
+    ring_val.size *= 2;
+
+    abendIt(ring_val);
 }
 
-function abendIt () {
+function abendIt (ring_val) {
     "use strict";
 
     //logit('abendIt', 'before');
-    if (left < 0) {
-        abend("abendIt", "left=" + left);
+    if (ring_val.left < 0) {
+        abend("abendIt", "left=" + ring_val.left);
     }
 
-    if ((input + left - output !== size) && (input + left - output !== 0)) {
-        abend('abendIt', "input(" + input + ") + left(" + left + ") - output(" + output + ") !== size(" + size + ")");
+    if ((ring_val.input + ring_val.left - ring_val.output !== ring_val.size) && (ring_val.input + ring_val.left - ring_val.output !== 0)) {
+        abend('abendIt', "input(" + ring_val.input + ") + left(" + ring_val.left + ") - output(" + ring_val.output + ") !== size(" + ring_val.size + ")");
     }
     //logit('abendIt', 'succeed');
 }

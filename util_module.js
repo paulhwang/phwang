@@ -58,6 +58,12 @@ function UtilObject() {
     };
 
     this.utilLogit = function (str1_val, str2_val) {
+        if (str2_val === undefined) {
+            str2_val = "UNDEFINED";
+        }
+        if (str2_val === null) {
+            str2_val = "NULL";
+        }
         if (this.userIndex() === undefined) {
             console.log(str1_val + "() " + str2_val);
         } else {
