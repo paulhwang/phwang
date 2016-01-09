@@ -98,7 +98,7 @@ function AjxObject(root_object_val) {
         var request0 = request_val;
 
         request_val.open("GET", this.ajxRoute(), true);
-        request_val.setRequestHeader("Content-Type", context_val);
+        request_val.setRequestHeader("Content-Type", this.jsonContext());
         request_val.setRequestHeader("my_name", session_val.myName());
         request_val.setRequestHeader("his_name", session_val.hisName());
         request_val.setRequestHeader("link_id", this.rootObject().linkId());
@@ -120,7 +120,7 @@ function AjxObject(root_object_val) {
 
     this.postMessage = function (request_val, context_val, msg_val, session_val) {
         request_val.open("POST", this.ajxRoute(), true);
-        request_val.setRequestHeader("Content-Type", context_val);
+        request_val.setRequestHeader("Content-Type", this.jsonContext());
 
         if (context_val === this.jsonContext()) {
             var json_str = this.formJsonString(msg_val, session_val);
