@@ -61,6 +61,14 @@ function SessionObject(root_object_val, receive_func_val, target_receive_val, my
         this.theLinkId = val;
     };
 
+    this.sessionId = function () {
+        return this.theSessionId;
+    };
+
+    this.setSessionId = function (val) {
+        this.theSessionId = val;
+    };
+
     //this.receiveQueue = function () {
     //    return this.theReceiveQueue;
     //};
@@ -88,6 +96,7 @@ function SessionObject(root_object_val, receive_func_val, target_receive_val, my
     this.theXmtSeq = 0;
     this.theRcvSeq = 0;
     this.theLinkId = 0;
+    this.theSessionId = 0;
     //this.theReceiveQueue = new QueueObject(this.utilObject());
     this.theTransmitQueue = new QueueObject(this.utilObject());
 }

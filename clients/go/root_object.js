@@ -24,6 +24,14 @@ function RootObject() {
         return this.theUtilObject;
     };
 
+    this.linkId = function () {
+        return this.theLinkId;
+    };
+
+    this.setLinkId = function (val) {
+        this.theLinkId = val;
+    };
+
     this.logit = function (s1_val, s2_val) {
         return this.utilObject().utilLogit(this.objectName() + "." + str1_val, str2_val);
     };
@@ -32,6 +40,7 @@ function RootObject() {
         return this.utilObject().utilAbend(this.objectName() + "." + str1_val, str2_val);
     };
 
+    this.theLinkId = 0;
     this.theUtilObject = new UtilObject();
     this.theAjxObject = new AjxObject(this);
     this.theSessionMgrObject = new SessionMgrObject(this);

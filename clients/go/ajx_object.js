@@ -30,6 +30,7 @@ function AjxObject(root_object_val) {
             data: msg_val,
             xmt_seq: session_val.xmtSeq(),
             link_id: session_val.linkId(),
+            session_id: session_val.sessionId(),
         });
         session_val.incrementXmtSeq();
         return s;
@@ -61,6 +62,32 @@ function AjxObject(root_object_val) {
         request_val.send(null);
     };
 
+    this.setupSession = function (request_val, dir_val, context_val, session_val) {
+        var this0 = this;
+        var request0 = request_val;
+
+        this.logit("setupLinkf", session_val.myName());
+        request_val.open("GET", dir_val, false);
+        request_val.setRequestHeader("Content-Type", context_val);
+        request_val.setRequestHeader("setup_session", "yes");
+        request_val.setRequestHeader("my_name", session_val.myName());
+        request_val.setRequestHeader("his_name", session_val.hisName());
+
+        request_val.onreadystatechange = function() {
+            if ((request0.readyState === 4) && (request0.status === 200)) {
+                var context_type = request0.getResponseHeader("Content-Type");
+                var session_id = request0.responseText;
+                this0.logit("getMessage", "session_id= " + request0.responseText);
+                session_val.setSessionId(Number(session_id));
+                //this0.logit("getMessage", "session_id= " + session_val.SessionId());
+            }
+            else {
+                //this0.logit("getMessage", "error=" + request0.readyState + ", " + request0.status);
+            }
+        };
+        request_val.send(null);
+    };
+
     this.getMessage = function (request_val, dir_val, context_val, sesson_mgr_val, session_val) {
         var this0 = this;
         var request0 = request_val;
@@ -70,6 +97,7 @@ function AjxObject(root_object_val) {
         request_val.setRequestHeader("my_name", session_val.myName());
         request_val.setRequestHeader("his_name", session_val.hisName());
         request_val.setRequestHeader("link_id", session_val.linkId());
+        request_val.setRequestHeader("session_id", session_val.sessionId());
 
         request_val.onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
