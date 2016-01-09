@@ -118,17 +118,13 @@ function AjxObject(root_object_val) {
         request_val.send(null);
     };
 
-    this.postMessage = function (request_val, context_val, msg_val, session_val) {
+    this.postMessage = function (request_val, msg_val, session_val) {
         request_val.open("POST", this.ajxRoute(), true);
         request_val.setRequestHeader("Content-Type", this.jsonContext());
 
-        if (context_val === this.jsonContext()) {
-            var json_str = this.formJsonString(msg_val, session_val);
-            this.logit("postMessage", "json=" + json_str);
-            request_val.send(json_str);
-        } else {
-            request_val.send(msg_val);
-        }
+        var json_str = this.formJsonString(msg_val, session_val);
+        this.logit("postMessage", "json=" + json_str);
+        request_val.send(json_str);
 
 /*
         $.ajax({
