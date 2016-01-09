@@ -5,12 +5,12 @@
  */
 
 module.exports = {
-    search: function (my_name_val, his_name_val, link_id_val) {
-        return searchIt(my_name_val, his_name_val, link_id_val);
+    search: function (my_name_val, his_name_val, session_id_val) {
+        return searchIt(my_name_val, his_name_val, session_id_val);
     },
 
-    search_and_create: function (my_name_val, his_name_val, link_id_val) {
-        return searchAndCreate(my_name_val, his_name_val, link_id_val);
+    search_and_create: function (my_name_val, his_name_val, session_id_val) {
+        return searchAndCreate(my_name_val, his_name_val, session_id_val);
     },
 
     malloc: function (my_name_val, his_name_val) {
@@ -29,14 +29,14 @@ var account_pool = require("./account_pool_module.js");
 
 var account_queue = queue.malloc();
 
-function searchIt(my_name_val, his_name_val, link_id_val) {
+function searchIt(my_name_val, his_name_val, session_id_val) {
     "use strict";
-    return queue.search(account_queue, compareIt, my_name_val, his_name_val, link_id_val);
+    return queue.search(account_queue, compareIt, my_name_val, his_name_val, session_id_val);
 }
 
-function searchAndCreate(my_name_val, his_name_val, link_id_val) {
+function searchAndCreate(my_name_val, his_name_val, session_id_val) {
     "use strict";
-    var link = queue.search(account_queue, compareIt, my_name_val, his_name_val, link_id_val);
+    var link = queue.search(account_queue, compareIt, my_name_val, his_name_val, session_id_val);
     if (!link) {
         link = account_pool.malloc(my_name_val, his_name_val);
         queue.enqueue(account_queue, link);
@@ -44,16 +44,16 @@ function searchAndCreate(my_name_val, his_name_val, link_id_val) {
     return link;
 }
 
-function compareIt (link_val, my_name_val, his_name_val, link_id_val) {
+function compareIt (link_val, my_name_val, his_name_val, session_id_val) {
     //logit("compareIt", my_name_val + ":" + link_val.my_name + " " + his_name_val + ":" + link_val.his_name);
     //return (my_name_val === link_val.my_name);
     if ((my_name_val !== link_val.my_name) || (his_name_val !== link_val.his_name)) {
         return false;
     }
-    if (link_id_val === -1) {
+    if (session_id_val === -1) {
         return true;
     } else {
-        return (link_id_val === link_val.link_id);
+        return (session_id_val === link_val.link_id);
     }
 }
 
