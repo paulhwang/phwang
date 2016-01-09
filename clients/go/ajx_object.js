@@ -101,7 +101,7 @@ function AjxObject(root_object_val) {
         this.httpGetRequest().send(null);
     };
 
-    this.getMessage = function (request_val, sesson_mgr_val, session_val) {
+    this.getMessage = function (sesson_mgr_val, session_val) {
         var this0 = this;
         var request0 = this.httpGetRequest();
 
@@ -126,13 +126,13 @@ function AjxObject(root_object_val) {
         this.httpGetRequest().send(null);
     };
 
-    this.postMessage = function (request_val, msg_val, session_val) {
-        request_val.open("POST", this.ajxRoute(), true);
-        request_val.setRequestHeader("Content-Type", this.jsonContext());
+    this.postMessage = function (msg_val, session_val) {
+        this.httpPostRequest().open("POST", this.ajxRoute(), true);
+        this.httpPostRequest().setRequestHeader("Content-Type", this.jsonContext());
 
         var json_str = this.formJsonString(msg_val, session_val);
         this.logit("postMessage", "json=" + json_str);
-        request_val.send(json_str);
+        this.httpPostRequest().send(json_str);
 
 /*
         $.ajax({
