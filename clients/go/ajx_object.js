@@ -16,6 +16,10 @@ function AjxObject(root_object_val) {
         return this.rootObject().utilObject();
     };
 
+    this.ajxRoute = function () {
+        return "/go_msg";
+    };
+
     this.jsonContext = function () {
         return "application/json; charset=utf-8";
     }
@@ -41,7 +45,7 @@ function AjxObject(root_object_val) {
         var request0 = request_val;
 
         this.logit("setupLinkf", session_val.myName());
-        request_val.open("GET", dir_val, false);
+        request_val.open("GET", this.ajxRoute(), false);
         request_val.setRequestHeader("Content-Type", context_val);
         request_val.setRequestHeader("setup_link", "yes");
         request_val.setRequestHeader("my_name", session_val.myName());
@@ -68,7 +72,7 @@ function AjxObject(root_object_val) {
         var request0 = request_val;
 
         this.logit("setupLinkf", session_val.myName());
-        request_val.open("GET", dir_val, false);
+        request_val.open("GET", this.ajxRoute(), false);
         request_val.setRequestHeader("Content-Type", context_val);
         request_val.setRequestHeader("setup_session", "yes");
         request_val.setRequestHeader("my_name", session_val.myName());
