@@ -48,7 +48,7 @@ function AjxObject(root_object_val) {
         return s;
     };
 
-    this.setupLink = function (request_val, session_val) {
+    this.setupLink = function (session_val) {
         var this0 = this;
         var request0 = this.httpGetRequest();
 
@@ -75,7 +75,7 @@ function AjxObject(root_object_val) {
     };
 
 
-    this.setupSession = function (request_val, session_val) {
+    this.setupSession = function (session_val) {
         var this0 = this;
         var request0 = this.httpGetRequest();
 
@@ -157,7 +157,7 @@ function AjxObject(root_object_val) {
     this.logit = function (str1_val, str2_val) {
         return this.utilObject().utilLogit("AjxObject." + str1_val, str2_val);
     };
-    
+
     this.theHttpGetRequest = new XMLHttpRequest();
     this.theHttpPostRequest = new XMLHttpRequest();
 }
