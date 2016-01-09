@@ -41,13 +41,13 @@ function AjxObject(root_object_val) {
         return s;
     };
 
-    this.getMessage = function (request_val, dir_val, context_val, sesson_mgr_val, down_name_val, session_val) {
+    this.getMessage = function (request_val, dir_val, context_val, sesson_mgr_val, session_val) {
         var this0 = this;
         var request0 = request_val;
 
         request_val.open("GET", dir_val);
         request_val.setRequestHeader("Content-Type", context_val);
-        request_val.setRequestHeader("Name", down_name_val);
+        request_val.setRequestHeader("Name", session_val.myName());
 
         request_val.onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
