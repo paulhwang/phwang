@@ -27,7 +27,7 @@ function resetIt (link_val, my_name_val, his_name_val) {
     link_val.down_seq = 0;
     link_val.queue = queue.malloc();
     link_val.ring = ring.malloc();
-    link_val.link_id = global_session_id;
+    link_val.session_id = global_session_id;
     global_session_id += 1;
 }
 

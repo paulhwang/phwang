@@ -149,7 +149,7 @@ function setupSession (req, res) {
         abend("setupSession", "null session");
         return;
     }
-    session_id_str = "" + session.link_id;
+    session_id_str = "" + session.session_id;
     res.send(session_id_str);
     logit("setupSession  ", req.headers.his_name + "=>" + req.headers.my_name);
 }

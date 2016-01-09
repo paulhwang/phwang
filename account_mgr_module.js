@@ -53,7 +53,7 @@ function compareIt (session_val, my_name_val, his_name_val, session_id_val) {
     if (session_id_val === -1) {
         return true;
     } else {
-        return (session_id_val === session_val.link_id);
+        return (session_id_val === session_val.session_id);
     }
 }
 
