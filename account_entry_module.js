@@ -32,13 +32,4 @@ function resetIt (link_val, my_name_val, his_name_val) {
 }
 
 function AccountEntryObject() {
-    "use strict";
-
-    var my_name;
-    var his_name;
-    var up_seq;
-    var down_seq;
-    var queue;
-    var ring;
-    var link_id;
 }
