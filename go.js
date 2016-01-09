@@ -23,23 +23,32 @@ app.use(processFailure);
 app.listen(8080);
 
 function processPost(req, res) {
+    var my_link, his_link;
+
     postLogit("processPost", "start");
     state = "post start";
-    var my_link = account_mgr.search(req.body.my_name, req.body.his_name);
-    var his_link = account_mgr.search(req.body.his_name, req.body.my_name);
+
+    my_link = account_mgr.search(req.body.my_name, req.body.his_name);
     logit("processPost", req.body.my_name + "=>" + req.body.his_name + " " +req.body.data + " " + req.body.xmt_seq + " " + my_link.up_seq);
+    if (req.body.my_name === req.body.his_name) {
+        his_link = my_link;
+    }
+    else {
+        his_link = account_mgr.search(req.body.his_name, req.body.my_name);
+    }
+
     if (req.body.xmt_seq === my_link.up_seq) {
         state = "post 1000";
-        queue.enqueue(my_link.queue, req.body.data);
+        queue.enqueue(his_link.queue, req.body.data);
         state = "post 1200";
-        ring.enqueue(my_link.ring, req.body.data);
+        ring.enqueue(his_link.ring, req.body.data);
         state = "post 1900";
         my_link.up_seq += 1;
     } else if (req.body.xmt_seq < my_link.up_seq) {
         state = "post 2000";
          if (req.body.xmt_seq === 0) {
-            queue.enqueue(my_link.queue, req.body.data);
-            ring.enqueue(req.body.data);
+            queue.enqueue(his_link.queue, req.body.data);
+            ring.enqueue(his_link.ring, req.body.data);
             my_link.up_seq = 1;
             console.log(req.body.data + " post " + req.body.xmt_seq + " reset");
         } else {
