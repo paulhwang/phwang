@@ -28,7 +28,7 @@ function processPost(req, res) {
     postLogit("processPost", "start");
     state = "post start";
 
-    my_link = account_mgr.search(req.body.my_name, req.body.his_name);
+    my_link = account_mgr.search(req.body.my_name, req.body.his_name, -1);
     if (!my_link) {
         abend("processPost", "null my_link");
         return;
@@ -42,7 +42,7 @@ function processPost(req, res) {
         his_link = my_link;
     }
     else {
-        his_link = account_mgr.search(req.body.his_name, req.body.my_name);
+        his_link = account_mgr.search(req.body.his_name, req.body.my_name, -1);
         if (!his_link) {
             abend("processPost", "null his_link");
             return;
@@ -85,13 +85,17 @@ function processGet (req, res) {
 
     logit("processGet ", req.headers.his_name + "=>" + req.headers.my_name);
     state = "get start";
-    var my_link = account_mgr.search(req.headers.my_name, req.headers.his_name);
+    var my_link = account_mgr.search(req.headers.my_name, req.headers.his_name, -1);
     if (!my_link) {
-        logit("processGet", "name not found");
+        abend("processGet", "null my_link");
+        return;
+    }
+    if (my_link.link_id === 0) {
+        abend("processGet", "null my_link = 0");
         return;
     }
     if (!my_link.queue) {
-        logit("*****Abend:processGet", "null queue");
+        abend("processGet", "null queue");
         return;
     }
     res.type('application/json');
@@ -121,7 +125,11 @@ function processGet (req, res) {
 
 function setupLink (req, res) {
     var link, link_id_str;
-    link = account_mgr.search_and_create(req.headers.my_name, req.headers.his_name);
+    link = account_mgr.search_and_create(req.headers.my_name, req.headers.his_name, 0);
+    if (!link) {
+        abend("setupLink", "null link");
+        return;
+    }
     link_id_str = "" + link.link_id;
     res.send(link_id_str);
     logit("setupLink  ", req.headers.his_name + "=>" + req.headers.my_name);

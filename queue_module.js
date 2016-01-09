@@ -24,8 +24,8 @@ module.exports = {
         return deQueue(queue_val);
     },
 
-    search: function (queue_val, func_val, input_val1, input_val2) {
-        return searchIt(queue_val, func_val, input_val1, input_val2);
+    search: function (queue_val, func_val, input_val1, input_val2, input_val3) {
+        return searchIt(queue_val, func_val, input_val1, input_val2, input_val3);
     },
 
 };
@@ -127,12 +127,12 @@ function deQueue (queue_val) {
     return data;
 }
 
-function searchIt(queue_val, func_val, input_val1, input_val2) {
+function searchIt(queue_val, func_val, input_val1, input_val2, input_val3) {
     var p;
 
     p = queue_val.head;
     while (p) {
-        if (func_val(p.data, input_val1, input_val2)) {
+        if (func_val(p.data, input_val1, input_val2, input_val3)) {
             return p.data;
         }
         p = p.next;
