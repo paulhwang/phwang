@@ -29,14 +29,23 @@ function AjxObject(root_object_val) {
             my_name: session_val.myName(),
             data: msg_val,
             xmt_seq: session_val.xmtSeq(),
+            session_id: session_val.sessionId(),
         });
         session_val.incrementXmtSeq();
         return s;
     };
 
+    this.getSessionId = function (session_val) {
+
+    };
+
     this.getMessage = function (request_val, dir_val, context_val, sesson_mgr_val, session_val) {
         var this0 = this;
         var request0 = request_val;
+
+        if (session_val.sessionId() === 0) {
+            this.getSessionId(session_val);
+        }
 
         request_val.open("GET", dir_val);
         request_val.setRequestHeader("Content-Type", context_val);

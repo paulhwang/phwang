@@ -29,7 +29,7 @@ function processPost(req, res) {
     state = "post start";
 
     my_link = account_mgr.search(req.body.my_name, req.body.his_name);
-    logit("processPost", req.body.my_name + "=>" + req.body.his_name + " " +req.body.data + " " + req.body.xmt_seq + " " + my_link.up_seq);
+    logit("processPost", req.body.my_name + "=>" + req.body.his_name + " " + req.body.data + " " + req.body.xmt_seq + "=" + my_link.up_seq);
     if (req.body.my_name === req.body.his_name) {
         his_link = my_link;
     }
@@ -62,6 +62,7 @@ function processPost(req, res) {
 }
 
 function processGet (req, res) {
+    logit("processGet ", req.headers.his_name + "=>" + req.headers.my_name);
     state = "get start";
     var my_link = account_mgr.search(req.headers.my_name, req.headers.his_name);
     if (!my_link) {
@@ -91,7 +92,7 @@ function processGet (req, res) {
     }
 
     state = "get 5000";
-    logit("processGet ", req.headers.my_name + "<=" + req.headers.his_name + " " + data);
+    logit("processGet ", req.headers.his_name + "=>" + req.headers.my_name + " " + data);
     state = "get 9000";
     res.send(data);
     state = "get end";
