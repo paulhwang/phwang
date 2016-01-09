@@ -44,16 +44,16 @@ function searchAndCreate(my_name_val, his_name_val, session_id_val) {
     return session;
 }
 
-function compareIt (link_val, my_name_val, his_name_val, session_id_val) {
-    //logit("compareIt", my_name_val + ":" + link_val.my_name + " " + his_name_val + ":" + link_val.his_name);
-    //return (my_name_val === link_val.my_name);
-    if ((my_name_val !== link_val.my_name) || (his_name_val !== link_val.his_name)) {
+function compareIt (session_val, my_name_val, his_name_val, session_id_val) {
+    //logit("compareIt", my_name_val + ":" + session_val.my_name + " " + his_name_val + ":" + session_val.his_name);
+    //return (my_name_val === session_val.my_name);
+    if ((my_name_val !== session_val.my_name) || (his_name_val !== session_val.his_name)) {
         return false;
     }
     if (session_id_val === -1) {
         return true;
     } else {
-        return (session_id_val === link_val.link_id);
+        return (session_id_val === session_val.link_id);
     }
 }
 
