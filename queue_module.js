@@ -24,8 +24,8 @@ module.exports = {
         return deQueue(queue_val);
     },
 
-    search: function (queue_val, input_val, func_val) {
-        return searchIt(queue_val, input_val, func_val);
+    search: function (queue_val, func_val, input_val1, input_val2) {
+        return searchIt(queue_val, func_val, input_val1, input_val2);
     },
 
 };

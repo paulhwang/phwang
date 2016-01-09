@@ -27,6 +27,7 @@ var account_queue = queue.malloc();
 
 function searchIt(my_name_val, his_name_val) {
     "use strict";
+    //logit("searchIt", my_name_val + " " + his_name_val);
     var link = queue.search(account_queue, compareIt, my_name_val, his_name_val);
     if (!link) {
         link = account_pool.malloc(my_name_val, his_name_val);
@@ -36,9 +37,9 @@ function searchIt(my_name_val, his_name_val) {
 }
 
 function compareIt (link_val, my_name_val, his_name_val) {
-    //logit("compareIt", name_val + " " + link_val.name);
-    return (my_name_val === link_val.my_name);
-    //return (my_name_val === link_val.my_name) && (his_name_val === link_val.his_name);
+    //logit("compareIt", my_name_val + ":" + link_val.my_name + " " + his_name_val + ":" + link_val.his_name);
+    //return (my_name_val === link_val.my_name);
+    return (my_name_val === link_val.my_name) && (his_name_val === link_val.his_name);
 }
 
 function mallocIt(my_name_val, his_name_val) {
