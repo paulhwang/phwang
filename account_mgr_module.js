@@ -25,19 +25,19 @@ var account_pool = require("./account_pool_module.js");
 
 var account_queue = queue.malloc();
 
-function searchIt(name_val) {
+function searchIt(his_name_val, my_name_val) {
     "use strict";
-    var acc = queue.search(account_queue, name_val, compareIt);
+    var acc = queue.search(account_queue, his_name_val, compareIt);
     if (!acc) {
-        acc = account_pool.malloc(name_val);
+        acc = account_pool.malloc(his_name_val, my_name_val);
         queue.enqueue(account_queue, acc);
     }
     return acc;
 }
 
-function compareIt (name_val, account_val) {
+function compareIt (his_name_val, account_val) {
     //logit("compareIt", name_val + " " + account_val.name);
-    return (name_val === account_val.name);
+    return (his_name_val === account_val.his_name);
 }
 
 function mallocIt(name_val) {

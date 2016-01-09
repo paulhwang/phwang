@@ -25,7 +25,7 @@ app.listen(8080);
 function processPost(req, res) {
     postLogit("processPost", "start");
     state = "post start";
-    var acc = account_mgr.search(req.body.his_name);
+    var acc = account_mgr.search(req.body.his_name, req.body.my_name);
     logit("processPost", req.body.data + " " + req.body.xmt_seq + " " + acc.up_seq);
     if (req.body.xmt_seq === acc.up_seq) {
         state = "post 1000";

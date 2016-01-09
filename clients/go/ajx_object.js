@@ -26,6 +26,7 @@ function AjxObject(root_object_val) {
     this.formJsonString = function (msg_val, session_val) {
         var s = JSON.stringify({
             his_name: session_val.hisName(),
+            my_name: session_val.myName(),
             data: msg_val,
             xmt_seq: session_val.xmtSeq(),
         });

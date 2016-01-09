@@ -7,19 +7,20 @@
 var queue = require("./queue_module.js");
 
 module.exports = {
-    reset: function (acc_val, name_val) {
-        resetIt(acc_val, name_val);
+    reset: function (acc_val, his_name_val, my_name_val) {
+        resetIt(acc_val, his_name_val, my_name_val);
    },
 
-    malloc: function (name_val) {
+    malloc: function (his_name_val, my_name_val) {
         acc = new AccountEntryObject();
-        resetIt(acc, name_val);
+        resetIt(acc, his_name_val, my_name_val);
         return acc;
     },
 };
 
-function resetIt (acc_val, name_val) {
-    acc_val.name = name_val;
+function resetIt (acc_val, his_name_val, my_name_val) {
+    acc_val.his_name = his_name_val;
+    acc_val.my_name = my_name_val;
     acc_val.up_seq = 0;
     acc_val.down_seq = 0;
     acc_val.queue = queue.malloc();
