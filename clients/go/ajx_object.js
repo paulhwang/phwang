@@ -40,7 +40,7 @@ function AjxObject(root_object_val) {
         var request0 = request_val;
 
         this.logit("setupLinkf", session_val.myName());
-        request_val.open("GET", dir_val);
+        request_val.open("GET", dir_val, false);
         request_val.setRequestHeader("Content-Type", context_val);
         request_val.setRequestHeader("setup_link", "yes");
         request_val.setRequestHeader("my_name", session_val.myName());
@@ -65,7 +65,7 @@ function AjxObject(root_object_val) {
         var this0 = this;
         var request0 = request_val;
 
-        request_val.open("GET", dir_val);
+        request_val.open("GET", dir_val, true);
         request_val.setRequestHeader("Content-Type", context_val);
         request_val.setRequestHeader("my_name", session_val.myName());
         request_val.setRequestHeader("his_name", session_val.hisName());
@@ -86,7 +86,7 @@ function AjxObject(root_object_val) {
     };
 
     this.postMessage = function (request_val, dir_val, context_val, msg_val, session_val) {
-        request_val.open("POST", dir_val);
+        request_val.open("POST", dir_val, true);
         request_val.setRequestHeader("Content-Type", context_val);
 
         if (context_val === this.jsonContext()) {
