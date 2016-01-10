@@ -77,11 +77,11 @@ function abendIt() {
 
 function abend (str1_val, str2_val) {
     "use strict";
-    util.abend("AccountMgrModule." + str1_val, str2_val);
+    util.abend("SessionMgrModule." + str1_val, str2_val);
 }
 
 function logit (str1_val, str2_val) {
     "use strict";
-    util.logit("AccountMgrModule." + str1_val, str2_val);
+    util.logit("SessionMgrModule." + str1_val, str2_val);
 }
 

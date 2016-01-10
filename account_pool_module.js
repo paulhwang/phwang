@@ -70,11 +70,11 @@ function abendIt() {
 
 function abend (str1_val, str2_val) {
     "use strict";
-    util.abend("AccountPoolModule." + str1_val, str2_val);
+    util.abend("SessionPoolModule." + str1_val, str2_val);
 }
 
 function logit (str1_val, str2_val) {
     "use strict";
-    util.logit("AccountPoolModule." + str1_val, str2_val);
+    util.logit("SessionPoolModule." + str1_val, str2_val);
 }
 
