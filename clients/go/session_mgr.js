@@ -42,6 +42,11 @@ function SessionMgrObject(root_object_val) {
         return session;
     };
 
+    this.enQueueSessionData = function (session_val) {
+        this.enQueue(session_val);
+        this.transmitData();
+    };
+
     this.transmitData = function () {
         var session, str;
         while (true) {
