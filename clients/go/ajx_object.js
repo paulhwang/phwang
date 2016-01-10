@@ -115,7 +115,7 @@ function AjxObject(root_object_val) {
             if ((request0.readyState === 4) && (request0.status === 200)) {
                 var context_type = request0.getResponseHeader("Content-Type");
                 this0.logit("getMessage", "data= " + request0.responseText);
-                sesson_mgr_val.receiveStringData(session_val, request0.responseText);
+                session_val.receiveData(request0.responseText);
             }
         };
         this.httpGetRequest().send(null);

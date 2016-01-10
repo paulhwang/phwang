@@ -24,6 +24,10 @@ function GoPortObject(container_val) {
         return this.rootObject().utilObject();
     };
 
+    this.ajxObject = function () {
+        return this.rootObject().ajxObject();
+    };
+
     this.configObject = function () {
         return this.containerObject().configObject();
     };
@@ -113,7 +117,7 @@ function GoPortObject(container_val) {
     this.theContainerObject = container_val;
     this.theSessionObject = new SessionObject(this.rootObject(), goPortReceive, this, this.configObject().myName(), this.configObject().opponentName());
     this.theSessionEngineObject = new SessionEngineObject(this.rootObject(), this.sessionObject());
-    this.theSessionEngineObject.setupSession(this.sessionObject());
+    this.ajxObject().setupSession(this.sessionObject());
     //if (this.containerObject().gameObject().nextColor() !== this.configObject().myColor()) {
         //this.sessionEngineObject().sendHttpGetRequest(this.sessionObject());
     //}

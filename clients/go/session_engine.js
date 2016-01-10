@@ -34,10 +34,6 @@ function SessionEngineObject(root_object_val, session_object_val) {
         return this.rootObject().ajxObject();
     };
 
-    this.setupSession = function (session_val) {
-        this.ajxObject().setupSession(session_val);
-    };
-
     this.transmitData = function () {
         var session, str;
         while (true) {
@@ -55,10 +51,6 @@ function SessionEngineObject(root_object_val, session_object_val) {
                 this.abend("transmitData", "null data");
             }
         }
-    };
-
-    this.receiveStringData = function (session_val, str_val) {
-        session_val.receiveData(str_val);
     };
 
     this.abend = function (str1_val, str2_val) {
