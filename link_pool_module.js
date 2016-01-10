@@ -67,13 +67,17 @@ function abendIt() {
     //logit('abendIt', 'succeed');
  }
 
+function debug(debug_val, str1_val, str2_val) {
+    if (debug_val) {
+        logit(str1_val, "==" + str2_val);
+    }
+}
+
 function abend (str1_val, str2_val) {
-    "use strict";
     util.abend("LinkPoolModule." + str1_val, str2_val);
 }
 
 function logit (str1_val, str2_val) {
-    "use strict";
     util.logit("LinkPoolModule." + str1_val, str2_val);
 }
 

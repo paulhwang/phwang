@@ -169,12 +169,16 @@ function abendIt (queue_val) {
     //logit("abendIt", "end");
 }
 
+function debug(debug_val, str1_val, str2_val) {
+    if (debug_val) {
+        logit(str1_val, "==" + str2_val);
+    }
+}
+
 function abend (str1_val, str2_val) {
-    "use strict";
     util.utilAbend("QueueModule." + str1_val, str2_val);
 }
 
 function logit (str1_val, str2_val) {
-    "use strict";
     util.utilLogit("QueueModule." + str1_val, str2_val);
 }

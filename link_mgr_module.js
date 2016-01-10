@@ -75,12 +75,10 @@ function debug(debug_val, str1_val, str2_val) {
 }
 
 function abend (str1_val, str2_val) {
-    "use strict";
     util.utilAbend("LinkMgrModule." + str1_val, str2_val);
 }
 
 function logit (str1_val, str2_val) {
-    "use strict";
     util.utilLogit("LinkMgrModule." + str1_val, str2_val);
 }
 
