@@ -45,7 +45,7 @@ function searchAndCreate(my_name_val, link_id_val) {
 }
 
 function compareIt (link_val, my_name_val, link_id_val) {
-    logi("compareIt", my_name_val + ":" + link_val.my_name);
+    logit("compareIt", my_name_val + ":" + link_val.my_name);
     if (my_name_val !== link_val.my_name) {
         return false;
     }

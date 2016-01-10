@@ -54,7 +54,7 @@ function AjxObject(root_object_val) {
         var root0 = this.rootObject();
 
         this.logit("setupLink", this.rootObject().myName());
-        this.httpGetRequest().open("GET", this.ajxRoute(), false);
+        this.httpGetRequest().open("GET", this.ajxRoute(), true);
         this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
         this.httpGetRequest().setRequestHeader("setup_link", "yes");
         this.httpGetRequest().setRequestHeader("my_name", this.rootObject().myName());
@@ -79,7 +79,7 @@ function AjxObject(root_object_val) {
         var request0 = this.httpGetRequest();
 
         this.logit("setupLinkf", session_val.myName());
-        this.httpGetRequest().open("GET", this.ajxRoute(), false);
+        this.httpGetRequest().open("GET", this.ajxRoute(), true);
         this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
         this.httpGetRequest().setRequestHeader("setup_session", "yes");
         this.httpGetRequest().setRequestHeader("my_name", session_val.myName());

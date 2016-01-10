@@ -27,7 +27,7 @@ function processPost(req, res) {
     var my_session, his_session;
 
     postLogit("processPost", "start");
-    state = "post start";
+    state = "processPost start";
 
     var my_session_id = Number(req.body.session_id);
     my_session = account_mgr.search(req.body.my_name, req.body.his_name, my_session_id);
@@ -56,14 +56,10 @@ function processPost(req, res) {
     }
 
     if (req.body.xmt_seq === my_session.up_seq) {
-        state = "post 1000";
         queue.enqueue(his_session.queue, req.body.data);
-        state = "post 1200";
         ring.enqueue(his_session.ring, req.body.data);
-        state = "post 1900";
         my_session.up_seq += 1;
     } else if (req.body.xmt_seq < my_session.up_seq) {
-        state = "post 2000";
          if (req.body.xmt_seq === 0) {
             queue.enqueue(his_session.queue, req.body.data);
             ring.enqueue(his_session.ring, req.body.data);
@@ -73,10 +69,9 @@ function processPost(req, res) {
             logit("processPost", req.body.data + " post " + req.body.xmt_seq + " dropped");
         }
     } else {
-        state = "post 3000";
         logit("***abend: processPost", req.body.data + " post seq=" + req.body.xmt_seq + " dropped");
     }
-    state = "post end";
+    state = "processPost end";
 }
 
 function processGet (req, res) {
@@ -91,7 +86,7 @@ function processGet (req, res) {
     }
 
     //logit("processGet ", "link=" + req.headers.session_id + " "  + req.headers.his_name + "=>" + req.headers.my_name);
-    state = "get start";
+    state = "processGet start";
     var session_id = Number(req.headers.session_id);
     var my_session = account_mgr.search(req.headers.my_name, req.headers.his_name, session_id);
     if (!my_session) {
@@ -124,14 +119,13 @@ function processGet (req, res) {
         return;
     }
 
-    state = "get 5000";
     logit("processGet ", "link=" + req.headers.link_id + " session=" + req.headers.session_id + " "  + req.headers.his_name + "=>" + req.headers.my_name + " " + data);
-    state = "get 9000";
     res.send(data);
-    state = "get end";
+    state = "processGet end";
 }
 
 function setupLink (req, res) {
+    state = "setupLink start";
     var link, link_id_str;
     link = link_mgr.search_and_create(req.headers.my_name, 0);
     if (!link) {
@@ -141,9 +135,11 @@ function setupLink (req, res) {
     link_id_str = "" + link.link_id;
     res.send(link_id_str);
     logit("setupLink  ", "my_name=" + req.headers.my_name + " link=" + link.link_id);
+    state = "setupLink end";
 }
 
 function setupSession (req, res) {
+    state = "setupSession start";
     var session, session_id_str;
     session = account_mgr.search_and_create(req.headers.my_name, req.headers.his_name, 0);
     if (!session) {
@@ -153,6 +149,7 @@ function setupSession (req, res) {
     session_id_str = "" + session.session_id;
     res.send(session_id_str);
     logit("setupSession", req.headers.his_name + "=>" + req.headers.my_name);
+    state = "setupSession end";
 }
 
 function processNotFount (req, res) {
