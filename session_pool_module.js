@@ -15,7 +15,7 @@ module.exports = {
 };
 
 var util = require("./util_module.js");
-var account = require("./account_entry_module.js");
+var account = require("./session_entry_module.js");
 var head = null;
 var size = 0;
 

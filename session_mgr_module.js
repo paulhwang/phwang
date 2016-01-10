@@ -24,8 +24,7 @@ module.exports = {
 
 var util = require("./util_module.js");
 var queue = require("./queue_module.js");
-var account_pool = require("./account_pool_module.js");
-//var account = require("./account_entry_module.js");
+var account_pool = require("./session_pool_module.js");
 
 var account_queue = queue.malloc();
 
