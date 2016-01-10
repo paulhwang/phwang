@@ -25,7 +25,6 @@ module.exports = {
 var util = require("./util_module.js");
 var queue = require("./queue_module.js");
 var link_pool = require("./link_pool_module.js");
-//var account = require("./account_entry_module.js");
 
 var link_queue = queue.malloc();
 
@@ -45,7 +44,7 @@ function searchAndCreate(my_name_val, link_id_val) {
 }
 
 function compareIt (link_val, my_name_val, link_id_val) {
-    logit("compareIt", my_name_val + ":" + link_val.my_name);
+    debug(false, "compareIt", my_name_val + ":" + link_val.my_name);
     if (my_name_val !== link_val.my_name) {
         return false;
     }
@@ -67,20 +66,21 @@ function freeIt(entry_val) {
 }
 
 function abendIt() {
-    "use strict";
+}
 
-    //logit('abendIt', 'before');
-
-    //logit('abendIt', 'succeed');
- }
+function debug(debug_val, str1_val, str2_val) {
+    if (debug_val) {
+        logit(str1_val, "==" + str2_val);
+    }
+}
 
 function abend (str1_val, str2_val) {
     "use strict";
-    util.abend("LinkMgrModule." + str1_val, str2_val);
+    util.utilAbend("LinkMgrModule." + str1_val, str2_val);
 }
 
 function logit (str1_val, str2_val) {
     "use strict";
-    util.logit("LinkMgrModule." + str1_val, str2_val);
+    util.utilLogit("LinkMgrModule." + str1_val, str2_val);
 }
 

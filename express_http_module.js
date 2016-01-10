@@ -34,7 +34,7 @@ var state;
 function processPost(req, res) {
     var my_session, his_session;
 
-    postLogit("processPost", "start");
+    debug(false, "processPost", "start");
     state = "processPost start";
 
     var my_session_id = Number(req.body.session_id);
@@ -80,6 +80,7 @@ function processPost(req, res) {
         logit("***abend: processPost", req.body.data + " post seq=" + req.body.xmt_seq + " dropped");
     }
     state = "processPost end";
+    debug(false, "processPost", "end");
 }
 
 function processGet (req, res) {
@@ -93,7 +94,8 @@ function processGet (req, res) {
         return;
     }
 
-    //logit("processGet ", "link=" + req.headers.session_id + " "  + req.headers.his_name + "=>" + req.headers.my_name);
+    debug(false, "processGet ", "start");
+    debug(false, "processGet ", "link=" + req.headers.session_id + " "  + req.headers.his_name + "=>" + req.headers.my_name);
     state = "processGet start";
     var session_id = Number(req.headers.session_id);
     var my_session = account_mgr.search(req.headers.my_name, req.headers.his_name, session_id);
@@ -130,6 +132,7 @@ function processGet (req, res) {
     logit("processGet ", "link=" + req.headers.link_id + " session=" + req.headers.session_id + " "  + req.headers.his_name + "=>" + req.headers.my_name + " " + data);
     res.send(data);
     state = "processGet end";
+    debug(false, "processGet ", "end");
 }
 
 function setupLink (req, res) {
@@ -171,10 +174,9 @@ function processFailure (err, req, res, next) {
     logit("processFailure", state);
 }
 
-function postLogit(str1_val, str2_val) {
-    var debugPost = false;
-    if (debugPost) {
-        logit(str1_val, str2_val);
+function debug(debug_val, str1_val, str2_val) {
+    if (debug_val) {
+        logit(str1_val, "==" + str2_val);
     }
 }
 
