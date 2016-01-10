@@ -3,7 +3,6 @@
 var util = require("./util_module.js");
 var queue = require("./queue_module.js");
 var ring = require("./ring_module.js");
-var account = require("./session_entry_module.js");
 var account_mgr = require("./session_mgr_module.js");
 var link_mgr = require("./link_mgr_module.js");
 var express = require('express');
