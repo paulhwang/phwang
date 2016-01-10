@@ -57,8 +57,8 @@ function SessionEngineObject(root_object_val, session_object_val) {
         }
     };
 
-    this.receiveStringData = function (str_val) {
-        this.sessionObject().receiveData(str_val);
+    this.receiveStringData = function (session_val, str_val) {
+        session_val.receiveData(str_val);
     };
 
     this.abend = function (str1_val, str2_val) {
