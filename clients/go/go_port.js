@@ -28,6 +28,10 @@ function GoPortObject(container_val) {
         return this.rootObject().ajxObject();
     };
 
+    this.sessionMgrObject = function () {
+        return this.rootObject().sessionMgrObject();
+    };
+
     this.configObject = function () {
         return this.containerObject().configObject();
     };
@@ -38,10 +42,6 @@ function GoPortObject(container_val) {
 
     this.sessionObject = function () {
         return this.theSessionObject;
-    };
-
-    this.sessionEngineObject = function () {
-        return this.theSessionEngineObject;
     };
 
     this.GoHandlerObject = function () {
@@ -73,7 +73,7 @@ function GoPortObject(container_val) {
         //this.logit("transmitStringData", str_val);
         this.sessionObject().transmitQueue().enQueue(str_val);
         this.rootObject().sessionMgrObject().enQueue(this.sessionObject());
-        this.sessionEngineObject().transmitData();
+        this.sessionMgrObject().transmitData();
     };
 
     this.receiveStringData = function (str_val) {
@@ -116,7 +116,6 @@ function GoPortObject(container_val) {
 
     this.theContainerObject = container_val;
     this.theSessionObject = new SessionObject(this.rootObject(), goPortReceive, this, this.configObject().myName(), this.configObject().opponentName());
-    this.theSessionEngineObject = new SessionEngineObject(this.rootObject(), this.sessionObject());
     this.ajxObject().setupSession(this.sessionObject());
     //if (this.containerObject().gameObject().nextColor() !== this.configObject().myColor()) {
         //this.sessionEngineObject().sendHttpGetRequest(this.sessionObject());

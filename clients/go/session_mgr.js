@@ -21,6 +21,10 @@ function SessionMgrObject(root_object_val) {
         return this.rootObject().utilObject();
     };
 
+    this.ajxObject = function () {
+        return this.rootObject().ajxObject();
+    };
+
     this.sessionQueue = function () {
         return this.theSessionQueue;
     };
@@ -36,6 +40,25 @@ function SessionMgrObject(root_object_val) {
     this.deQueue = function () {
         var session = this.sessionQueue().deQueue();
         return session;
+    };
+
+    this.transmitData = function () {
+        var session, str;
+        while (true) {
+            session = this.rootObject().sessionMgrObject().deQueue();
+            if (!session) {
+                return;
+            }
+            str = session.transmitQueue().deQueue();
+            if (str) {
+                //this.logit("transmitData", str);
+                this.ajxObject().postMessage(str, session);
+                this.ajxObject().getMessage(this, session);
+            }
+            else {
+                this.abend("transmitData", "null data");
+            }
+        }
     };
 
     this.goAbend = function (str1_val, str2_val) {
