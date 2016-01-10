@@ -15,7 +15,7 @@ module.exports = {
 };
 
 var util = require("./util_module.js");
-var account = require("./session_entry_module.js");
+var session = require("./session_entry_module.js");
 var head = null;
 var size = 0;
 
@@ -24,10 +24,10 @@ function mallocIt(my_name_val, his_name_val) {
     var entry;
 
     if (!head) {
-        entry = account.malloc(my_name_val, his_name_val);
+        entry = session.malloc(my_name_val, his_name_val);
     } else {
         entry = head;
-        account.reset(entry, my_name_val, his_name_val);
+        session.reset(entry, my_name_val, his_name_val);
         head = entry.next;
         size -= 1;
     }
