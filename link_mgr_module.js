@@ -29,15 +29,15 @@ var link_pool = require("./link_pool_module.js");
 var link_queue = queue.malloc();
 
 function searchIt(my_name_val, link_id_val) {
-    "use strict";
+    debug(false, "searchIt", my_name_val + " " + link_id_val);
     return queue.search(link_queue, compareIt, my_name_val, link_id_val);
 }
 
 function searchAndCreate(my_name_val, link_id_val) {
-    "use strict";
     var link = queue.search(link_queue, compareIt, my_name_val, link_id_val);
     if (!link) {
         link = link_pool.malloc(my_name_val);
+        debug(false, "searchAndCreate", "malloc link: name=" + link.my_name + "=link_id=" + link.link_id);
         queue.enqueue(link_queue, link);
     }
     return link;
@@ -51,7 +51,7 @@ function compareIt (link_val, my_name_val, link_id_val) {
     if (link_id_val === -1) {
         return true;
     } else {
-        return (link_id_val === link_val.session_id);
+        return (link_id_val === link_val.link_id);
     }
 }
 

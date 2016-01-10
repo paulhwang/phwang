@@ -35,7 +35,19 @@ function processPost(req, res) {
     var my_session, his_session;
 
     debug(false, "processPost", "start");
+    debug(false, "processPost", "my_name=" + req.body.my_name + " link_id=" + req.body.link_id);
     state = "processPost start";
+
+    var my_link_id = Number(req.body.link_id);
+    my_link = link_mgr.search(req.body.my_name, my_link_id);
+    if (!my_link) {
+        abend("processPost", "null my_link");
+        return;
+    }
+    if (my_link.link_id === 0) {
+        abend("processPost", "null my_link = 0");
+        return;
+    }
 
     var my_session_id = Number(req.body.session_id);
     my_session = account_mgr.search(req.body.my_name, req.body.his_name, my_session_id);

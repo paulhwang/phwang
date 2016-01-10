@@ -43,8 +43,7 @@ function searchAndCreate(my_name_val, his_name_val, session_id_val) {
 }
 
 function compareIt (session_val, my_name_val, his_name_val, session_id_val) {
-    //logit("compareIt", my_name_val + ":" + session_val.my_name + " " + his_name_val + ":" + session_val.his_name);
-    //return (my_name_val === session_val.my_name);
+    debug(false, "compareIt", my_name_val + ":" + session_val.my_name + " " + his_name_val + ":" + session_val.his_name);
     if ((my_name_val !== session_val.my_name) || (his_name_val !== session_val.his_name)) {
         return false;
     }

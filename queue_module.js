@@ -130,13 +130,18 @@ function deQueue (queue_val) {
 function searchIt(queue_val, func_val, input_val1, input_val2, input_val3) {
     var p;
 
+    debug(false, "searchIt", "start");
+    debug(false, "searchIt", func_val);
     p = queue_val.head;
     while (p) {
+        debug(false, "searchIt", "in while loop");
         if (func_val(p.data, input_val1, input_val2, input_val3)) {
+            debug(false, "searchIt", "found");
             return p.data;
         }
         p = p.next;
     }
+    debug(false, "searchIt", "not found");
     return null;
 }
 
