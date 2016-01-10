@@ -1,5 +1,3 @@
-"use strict";
-
 var express = require('express');
 var bodyParser = require('body-parser');
 var express_http = require('./express_http_module.js');
@@ -9,7 +7,6 @@ util.init();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(__dirname + "/clients/util"));
 app.use(express.static(__dirname + "/clients/go"));
 app.post("/go_msg", express_http.post);
 app.get("/go_msg", express_http.get);
