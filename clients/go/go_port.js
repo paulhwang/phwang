@@ -115,14 +115,14 @@ function GoPortObject(container_val) {
     this.GO_PROTOCOL_CODE_SPECIAL_MOVE = "Special";
 
     this.theContainerObject = container_val;
-    this.theSessionObject = new SessionObject(this.rootObject(), goPortReceive, this, this.configObject().myName(), this.configObject().opponentName());
+    this.theSessionObject = new SessionObject(this.rootObject(), receiveFromAjax, this, this.configObject().myName(), this.configObject().opponentName());
     this.ajxObject().setupSession(this.sessionObject());
     //if (this.containerObject().gameObject().nextColor() !== this.configObject().myColor()) {
         //this.sessionEngineObject().sendHttpGetRequest(this.sessionObject());
     //}
 }
 
-function goPortReceive (port_val, data_val) {
+function receiveFromAjax (port_val, data_val) {
     //console.log("goPortReceive" + port_val.objectName());
     port_val.receiveStringData(data_val)
 }
