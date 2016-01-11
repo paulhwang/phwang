@@ -3,7 +3,6 @@ var main = function () {
 
     document.cookie="paul's cookie is here";
 
-    var goTwoBoard = false;
     var theMainGoConfigObject;
     var goUi;
     var goContainer;
@@ -12,7 +11,7 @@ var main = function () {
 
     function runPrelude () {
         var root = new RootObject();
-        var html = new GoHtmlObject(root, goTwoBoard);
+        var html = new GoHtmlObject(root);
         root.setHtmlObject(html);
         html.createPreludeHolder();
         $(".prelude_holder button").on("click", function() {
@@ -85,27 +84,11 @@ var main = function () {
 
         $("canvas").on("click", function(event) {
             goUi.uiClickApi(event.clientX, event.clientY);
-            if (goContainer2) {
-                goUi2.uiClickApi(event.clientX, event.clientY);
-            }
         });
+        
         $("canvas").on("mousemove", function(event) {
             goUi.uiMouseMove(event.clientX, event.clientY);
-            if (goContainer2) {
-                goUi2.uiMouseMove(event.clientX, event.clientY);
-            }
         });
-
-        if (goTwoBoard) {
-            var goUi2 = new GoUiObject("goCanvas2");
-            var goConfig2 = theMainGoConfigObject.createTwoBoardOpponentConfig();
-            var goContainer2 = new GoContainerObject(session_val.rootObject(), goConfig2, goUi2, "2");
-            goUi2.initElements();
-            goUi2.drawBoard(goContainer2.engineObject());
-
-            goContainer2.setHisContainerObject(goContainer);
-            goContainer.setHisContainerObject(goContainer2);
-        }
     }
 };
 

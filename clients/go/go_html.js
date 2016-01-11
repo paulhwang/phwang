@@ -4,10 +4,9 @@
  * File name: go_html.js
  */
 
-function GoHtmlObject(prelude_val, two_board_val) {
+function GoHtmlObject(prelude_val) {
     "use strict";
     this.thePreludeObject = prelude_val;
-    this.theTwoBorad = two_board_val;
     this.theCanvasWidth = 432;
 
     this.thePreludeHolderOn = false;
@@ -22,10 +21,6 @@ function GoHtmlObject(prelude_val, two_board_val) {
 
     this.canvasWidth = function () {
         return this.theCanvasWidth;
-    };
-
-    this.twoBorad = function () {
-        return this.theTwoBorad;
     };
 
     this.utilObject = function () {
@@ -410,7 +405,7 @@ function GoHtmlObject(prelude_val, two_board_val) {
 
     };
 
-    this.createCanvasHolder = function (two_board_val) {
+    this.createCanvasHolder = function () {
         if (this.canvasHolderOn()) {
             return;
         }
@@ -429,20 +424,6 @@ function GoHtmlObject(prelude_val, two_board_val) {
         var canvas_holder = document.createElement("canvas_holder");
         canvas_holder.setAttribute("id", "canvas_holder");
         canvas_holder.appendChild(canvas_element);
-
-        if (two_board_val) {
-            var canvas_element2 = document.createElement("canvas");
-            canvas_element2.setAttribute("id", "goCanvas2");
-            canvas_element2.setAttribute("style", "border:1px solid #000000;");
-            canvas_element2.width = this.canvasWidth();
-            canvas_element2.height = this.canvasWidth() * 1.1;
-
-            var canvas_section2 = document.createElement("section");
-            canvas_section2.setAttribute("id", "canvas-area1");
-            canvas_section2.appendChild(canvas_element2);
-
-            canvas_holder.appendChild(canvas_element2);
-        }
 
         var main_holder = document.getElementById("body");
         main_holder.appendChild(canvas_holder);
@@ -544,7 +525,7 @@ function GoHtmlObject(prelude_val, two_board_val) {
 
     this.createPlayHolders = function () {
         this.removeAllHolders();
-        this.createCanvasHolder(this.twoBorad());
+        this.createCanvasHolder();
         this.createScoreHolder();
     };
 
@@ -552,7 +533,7 @@ function GoHtmlObject(prelude_val, two_board_val) {
         this.removePreludeHolder();
         this.removeTitleHolder();
         this.removeConfigHolder();
-        this.removeCanvasHolder(this.twoBorad());
+        this.removeCanvasHolder();
         this.removeScoreHolder();
     };
 
