@@ -74,7 +74,7 @@ function AjxObject(root_object_val) {
         this.httpGetRequest().send(null);
     };
 
-    this.initiateSessionConnection = function (session_val) {
+    this.initiateSessionConnection = function (callback_val, session_val) {
         var this0 = this;
         var request0 = this.httpGetRequest();
 
@@ -91,6 +91,7 @@ function AjxObject(root_object_val) {
                 var session_id = request0.responseText;
                 this0.logit("getMessage", "session_id= " + request0.responseText);
                 session_val.setSessionId(Number(session_id));
+                callback_val(session_val);
                 //this0.logit("getMessage", "session_id= " + session_val.linkId());
             }
             else {

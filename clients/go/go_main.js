@@ -30,8 +30,7 @@ var main = function () {
                 session.setHisName(session.rootObject().myName());
             }
             console.log("runCreateSession() ", "peer_name=" + session.hisName());
-            session.rootObject().ajaxObject().initiateSessionConnection(session);
-            setupSessionCallback(session);
+            session.rootObject().ajaxObject().initiateSessionConnection(setupSessionCallback, session);
         });
     }
 
