@@ -4,12 +4,11 @@
  * File name: go_container.js
  */
 
-function GoContainerObject(session_object_val, config_object_val, ui_object_val, index_val) {
+function GoContainerObject(session_object_val, config_object_val, index_val) {
     "use strict";
     this.theObjectName = "GoContainerObject";
     this.theSessionObject = session_object_val;
     this.theConfigObject = config_object_val;
-    this.theUiObject = ui_object_val;
     this.theContainerIndex = index_val;
 
     this.objectName = function () {
@@ -104,6 +103,7 @@ function GoContainerObject(session_object_val, config_object_val, ui_object_val,
         this.utilObject().utilAbend(this.containerIndex() + s1_val, s2_val);
     };
 
+    this.theUiObject = new GoUiObject("goCanvas");
     this.utilObject().setUserIndex(this.containerIndex());
     this.theConfigObject.setContainerObject(this);
 

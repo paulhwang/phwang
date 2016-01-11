@@ -47,8 +47,7 @@ var main = function () {
                             " handicap=" + config.handicapPoint());
             if (config.opponentName()) {
                 session_val.setHisName(config.opponentName());
-                var ui = new GoUiObject("goCanvas");
-                var container = new GoContainerObject(session_val, config, ui, "1");
+                var container = new GoContainerObject(session_val, config, "1");
                 session_val.setContainerObject(container);
                 runGoGame(session_val.containerObject());
             }
