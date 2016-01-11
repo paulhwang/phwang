@@ -33,9 +33,9 @@ var main = function () {
             config.setMyColor($(".play_color_section select").val());
             config.setKomiPoint($(".komi_section select").val());
             config.setHandicapPoint($(".handicap_section select").val());
-            config.setOpponentName($(".opponent_section select").val());
-            if (config.opponentName() === "Myself") {
-                config.setOpponentName(session_val.rootObject().myName());
+            session_val.setHisName($(".opponent_section select").val());
+            if (session_val.hisName() === "Myself") {
+                session_val.setHisName(session_val.rootObject().myName());
             }
             console.log("runConfig() ", "opponent=" + config.opponentName() + " board_size=" + config.boardSize() +
                             " color=" + config.myColor() +

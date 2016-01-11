@@ -25,11 +25,7 @@ function GoConfigObject(session_val) {
     };
 
     this.opponentName = function () {
-        return this.theOpponentName;
-    };
-
-    this.setOpponentName = function (val) {
-        this.theOpponentName = val;
+        return this.sessionObject().hisName();
     };
 
     this.boardSize = function () {
