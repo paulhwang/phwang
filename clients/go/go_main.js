@@ -4,7 +4,6 @@ var main = function () {
     document.cookie="paul's cookie is here";
 
     var theMainGoConfigObject;
-    var goUi;
     var goContainer;
 
     runPrelude();
@@ -49,18 +48,18 @@ var main = function () {
                             " handicap=" + config.handicapPoint());
             if (config.opponentName()) {
                 session_val.setHisName(config.opponentName());
-                goUi = new GoUiObject("goCanvas");
-                goContainer = new GoContainerObject(session_val, config, goUi, "1");
+                var ui = new GoUiObject("goCanvas");
+                goContainer = new GoContainerObject(session_val, config, ui, "1");
                 session_val.setContainerObject(goContainer);
-                runGoGame(session_val);
+                runGoGame(session_val, goContainer);
             }
         });
     }
 
-    function runGoGame (session_val) {
+    function runGoGame (session_val, container_val) {
         session_val.rootObject().htmlObject().createPlayHolders();
-        session_val.containerObject().uiObject().initElements();
-        session_val.containerObject().uiObject().drawBoard(goContainer.engineObject());
+        container_val.uiObject().initElements();
+        container_val.uiObject().drawBoard(goContainer.engineObject());
 
         var addCommentFromInputBox = function () {
             var $new_comment = $("<p>");
@@ -84,11 +83,11 @@ var main = function () {
         });
 
         $("canvas").on("click", function(event) {
-            goUi.uiClickApi(event.clientX, event.clientY);
+            container_val.uiObject().uiClickApi(event.clientX, event.clientY);
         });
 
         $("canvas").on("mousemove", function(event) {
-            goUi.uiMouseMove(event.clientX, event.clientY);
+            container_val.uiObject().uiMouseMove(event.clientX, event.clientY);
         });
     }
 };
