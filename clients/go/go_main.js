@@ -27,10 +27,8 @@ var main = function () {
                 session.setHisName(session.rootObject().myName());
             }
             console.log("runCreateSession() ", "peer_name=" + session.hisName());
-            if (session.hisName()) {
-                session.rootObject().ajaxObject().initiateSessionConnection(session);
-                runGoConfig(session);
-            }
+            session.rootObject().ajaxObject().initiateSessionConnection(session);
+            runGoConfig(session);
         });
     }
 
@@ -56,6 +54,14 @@ var main = function () {
         container.uiObject().initElements();
         container.uiObject().drawBoard(container.engineObject());
 
+        $("canvas").on("click", function(event) {
+            container.uiObject().uiClickApi(event.clientX, event.clientY);
+        });
+
+        $("canvas").on("mousemove", function(event) {
+            container.uiObject().uiMouseMove(event.clientX, event.clientY);
+        });
+
         var addCommentFromInputBox = function () {
             var $new_comment = $("<p>");
             if ($(".comment-input input").val() !== "") {
@@ -75,14 +81,6 @@ var main = function () {
             if (event.keyCode == 13) {
                 addCommentFromInputBox();
             }
-        });
-
-        $("canvas").on("click", function(event) {
-            container.uiObject().uiClickApi(event.clientX, event.clientY);
-        });
-
-        $("canvas").on("mousemove", function(event) {
-            container.uiObject().uiMouseMove(event.clientX, event.clientY);
         });
     }
 };
