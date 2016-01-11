@@ -6,9 +6,7 @@ var main = function () {
 
     function runPrelude () {
         var root = new RootObject();
-        var html = new GoHtmlObject(root);
-        root.setHtmlObject(html);
-        html.createPreludeHolder();
+        root.htmlObject().createPreludeHolder();
         $(".prelude_holder button").on("click", function() {
             root.setMyName($(".prelude_holder input").val());
             root.setLanguageUsed($(".prelude_holder select").val());

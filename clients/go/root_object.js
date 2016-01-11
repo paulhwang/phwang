@@ -76,7 +76,5 @@ function RootObject() {
     this.theUtilObject = new UtilObject();
     this.theAjaxObject = new AjxObject(this);
     this.theSessionMgrObject = new SessionMgrObject(this);
-    this.theMyName = "dummy";
-    this.theMyName2 = "";
-    this.theLanguageUsed = "English";
+    this.theHtmlObject = new GoHtmlObject(this);
 }
