@@ -160,7 +160,7 @@ function GoHtmlObject(prelude_val) {
         peer_paragraph.appendChild(peer_button);
 
         var config_peer_section = document.createElement("section");
-        config_peer_section.setAttribute("class", "opponent_section");
+        config_peer_section.setAttribute("class", "peer_section");
         config_peer_section.appendChild(peer_paragraph);
 
         return config_peer_section;

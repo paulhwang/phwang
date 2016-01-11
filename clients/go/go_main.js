@@ -24,11 +24,11 @@ var main = function () {
         var session = new SessionObject(root_val);
         session.rootObject().htmlObject().createSessionHolders();
         $(".session_holder button").on("click", function() {
-            session.setHisName($(".opponent_section select").val());
+            session.setHisName($(".peer_section select").val());
             if (session.hisName() === "Myself") {
                 session.setHisName(session.rootObject().myName());
             }
-            console.log("runConfig() ", "peer_name=" + session.hisName());
+            console.log("runCreateSession() ", "peer_name=" + session.hisName());
             if (session.hisName()) {
                 session.setHisName(session.hisName());
                 runGoConfig(session);
