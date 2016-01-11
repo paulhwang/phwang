@@ -28,7 +28,7 @@ var main = function () {
             }
             console.log("runCreateSession() ", "peer_name=" + session.hisName());
             if (session.hisName()) {
-                session.setHisName(session.hisName());
+                session.rootObject().ajaxObject().initiateSessionConnection(session);
                 runGoConfig(session);
             }
         });
