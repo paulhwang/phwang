@@ -48,7 +48,7 @@ function AjxObject(root_object_val) {
         return s;
     };
 
-    this.setupLink = function () {
+    this.setupLink = function (callback_val, root_val) {
         var this0 = this;
         var request0 = this.httpGetRequest();
         var root0 = this.rootObject();
@@ -65,6 +65,7 @@ function AjxObject(root_object_val) {
                 var link_id = request0.responseText;
                 this0.logit("getMessage", "link_id= " + request0.responseText);
                 root0.setLinkId(Number(link_id));
+                callback_val(root_val);
             }
             else {
                 //this0.logit("getMessage", "error=" + request0.readyState + ", " + request0.status);
@@ -72,7 +73,6 @@ function AjxObject(root_object_val) {
         };
         this.httpGetRequest().send(null);
     };
-
 
     this.initiateSessionConnection = function (session_val) {
         var this0 = this;

@@ -60,10 +60,6 @@ function RootObject() {
         this.theLinkId = val;
     };
 
-    this.setupLink = function () {
-        this.ajaxObject().setupLink();
-    };
-
     this.logit = function (s1_val, s2_val) {
         return this.utilObject().utilLogit(this.objectName() + "." + str1_val, str2_val);
     };

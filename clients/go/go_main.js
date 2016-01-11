@@ -12,8 +12,7 @@ var main = function () {
             root.setLanguageUsed($(".prelude_holder select").val());
             console.log("runPrelude() ", "name=" + root.myName() + " language=" + root.languageUsed());
             if (root.myName()) {
-                root.setupLink();
-                setupLinkCallback(root);
+                root.ajaxObject().setupLink(setupLinkCallback, root);
             }
         });
     }
