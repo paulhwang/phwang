@@ -26,11 +26,11 @@ var main = function () {
     }
 
     function runCreateSession (root_val) {
-        runGoConfig();
-        theMainSessionObject = new SessionObject(root_val);
+        var session = new SessionObject(root_val);
+        runGoConfig(session);
     }
 
-    function runGoConfig () {
+    function runGoConfig (session_val) {
         theMainGoConfigObject = new GoConfigObject(theMainRootObject.myName());
         theMainHtmlObject.createConfigHolders();
         $(".config_holder button").on("click", function() {
@@ -47,13 +47,13 @@ var main = function () {
                             " komi=" + theMainGoConfigObject.komiPoint() +
                             " handicap=" + theMainGoConfigObject.handicapPoint());
             if (theMainGoConfigObject.opponentName()) {
-                theMainSessionObject.setHisName(theMainGoConfigObject.opponentName());
-                runGoGame();
+                session_val.setHisName(theMainGoConfigObject.opponentName());
+                runGoGame(session_val);
             }
         });
     }
 
-    function runGoGame () {
+    function runGoGame (session_val) {
         theMainHtmlObject.createPlayHolders();
 
         //console.log ("runGoGame", "opponent=" + theMainGoConfigObject.opponentName());
@@ -93,7 +93,7 @@ var main = function () {
         });
 
         var goUi = new GoUiObject("goCanvas");
-        var goContainer = new GoContainerObject(theMainSessionObject, theMainGoConfigObject, goUi, "1");
+        var goContainer = new GoContainerObject(session_val, theMainGoConfigObject, goUi, "1");
         goUi.initElements();
         goUi.drawBoard(goContainer.engineObject());
 
