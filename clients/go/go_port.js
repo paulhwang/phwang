@@ -114,10 +114,6 @@ function GoPortObject(container_val) {
 
     this.theContainerObject = container_val;
     this.theSessionObject = new SessionObject(this.rootObject(), receiveFromAjax, this, this.configObject().myName(), this.configObject().opponentName());
-    this.ajxObject().setupSession(this.sessionObject());
-    //if (this.containerObject().gameObject().nextColor() !== this.configObject().myColor()) {
-        //this.sessionEngineObject().sendHttpGetRequest(this.sessionObject());
-    //}
 }
 
 function receiveFromAjax (port_val, data_val) {

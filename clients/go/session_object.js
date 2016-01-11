@@ -21,6 +21,10 @@ function SessionObject(root_object_val, receive_func_val, target_receive_val, my
         return this.theRootObject;
     };
 
+    this.ajxObject = function () {
+        return this.rootObject().ajxObject();
+    };
+
     this.receiveFunction = function() {
         return this.theReceiveFunction;
     };
@@ -90,5 +94,6 @@ function SessionObject(root_object_val, receive_func_val, target_receive_val, my
     this.theSessionId = 0;
     //this.theReceiveQueue = new QueueObject(this.utilObject());
     this.theTransmitQueue = new QueueObject(this.utilObject());
+    this.ajxObject().setupSession(this);
 }
 
