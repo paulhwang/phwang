@@ -5,6 +5,8 @@ var main = function () {
 
     var goTwoBoard = false;
     var theMainGoConfigObject;
+    var goUi;
+    var goContainer;
 
     runPrelude();
 
@@ -55,8 +57,10 @@ var main = function () {
 
     function runGoGame (session_val) {
         session_val.rootObject().htmlObject().createPlayHolders();
-
-        //console.log ("runGoGame", "opponent=" + theMainGoConfigObject.opponentName());
+        goUi = new GoUiObject("goCanvas");
+        goContainer = new GoContainerObject(session_val, theMainGoConfigObject, goUi, "1");
+        goUi.initElements();
+        goUi.drawBoard(goContainer.engineObject());
 
         var addCommentFromInputBox = function () {
             var $new_comment = $("<p>");
@@ -91,11 +95,6 @@ var main = function () {
                 goUi2.uiMouseMove(event.clientX, event.clientY);
             }
         });
-
-        var goUi = new GoUiObject("goCanvas");
-        var goContainer = new GoContainerObject(session_val, theMainGoConfigObject, goUi, "1");
-        goUi.initElements();
-        goUi.drawBoard(goContainer.engineObject());
 
         if (goTwoBoard) {
             var goUi2 = new GoUiObject("goCanvas2");
