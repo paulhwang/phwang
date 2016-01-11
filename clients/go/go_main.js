@@ -43,17 +43,18 @@ var main = function () {
                             " handicap=" + config.handicapPoint());
             if (config.opponentName()) {
                 session_val.setHisName(config.opponentName());
-                var container = new GoContainerObject(session_val, config);
-                session_val.setContainerObject(container);
-                runGoGame(session_val.containerObject());
+                runGoGame(session_val, config);
             }
         });
     }
 
-    function runGoGame (container_val) {
-        container_val.sessionObject().rootObject().htmlObject().createPlayHolders();
-        container_val.uiObject().initElements();
-        container_val.uiObject().drawBoard(container_val.engineObject());
+    function runGoGame (session_val, config_val) {
+        var container = new GoContainerObject(session_val, config_val);
+        session_val.setContainerObject(container);
+        
+        container.sessionObject().rootObject().htmlObject().createPlayHolders();
+        container.uiObject().initElements();
+        container.uiObject().drawBoard(container.engineObject());
 
         var addCommentFromInputBox = function () {
             var $new_comment = $("<p>");
@@ -77,11 +78,11 @@ var main = function () {
         });
 
         $("canvas").on("click", function(event) {
-            container_val.uiObject().uiClickApi(event.clientX, event.clientY);
+            container.uiObject().uiClickApi(event.clientX, event.clientY);
         });
 
         $("canvas").on("mousemove", function(event) {
-            container_val.uiObject().uiMouseMove(event.clientX, event.clientY);
+            container.uiObject().uiMouseMove(event.clientX, event.clientY);
         });
     }
 };
