@@ -22,7 +22,18 @@ var main = function () {
 
     function runCreateSession (root_val) {
         var session = new SessionObject(root_val);
-        runGoConfig(session);
+        session.rootObject().htmlObject().createSessionHolder();
+        $(".session_holder button").on("click", function() {
+            session.setHisName($(".opponent_section select").val());
+            if (session.hisName() === "Myself") {
+                session.setHisName(session.rootObject().myName());
+            }
+            console.log("runConfig() ", "peer_name=" + session.hisName());
+            if (session.hisName()) {
+                session.setHisName(session.hisName());
+                runGoConfig(session);
+            }
+        });
     }
 
     function runGoConfig (session_val) {

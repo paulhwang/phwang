@@ -597,8 +597,9 @@ function GoHtmlObject(prelude_val) {
     };
 
     this.removeAllHolders = function () {
-        this.removePreludeHolder();
         this.removeTitleHolder();
+        this.removePreludeHolder();
+        this.removeSessionHolder();
         this.removeConfigHolder();
         this.removeCanvasHolder();
         this.removeScoreHolder();
