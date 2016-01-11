@@ -13,9 +13,13 @@ var main = function () {
             console.log("runPrelude() ", "name=" + root.myName() + " language=" + root.languageUsed());
             if (root.myName()) {
                 root.setupLink();
-                runCreateSession(root);
+                setupLinkCallback(root);
             }
         });
+    }
+
+    function setupLinkCallback (root_val) {
+        runCreateSession(root_val);
     }
 
     function runCreateSession (root_val) {
@@ -28,8 +32,12 @@ var main = function () {
             }
             console.log("runCreateSession() ", "peer_name=" + session.hisName());
             session.rootObject().ajaxObject().initiateSessionConnection(session);
-            runGoConfig(session);
+            setupSessionCallback(session);
         });
+    }
+
+    function setupSessionCallback (session_val) {
+        runGoConfig(session_val);
     }
 
     function runGoConfig (session_val) {
