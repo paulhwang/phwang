@@ -20,6 +20,10 @@ function GoContainerObject(root_object_val, config_object_val, ui_object_val, in
         return this.theRootObject;
     };
 
+    this.sessionObject = function () {
+        return this.theSessionObject;
+    };
+
     this.configObject = function () {
         return this.theConfigObject;
     };
@@ -112,11 +116,12 @@ function GoContainerObject(root_object_val, config_object_val, ui_object_val, in
 
     this.gameObject().processTheWholeMoveList();
 
-    this.portObject().sessionObject().setupReceiveCallBack(receiveFromAjax);
+    this.theSessionObject = new SessionObject(this.rootObject(), this, this.configObject().opponentName());
+    this.sessionObject().setupReceiveCallBack(ajaxReceiveCallBack);
 }
 
-function receiveFromAjax (container_val, data_val) {
-    //console.log("goPortReceive" + port_val.objectName());
+function ajaxReceiveCallBack (container_val, data_val) {
+    //console.log("receiveFromAjax" + port_val.objectName());
     container_val.portObject().receiveStringData(data_val)
 }
 

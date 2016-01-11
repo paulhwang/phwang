@@ -7,6 +7,13 @@
 function GoPortObject(container_val) {
     "use strict";
     this.theObjectName = "GoPortObject";
+    this.theContainerObject = container_val;
+    this.GO_PROTOCOL_CODE_SIZE = 7;
+    this.GO_PROTOCOL_CODE_PROPOSE = "Propose";
+    this.GO_PROTOCOL_CODE_ACCEPT = "Accept ";
+    this.GO_PROTOCOL_CODE_CONFIRM = "Confirm";
+    this.GO_PROTOCOL_CODE_MOVE_DATA = "Move   ";
+    this.GO_PROTOCOL_CODE_SPECIAL_MOVE = "Special";
 
     this.objectName = function () {
         return this.theObjectName;
@@ -41,7 +48,7 @@ function GoPortObject(container_val) {
     };
 
     this.sessionObject = function () {
-        return this.theSessionObject;
+        return this.containerObject().sessionObject();
     };
 
     this.GoHandlerObject = function () {
@@ -104,16 +111,5 @@ function GoPortObject(container_val) {
     this.logit = function (str1_val, str2_val) {
         return this.containerObject().goLog(this.objectName() + "." + str1_val, str2_val);
     };
-
-    this.GO_PROTOCOL_CODE_SIZE = 7;
-    this.GO_PROTOCOL_CODE_PROPOSE = "Propose";
-    this.GO_PROTOCOL_CODE_ACCEPT = "Accept ";
-    this.GO_PROTOCOL_CODE_CONFIRM = "Confirm";
-    this.GO_PROTOCOL_CODE_MOVE_DATA = "Move   ";
-    this.GO_PROTOCOL_CODE_SPECIAL_MOVE = "Special";
-
-    this.theContainerObject = container_val;
-    this.theSessionObject = new SessionObject(this.rootObject(), this.containerObject(), this.configObject().opponentName());
-    //this.sessionObject().setupReceiveCallBack(receiveFromAjax);
 }
 
