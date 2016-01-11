@@ -44,18 +44,11 @@ var main = function () {
             config.setMyColor($(".play_color_section select").val());
             config.setKomiPoint($(".komi_section select").val());
             config.setHandicapPoint($(".handicap_section select").val());
-            session_val.setHisName($(".opponent_section select").val());
-            if (session_val.hisName() === "Myself") {
-                session_val.setHisName(session_val.rootObject().myName());
-            }
-            console.log("runConfig() ", "opponent=" + config.opponentName() + " board_size=" + config.boardSize() +
+            console.log("runConfig() ", " board_size=" + config.boardSize() +
                             " color=" + config.myColor() +
                             " komi=" + config.komiPoint() +
                             " handicap=" + config.handicapPoint());
-            if (config.opponentName()) {
-                session_val.setHisName(config.opponentName());
-                runGoGame(session_val, config);
-            }
+            runGoGame(session_val, config);
         });
     }
 
