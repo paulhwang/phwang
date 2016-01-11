@@ -111,6 +111,13 @@ function GoContainerObject(root_object_val, config_object_val, ui_object_val, in
     this.thePortObject = new GoPortObject(this);
 
     this.gameObject().processTheWholeMoveList();
+
+    this.portObject().sessionObject().setupReceiveCallBack(receiveFromAjax);
+}
+
+function receiveFromAjax (container_val, data_val) {
+    //console.log("goPortReceive" + port_val.objectName());
+    container_val.portObject().receiveStringData(data_val)
 }
 
 var GO = new GoDefineObject;

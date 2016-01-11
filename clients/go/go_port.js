@@ -113,12 +113,7 @@ function GoPortObject(container_val) {
     this.GO_PROTOCOL_CODE_SPECIAL_MOVE = "Special";
 
     this.theContainerObject = container_val;
-    this.theSessionObject = new SessionObject(this.rootObject(), this, this.configObject().opponentName());
-    this.sessionObject().setupReceiveCallBack(receiveFromAjax);
-}
-
-function receiveFromAjax (port_val, data_val) {
-    //console.log("goPortReceive" + port_val.objectName());
-    port_val.receiveStringData(data_val)
+    this.theSessionObject = new SessionObject(this.rootObject(), this.containerObject(), this.configObject().opponentName());
+    //this.sessionObject().setupReceiveCallBack(receiveFromAjax);
 }
 
