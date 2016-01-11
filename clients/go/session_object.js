@@ -23,8 +23,8 @@ function SessionObject(root_object_val, client_val, his_name_val) {
         return this.rootObject().ajxObject();
     };
 
-    this.receiveFunction = function() {
-        return this.theReceiveFunction;
+    this.clientReceiveCallbackFunc = function() {
+        return this.theClientReceiveCallbackFunc;
     };
 
     this.clientObject = function () {
@@ -71,12 +71,12 @@ function SessionObject(root_object_val, client_val, his_name_val) {
         return this.theTransmitQueue;
     };
 
-    this.setupReceiveCallBack = function (receive_func_val) {
-        this.theReceiveFunction = receive_func_val;
+    this.setupClientReceiveCallback = function (callback_func_val) {
+        this.theClientReceiveCallbackFunc = callback_func_val;
     };
 
     this.receiveData = function (str_val) {
-        this.receiveFunction()(this.clientObject(), str_val);
+        this.clientReceiveCallbackFunc()(this.clientObject(), str_val);
     };
 
     this.utilObject = function () {

@@ -117,10 +117,10 @@ function GoContainerObject(root_object_val, config_object_val, ui_object_val, in
     this.gameObject().processTheWholeMoveList();
 
     this.theSessionObject = new SessionObject(this.rootObject(), this, this.configObject().opponentName());
-    this.sessionObject().setupReceiveCallBack(ajaxReceiveCallBack);
+    this.sessionObject().setupClientReceiveCallback(ajaxReceiveCallback);
 }
 
-function ajaxReceiveCallBack (container_val, data_val) {
+function ajaxReceiveCallback (container_val, data_val) {
     //console.log("ajaxReceiveCallBack" + port_val.objectName());
     container_val.portObject().receiveStringData(data_val);
 }
