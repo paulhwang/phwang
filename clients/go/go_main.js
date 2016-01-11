@@ -5,7 +5,6 @@ var main = function () {
 
     var goTwoBoard = false;
     var theMainRootObject = new RootObject();
-    var theMainHtmlObject = new GoHtmlObject(theMainRootObject, goTwoBoard);
     var theMainSessionObject;
     var theMainGoConfigObject;
 
@@ -13,7 +12,9 @@ var main = function () {
 
     function runPrelude () {
         var root = theMainRootObject;
-        theMainHtmlObject.createPreludeHolder();
+        var html = new GoHtmlObject(root, goTwoBoard);
+        root.setHtmlObject(html);
+        html.createPreludeHolder();
         $(".prelude_holder button").on("click", function() {
             root.setMyName($(".prelude_holder input").val());
             root.setLanguageUsed($(".prelude_holder select").val());
@@ -32,7 +33,7 @@ var main = function () {
 
     function runGoConfig (session_val) {
         theMainGoConfigObject = new GoConfigObject(theMainRootObject.myName());
-        theMainHtmlObject.createConfigHolders();
+        session_val.rootObject().htmlObject().createConfigHolders();
         $(".config_holder button").on("click", function() {
             theMainGoConfigObject.setBoardSize($(".board_size_section select").val());
             theMainGoConfigObject.setMyColor($(".play_color_section select").val());
@@ -54,7 +55,7 @@ var main = function () {
     }
 
     function runGoGame (session_val) {
-        theMainHtmlObject.createPlayHolders();
+        session_val.rootObject().htmlObject().createPlayHolders();
 
         //console.log ("runGoGame", "opponent=" + theMainGoConfigObject.opponentName());
 

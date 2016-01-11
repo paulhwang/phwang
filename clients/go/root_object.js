@@ -12,6 +12,10 @@ function RootObject() {
         return this.theObjectName;
     };
 
+    this.htmlObject = function () {
+        return this.theHtmlObject;
+    };
+
     this.ajaxObject = function () {
         return this.theAjaxObject;
     };
@@ -34,6 +38,10 @@ function RootObject() {
 
     this.myName2 = function () {
         return this.theMyName2;
+    };
+
+    this.setHtmlObject = function (val) {
+        this.theHtmlObject = val;
     };
 
     this.setMyName = function (val) {
