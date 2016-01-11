@@ -113,7 +113,7 @@ function GoPortObject(container_val) {
     this.GO_PROTOCOL_CODE_SPECIAL_MOVE = "Special";
 
     this.theContainerObject = container_val;
-    this.theSessionObject = new SessionObject(this.rootObject(), this, this.configObject().myName(), this.configObject().opponentName());
+    this.theSessionObject = new SessionObject(this.rootObject(), this, this.configObject().opponentName());
     this.sessionObject().setupReceiveCallBack(receiveFromAjax);
 }
 
