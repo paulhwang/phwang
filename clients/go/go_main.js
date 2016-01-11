@@ -2,9 +2,6 @@ var main = function () {
     "use strict";
 
     document.cookie="paul's cookie is here";
-
-    var theMainGoConfigObject;
-
     runPrelude();
 
     function runPrelude () {
@@ -29,8 +26,7 @@ var main = function () {
     }
 
     function runGoConfig (session_val) {
-        theMainGoConfigObject = new GoConfigObject(session_val.rootObject().myName());
-        var config = theMainGoConfigObject;
+        var config = new GoConfigObject(session_val.rootObject().myName());
         session_val.rootObject().htmlObject().createConfigHolders();
         $(".config_holder button").on("click", function() {
             config.setBoardSize($(".board_size_section select").val());
@@ -41,7 +37,7 @@ var main = function () {
             if (config.opponentName() === "Myself") {
                 config.setOpponentName(session_val.rootObject().myName());
             }
-            console.log("runConfig() ", "opponent=" + config.opponentName() + " board_size=" + theMainGoConfigObject.boardSize() +
+            console.log("runConfig() ", "opponent=" + config.opponentName() + " board_size=" + config.boardSize() +
                             " color=" + config.myColor() +
                             " komi=" + config.komiPoint() +
                             " handicap=" + config.handicapPoint());
