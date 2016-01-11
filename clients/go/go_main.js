@@ -31,22 +31,23 @@ var main = function () {
 
     function runGoConfig (session_val) {
         theMainGoConfigObject = new GoConfigObject(session_val.rootObject().myName());
+        var config = theMainGoConfigObject;
         session_val.rootObject().htmlObject().createConfigHolders();
         $(".config_holder button").on("click", function() {
-            theMainGoConfigObject.setBoardSize($(".board_size_section select").val());
-            theMainGoConfigObject.setMyColor($(".play_color_section select").val());
-            theMainGoConfigObject.setKomiPoint($(".komi_section select").val());
-            theMainGoConfigObject.setHandicapPoint($(".handicap_section select").val());
-            theMainGoConfigObject.setOpponentName($(".opponent_section select").val());
-            if (theMainGoConfigObject.opponentName() === "Myself") {
-                theMainGoConfigObject.setOpponentName(session_val.rootObject().myName());
+            config.setBoardSize($(".board_size_section select").val());
+            config.setMyColor($(".play_color_section select").val());
+            config.setKomiPoint($(".komi_section select").val());
+            config.setHandicapPoint($(".handicap_section select").val());
+            config.setOpponentName($(".opponent_section select").val());
+            if (config.opponentName() === "Myself") {
+                config.setOpponentName(session_val.rootObject().myName());
             }
-            console.log("runConfig() ", "opponent=" + theMainGoConfigObject.opponentName() + " board_size=" + theMainGoConfigObject.boardSize() +
-                            " color=" + theMainGoConfigObject.myColor() +
-                            " komi=" + theMainGoConfigObject.komiPoint() +
-                            " handicap=" + theMainGoConfigObject.handicapPoint());
-            if (theMainGoConfigObject.opponentName()) {
-                session_val.setHisName(theMainGoConfigObject.opponentName());
+            console.log("runConfig() ", "opponent=" + config.opponentName() + " board_size=" + theMainGoConfigObject.boardSize() +
+                            " color=" + config.myColor() +
+                            " komi=" + config.komiPoint() +
+                            " handicap=" + config.handicapPoint());
+            if (config.opponentName()) {
+                session_val.setHisName(config.opponentName());
                 runGoGame(session_val);
             }
         });
