@@ -4,14 +4,12 @@ var main = function () {
     document.cookie="paul's cookie is here";
 
     var goTwoBoard = false;
-    var theMainRootObject = new RootObject();
-    var theMainSessionObject;
     var theMainGoConfigObject;
 
     runPrelude();
 
     function runPrelude () {
-        var root = theMainRootObject;
+        var root = new RootObject();
         var html = new GoHtmlObject(root, goTwoBoard);
         root.setHtmlObject(html);
         html.createPreludeHolder();
@@ -32,7 +30,7 @@ var main = function () {
     }
 
     function runGoConfig (session_val) {
-        theMainGoConfigObject = new GoConfigObject(theMainRootObject.myName());
+        theMainGoConfigObject = new GoConfigObject(session_val.rootObject().myName());
         session_val.rootObject().htmlObject().createConfigHolders();
         $(".config_holder button").on("click", function() {
             theMainGoConfigObject.setBoardSize($(".board_size_section select").val());
@@ -41,7 +39,7 @@ var main = function () {
             theMainGoConfigObject.setHandicapPoint($(".handicap_section select").val());
             theMainGoConfigObject.setOpponentName($(".opponent_section select").val());
             if (theMainGoConfigObject.opponentName() === "Myself") {
-                theMainGoConfigObject.setOpponentName(theMainRootObject.myName());
+                theMainGoConfigObject.setOpponentName(session_val.rootObject().myName());
             }
             console.log("runConfig() ", "opponent=" + theMainGoConfigObject.opponentName() + " board_size=" + theMainGoConfigObject.boardSize() +
                             " color=" + theMainGoConfigObject.myColor() +
@@ -101,7 +99,7 @@ var main = function () {
         if (goTwoBoard) {
             var goUi2 = new GoUiObject("goCanvas2");
             var goConfig2 = theMainGoConfigObject.createTwoBoardOpponentConfig();
-            var goContainer2 = new GoContainerObject(theMainRootObject, goConfig2, goUi2, "2");
+            var goContainer2 = new GoContainerObject(session_val.rootObject(), goConfig2, goUi2, "2");
             goUi2.initElements();
             goUi2.drawBoard(goContainer2.engineObject());
 
