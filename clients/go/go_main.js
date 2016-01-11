@@ -50,6 +50,8 @@ var main = function () {
                             " handicap=" + config.handicapPoint());
             if (config.opponentName()) {
                 session_val.setHisName(config.opponentName());
+                goUi = new GoUiObject("goCanvas");
+                goContainer = new GoContainerObject(session_val, config, goUi, "1");
                 runGoGame(session_val);
             }
         });
@@ -57,8 +59,6 @@ var main = function () {
 
     function runGoGame (session_val) {
         session_val.rootObject().htmlObject().createPlayHolders();
-        goUi = new GoUiObject("goCanvas");
-        goContainer = new GoContainerObject(session_val, theMainGoConfigObject, goUi, "1");
         goUi.initElements();
         goUi.drawBoard(goContainer.engineObject());
 
