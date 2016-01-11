@@ -35,6 +35,10 @@ function GoHtmlObject(prelude_val) {
         return this.theTitleHolderOn;
     };
 
+    this.sessionHolderOn = function () {
+        return this.theSessionHolderOn;
+    };
+
     this.configHolderOn = function () {
         return this.theConfigHolderOn;
     };
@@ -53,6 +57,10 @@ function GoHtmlObject(prelude_val) {
 
     this.setTitleHolderOn = function (val) {
         this.theTitleHolderOn = val;
+    };
+
+    this.setSessionHolderOn = function (val) {
+        this.theSessionHolderOn = val;
     };
 
     this.setConfigHolderOn = function (val) {
@@ -125,6 +133,65 @@ function GoHtmlObject(prelude_val) {
         var main_holder = document.getElementById("body");
         var title_holder = document.getElementById("title_holder");
         main_holder.removeChild(title_holder);
+    };
+
+    this.createSessionPeerSection = function () {
+        var data = ["aaa", "bbb", "ccc"];
+
+        var opponent_option_0 = document.createElement("option");
+        opponent_option_0.setAttribute("value", "Myself");
+        opponent_option_0.appendChild(document.createTextNode("Myself"));
+
+        var opponent_option_1 = document.createElement("option");
+        opponent_option_1.setAttribute("value", "BBB");
+        opponent_option_1.appendChild(document.createTextNode("bbbb"));
+
+        var opponent_select = document.createElement("select");
+        opponent_select.setAttribute("name", "opponent");
+        opponent_select.appendChild(opponent_option_0);
+        opponent_select.appendChild(opponent_option_1);
+
+        var opponent_button = document.createElement("button");
+        opponent_button.appendChild(document.createTextNode("Play"));
+
+        var opponent_paragraph = document.createElement("p");
+        opponent_paragraph.appendChild(document.createTextNode("Opponent: "));
+        opponent_paragraph.appendChild(opponent_select);
+        opponent_paragraph.appendChild(opponent_button);
+
+        var config_opponent_section = document.createElement("section");
+        config_opponent_section.setAttribute("class", "opponent_section");
+        config_opponent_section.appendChild(opponent_paragraph);
+
+        return config_opponent_section;
+    };
+    this.createSessionHolder = function () {
+        if (this.sessionHolderOn()) {
+            return;
+        }
+        this.setSessionHolderOn(true);
+
+        var session_holder = document.createElement("section");
+        session_holder.setAttribute("id", "session_holder");
+        session_holder.setAttribute("class", "session_holder");
+        session_holder.appendChild(this.createSessionPeerSection());
+
+        var main_holder = document.getElementById("body");
+        main_holder.appendChild(session_holder);
+
+        this.setHolderStyle(session_holder);
+    };
+
+    this.removeSessionHolder = function () {
+        if (!this.sessionHolderOn()) {
+            return;
+        }
+        this.setSessionHolderOn(false);
+
+        var main_holder = document.getElementById("body");
+        var session_holder = document.getElementById("session_holder");
+        main_holder.removeChild(session_holder);
+
     };
 
     this.createConfigMyNameSection = function () {
