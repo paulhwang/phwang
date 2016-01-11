@@ -21,8 +21,8 @@ function SessionObject(root_object_val) {
         return this.theRootObject;
     };
 
-    this.ajxObject = function () {
-        return this.rootObject().ajxObject();
+    this.ajaxObject = function () {
+        return this.rootObject().ajaxObject();
     };
 
     this.clientReceiveCallbackFunc = function() {
