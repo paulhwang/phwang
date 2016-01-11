@@ -71,8 +71,6 @@ var main = function () {
             }
         });
 
-        var theMainSessionObject = new SessionObject(theMainRootObject, theMainGoConfigObject.opponentName());
-
         $("canvas").on("click", function(event) {
             goUi.uiClickApi(event.clientX, event.clientY);
             if (goContainer2) {
@@ -85,6 +83,9 @@ var main = function () {
                 goUi2.uiMouseMove(event.clientX, event.clientY);
             }
         });
+
+        var theMainSessionObject = new SessionObject(theMainRootObject, theMainGoConfigObject.opponentName());
+        theMainSessionObject.setHisName(theMainGoConfigObject.opponentName());
 
         var goUi = new GoUiObject("goCanvas");
         var goContainer = new GoContainerObject(theMainSessionObject, theMainGoConfigObject, goUi, "1");

@@ -120,8 +120,6 @@ function GoContainerObject(session_object_val, config_object_val, ui_object_val,
 
     this.gameObject().processTheWholeMoveList();
 
-    //this.theSessionObject = new SessionObject(this.rootObject(), this.configObject().opponentName());
-    this.sessionObject().setHisName(this.configObject().opponentName());
     this.sessionObject().setupClientReceiveCallback(ajaxReceiveCallback, this);
     this.rootObject().ajaxObject().initiateSessionConnection(this.sessionObject());
 }
