@@ -74,7 +74,7 @@ function AjxObject(root_object_val) {
     };
 
 
-    this.setupSession = function (session_val) {
+    this.initiateSessionConnection = function (session_val) {
         var this0 = this;
         var request0 = this.httpGetRequest();
 

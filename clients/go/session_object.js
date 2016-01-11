@@ -10,6 +10,10 @@ function SessionObject(root_object_val, his_name_val) {
     this.theRootObject = root_object_val;
     this.theHisName = his_name_val;
 
+    this.setHisName = function (val) {
+        this.theHisName = val;
+    };
+
     this.objectName = function () {
         return this.theObjectName;
     };
@@ -96,6 +100,6 @@ function SessionObject(root_object_val, his_name_val) {
     this.theSessionId = 0;
     //this.theReceiveQueue = new QueueObject(this.utilObject());
     this.theTransmitQueue = new QueueObject(this.utilObject());
-    this.ajxObject().setupSession(this);
+    this.ajxObject().initiateSessionConnection(this);
 }
 
