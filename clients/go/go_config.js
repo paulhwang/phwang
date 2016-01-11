@@ -4,15 +4,24 @@
  * File name: go_config.js
  */
 
-function GoConfigObject(my_name_val, his_name_val, board_size_val, my_color_val, handicap_val, komi_val) {
+function GoConfigObject(session_val) {
     "use strict";
+    this.theSessionObject = session_val;
 
-    this.container_Object = function () {
+    this.containerObject = function () {
         return this.theContainerObject;
     };
 
+    this.sessionObject = function () {
+        return this.theSessionObject;
+    };
+
+    this.rootObject = function () {
+        return this.sessionObject().rootObject();
+    };
+
     this.myName = function () {
-        return this.theMyName;
+        return this.rootObject().myName();
     };
 
     this.opponentName = function () {
@@ -119,13 +128,6 @@ function GoConfigObject(my_name_val, his_name_val, board_size_val, my_color_val,
     this.goLog = function (str1_val, str2_val) {
         return this.containerObject().goLog("GoConfigObject." + str1_val, str2_val);
     };
-
-    this.theMyName = my_name_val;
-    this.theOpponentName = his_name_val;
-    this.theBoardSize = board_size_val;
-    this.theMyColor = my_color_val;
-    this.theHandicapPoint = handicap_val;
-    this.theKomiPoint = komi_val;
 
     this.setContainerObject = function (container_val) {
         this.theContainerObject = container_val;
