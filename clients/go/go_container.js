@@ -121,8 +121,8 @@ function GoContainerObject(root_object_val, config_object_val, ui_object_val, in
 }
 
 function ajaxReceiveCallBack (container_val, data_val) {
-    //console.log("receiveFromAjax" + port_val.objectName());
-    container_val.portObject().receiveStringData(data_val)
+    //console.log("ajaxReceiveCallBack" + port_val.objectName());
+    container_val.portObject().receiveStringData(data_val);
 }
 
 var GO = new GoDefineObject;

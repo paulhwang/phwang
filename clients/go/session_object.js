@@ -4,11 +4,11 @@
  * File name: SessionObject.js
  */
 
-function SessionObject(root_object_val, target_receive_val, his_name_val) {
+function SessionObject(root_object_val, client_val, his_name_val) {
     "use strict";
     this.theObjectName = "SessionObject";
     this.theRootObject = root_object_val;
-    this.theTargetReceiveObject = target_receive_val;
+    this.theClientObject = client_val;
     this.theHisName = his_name_val;
 
     this.objectName = function () {
@@ -27,8 +27,8 @@ function SessionObject(root_object_val, target_receive_val, his_name_val) {
         return this.theReceiveFunction;
     };
 
-    this.targetReceiveObject = function () {
-        return this.theTargetReceiveObject;
+    this.clientObject = function () {
+        return this.theClientObject;
     };
 
     this.myName = function () {
@@ -76,7 +76,7 @@ function SessionObject(root_object_val, target_receive_val, his_name_val) {
     };
 
     this.receiveData = function (str_val) {
-        this.receiveFunction()(this.targetReceiveObject(), str_val);
+        this.receiveFunction()(this.clientObject(), str_val);
     };
 
     this.utilObject = function () {
