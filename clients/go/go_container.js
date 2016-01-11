@@ -119,6 +119,7 @@ function GoContainerObject(root_object_val, config_object_val, ui_object_val, in
     this.theSessionObject = new SessionObject(this.rootObject(), this.configObject().opponentName());
     this.sessionObject().setHisName(this.configObject().opponentName());
     this.sessionObject().setupClientReceiveCallback(ajaxReceiveCallback, this);
+    this.rootObject().ajaxObject().initiateSessionConnection(this.sessionObject());
 }
 
 function ajaxReceiveCallback (container_val, data_val) {

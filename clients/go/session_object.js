@@ -100,6 +100,5 @@ function SessionObject(root_object_val, his_name_val) {
     this.theSessionId = 0;
     //this.theReceiveQueue = new QueueObject(this.utilObject());
     this.theTransmitQueue = new QueueObject(this.utilObject());
-    this.ajxObject().initiateSessionConnection(this);
 }
 

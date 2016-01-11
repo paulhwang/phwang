@@ -22,7 +22,7 @@ function SessionMgrObject(root_object_val) {
     };
 
     this.ajxObject = function () {
-        return this.rootObject().ajxObject();
+        return this.rootObject().ajaxObject();
     };
 
     this.sessionQueue = function () {

@@ -12,8 +12,8 @@ function RootObject() {
         return this.theObjectName;
     };
 
-    this.ajxObject = function () {
-        return this.theAjxObject;
+    this.ajaxObject = function () {
+        return this.theAjaxObject;
     };
 
     this.sessionMgrObject = function () {
@@ -53,7 +53,7 @@ function RootObject() {
     };
 
     this.setupLink = function () {
-        this.ajxObject().setupLink();
+        this.ajaxObject().setupLink();
     };
 
     this.logit = function (s1_val, s2_val) {
@@ -66,7 +66,7 @@ function RootObject() {
 
     this.theLinkId = 0;
     this.theUtilObject = new UtilObject();
-    this.theAjxObject = new AjxObject(this);
+    this.theAjaxObject = new AjxObject(this);
     this.theSessionMgrObject = new SessionMgrObject(this);
     this.theMyName = "dummy";
     this.theMyName2 = "";
