@@ -52,9 +52,7 @@ var main = function () {
 
     function runGoGame (session_val, config_val) {
         var container = new GoContainerObject(session_val, config_val);
-        session_val.setContainerObject(container);
-        
-        container.sessionObject().rootObject().htmlObject().createPlayHolders();
+        container.rootObject().htmlObject().createPlayHolders();
         container.uiObject().initElements();
         container.uiObject().drawBoard(container.engineObject());
 
