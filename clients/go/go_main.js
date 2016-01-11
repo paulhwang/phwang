@@ -6,6 +6,7 @@ var main = function () {
     var goTwoBoard = false;
     var theMainRootObject = new RootObject();
     var theMainHtmlObject = new GoHtmlObject(theMainRootObject, goTwoBoard);
+    var theMainSessionObject;
     var theMainGoConfigObject;
 
     runPrelude();
@@ -24,6 +25,7 @@ var main = function () {
     }
 
     function runGoConfig () {
+        theMainSessionObject = new SessionObject(theMainRootObject);
         theMainGoConfigObject = new GoConfigObject(theMainRootObject.myName());
         theMainHtmlObject.createConfigHolders();
         $(".config_holder button").on("click", function() {
@@ -40,6 +42,7 @@ var main = function () {
                             " komi=" + theMainGoConfigObject.komiPoint() +
                             " handicap=" + theMainGoConfigObject.handicapPoint());
             if (theMainGoConfigObject.opponentName()) {
+                theMainSessionObject.setHisName(theMainGoConfigObject.opponentName());
                 runGoGame();
             }
         });
@@ -83,9 +86,6 @@ var main = function () {
                 goUi2.uiMouseMove(event.clientX, event.clientY);
             }
         });
-
-        var theMainSessionObject = new SessionObject(theMainRootObject, theMainGoConfigObject.opponentName());
-        theMainSessionObject.setHisName(theMainGoConfigObject.opponentName());
 
         var goUi = new GoUiObject("goCanvas");
         var goContainer = new GoContainerObject(theMainSessionObject, theMainGoConfigObject, goUi, "1");

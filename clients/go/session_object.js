@@ -4,11 +4,10 @@
  * File name: SessionObject.js
  */
 
-function SessionObject(root_object_val, his_name_val) {
+function SessionObject(root_object_val) {
     "use strict";
     this.theObjectName = "SessionObject";
     this.theRootObject = root_object_val;
-    this.theHisName = his_name_val;
 
     this.setHisName = function (val) {
         this.theHisName = val;
