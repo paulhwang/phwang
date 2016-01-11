@@ -71,6 +71,8 @@ var main = function () {
             }
         });
 
+        var theMainSessionObject = new SessionObject(theMainRootObject, theMainGoConfigObject.opponentName());
+
         $("canvas").on("click", function(event) {
             goUi.uiClickApi(event.clientX, event.clientY);
             if (goContainer2) {
@@ -85,7 +87,7 @@ var main = function () {
         });
 
         var goUi = new GoUiObject("goCanvas");
-        var goContainer = new GoContainerObject(theMainRootObject, theMainGoConfigObject, goUi, "1");
+        var goContainer = new GoContainerObject(theMainSessionObject, theMainGoConfigObject, goUi, "1");
         goUi.initElements();
         goUi.drawBoard(goContainer.engineObject());
 

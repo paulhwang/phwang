@@ -4,10 +4,10 @@
  * File name: go_container.js
  */
 
-function GoContainerObject(root_object_val, config_object_val, ui_object_val, index_val) {
+function GoContainerObject(session_object_val, config_object_val, ui_object_val, index_val) {
     "use strict";
     this.theObjectName = "GoContainerObject";
-    this.theRootObject = root_object_val;
+    this.theSessionObject = session_object_val;
     this.theConfigObject = config_object_val;
     this.theUiObject = ui_object_val;
     this.theContainerIndex = index_val;
@@ -16,8 +16,12 @@ function GoContainerObject(root_object_val, config_object_val, ui_object_val, in
         return this.theObjectName;
     };
 
+    this.sessionObject = function () {
+        return this.theSessionObject;
+    };
+
     this.rootObject = function () {
-        return this.theRootObject;
+        return this.sessionObject().rootObject();
     };
 
     this.sessionObject = function () {
