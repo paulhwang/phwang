@@ -12,20 +12,25 @@ var main = function () {
     runPrelude();
 
     function runPrelude () {
+        var root = theMainRootObject;
         theMainHtmlObject.createPreludeHolder();
         $(".prelude_holder button").on("click", function() {
-            theMainRootObject.setMyName($(".prelude_holder input").val());
-            theMainRootObject.setLanguageUsed($(".prelude_holder select").val());
-            console.log("runPrelude() ", "name=" + theMainRootObject.myName() + " language=" + theMainRootObject.languageUsed());
-            if (theMainRootObject.myName()) {
-                theMainRootObject.setupLink();
-                runGoConfig();
+            root.setMyName($(".prelude_holder input").val());
+            root.setLanguageUsed($(".prelude_holder select").val());
+            console.log("runPrelude() ", "name=" + root.myName() + " language=" + root.languageUsed());
+            if (root.myName()) {
+                root.setupLink();
+                runCreateSession(root);
             }
         });
     }
 
+    function runCreateSession (root_val) {
+        runGoConfig();
+        theMainSessionObject = new SessionObject(root_val);
+    }
+
     function runGoConfig () {
-        theMainSessionObject = new SessionObject(theMainRootObject);
         theMainGoConfigObject = new GoConfigObject(theMainRootObject.myName());
         theMainHtmlObject.createConfigHolders();
         $(".config_holder button").on("click", function() {
