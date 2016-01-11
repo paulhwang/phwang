@@ -4,7 +4,6 @@ var main = function () {
     document.cookie="paul's cookie is here";
 
     var theMainGoConfigObject;
-    var goContainer;
 
     runPrelude();
 
@@ -49,17 +48,17 @@ var main = function () {
             if (config.opponentName()) {
                 session_val.setHisName(config.opponentName());
                 var ui = new GoUiObject("goCanvas");
-                goContainer = new GoContainerObject(session_val, config, ui, "1");
-                session_val.setContainerObject(goContainer);
-                runGoGame(session_val, goContainer);
+                var container = new GoContainerObject(session_val, config, ui, "1");
+                session_val.setContainerObject(container);
+                runGoGame(session_val.containerObject());
             }
         });
     }
 
-    function runGoGame (session_val, container_val) {
-        session_val.rootObject().htmlObject().createPlayHolders();
+    function runGoGame (container_val) {
+        container_val.sessionObject().rootObject().htmlObject().createPlayHolders();
         container_val.uiObject().initElements();
-        container_val.uiObject().drawBoard(goContainer.engineObject());
+        container_val.uiObject().drawBoard(container_val.engineObject());
 
         var addCommentFromInputBox = function () {
             var $new_comment = $("<p>");
