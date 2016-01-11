@@ -4,11 +4,10 @@
  * File name: SessionObject.js
  */
 
-function SessionObject(root_object_val, client_val, his_name_val) {
+function SessionObject(root_object_val, his_name_val) {
     "use strict";
     this.theObjectName = "SessionObject";
     this.theRootObject = root_object_val;
-    this.theClientObject = client_val;
     this.theHisName = his_name_val;
 
     this.objectName = function () {
@@ -71,8 +70,9 @@ function SessionObject(root_object_val, client_val, his_name_val) {
         return this.theTransmitQueue;
     };
 
-    this.setupClientReceiveCallback = function (callback_func_val) {
+    this.setupClientReceiveCallback = function (callback_func_val, client_val) {
         this.theClientReceiveCallbackFunc = callback_func_val;
+        this.theClientObject = client_val;
     };
 
     this.receiveData = function (str_val) {
