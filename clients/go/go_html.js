@@ -138,32 +138,32 @@ function GoHtmlObject(prelude_val) {
     this.createSessionPeerSection = function () {
         var data = ["aaa", "bbb", "ccc"];
 
-        var opponent_option_0 = document.createElement("option");
-        opponent_option_0.setAttribute("value", "Myself");
-        opponent_option_0.appendChild(document.createTextNode("Myself"));
+        var peer_option_0 = document.createElement("option");
+        peer_option_0.setAttribute("value", "Myself");
+        peer_option_0.appendChild(document.createTextNode("Myself"));
 
-        var opponent_option_1 = document.createElement("option");
-        opponent_option_1.setAttribute("value", "BBB");
-        opponent_option_1.appendChild(document.createTextNode("bbbb"));
+        var peer_option_1 = document.createElement("option");
+        peer_option_1.setAttribute("value", "BBB");
+        peer_option_1.appendChild(document.createTextNode("bbbb"));
 
-        var opponent_select = document.createElement("select");
-        opponent_select.setAttribute("name", "opponent");
-        opponent_select.appendChild(opponent_option_0);
-        opponent_select.appendChild(opponent_option_1);
+        var peer_select = document.createElement("select");
+        peer_select.setAttribute("name", "opponent");
+        peer_select.appendChild(peer_option_0);
+        peer_select.appendChild(peer_option_1);
 
-        var opponent_button = document.createElement("button");
-        opponent_button.appendChild(document.createTextNode("Play"));
+        var peer_button = document.createElement("button");
+        peer_button.appendChild(document.createTextNode("Play"));
 
-        var opponent_paragraph = document.createElement("p");
-        opponent_paragraph.appendChild(document.createTextNode("Opponent: "));
-        opponent_paragraph.appendChild(opponent_select);
-        opponent_paragraph.appendChild(opponent_button);
+        var peer_paragraph = document.createElement("p");
+        peer_paragraph.appendChild(document.createTextNode("Peer Name: "));
+        peer_paragraph.appendChild(peer_select);
+        peer_paragraph.appendChild(peer_button);
 
-        var config_opponent_section = document.createElement("section");
-        config_opponent_section.setAttribute("class", "opponent_section");
-        config_opponent_section.appendChild(opponent_paragraph);
+        var config_peer_section = document.createElement("section");
+        config_peer_section.setAttribute("class", "opponent_section");
+        config_peer_section.appendChild(peer_paragraph);
 
-        return config_opponent_section;
+        return config_peer_section;
     };
     this.createSessionHolder = function () {
         if (this.sessionHolderOn()) {
@@ -585,6 +585,11 @@ function GoHtmlObject(prelude_val) {
         this.createPreludeHolder();
     };
 
+    this.createSessionHolders = function () {
+        this.removeAllHolders();
+        this.createSessionHolder();
+    };
+
     this.createConfigHolders = function () {
         this.removeAllHolders();
         this.createConfigHolder();
@@ -597,8 +602,8 @@ function GoHtmlObject(prelude_val) {
     };
 
     this.removeAllHolders = function () {
-        this.removeTitleHolder();
         this.removePreludeHolder();
+        this.removeTitleHolder();
         this.removeSessionHolder();
         this.removeConfigHolder();
         this.removeCanvasHolder();

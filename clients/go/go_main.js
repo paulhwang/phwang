@@ -22,7 +22,7 @@ var main = function () {
 
     function runCreateSession (root_val) {
         var session = new SessionObject(root_val);
-        session.rootObject().htmlObject().createSessionHolder();
+        session.rootObject().htmlObject().createSessionHolders();
         $(".session_holder button").on("click", function() {
             session.setHisName($(".opponent_section select").val());
             if (session.hisName() === "Myself") {
