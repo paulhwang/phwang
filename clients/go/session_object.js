@@ -65,6 +65,14 @@ function SessionObject(root_object_val) {
         this.theSessionId = val;
     };
 
+    this.containerObject = function () {
+        return this.theContainerObject;
+    };
+
+    this.setContainerObject = function (val) {
+        this.theContainerObject = val;
+    };
+
     //this.receiveQueue = function () {
     //    return this.theReceiveQueue;
     //};

@@ -51,6 +51,7 @@ var main = function () {
                 session_val.setHisName(config.opponentName());
                 goUi = new GoUiObject("goCanvas");
                 goContainer = new GoContainerObject(session_val, config, goUi, "1");
+                session_val.setContainerObject(goContainer);
                 runGoGame(session_val);
             }
         });
@@ -58,8 +59,8 @@ var main = function () {
 
     function runGoGame (session_val) {
         session_val.rootObject().htmlObject().createPlayHolders();
-        goUi.initElements();
-        goUi.drawBoard(goContainer.engineObject());
+        session_val.containerObject().uiObject().initElements();
+        session_val.containerObject().uiObject().drawBoard(goContainer.engineObject());
 
         var addCommentFromInputBox = function () {
             var $new_comment = $("<p>");
@@ -85,7 +86,7 @@ var main = function () {
         $("canvas").on("click", function(event) {
             goUi.uiClickApi(event.clientX, event.clientY);
         });
-        
+
         $("canvas").on("mousemove", function(event) {
             goUi.uiMouseMove(event.clientX, event.clientY);
         });
