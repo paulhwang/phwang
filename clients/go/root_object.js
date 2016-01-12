@@ -73,8 +73,7 @@ function RootObject() {
     };
 
     this.setNameList = function (data_val) {
-        this.setNameListElement(0, data_val);
-        this.setNameListElement(2, "JACK");
+        this.theNameList = data_val;
     };
 
     this.logit = function (s1_val, s2_val) {
