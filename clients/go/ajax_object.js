@@ -63,12 +63,32 @@ function AjaxObject(root_object_val) {
             if ((request0.readyState === 4) && (request0.status === 200)) {
                 var context_type = request0.getResponseHeader("Content-Type");
                 var link_id = request0.responseText;
-                this0.logit("getMessage", "link_id= " + request0.responseText);
+                this0.logit("setupLink", "link_id= " + request0.responseText);
                 root0.setLinkId(Number(link_id));
                 callback_val(root_val);
             }
-            else {
-                //this0.logit("getMessage", "error=" + request0.readyState + ", " + request0.status);
+        };
+        this.httpGetRequest().send(null);
+    };
+
+    this.getNameList = function (callback_val, root_val) {
+        var this0 = this;
+        var request0 = this.httpGetRequest();
+        var root0 = this.rootObject();
+
+        this.logit("getNameList", this.rootObject().myName());
+        this.httpGetRequest().open("GET", this.ajaxRoute(), true);
+        this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
+        this.httpGetRequest().setRequestHeader("command", "get_name_list");
+        this.httpGetRequest().setRequestHeader("my_name", this.rootObject().myName());
+
+        this.httpGetRequest().onreadystatechange = function() {
+            if ((request0.readyState === 4) && (request0.status === 200)) {
+                var context_type = request0.getResponseHeader("Content-Type");
+                var link_id = request0.responseText;
+                this0.logit("getNameList", "link_id= " + request0.responseText);
+                root0.setLinkId(Number(link_id));
+                callback_val(root_val);
             }
         };
         this.httpGetRequest().send(null);
@@ -78,7 +98,7 @@ function AjaxObject(root_object_val) {
         var this0 = this;
         var request0 = this.httpGetRequest();
 
-        this.logit("setupLinkf", session_val.myName());
+        this.logit("initiateSessionConnection", session_val.myName());
         this.httpGetRequest().open("GET", this.ajaxRoute(), true);
         this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
         this.httpGetRequest().setRequestHeader("command", "setup_session");
@@ -90,13 +110,9 @@ function AjaxObject(root_object_val) {
             if ((request0.readyState === 4) && (request0.status === 200)) {
                 var context_type = request0.getResponseHeader("Content-Type");
                 var session_id = request0.responseText;
-                this0.logit("getMessage", "session_id= " + request0.responseText);
+                this0.logit("initiateSessionConnection", "session_id= " + request0.responseText);
                 session_val.setSessionId(Number(session_id));
                 callback_val(session_val);
-                //this0.logit("getMessage", "session_id= " + session_val.linkId());
-            }
-            else {
-                //this0.logit("getMessage", "error=" + request0.readyState + ", " + request0.status);
             }
         };
         this.httpGetRequest().send(null);
