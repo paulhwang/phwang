@@ -56,7 +56,7 @@ function AjaxObject(root_object_val) {
         this.logit("setupLink", this.rootObject().myName());
         this.httpGetRequest().open("GET", this.ajaxRoute(), true);
         this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
-        this.httpGetRequest().setRequestHeader("setup_link", "yes");
+        this.httpGetRequest().setRequestHeader("command", "setup_link");
         this.httpGetRequest().setRequestHeader("my_name", this.rootObject().myName());
 
         this.httpGetRequest().onreadystatechange = function() {
@@ -81,7 +81,7 @@ function AjaxObject(root_object_val) {
         this.logit("setupLinkf", session_val.myName());
         this.httpGetRequest().open("GET", this.ajaxRoute(), true);
         this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
-        this.httpGetRequest().setRequestHeader("setup_session", "yes");
+        this.httpGetRequest().setRequestHeader("command", "setup_session");
         this.httpGetRequest().setRequestHeader("link_id", session_val.rootObject().linkId());
         this.httpGetRequest().setRequestHeader("my_name", session_val.myName());
         this.httpGetRequest().setRequestHeader("his_name", session_val.hisName());
@@ -108,6 +108,7 @@ function AjaxObject(root_object_val) {
 
         this.httpGetRequest().open("GET", this.ajaxRoute(), true);
         this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
+        this.httpGetRequest().setRequestHeader("command", "peer");
         this.httpGetRequest().setRequestHeader("my_name", session_val.myName());
         this.httpGetRequest().setRequestHeader("his_name", session_val.hisName());
         this.httpGetRequest().setRequestHeader("link_id", this.rootObject().linkId());

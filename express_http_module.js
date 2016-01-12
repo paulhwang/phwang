@@ -98,13 +98,18 @@ function processPost(req, res) {
 }
 
 function processGet (req, res) {
-    if (req.headers.setup_link === "yes") {
+    if (req.headers.command === "setup_link") {
         initLink(req, res);
         return;
     }
 
-    if (req.headers.setup_session === "yes") {
+    if (req.headers.command === "setup_session") {
         initSession(req, res);
+        return;
+    }
+
+    if (req.headers.command === "get_name_list") {
+        getNameList(req, res);
         return;
     }
 
@@ -178,6 +183,20 @@ function initLink (req, res) {
 }
 
 function initSession (req, res) {
+    state = "initSession start";
+    var session, session_id_str;
+    session = account_mgr.search_and_create(req.headers.my_name, req.headers.his_name, 0);
+    if (!session) {
+        abend("initSession", "null session");
+        return;
+    }
+    session_id_str = "" + session.session_id;
+    res.send(session_id_str);
+    logit("initSession", "(" + req.headers.link_id + "," + session.session_id + ") " + req.headers.his_name + "=>" + req.headers.my_name);
+    state = "initSession end";
+}
+
+function getNameList (req, res) {
     state = "initSession start";
     var session, session_id_str;
     session = account_mgr.search_and_create(req.headers.my_name, req.headers.his_name, 0);
