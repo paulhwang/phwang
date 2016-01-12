@@ -68,6 +68,7 @@ function getNameList () {
     while (queue_element) {
         link = queue_element.data;
         name_array[i] = link.my_name;
+        i += 1;
         queue_element = queue_element.next;
     }
     return name_array;
