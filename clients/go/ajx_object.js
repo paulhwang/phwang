@@ -4,7 +4,7 @@
  * File name: AjxObject.js
  */
 
-function AjxObject(root_object_val) {
+function AjaxObject(root_object_val) {
     "use strict";
     this.theRootObject = root_object_val;
 
@@ -16,7 +16,7 @@ function AjxObject(root_object_val) {
         return this.rootObject().utilObject();
     };
 
-    this.ajxRoute = function () {
+    this.ajaxRoute = function () {
         return "/go_msg";
     };
 
@@ -54,7 +54,7 @@ function AjxObject(root_object_val) {
         var root0 = this.rootObject();
 
         this.logit("setupLink", this.rootObject().myName());
-        this.httpGetRequest().open("GET", this.ajxRoute(), true);
+        this.httpGetRequest().open("GET", this.ajaxRoute(), true);
         this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
         this.httpGetRequest().setRequestHeader("setup_link", "yes");
         this.httpGetRequest().setRequestHeader("my_name", this.rootObject().myName());
@@ -79,7 +79,7 @@ function AjxObject(root_object_val) {
         var request0 = this.httpGetRequest();
 
         this.logit("setupLinkf", session_val.myName());
-        this.httpGetRequest().open("GET", this.ajxRoute(), true);
+        this.httpGetRequest().open("GET", this.ajaxRoute(), true);
         this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
         this.httpGetRequest().setRequestHeader("setup_session", "yes");
         this.httpGetRequest().setRequestHeader("link_id", session_val.rootObject().linkId());
@@ -106,7 +106,7 @@ function AjxObject(root_object_val) {
         var this0 = this;
         var request0 = this.httpGetRequest();
 
-        this.httpGetRequest().open("GET", this.ajxRoute(), true);
+        this.httpGetRequest().open("GET", this.ajaxRoute(), true);
         this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
         this.httpGetRequest().setRequestHeader("my_name", session_val.myName());
         this.httpGetRequest().setRequestHeader("his_name", session_val.hisName());
@@ -124,7 +124,7 @@ function AjxObject(root_object_val) {
     };
 
     this.postMessage = function (msg_val, session_val) {
-        this.httpPostRequest().open("POST", this.ajxRoute(), true);
+        this.httpPostRequest().open("POST", this.ajaxRoute(), true);
         this.httpPostRequest().setRequestHeader("Content-Type", this.jsonContext());
 
         var json_str = this.formJsonString(msg_val, session_val);

@@ -70,7 +70,7 @@ function RootObject() {
 
     this.theLinkId = 0;
     this.theUtilObject = new UtilObject();
-    this.theAjaxObject = new AjxObject(this);
+    this.theAjaxObject = new AjaxObject(this);
     this.theSessionMgrObject = new SessionMgrObject(this);
     this.theHtmlObject = new GoHtmlObject(this);
 }
