@@ -60,6 +60,22 @@ function RootObject() {
         this.theLinkId = val;
     };
 
+    this.nameList = function (index_val) {
+        return this.theNameList[index_val];
+    };
+
+    this.setNameList = function (index_val, data_val) {
+        return this.theNameList[index_val] = data_val;
+    };
+
+    this.nameListDone = function () {
+        return this.theNameListDone;
+    };
+
+    this.setNameListDone = function () {
+        return this.theNameListDone;
+    };
+
     this.logit = function (s1_val, s2_val) {
         return this.utilObject().utilLogit(this.objectName() + "." + str1_val, str2_val);
     };
@@ -73,4 +89,6 @@ function RootObject() {
     this.theAjaxObject = new AjaxObject(this);
     this.theSessionMgrObject = new SessionMgrObject(this);
     this.theHtmlObject = new GoHtmlObject(this);
+    this.theNameList = [];
+    this.this.theNameListDone = false;
 }

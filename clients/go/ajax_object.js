@@ -76,6 +76,10 @@ function AjaxObject(root_object_val) {
         var request0 = this.httpGetRequest();
         var root0 = this.rootObject();
 
+        if (this.rootObject().nameListDone()) {
+            return;
+        }
+
         this.logit("getNameList", this.rootObject().myName());
         this.httpGetRequest().open("GET", this.ajaxRoute(), true);
         this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
