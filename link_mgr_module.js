@@ -64,12 +64,12 @@ function getNameList () {
     var name_array = [];
 
     i = 0;
-    queue_element = link_queue.head;
+    queue_element = link_queue.tail;
     while (queue_element) {
         link = queue_element.data;
         name_array[i] = link.my_name;
         i += 1;
-        queue_element = queue_element.next;
+        queue_element = queue_element.prev;
     }
     return name_array;
 }

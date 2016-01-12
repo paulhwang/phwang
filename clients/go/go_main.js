@@ -42,9 +42,6 @@ var main = function () {
         session.rootObject().htmlObject().createSessionHolders(root_val);
         $(".session_holder button").on("click", function() {
             session.setHisName($(".peer_section select").val());
-            if (session.hisName() === "Myself") {
-                session.setHisName(session.rootObject().myName());
-            }
             console.log("runCreateSession() ", "peer_name=" + session.hisName());
             session.ajaxObject().initiateSessionConnection(setupSessionCallback, session);
         });

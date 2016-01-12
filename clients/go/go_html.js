@@ -136,13 +136,8 @@ function GoHtmlObject(prelude_val) {
     };
 
     this.createSessionPeerSection = function (root_val) {
-        var peer_option_0 = document.createElement("option");
-        peer_option_0.setAttribute("value", "Myself");
-        peer_option_0.appendChild(document.createTextNode("Myself"));
-
         var peer_select = document.createElement("select");
         peer_select.setAttribute("name", "opponent");
-        peer_select.appendChild(peer_option_0);
 
         var i = 0;
         while (i < root_val.nameListLength()) {
