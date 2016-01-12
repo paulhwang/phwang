@@ -197,9 +197,10 @@ function getNameList (req, res) {
         return;
     }
 
-    var name_list = link_mgr.get_name_list();
-    res.send(name_list);
-    logit("getNameList", "(" + link.link_id + ",0) " + req.headers.my_name + "=>server " + name_list);
+    var name_array = link_mgr.get_name_list();
+    name_array_str = JSON.stringify(name_array);
+    res.send(name_array_str);
+    logit("getNameList", "(" + link.link_id + ",0) " + req.headers.my_name + "=>server " + name_array_str);
     state = "getNameList end";
 }
 

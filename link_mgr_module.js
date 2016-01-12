@@ -60,14 +60,17 @@ function compareIt (link_val, my_name_val, link_id_val) {
 }
 
 function getNameList () {
-    var queue_element, link;
+    var queue_element, link, i;
+    var name_array = [];
 
+    i = 0;
     queue_element = link_queue.head;
     while (queue_element) {
         link = queue_element.data;
+        name_array[i] = link.my_name;
         queue_element = queue_element.next;
     }
-    return link.my_name;
+    return name_array;
 }
 
 function mallocIt(my_name_val) {
