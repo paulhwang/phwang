@@ -60,6 +60,10 @@ function RootObject() {
         this.theLinkId = val;
     };
 
+    this.nameListLength = function () {
+        return this.theNameList.length;
+    };
+
     this.nameList = function (index_val) {
         return this.theNameList[index_val];
     };
@@ -89,6 +93,6 @@ function RootObject() {
     this.theAjaxObject = new AjaxObject(this);
     this.theSessionMgrObject = new SessionMgrObject(this);
     this.theHtmlObject = new GoHtmlObject(this);
-    this.theNameList = [];
-    this.this.theNameListDone = false;
+    this.theNameList = ["steve", "john", "david"];
+    this.theNameListDone = false;
 }

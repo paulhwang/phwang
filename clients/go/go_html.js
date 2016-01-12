@@ -135,21 +135,23 @@ function GoHtmlObject(prelude_val) {
         main_holder.removeChild(title_holder);
     };
 
-    this.createSessionPeerSection = function () {
-        var data = ["aaa", "bbb", "ccc"];
-
+    this.createSessionPeerSection = function (root_val) {
         var peer_option_0 = document.createElement("option");
         peer_option_0.setAttribute("value", "Myself");
         peer_option_0.appendChild(document.createTextNode("Myself"));
 
-        var peer_option_1 = document.createElement("option");
-        peer_option_1.setAttribute("value", "BBB");
-        peer_option_1.appendChild(document.createTextNode("bbbb"));
-
         var peer_select = document.createElement("select");
         peer_select.setAttribute("name", "opponent");
         peer_select.appendChild(peer_option_0);
-        peer_select.appendChild(peer_option_1);
+
+        var i = 0;
+        while (i < root_val.nameListLength()) {
+            var peer_option = document.createElement("option");
+            peer_option.setAttribute("value", root_val.nameList(i));
+            peer_option.appendChild(document.createTextNode(root_val.nameList(i)));
+            peer_select.appendChild(peer_option);
+            i += 1;
+        }
 
         var peer_button = document.createElement("button");
         peer_button.appendChild(document.createTextNode("Play"));
@@ -165,7 +167,8 @@ function GoHtmlObject(prelude_val) {
 
         return config_peer_section;
     };
-    this.createSessionHolder = function () {
+
+    this.createSessionHolder = function (root_val) {
         if (this.sessionHolderOn()) {
             return;
         }
@@ -174,7 +177,7 @@ function GoHtmlObject(prelude_val) {
         var session_holder = document.createElement("section");
         session_holder.setAttribute("id", "session_holder");
         session_holder.setAttribute("class", "session_holder");
-        session_holder.appendChild(this.createSessionPeerSection());
+        session_holder.appendChild(this.createSessionPeerSection(root_val));
 
         var main_holder = document.getElementById("body");
         main_holder.appendChild(session_holder);
@@ -585,9 +588,9 @@ function GoHtmlObject(prelude_val) {
         this.createPreludeHolder();
     };
 
-    this.createSessionHolders = function () {
+    this.createSessionHolders = function (root_val) {
         this.removeAllHolders();
-        this.createSessionHolder();
+        this.createSessionHolder(root_val);
     };
 
     this.createConfigHolders = function () {
