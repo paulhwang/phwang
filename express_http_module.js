@@ -182,21 +182,28 @@ function initLink (req, res) {
     state = "initLink end";
 }
 
-function initSession (req, res) {
-    state = "initSession start";
-    var session, session_id_str;
-    session = account_mgr.search_and_create(req.headers.my_name, req.headers.his_name, 0);
-    if (!session) {
-        abend("initSession", "null session");
+function getNameList (req, res) {
+    state = "getNameList start";
+    var my_link_id;
+
+    my_link_id = Number(req.headers.link_id);
+    my_link = link_mgr.search(req.headers.my_name, my_link_id);
+    if (!my_link) {
+        abend("getNameList", "null my_link");
         return;
     }
-    session_id_str = "" + session.session_id;
-    res.send(session_id_str);
-    logit("initSession", "(" + req.headers.link_id + "," + session.session_id + ") " + req.headers.his_name + "=>" + req.headers.my_name);
-    state = "initSession end";
+    if (my_link.link_id === 0) {
+        abend("getNameList", "null my_link = 0");
+        return;
+    }
+
+    var name_list = link_mgr.get_name_list();
+    res.send(name_list);
+    logit("getNameList", "(" + link.link_id + ",0) " + req.headers.my_name + "=>server " + name_list);
+    state = "getNameList end";
 }
 
-function getNameList (req, res) {
+function initSession (req, res) {
     state = "initSession start";
     var session, session_id_str;
     session = account_mgr.search_and_create(req.headers.my_name, req.headers.his_name, 0);

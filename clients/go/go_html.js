@@ -147,8 +147,8 @@ function GoHtmlObject(prelude_val) {
         var i = 0;
         while (i < root_val.nameListLength()) {
             var peer_option = document.createElement("option");
-            peer_option.setAttribute("value", root_val.nameList(i));
-            peer_option.appendChild(document.createTextNode(root_val.nameList(i)));
+            peer_option.setAttribute("value", root_val.nameListElement(i));
+            peer_option.appendChild(document.createTextNode(root_val.nameListElement(i)));
             peer_select.appendChild(peer_option);
             i += 1;
         }

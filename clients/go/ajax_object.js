@@ -76,22 +76,19 @@ function AjaxObject(root_object_val) {
         var request0 = this.httpGetRequest();
         var root0 = this.rootObject();
 
-        if (this.rootObject().nameListDone()) {
-            return;
-        }
-
         this.logit("getNameList", this.rootObject().myName());
         this.httpGetRequest().open("GET", this.ajaxRoute(), true);
         this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
         this.httpGetRequest().setRequestHeader("command", "get_name_list");
         this.httpGetRequest().setRequestHeader("my_name", this.rootObject().myName());
+        this.httpGetRequest().setRequestHeader("link_id", this.rootObject().linkId());
 
         this.httpGetRequest().onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
                 var context_type = request0.getResponseHeader("Content-Type");
-                var link_id = request0.responseText;
-                this0.logit("getNameList", "link_id= " + request0.responseText);
-                root0.setLinkId(Number(link_id));
+                var name_list = request0.responseText;
+                this0.logit("getNameList", "name_list= " + request0.responseText);
+                root0.setNameList(name_list);
                 callback_val(root_val);
             }
         };

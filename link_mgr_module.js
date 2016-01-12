@@ -13,6 +13,10 @@ module.exports = {
         return searchAndCreate(my_name_val, link_id_val);
     },
 
+    get_name_list: function () {
+        return getNameList();
+    },
+
     malloc: function (my_name_val) {
          return mallocIt(my_name_val);
     },
@@ -53,6 +57,10 @@ function compareIt (link_val, my_name_val, link_id_val) {
     } else {
         return (link_id_val === link_val.link_id);
     }
+}
+
+function getNameList () {
+    return "hello";
 }
 
 function mallocIt(my_name_val) {

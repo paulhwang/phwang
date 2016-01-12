@@ -64,20 +64,17 @@ function RootObject() {
         return this.theNameList.length;
     };
 
-    this.nameList = function (index_val) {
+    this.nameListElement = function (index_val) {
         return this.theNameList[index_val];
     };
 
-    this.setNameList = function (index_val, data_val) {
-        return this.theNameList[index_val] = data_val;
+    this.setNameListElement = function (index_val, data_val) {
+        this.theNameList[index_val] = data_val;
     };
 
-    this.nameListDone = function () {
-        return this.theNameListDone;
-    };
-
-    this.setNameListDone = function () {
-        return this.theNameListDone;
+    this.setNameList = function (data_val) {
+        this.setNameListElement(0, data_val);
+        this.setNameListElement(2, "JACK");
     };
 
     this.logit = function (s1_val, s2_val) {
@@ -93,6 +90,5 @@ function RootObject() {
     this.theAjaxObject = new AjaxObject(this);
     this.theSessionMgrObject = new SessionMgrObject(this);
     this.theHtmlObject = new GoHtmlObject(this);
-    this.theNameList = ["steve", "john", "david"];
-    this.theNameListDone = false;
+    this.theNameList = [];
 }
