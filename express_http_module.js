@@ -60,7 +60,7 @@ function processPost(req, res) {
         return;
     }
 
-    logit("processPost", "(" + req.body.link_id + "," + req.body.session_id + ") "  + req.body.my_name + "=>" + req.body.his_name + " {" + req.body.data + "} " + req.body.xmt_seq + "=" + my_session.up_seq);
+    logit("processPost", "(" + req.body.link_id + "," + req.body.session_id + ") "  + req.body.my_name + "=>" + req.body.his_name + " {" + req.body.data + "} " + req.body.xmt_seq + "=>" + my_session.up_seq);
 
     if (req.body.my_name === req.body.his_name) {
         his_session = my_session;
@@ -88,7 +88,7 @@ function processPost(req, res) {
             my_session.up_seq = 1;
             logit("processPost", req.body.data + " post " + req.body.xmt_seq + " reset");
         } else {
-            logit("processPost", "{" + req.body.data + "} " + req.body.xmt_seq + " dropped");
+            logit("processPost", "(" + req.body.link_id + "," + req.body.session_id + ") "  + req.body.my_name + "=>" + req.body.his_name + " {" + req.body.data + "} " + req.body.xmt_seq + " dropped");
         }
     } else {
         logit("***abend: processPost", req.body.data + " post seq=" + req.body.xmt_seq + " dropped");
