@@ -192,7 +192,8 @@ function initSession (req, res) {
 }
 
 function processNotFound (req, res) {
-    logit("processNotFound", "use" + req);
+    console.log(req.headers);
+    logit("processNotFound", "*****");
     res.type('text/plain');
     res.status(404);
     res.send('Not Found');
