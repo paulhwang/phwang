@@ -57,8 +57,8 @@ function SessionMgrObject(root_object_val) {
             str = session.transmitQueue().deQueue();
             if (str) {
                 //this.logit("transmitData", str);
-                this.ajxObject().postMessage(str, session);
-                this.ajxObject().getMessage(this, session);
+                this.ajxObject().postRequest(str, session);
+                this.ajxObject().sendDataToPeer(this, session);
             }
             else {
                 this.abend("transmitData", "null data");

@@ -102,10 +102,7 @@ function AjaxObject(root_object_val) {
         this.httpGetRequest().send(null);
     };
 
-    this.getMessage = function (sesson_mgr_val, session_val) {
-        var this0 = this;
-        var request0 = this.httpGetRequest();
-
+    this.sendDataToPeer = function (sesson_mgr_val, session_val) {
         this.httpGetRequest().open("GET", this.ajaxRoute(), true);
         this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
         this.httpGetRequest().setRequestHeader("command", "peer");
@@ -113,6 +110,13 @@ function AjaxObject(root_object_val) {
         this.httpGetRequest().setRequestHeader("his_name", session_val.hisName());
         this.httpGetRequest().setRequestHeader("link_id", this.rootObject().linkId());
         this.httpGetRequest().setRequestHeader("session_id", session_val.sessionId());
+
+        this.getRequest(sesson_mgr_val, session_val);
+    };
+
+    this.getRequest = function (sesson_mgr_val, session_val) {
+        var this0 = this;
+        var request0 = this.httpGetRequest();
 
         this.httpGetRequest().onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
@@ -124,7 +128,7 @@ function AjaxObject(root_object_val) {
         this.httpGetRequest().send(null);
     };
 
-    this.postMessage = function (msg_val, session_val) {
+    this.postRequest = function (msg_val, session_val) {
         this.httpPostRequest().open("POST", this.ajaxRoute(), true);
         this.httpPostRequest().setRequestHeader("Content-Type", this.jsonContext());
 
