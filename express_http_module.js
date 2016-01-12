@@ -88,7 +88,7 @@ function processPost(req, res) {
             my_session.up_seq = 1;
             logit("processPost", req.body.data + " post " + req.body.xmt_seq + " reset");
         } else {
-            logit("processPost", req.body.data + " post " + req.body.xmt_seq + " dropped");
+            logit("processPost", "{" + req.body.data + "} " + req.body.xmt_seq + " dropped");
         }
     } else {
         logit("***abend: processPost", req.body.data + " post seq=" + req.body.xmt_seq + " dropped");
@@ -99,12 +99,12 @@ function processPost(req, res) {
 
 function processGet (req, res) {
     if (req.headers.setup_link === "yes") {
-        setupLink(req, res);
+        initLink(req, res);
         return;
     }
 
     if (req.headers.setup_session === "yes") {
-        setupSession(req, res);
+        initSession(req, res);
         return;
     }
 
@@ -163,32 +163,32 @@ function processGet (req, res) {
     debug(false, "processGet ", "end");
 }
 
-function setupLink (req, res) {
-    state = "setupLink start";
+function initLink (req, res) {
+    state = "initLink start";
     var link, link_id_str;
     link = link_mgr.search_and_create(req.headers.my_name, 0);
     if (!link) {
-        abend("setupLink", "null link");
+        abend("initLink", "null link");
         return;
     }
     link_id_str = "" + link.link_id;
     res.send(link_id_str);
-    logit("setupLink  ", "my_name=" + req.headers.my_name + " link=" + link.link_id);
-    state = "setupLink end";
+    logit("initLink   ", "(" + link.link_id + ",0) " + req.headers.my_name + "=>server");
+    state = "initLink end";
 }
 
-function setupSession (req, res) {
-    state = "setupSession start";
+function initSession (req, res) {
+    state = "initSession start";
     var session, session_id_str;
     session = account_mgr.search_and_create(req.headers.my_name, req.headers.his_name, 0);
     if (!session) {
-        abend("setupSession", "null session");
+        abend("initSession", "null session");
         return;
     }
     session_id_str = "" + session.session_id;
     res.send(session_id_str);
-    logit("setupSession", req.headers.his_name + "=>" + req.headers.my_name);
-    state = "setupSession end";
+    logit("initSession", "(" + req.headers.link_id + "," + session.session_id + ") " + req.headers.his_name + "=>" + req.headers.my_name);
+    state = "initSession end";
 }
 
 function processNotFound (req, res) {

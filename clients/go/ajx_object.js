@@ -82,6 +82,7 @@ function AjxObject(root_object_val) {
         this.httpGetRequest().open("GET", this.ajxRoute(), true);
         this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
         this.httpGetRequest().setRequestHeader("setup_session", "yes");
+        this.httpGetRequest().setRequestHeader("link_id", session_val.rootObject().linkId());
         this.httpGetRequest().setRequestHeader("my_name", session_val.myName());
         this.httpGetRequest().setRequestHeader("his_name", session_val.hisName());
 
