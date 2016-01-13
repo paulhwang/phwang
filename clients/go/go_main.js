@@ -56,22 +56,22 @@ var main = function () {
                             " color=" + config.myColor() +
                             " komi=" + config.komiPoint() +
                             " handicap=" + config.handicapPoint());
-            runGoGame(session_val, config);
+            var container = new GoContainerObject(session_val, config);
+            runGoGame(container);
         });
     }
 
-    function runGoGame (session_val, config_val) {
-        var container = new GoContainerObject(session_val, config_val);
-        container.rootObject().htmlObject().createPlayHolders();
-        container.uiObject().initElements();
-        container.uiObject().drawBoard(container.engineObject());
+    function runGoGame (container_val) {
+        container_val.rootObject().htmlObject().createPlayHolders();
+        container_val.uiObject().initElements();
+        container_val.uiObject().drawBoard(container_val.engineObject());
 
         $("canvas").on("click", function(event) {
-            container.uiObject().uiClickApi(event.clientX, event.clientY);
+            container_val.uiObject().uiClickApi(event.clientX, event.clientY);
         });
 
         $("canvas").on("mousemove", function(event) {
-            container.uiObject().uiMouseMove(event.clientX, event.clientY);
+            container_val.uiObject().uiMouseMove(event.clientX, event.clientY);
         });
 
         var addCommentFromInputBox = function () {
