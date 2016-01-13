@@ -106,7 +106,7 @@ function GoContainerObject(session_object_val, config_object_val) {
     this.theConfigObject.setContainerObject(this);
 
     //this.goLog("GoContainerObject", "color=" + this.configObject().myColor() + " board_size=" + this.configObject().boardSize());
-    this.theBoardObject = new GoBoardObject(this.configObject());
+    this.theBoardObject = new GoBoardObject(this);
 
     this.theUiObject.setContainerObject(this);
 

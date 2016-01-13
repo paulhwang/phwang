@@ -4,16 +4,20 @@
  * File name: go_board.js
  */
 
-function GoBoardObject(config_val) {
+function GoBoardObject(container_val) {
     "use strict";
-    this.theConfigObject = config_val;
+    this.theContainerObject = container_val;
 
     this.objectName = function () {
         return "GoBoardObject";
     };
 
+    this.containerObject = function () {
+        return this.theContainerObject;
+    };
+
     this.configObject = function () {
-        return this.theConfigObject;
+        return this.containerObject().configObject();
     };
 
     this.boardSize = function () {
