@@ -1,11 +1,20 @@
 var main = function () {
     "use strict";
 
-    document.cookie="paul's cookie is here";
+    document.cookie = "paul's cookie is here";
+
+    function updateTimer () {
+        root.ajaxObject().getPendingData(getPendingDataCallback, root);
+    }
+
+    function getPendingDataCallback (root_val) {
+        //console.log("getPendingDataCallback " + root_val.objectName());
+    }
+
+    var root = new RootObject();
     runPrelude();
 
     function runPrelude () {
-        var root = new RootObject();
         root.htmlObject().createPreludeHolder();
         $(".prelude_holder button").on("click", function() {
             root.setMyName($(".prelude_holder input").val());
@@ -15,10 +24,6 @@ var main = function () {
                 root.ajaxObject().setupLink(setupLinkCallback, root);
             }
         });
-    }
-
-    function updateTimer () {
-        console.log("updataTimer");
     }
 
     function setupLinkCallback (root_val) {

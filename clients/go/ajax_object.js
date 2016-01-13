@@ -48,7 +48,28 @@ function AjaxObject(root_object_val) {
         return s;
     };
 
-    this.setupLink = function (callback_val, root_val) {
+    this.getPendingData = function (callback_func_val, callback_param_val) {
+        var this0 = this;
+        var request0 = this.httpGetRequest();
+        var root0 = this.rootObject();
+
+        //this.logit("getPendingData", this.rootObject().myName());
+        this.httpGetRequest().open("GET", this.ajaxRoute(), true);
+        this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
+        this.httpGetRequest().setRequestHeader("command", "get_pending_data");
+        this.httpGetRequest().setRequestHeader("my_name", this.rootObject().myName());
+
+        this.httpGetRequest().onreadystatechange = function() {
+            if ((request0.readyState === 4) && (request0.status === 200)) {
+                var context_type = request0.getResponseHeader("Content-Type");
+                //this0.logit("getPendingData", request0.responseText);
+                callback_func_val(callback_param_val);
+            }
+        };
+        this.httpGetRequest().send(null);
+    };
+
+    this.setupLink = function (callback_func_val, callback_param_val) {
         var this0 = this;
         var request0 = this.httpGetRequest();
         var root0 = this.rootObject();
@@ -65,7 +86,7 @@ function AjaxObject(root_object_val) {
                 var link_id = request0.responseText;
                 this0.logit("setupLink", "link_id= " + request0.responseText);
                 root0.setLinkId(Number(link_id));
-                callback_val(root_val);
+                callback_func_val(callback_param_val);
             }
         };
         this.httpGetRequest().send(null);

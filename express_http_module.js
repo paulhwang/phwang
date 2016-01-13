@@ -98,6 +98,11 @@ function processPost(req, res) {
 }
 
 function processGet (req, res) {
+    if (req.headers.command === "get_pending_data") {
+        getPendingData(req, res);
+        return;
+    }
+
     if (req.headers.command === "setup_link") {
         initLink(req, res);
         return;
@@ -166,6 +171,11 @@ function processGet (req, res) {
     res.send(data);
     state = "processGet end";
     debug(false, "processGet ", "end");
+}
+
+function getPendingData (req, res) {
+    //logit("getPendingData", "");
+    res.send("response from server for getPendingData");
 }
 
 function initLink (req, res) {
