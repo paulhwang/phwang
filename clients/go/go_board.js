@@ -114,12 +114,12 @@ function GoBoardObject(config_val) {
 
     this.theObjectName = "GoBoardObject";
     this.theConfigObject = config_val;
-    this.theBoardArray = [this.boardSize()];
-    this.theMarkedBoardArray = [this.boardSize()];
+    this.theBoardArray = [19];
+    this.theMarkedBoardArray = [19];
     i = 0;
-    while (i < this.boardSize()) {
-        this.theBoardArray[i] = [this.boardSize()];
-        this.theMarkedBoardArray[i] = [this.boardSize()];
+    while (i < 19) {
+        this.theBoardArray[i] = [19];
+        this.theMarkedBoardArray[i] = [19];
         i += 1;
     }
     this.resetBoardObjectData();
