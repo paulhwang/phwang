@@ -4,11 +4,12 @@
  * File name: go_board.js
  */
 
-"use strict";
-
 function GoBoardObject(config_val) {
+    "use strict";
+    this.theConfigObject = config_val;
+
     this.objectName = function () {
-        return this.theObjectName;
+        return "GoBoardObject";
     };
 
     this.configObject = function () {
@@ -94,7 +95,6 @@ function GoBoardObject(config_val) {
         }
     };
 
-
     this.resetBoardObjectData = function () {
         var i, j;
 
@@ -110,13 +110,9 @@ function GoBoardObject(config_val) {
         }
     };
 
-    var i;
-
-    this.theObjectName = "GoBoardObject";
-    this.theConfigObject = config_val;
     this.theBoardArray = [19];
     this.theMarkedBoardArray = [19];
-    i = 0;
+    var i = 0;
     while (i < 19) {
         this.theBoardArray[i] = [19];
         this.theMarkedBoardArray[i] = [19];
