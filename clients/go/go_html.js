@@ -148,17 +148,27 @@ function GoHtmlObject(prelude_val) {
             i += 1;
         }
 
-        var peer_button = document.createElement("button");
-        peer_button.appendChild(document.createTextNode("Play"));
+        var peer_update_button = document.createElement("button");
+        peer_update_button.appendChild(document.createTextNode("Update"));
 
         var peer_paragraph = document.createElement("p");
+        peer_paragraph.setAttribute("id", "peer_paragraph");
         peer_paragraph.appendChild(document.createTextNode("Peer Name: "));
         peer_paragraph.appendChild(peer_select);
-        peer_paragraph.appendChild(peer_button);
+        peer_paragraph.appendChild(peer_update_button);
+
+        var peer_connect_button = document.createElement("button");
+        peer_connect_button.appendChild(document.createTextNode("Connect"));
+
+        var peer_connect_section = document.createElement("section");
+        peer_connect_section.setAttribute("id", "peer_connect_section");
+        peer_connect_section.appendChild(peer_connect_button);
 
         var config_peer_section = document.createElement("section");
+        config_peer_section.setAttribute("id", "config_peer_section");
         config_peer_section.setAttribute("class", "peer_section");
         config_peer_section.appendChild(peer_paragraph);
+        config_peer_section.appendChild(peer_connect_section);
 
         return config_peer_section;
     };
