@@ -170,15 +170,18 @@ function processGet (req, res) {
 
 function initLink (req, res) {
     state = "initLink start";
-    var link, link_id_str;
-    link = link_mgr.search_and_create(req.headers.my_name, 0);
+    var link = link_mgr.search_and_create(req.headers.my_name, 0);
     if (!link) {
         abend("initLink", "null link");
         return;
     }
-    link_id_str = "" + link.link_id;
+    var link_id_str = "" + link.link_id;
+    var name_array = link_mgr.get_name_list();
+    var name_array_str = JSON.stringify(name_array);
+    var data = {link_id: link.link_id, name_list: name_array};
+    var data_str = JSON.stringify(data);
     res.send(link_id_str);
-    logit("initLink   ", "(" + link.link_id + ",0) " + req.headers.my_name + "=>server");
+    logit("initLink   ", "(" + link.link_id + ",0) " + req.headers.my_name + "=>server " + data_str);
     state = "initLink end";
 }
 
