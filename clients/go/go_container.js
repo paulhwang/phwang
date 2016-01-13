@@ -4,11 +4,10 @@
  * File name: go_container.js
  */
 
-function GoContainerObject(session_object_val, config_object_val) {
+function GoContainerObject(session_object_val) {
     "use strict";
     this.theObjectName = "GoContainerObject";
     this.theSessionObject = session_object_val;
-    this.theConfigObject = config_object_val;
 
     this.objectName = function () {
         return this.theObjectName;
@@ -118,6 +117,8 @@ function GoContainerObject(session_object_val, config_object_val) {
         this.gameObject().processTheWholeMoveList();
         this.sessionObject().setupClientReceiveCallback(ajaxReceiveCallback, this);
     };
+
+    this.theConfigObject = new GoConfigObject(this.sessionObject());
 }
 
 function ajaxReceiveCallback (container_val, data_val) {

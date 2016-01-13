@@ -45,8 +45,8 @@ var main = function () {
     }
 
     function runGoConfig (session_val) {
-        var config = new GoConfigObject(session_val);
-        var container = new GoContainerObject(session_val, config);
+        var container = new GoContainerObject(session_val);
+        var config = container.configObject();
         session_val.rootObject().htmlObject().createConfigHolders();
         $(".config_holder button").on("click", function() {
             config.setBoardSize($(".board_size_section select").val());
