@@ -32,7 +32,12 @@ var main = function () {
     function runCreateSession (root_val) {
         var session = new SessionObject(root_val);
         session.rootObject().htmlObject().createSessionHolders(root_val);
-        $(".session_holder button").on("click", function() {
+        $(".peer_paragraph button").on("click", function() {
+            session.setHisName($(".peer_section select").val());
+            console.log("runCreateSession(update) ", "peer_name=" + session.hisName());
+            root_val.ajaxObject().getNameList(getNameListCallback, root_val);
+        });
+        $(".peer_connect_section button").on("click", function() {
             session.setHisName($(".peer_section select").val());
             console.log("runCreateSession() ", "peer_name=" + session.hisName());
             session.ajaxObject().initiateSessionConnection(setupSessionCallback, session);

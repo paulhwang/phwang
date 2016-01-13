@@ -152,7 +152,7 @@ function GoHtmlObject(prelude_val) {
         peer_update_button.appendChild(document.createTextNode("Update"));
 
         var peer_paragraph = document.createElement("p");
-        peer_paragraph.setAttribute("id", "peer_paragraph");
+        peer_paragraph.setAttribute("class", "peer_paragraph");
         peer_paragraph.appendChild(document.createTextNode("Peer Name: "));
         peer_paragraph.appendChild(peer_select);
         peer_paragraph.appendChild(peer_update_button);
@@ -161,7 +161,7 @@ function GoHtmlObject(prelude_val) {
         peer_connect_button.appendChild(document.createTextNode("Connect"));
 
         var peer_connect_section = document.createElement("section");
-        peer_connect_section.setAttribute("id", "peer_connect_section");
+        peer_connect_section.setAttribute("class", "peer_connect_section");
         peer_connect_section.appendChild(peer_connect_button);
 
         var config_peer_section = document.createElement("section");
