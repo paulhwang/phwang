@@ -71,7 +71,7 @@ function AjaxObject(root_object_val) {
         this.httpGetRequest().send(null);
     };
 
-    this.getNameList = function (callback_val, root_val) {
+    this.getNameList = function (callback_func_val, callback_param_val) {
         var this0 = this;
         var request0 = this.httpGetRequest();
         var root0 = this.rootObject();
@@ -88,8 +88,8 @@ function AjaxObject(root_object_val) {
                 var context_type = request0.getResponseHeader("Content-Type");
                 this0.logit("getNameList", "name_list= " + request0.responseText);
                 root0.setNameList(JSON.parse(request0.responseText));
-                if (callback_val) {
-                    callback_val(root_val);
+                if (callback_func_val) {
+                    callback_func_val(callback_param_val);
                 }
             }
         };

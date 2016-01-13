@@ -18,38 +18,25 @@ var main = function () {
     }
 
     function setupLinkCallback (root_val) {
-        root_val.ajaxObject().getNameList(getNameListAndRunCallback, root_val);
-    }
-
-    var run_create_session_caller = false;
-    function getNameListAndRunCallback (root_val) {
-        root_val.htmlObject().createSessionHolders(root_val);
-        if (!run_create_session_caller) {
-            runCreateSession(root_val);
-            run_create_session_caller = true;
-        }
-    }
-
-    function getNameListCallback (root_val) {
-        root_val.htmlObject().createSessionHolders(root_val);
-        if (!run_create_session_caller) {
-            runCreateSession(root_val);
-            run_create_session_caller = true;
-        }
-    }
-
-    function runCreateSession (root_val) {
         var session = new SessionObject(root_val);
-        session.rootObject().htmlObject().createSessionHolders(root_val);
+        root_val.ajaxObject().getNameList(getNameListCallback, session);
+    }
+
+    function getNameListCallback (session_val) {
+        runCreateSession(session_val);
+    }
+
+    function runCreateSession (session_val) {
+        session_val.rootObject().htmlObject().createSessionHolders(session_val.rootObject());
         $(".peer_paragraph button").on("click", function() {
-            session.setHisName($(".peer_section select").val());
-            console.log("runCreateSession(update) ", "peer_name=" + session.hisName());
-            root_val.ajaxObject().getNameList(getNameListCallback, root_val);
+            session_val.setHisName($(".peer_section select").val());
+            console.log("runCreateSession() ", "peer_name=" + session_val.hisName());
+            session_val.ajaxObject().getNameList(getNameListCallback, session_val);
         });
         $(".peer_connect_section button").on("click", function() {
-            session.setHisName($(".peer_section select").val());
-            console.log("runCreateSession() ", "peer_name=" + session.hisName());
-            session.ajaxObject().initiateSessionConnection(setupSessionCallback, session);
+            session_val.setHisName($(".peer_section select").val());
+            console.log("runCreateSession() ", "peer_name=" + session_val.hisName());
+            session_val.ajaxObject().initiateSessionConnection(setupSessionCallback, session_val);
         });
     }
 
