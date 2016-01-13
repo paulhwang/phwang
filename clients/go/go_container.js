@@ -101,11 +101,8 @@ function GoContainerObject(session_object_val) {
     };
 
     this.startGoGame = function () {
-        this.theUiObject = new GoUiObject("goCanvas");
+        this.theUiObject = new GoUiObject(this, "goCanvas");
         this.theBoardObject = new GoBoardObject(this);
-
-        this.theUiObject.setContainerObject(this);
-
         this.theEngineObject = new GoEngineObject(this);
         this.theGameObject = new GoGameObject(this, this.lastGame());
         this.theHandlerObject = new GoHandlerObject(this);

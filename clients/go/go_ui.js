@@ -4,9 +4,10 @@
  * File name: go_ui.js
  */
 
-function GoUiObject(canvas_id_val) {
+function GoUiObject(container_val, canvas_id_val) {
     "use strict";
     this.theCanvasId = canvas_id_val;
+    this.theContainerObject = container_val;
 
     this.canvasId = function () {
         return this.theCanvasId;
@@ -568,10 +569,6 @@ function GoUiObject(canvas_id_val) {
     this.theLastMouseX = 9;
     this.theLastMouseY = 9;
     this.theEncodedMoveList = null;
-
-    this.setContainerObject = function (container_val) {
-        this.theContainerObject = container_val;
-    };
 
     this.initElements = function () {
         this.theCanvasElement = window.document.getElementById(this.canvasId());
