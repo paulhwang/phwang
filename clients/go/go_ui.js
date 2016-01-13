@@ -4,13 +4,16 @@
  * File name: go_ui.js
  */
 
-function GoUiObject(container_val, canvas_id_val) {
+function GoUiObject(container_val) {
     "use strict";
-    this.theCanvasId = canvas_id_val;
     this.theContainerObject = container_val;
 
+    this.objectName = function () {
+        return "GoUiObject";
+    };
+
     this.canvasId = function () {
-        return this.theCanvasId;
+        return "goCanvas";
     };
 
     this.containerObject = function () {
@@ -180,9 +183,9 @@ function GoUiObject(container_val, canvas_id_val) {
             return;
         }
 
-        this.goLog("uiClick", this.canvasId() + "(" + x + "," + y + ")");
+        this.logit("uiClick", this.canvasId() + "(" + x + "," + y + ")");
         if (!this.gameObject().isMyTurn(this.containerObject().engineObject())) {
-            this.goLog("uiClick", "not my turn");
+            this.logit("uiClick", "not my turn");
             return;
         }
 
@@ -558,14 +561,14 @@ function GoUiObject(container_val, canvas_id_val) {
         this.whiteScoreElement().textContent = this.engineObject().whiteScoreString();
     };
 
-    this.goAbend = function (str1_val, str2_val) {
-        return this.containerObject().goAbend("GoUiObject." + str1_val, str2_val);
+    this.abend = function (str1_val, str2_val) {
+        return this.containerObject().goAbend(this.objectName() + "." + str1_val, str2_val);
     };
 
-    this.goLog = function (str1_val, str2_val) {
-        return this.containerObject().goLog("GoUiObject." + str1_val, str2_val);
+    this.logit = function (str1_val, str2_val) {
+        return this.containerObject().goLog(this.objectName() + "." + str1_val, str2_val);
     };
-    
+
     this.theLastMouseX = 9;
     this.theLastMouseY = 9;
     this.theEncodedMoveList = null;
