@@ -21,16 +21,8 @@ var main = function () {
         root_val.ajaxObject().getNameList(getNameListCallback, root_val);
     }
 
-    var get_name_list_done = false;
     var run_create_session_caller = false;
-
     function getNameListCallback (root_val) {
-        if (get_name_list_done) {
-            return;
-        }
-
-        //root_val.ajaxObject().getNameList(getNameListCallback, root_val);
-
         if (!run_create_session_caller) {
             runCreateSession(root_val);
             run_create_session_caller = true;
@@ -48,7 +40,6 @@ var main = function () {
     }
 
     function setupSessionCallback (session_val) {
-        get_name_list_done = true;
         runGoConfig(session_val);
     }
 
