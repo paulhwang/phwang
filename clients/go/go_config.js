@@ -4,16 +4,20 @@
  * File name: go_config.js
  */
 
-function GoConfigObject(session_val) {
+function GoConfigObject(container_val) {
     "use strict";
-    this.theSessionObject = session_val;
+    this.theContainerObject = container_val;
+
+    this.objectName = function () {
+        return "GoConfigObject";
+    };
 
     this.containerObject = function () {
         return this.theContainerObject;
     };
 
     this.sessionObject = function () {
-        return this.theSessionObject;
+        return this.containerObject().sessionObject();
     };
 
     this.rootObject = function () {
@@ -117,15 +121,11 @@ function GoConfigObject(session_val) {
         return (0 <= coordinate_val) && (coordinate_val < this.boardSize());
     };
 
-    this.goAbend = function (str1_val, str2_val) {
-        return this.containerObject().goAbend("GoConfigObject." + str1_val, str2_val);
+    this.abend = function (str1_val, str2_val) {
+        return this.containerObject().goAbend(this.objectName() + "." + str1_val, str2_val);
     };
 
-    this.goLog = function (str1_val, str2_val) {
-        return this.containerObject().goLog("GoConfigObject." + str1_val, str2_val);
-    };
-
-    this.setContainerObject = function (container_val) {
-        this.theContainerObject = container_val;
+    this.logit = function (str1_val, str2_val) {
+        return this.containerObject().goLog(this.objectName() + "." + str1_val, str2_val);
     };
 }

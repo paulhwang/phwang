@@ -6,11 +6,10 @@
 
 function GoContainerObject(session_object_val) {
     "use strict";
-    this.theObjectName = "GoContainerObject";
     this.theSessionObject = session_object_val;
 
     this.objectName = function () {
-        return this.theObjectName;
+        return "GoContainerObject";
     };
 
     this.sessionObject = function () {
@@ -103,8 +102,6 @@ function GoContainerObject(session_object_val) {
 
     this.startGoGame = function () {
         this.theUiObject = new GoUiObject("goCanvas");
-        this.theConfigObject.setContainerObject(this);
-
         this.theBoardObject = new GoBoardObject(this);
 
         this.theUiObject.setContainerObject(this);
@@ -118,7 +115,7 @@ function GoContainerObject(session_object_val) {
         this.sessionObject().setupClientReceiveCallback(ajaxReceiveCallback, this);
     };
 
-    this.theConfigObject = new GoConfigObject(this.sessionObject());
+    this.theConfigObject = new GoConfigObject(this);
 }
 
 function ajaxReceiveCallback (container_val, data_val) {
