@@ -101,18 +101,17 @@ function GoContainerObject(session_object_val) {
     };
 
     this.startGoGame = function () {
-        this.theUiObject = new GoUiObject(this);
-        this.theBoardObject = new GoBoardObject(this);
-        this.theEngineObject = new GoEngineObject(this);
-        this.theGameObject = new GoGameObject(this, this.lastGame());
-        this.theHandlerObject = new GoHandlerObject(this);
-        this.thePortObject = new GoPortObject(this);
-
         this.gameObject().processTheWholeMoveList();
         this.sessionObject().setupClientReceiveCallback(ajaxReceiveCallback, this);
     };
 
     this.theConfigObject = new GoConfigObject(this);
+    this.theUiObject = new GoUiObject(this);
+    this.theBoardObject = new GoBoardObject(this);
+    this.theEngineObject = new GoEngineObject(this);
+    this.theGameObject = new GoGameObject(this, this.lastGame());
+    this.theHandlerObject = new GoHandlerObject(this);
+    this.thePortObject = new GoPortObject(this);
 }
 
 function ajaxReceiveCallback (container_val, data_val) {

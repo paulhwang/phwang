@@ -57,12 +57,12 @@ var main = function () {
                             " color=" + config.myColor() +
                             " komi=" + config.komiPoint() +
                             " handicap=" + config.handicapPoint());
-            container.startGoGame();
             runGoGame(container);
         });
     }
 
     function runGoGame (container_val) {
+        container_val.startGoGame();
         container_val.rootObject().htmlObject().createPlayHolders();
         container_val.uiObject().initElements();
         container_val.uiObject().drawBoard(container_val.engineObject());
