@@ -41,13 +41,13 @@ var main = function () {
     }
 
     function setupSessionCallback (session_val) {
-        runGoConfig(session_val);
+        var container = new GoContainerObject(session_val);
+        runGoConfig(container);
     }
 
-    function runGoConfig (session_val) {
-        var container = new GoContainerObject(session_val);
-        var config = container.configObject();
-        session_val.rootObject().htmlObject().createConfigHolders();
+    function runGoConfig (container_val) {
+        var config = container_val.configObject();
+        container_val.rootObject().htmlObject().createConfigHolders();
         $(".config_holder button").on("click", function() {
             config.setBoardSize($(".board_size_section select").val());
             config.setMyColor($(".play_color_section select").val());
@@ -57,7 +57,7 @@ var main = function () {
                             " color=" + config.myColor() +
                             " komi=" + config.komiPoint() +
                             " handicap=" + config.handicapPoint());
-            runGoGame(container);
+            runGoGame(container_val);
         });
     }
 
