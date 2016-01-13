@@ -102,23 +102,22 @@ function GoContainerObject(session_object_val, config_object_val) {
         this.utilObject().utilAbend(this.sessionObject().sessionId() + s1_val, s2_val);
     };
 
-    this.theUiObject = new GoUiObject("goCanvas");
-    this.theConfigObject.setContainerObject(this);
+    this.startGoGame = function () {
+        this.theUiObject = new GoUiObject("goCanvas");
+        this.theConfigObject.setContainerObject(this);
 
-    //this.goLog("GoContainerObject", "color=" + this.configObject().myColor() + " board_size=" + this.configObject().boardSize());
-    this.theBoardObject = new GoBoardObject(this);
+        this.theBoardObject = new GoBoardObject(this);
 
-    this.theUiObject.setContainerObject(this);
+        this.theUiObject.setContainerObject(this);
 
-    this.theEngineObject = new GoEngineObject(this);
-    this.theGameObject = new GoGameObject(this, this.lastGame());
-    //this.goLog("GoContainerObject", "color=" + this.configObject().myColor() + " board_size=" + this.configObject().boardSize());
-    this.theHandlerObject = new GoHandlerObject(this);
-    this.thePortObject = new GoPortObject(this);
+        this.theEngineObject = new GoEngineObject(this);
+        this.theGameObject = new GoGameObject(this, this.lastGame());
+        this.theHandlerObject = new GoHandlerObject(this);
+        this.thePortObject = new GoPortObject(this);
 
-    this.gameObject().processTheWholeMoveList();
-
-    this.sessionObject().setupClientReceiveCallback(ajaxReceiveCallback, this);
+        this.gameObject().processTheWholeMoveList();
+        this.sessionObject().setupClientReceiveCallback(ajaxReceiveCallback, this);
+    };
 }
 
 function ajaxReceiveCallback (container_val, data_val) {

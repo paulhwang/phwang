@@ -46,6 +46,7 @@ var main = function () {
 
     function runGoConfig (session_val) {
         var config = new GoConfigObject(session_val);
+        var container = new GoContainerObject(session_val, config);
         session_val.rootObject().htmlObject().createConfigHolders();
         $(".config_holder button").on("click", function() {
             config.setBoardSize($(".board_size_section select").val());
@@ -56,7 +57,7 @@ var main = function () {
                             " color=" + config.myColor() +
                             " komi=" + config.komiPoint() +
                             " handicap=" + config.handicapPoint());
-            var container = new GoContainerObject(session_val, config);
+            container.startGoGame();
             runGoGame(container);
         });
     }
