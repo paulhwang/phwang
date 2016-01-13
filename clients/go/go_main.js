@@ -18,11 +18,24 @@ var main = function () {
     }
 
     function setupLinkCallback (root_val) {
-        root_val.ajaxObject().getNameList(getNameListCallback, root_val);
+        root_val.ajaxObject().getNameList(getNameListAndRunCallback, root_val);
+    }
+
+    var run_create_session_caller = false;
+    function getNameListAndRunCallback (root_val) {
+        root_val.htmlObject().createSessionHolders(root_val);
+        if (!run_create_session_caller) {
+            runCreateSession(root_val);
+            run_create_session_caller = true;
+        }
     }
 
     function getNameListCallback (root_val) {
-        runCreateSession(root_val);
+        root_val.htmlObject().createSessionHolders(root_val);
+        if (!run_create_session_caller) {
+            runCreateSession(root_val);
+            run_create_session_caller = true;
+        }
     }
 
     function runCreateSession (root_val) {
@@ -31,7 +44,7 @@ var main = function () {
         $(".peer_paragraph button").on("click", function() {
             session.setHisName($(".peer_section select").val());
             console.log("runCreateSession(update) ", "peer_name=" + session.hisName());
-            root_val.ajaxObject().getNameList(null, root_val);
+            root_val.ajaxObject().getNameList(getNameListCallback, root_val);
         });
         $(".peer_connect_section button").on("click", function() {
             session.setHisName($(".peer_section select").val());
