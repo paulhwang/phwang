@@ -17,7 +17,12 @@ var main = function () {
         });
     }
 
+    function updateTimer () {
+        console.log("updataTimer");
+    }
+
     function setupLinkCallback (root_val) {
+        window.setInterval(updateTimer, 1000);
         var session = new SessionObject(root_val);
         root_val.ajaxObject().getNameList(getNameListCallback, session);
     }
