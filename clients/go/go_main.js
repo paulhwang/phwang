@@ -38,10 +38,14 @@ var main = function () {
 
     function runCreateSession (session_val) {
         session_val.rootObject().htmlObject().createSessionHolders(session_val);
-        $(".peer_paragraph button").on("click", function() {
+        $(".peer_name_paragraph button").on("click", function() {
             session_val.setHisName($(".peer_main_section select").val());
             console.log("runCreateSession() ", "peer_name=" + session_val.hisName());
             session_val.ajaxObject().getNameList(getNameListCallback, session_val);
+        });
+        $(".peer_game_paragraph button").on("click", function() {
+            var game = $(".peer_game_paragraph select").val();
+            console.log("runCreateSession() ", "game=" + game);
         });
         $(".peer_connect_section button").on("click", function() {
             session_val.setHisName($(".peer_main_section select").val());
