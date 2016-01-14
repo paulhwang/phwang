@@ -165,13 +165,13 @@ function GoHtmlObject(prelude_val) {
         peer_connect_section.setAttribute("class", "peer_connect_section");
         peer_connect_section.appendChild(peer_connect_button);
 
-        var config_peer_section = document.createElement("section");
-        config_peer_section.setAttribute("id", "config_peer_section");
-        config_peer_section.setAttribute("class", "peer_section");
-        config_peer_section.appendChild(peer_paragraph);
-        config_peer_section.appendChild(peer_connect_section);
+        var peer_main_section = document.createElement("section");
+        //peer_main_section.setAttribute("id", "peer_main_section");
+        peer_main_section.setAttribute("class", "peer_main_section");
+        peer_main_section.appendChild(peer_paragraph);
+        peer_main_section.appendChild(peer_connect_section);
 
-        return config_peer_section;
+        return peer_main_section;
     };
 
     this.createSessionHolder = function (session_val) {
