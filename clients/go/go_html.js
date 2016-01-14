@@ -144,10 +144,10 @@ function GoHtmlObject(prelude_val) {
 
         i = 0;
         while (i < root.nameListLength()) {
-            var peer_option = document.createElement("option");
-            peer_option.setAttribute("value", root.nameListElement(i));
-            peer_option.appendChild(document.createTextNode(root.nameListElement(i)));
-            peer_name_select.appendChild(peer_option);
+            var peer_name_option = document.createElement("option");
+            peer_name_option.setAttribute("value", root.nameListElement(i));
+            peer_name_option.appendChild(document.createTextNode(root.nameListElement(i)));
+            peer_name_select.appendChild(peer_name_option);
             i += 1;
         }
 
