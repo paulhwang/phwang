@@ -41,6 +41,14 @@ function SessionObject(root_object_val) {
         return this.theHisName;
     };
 
+    this.gameName = function () {
+        return this.theGameName;
+    };
+
+    this.setGameName = function (val) {
+        this.theGameName = val;
+    };
+
     this.xmtSeq = function () {
         return this.theXmtSeq;
     };

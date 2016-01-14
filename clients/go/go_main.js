@@ -44,8 +44,9 @@ var main = function () {
             session_val.ajaxObject().getNameList(getNameListCallback, session_val);
         });
         $(".peer_game_paragraph button").on("click", function() {
-            var game = $(".peer_game_paragraph select").val();
-            console.log("runCreateSession() ", "game=" + game);
+            session_val.setGameName($(".peer_game_paragraph select").val());
+            console.log("runCreateSession() ", "game=" + $(".peer_game_paragraph select").val());
+            runCreateSession(session_val);
         });
         $(".peer_connect_section button").on("click", function() {
             session_val.setHisName($(".peer_name_paragraph select").val());

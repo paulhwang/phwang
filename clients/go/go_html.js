@@ -196,9 +196,24 @@ function GoHtmlObject(prelude_val) {
         peer_main_section.setAttribute("class", "peer_main_section");
         peer_main_section.appendChild(peer_name_paragraph);
         peer_main_section.appendChild(peer_game_paragraph);
+        if (session_val.gameName() === "Go") {
+            peer_main_section.appendChild(this.createGoConfigSection());
+        }
         peer_main_section.appendChild(peer_connect_section);
 
         return peer_main_section;
+    };
+
+    this.createGoConfigSection = function () {
+        var go_config_section = document.createElement("section");
+        go_config_section.setAttribute("id", "go_config_section");
+        go_config_section.setAttribute("class", "go_config_section");
+        go_config_section.appendChild(this.createConfigBoardSizeSection());
+        go_config_section.appendChild(this.createConfigPlayColorSection());
+        go_config_section.appendChild(this.createConfigKomiSection());
+        go_config_section.appendChild(this.createConfigHandicapSection());
+
+        return go_config_section;
     };
 
     this.createSessionHolder = function (session_val) {
