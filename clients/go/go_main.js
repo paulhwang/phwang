@@ -55,7 +55,19 @@ var main = function () {
         });
 
         $(".peer_connect_section button").on("click", function() {
-            //session_val.setHisName($(".peer_name_paragraph select").val());
+            session_val.setHisName($(".peer_name_paragraph select").val());
+            container_val.sessionObject().setHisName($(".peer_name_paragraph select").val());
+            var config = container_val.configObject();
+            config.setBoardSize($(".board_size_section select").val());
+            config.setMyColor($(".play_color_section select").val());
+            config.setKomiPoint($(".komi_section select").val());
+            config.setHandicapPoint($(".handicap_section select").val());
+            console.log("runConfig() ", " my_name=" + container_val.rootObject().myName() +
+                                        " his_name=" + container_val.sessionObject().hisName() +
+                                        " board_size=" + config.boardSize() +
+                                        " color=" + config.myColor() +
+                                        " komi=" + config.komiPoint() +
+                                        " handicap=" + config.handicapPoint());
             //console.log("runCreateSession() ", "peer_name=" + session_val.hisName());
             session_val.ajaxObject().initiateSessionConnection(setupSessionCallback, container_val);
         });
@@ -63,17 +75,6 @@ var main = function () {
 
 
     function setupSessionCallback (container_val) {
-        container_val.sessionObject().setHisName($(".peer_name_paragraph select").val());
-        var config = container_val.configObject();
-        config.setBoardSize($(".board_size_section select").val());
-        config.setMyColor($(".play_color_section select").val());
-        config.setKomiPoint($(".komi_section select").val());
-        config.setHandicapPoint($(".handicap_section select").val());
-        console.log("runConfig() ", " his_name=" + container_val.sessionObject().hisName() +
-                                    " board_size=" + config.boardSize() +
-                                    " color=" + config.myColor() +
-                                    " komi=" + config.komiPoint() +
-                                    " handicap=" + config.handicapPoint());
         runGoGame(container_val);
     }
 
