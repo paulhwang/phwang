@@ -60,6 +60,7 @@ var main = function () {
             session_val.ajaxObject().initiateSessionConnection(setupSessionCallback, container_val);
         });
 
+/*
         $(".config_holder button").on("click", function() {
             var config = container_val.configObject();
             config.setBoardSize($(".board_size_section select").val());
@@ -72,25 +73,26 @@ var main = function () {
                             " handicap=" + config.handicapPoint());
             runGoGame(container_val);
         });
+*/
     }
 
 
     function setupSessionCallback (container_val) {
         //var container = new GoContainerObject(session_val);
         //runGoConfig(session_val.containerObject());
-            var config = container_val.configObject();
-            config.setBoardSize($(".board_size_section select").val());
-            config.setMyColor($(".play_color_section select").val());
-            config.setKomiPoint($(".komi_section select").val());
-            config.setHandicapPoint($(".handicap_section select").val());
-            console.log("runConfig() ", " board_size=" + config.boardSize() +
-                            " color=" + config.myColor() +
-                            " komi=" + config.komiPoint() +
-                            " handicap=" + config.handicapPoint());
+        var config = container_val.configObject();
+        config.setBoardSize($(".board_size_section select").val());
+        config.setMyColor($(".play_color_section select").val());
+        config.setKomiPoint($(".komi_section select").val());
+        config.setHandicapPoint($(".handicap_section select").val());
+        console.log("runConfig() ", " board_size=" + config.boardSize() +
+                                    " color=" + config.myColor() +
+                                    " komi=" + config.komiPoint() +
+                                    " handicap=" + config.handicapPoint());
         runGoGame(container_val);
     }
 
-
+/*
     function runGoConfig (container_val) {
         var config = container_val.configObject();
         container_val.rootObject().htmlObject().createConfigHolders();
@@ -106,6 +108,7 @@ var main = function () {
             runGoGame(container_val);
         });
     }
+*/
 
     function runGoGame (container_val) {
         container_val.startGoGame();
