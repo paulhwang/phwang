@@ -29,36 +29,67 @@ var main = function () {
     function setupLinkCallback (root_val) {
         window.setInterval(updateTimer, 1000);
         var session = new SessionObject(root_val);
-        root_val.ajaxObject().getNameList(getNameListCallback, session);
+        var container = new GoContainerObject(session);
+        root_val.ajaxObject().getNameList(getNameListCallback, container);
     }
 
-    function getNameListCallback (session_val) {
-        runCreateSession(session_val);
+    function getNameListCallback (container_val) {
+        //console.log("getNameListCallback() " + container_val.objectName());
+        runCreateSession(container_val);
     }
 
-    function runCreateSession (session_val) {
+    function runCreateSession (container_val) {
+        //console.log("runCreateSession() " + container_val.objectName());
+        var session_val = container_val.sessionObject();
         session_val.rootObject().htmlObject().createSessionHolders(session_val);
         $(".peer_name_paragraph button").on("click", function() {
             //session_val.setHisName($(".peer_main_section select").val());
             //console.log("runCreateSession() ", "peer_name=" + session_val.hisName());
             session_val.ajaxObject().getNameList(getNameListCallback, session_val);
         });
+
         $(".peer_game_paragraph button").on("click", function() {
             session_val.setGameName($(".peer_game_paragraph select").val());
             console.log("runCreateSession() ", "game=" + $(".peer_game_paragraph select").val());
-            runCreateSession(session_val);
+            runCreateSession(container_val);
         });
+
         $(".peer_connect_section button").on("click", function() {
             session_val.setHisName($(".peer_name_paragraph select").val());
             console.log("runCreateSession() ", "peer_name=" + session_val.hisName());
-            session_val.ajaxObject().initiateSessionConnection(setupSessionCallback, session_val);
+            session_val.ajaxObject().initiateSessionConnection(setupSessionCallback, container_val);
+        });
+
+        $(".config_holder button").on("click", function() {
+            var config = container_val.configObject();
+            config.setBoardSize($(".board_size_section select").val());
+            config.setMyColor($(".play_color_section select").val());
+            config.setKomiPoint($(".komi_section select").val());
+            config.setHandicapPoint($(".handicap_section select").val());
+            console.log("runConfig() ", " board_size=" + config.boardSize() +
+                            " color=" + config.myColor() +
+                            " komi=" + config.komiPoint() +
+                            " handicap=" + config.handicapPoint());
+            runGoGame(container_val);
         });
     }
 
-    function setupSessionCallback (session_val) {
-        var container = new GoContainerObject(session_val);
-        runGoConfig(container);
+
+    function setupSessionCallback (container_val) {
+        //var container = new GoContainerObject(session_val);
+        //runGoConfig(session_val.containerObject());
+            var config = container_val.configObject();
+            config.setBoardSize($(".board_size_section select").val());
+            config.setMyColor($(".play_color_section select").val());
+            config.setKomiPoint($(".komi_section select").val());
+            config.setHandicapPoint($(".handicap_section select").val());
+            console.log("runConfig() ", " board_size=" + config.boardSize() +
+                            " color=" + config.myColor() +
+                            " komi=" + config.komiPoint() +
+                            " handicap=" + config.handicapPoint());
+        runGoGame(container_val);
     }
+
 
     function runGoConfig (container_val) {
         var config = container_val.configObject();

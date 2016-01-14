@@ -117,9 +117,10 @@ function AjaxObject(root_object_val) {
         this.httpGetRequest().send(null);
     };
 
-    this.initiateSessionConnection = function (callback_val, session_val) {
+    this.initiateSessionConnection = function (callback_val, container_val) {
         var this0 = this;
         var request0 = this.httpGetRequest();
+        var session_val = container_val.sessionObject();
 
         this.logit("initiateSessionConnection", session_val.myName());
         this.httpGetRequest().open("GET", this.ajaxRoute(), true);
@@ -135,7 +136,7 @@ function AjaxObject(root_object_val) {
                 var session_id = request0.responseText;
                 this0.logit("initiateSessionConnection", "session_id= " + request0.responseText);
                 session_val.setSessionId(Number(session_id));
-                callback_val(session_val);
+                callback_val(container_val);
             }
         };
         this.httpGetRequest().send(null);
