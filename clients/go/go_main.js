@@ -2,17 +2,22 @@ var main = function () {
     "use strict";
 
     document.cookie = "paul's cookie is here";
+    var root = new RootObject();
+    runPrelude();
 
     function updateTimer () {
-        root.ajaxObject().getPendingData(getPendingDataCallback, root);
+        console.log("updateTimer() ", root.sessionMgrObject().queueSize());
+        if (root.sessionMgrObject().queueSize() === 0) {
+            //root.ajaxObject().getNameList(getNameListCallback, session_val);
+
+        } else {
+            root.ajaxObject().getPendingData(getPendingDataCallback, root);
+        }
     }
 
     function getPendingDataCallback (root_val) {
         //console.log("getPendingDataCallback " + root_val.objectName());
     }
-
-    var root = new RootObject();
-    runPrelude();
 
     function runPrelude () {
         root.htmlObject().createPreludeHolder();
@@ -34,7 +39,7 @@ var main = function () {
     }
 
     function getNameListCallback (container_val) {
-        //console.log("getNameListCallback() " + container_val.objectName());
+        console.log("getNameListCallback() " + container_val.objectName());
         runCreateSession(container_val);
     }
 
@@ -50,7 +55,6 @@ var main = function () {
 
         $(".peer_game_paragraph button").on("click", function() {
             session_val.setGameName($(".peer_game_paragraph select").val());
-            //console.log("runCreateSession() ", "game=" + $(".peer_game_paragraph select").val());
             runCreateSession(container_val);
         });
 
@@ -68,7 +72,6 @@ var main = function () {
                                         " color=" + config.myColor() +
                                         " komi=" + config.komiPoint() +
                                         " handicap=" + config.handicapPoint());
-            //console.log("runCreateSession() ", "peer_name=" + session_val.hisName());
             session_val.ajaxObject().initiateSessionConnection(setupSessionCallback, container_val);
         });
     }
