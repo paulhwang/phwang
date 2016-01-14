@@ -139,6 +139,7 @@ function GoHtmlObject(prelude_val) {
         var root = session_val.rootObject();
         var i;
 
+        /* name list *************************************************************/
         var peer_name_select = document.createElement("select");
         //peer_name_select.setAttribute("name", "opponent");
 
@@ -160,6 +161,28 @@ function GoHtmlObject(prelude_val) {
         peer_name_paragraph.appendChild(peer_name_select);
         peer_name_paragraph.appendChild(peer_update_button);
 
+        /* game list *************************************************************/
+        var peer_game_select = document.createElement("select");
+        var peer_name_select_array = ["Go", "Game1", "Game2"];
+        i = 0;
+        while (i < peer_name_select_array.length) {
+            var peer_game_option = document.createElement("option");
+            peer_game_option.setAttribute("value", peer_name_select_array[i]);
+            peer_game_option.appendChild(document.createTextNode(peer_name_select_array[i]));
+            peer_game_select.appendChild(peer_game_option);
+            i += 1;
+        }
+
+        var peer_game_button = document.createElement("button");
+        peer_game_button.appendChild(document.createTextNode("Select"));
+
+        var peer_game_paragraph = document.createElement("p");
+        peer_game_paragraph.setAttribute("class", "peer_game_paragraph");
+        peer_game_paragraph.appendChild(document.createTextNode("Game: "));
+        peer_game_paragraph.appendChild(peer_game_select);
+        peer_game_paragraph.appendChild(peer_game_button);
+
+        /* connect *************************************************************/
         var peer_connect_button = document.createElement("button");
         peer_connect_button.appendChild(document.createTextNode("Connect"));
 
@@ -167,10 +190,12 @@ function GoHtmlObject(prelude_val) {
         peer_connect_section.setAttribute("class", "peer_connect_section");
         peer_connect_section.appendChild(peer_connect_button);
 
+        /* main *************************************************************/
         var peer_main_section = document.createElement("section");
         //peer_main_section.setAttribute("id", "peer_main_section");
         peer_main_section.setAttribute("class", "peer_main_section");
         peer_main_section.appendChild(peer_name_paragraph);
+        peer_main_section.appendChild(peer_game_paragraph);
         peer_main_section.appendChild(peer_connect_section);
 
         return peer_main_section;
