@@ -107,5 +107,6 @@ function SessionObject(root_object_val) {
     this.theSessionId = 0;
     //this.theReceiveQueue = new QueueObject(this.utilObject());
     this.theTransmitQueue = new QueueObject(this.utilObject());
+    this.rootObject().sessionMgrObject().enQueue(this);
 }
 
