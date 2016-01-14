@@ -50,65 +50,32 @@ var main = function () {
 
         $(".peer_game_paragraph button").on("click", function() {
             session_val.setGameName($(".peer_game_paragraph select").val());
-            console.log("runCreateSession() ", "game=" + $(".peer_game_paragraph select").val());
+            //console.log("runCreateSession() ", "game=" + $(".peer_game_paragraph select").val());
             runCreateSession(container_val);
         });
 
         $(".peer_connect_section button").on("click", function() {
-            session_val.setHisName($(".peer_name_paragraph select").val());
-            console.log("runCreateSession() ", "peer_name=" + session_val.hisName());
+            //session_val.setHisName($(".peer_name_paragraph select").val());
+            //console.log("runCreateSession() ", "peer_name=" + session_val.hisName());
             session_val.ajaxObject().initiateSessionConnection(setupSessionCallback, container_val);
         });
-
-/*
-        $(".config_holder button").on("click", function() {
-            var config = container_val.configObject();
-            config.setBoardSize($(".board_size_section select").val());
-            config.setMyColor($(".play_color_section select").val());
-            config.setKomiPoint($(".komi_section select").val());
-            config.setHandicapPoint($(".handicap_section select").val());
-            console.log("runConfig() ", " board_size=" + config.boardSize() +
-                            " color=" + config.myColor() +
-                            " komi=" + config.komiPoint() +
-                            " handicap=" + config.handicapPoint());
-            runGoGame(container_val);
-        });
-*/
     }
 
 
     function setupSessionCallback (container_val) {
-        //var container = new GoContainerObject(session_val);
-        //runGoConfig(session_val.containerObject());
+        container_val.sessionObject().setHisName($(".peer_name_paragraph select").val());
         var config = container_val.configObject();
         config.setBoardSize($(".board_size_section select").val());
         config.setMyColor($(".play_color_section select").val());
         config.setKomiPoint($(".komi_section select").val());
         config.setHandicapPoint($(".handicap_section select").val());
-        console.log("runConfig() ", " board_size=" + config.boardSize() +
+        console.log("runConfig() ", " his_name=" + container_val.sessionObject().hisName() +
+                                    " board_size=" + config.boardSize() +
                                     " color=" + config.myColor() +
                                     " komi=" + config.komiPoint() +
                                     " handicap=" + config.handicapPoint());
         runGoGame(container_val);
     }
-
-/*
-    function runGoConfig (container_val) {
-        var config = container_val.configObject();
-        container_val.rootObject().htmlObject().createConfigHolders();
-        $(".config_holder button").on("click", function() {
-            config.setBoardSize($(".board_size_section select").val());
-            config.setMyColor($(".play_color_section select").val());
-            config.setKomiPoint($(".komi_section select").val());
-            config.setHandicapPoint($(".handicap_section select").val());
-            console.log("runConfig() ", " board_size=" + config.boardSize() +
-                            " color=" + config.myColor() +
-                            " komi=" + config.komiPoint() +
-                            " handicap=" + config.handicapPoint());
-            runGoGame(container_val);
-        });
-    }
-*/
 
     function runGoGame (container_val) {
         container_val.startGoGame();
