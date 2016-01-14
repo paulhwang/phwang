@@ -137,15 +137,17 @@ function GoHtmlObject(prelude_val) {
 
     this.createSessionPeerSection = function (session_val) {
         var root = session_val.rootObject();
-        var peer_select = document.createElement("select");
-        peer_select.setAttribute("name", "opponent");
+        var i;
 
-        var i = 0;
+        var peer_name_select = document.createElement("select");
+        //peer_name_select.setAttribute("name", "opponent");
+
+        i = 0;
         while (i < root.nameListLength()) {
             var peer_option = document.createElement("option");
             peer_option.setAttribute("value", root.nameListElement(i));
             peer_option.appendChild(document.createTextNode(root.nameListElement(i)));
-            peer_select.appendChild(peer_option);
+            peer_name_select.appendChild(peer_option);
             i += 1;
         }
 
@@ -155,7 +157,7 @@ function GoHtmlObject(prelude_val) {
         var peer_paragraph = document.createElement("p");
         peer_paragraph.setAttribute("class", "peer_paragraph");
         peer_paragraph.appendChild(document.createTextNode("Peer Name: "));
-        peer_paragraph.appendChild(peer_select);
+        peer_paragraph.appendChild(peer_name_select);
         peer_paragraph.appendChild(peer_update_button);
 
         var peer_connect_button = document.createElement("button");
