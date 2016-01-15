@@ -1,7 +1,7 @@
 /*
  * Copyrights phwang
  * Written by Paul Hwang
- * File name: AjxObject.js
+ * File name: AjaxObject.js
  */
 
 function AjaxObject(root_object_val) {

@@ -45,21 +45,21 @@ var main = function () {
 
     function runCreateSession (container_val) {
         //console.log("runCreateSession() " + container_val.objectName());
-        var session_val = container_val.sessionObject();
-        session_val.rootObject().htmlObject().createSessionHolders(session_val);
+        var session = container_val.sessionObject();
+        session.rootObject().htmlObject().createSessionHolders(session);
         $(".peer_name_paragraph button").on("click", function() {
-            //session_val.setHisName($(".peer_main_section select").val());
-            //console.log("runCreateSession() ", "peer_name=" + session_val.hisName());
-            session_val.ajaxObject().getNameList(getNameListCallback, session_val);
+            //session.setHisName($(".peer_main_section select").val());
+            //console.log("runCreateSession() ", "peer_name=" + session.hisName());
+            session.ajaxObject().getNameList(getNameListCallback, container_val);
         });
 
         $(".peer_game_paragraph button").on("click", function() {
-            session_val.setGameName($(".peer_game_paragraph select").val());
+            session.setGameName($(".peer_game_paragraph select").val());
             runCreateSession(container_val);
         });
 
         $(".peer_connect_section button").on("click", function() {
-            session_val.setHisName($(".peer_name_paragraph select").val());
+            session.setHisName($(".peer_name_paragraph select").val());
             container_val.sessionObject().setHisName($(".peer_name_paragraph select").val());
             var config = container_val.configObject();
             config.setBoardSize($(".board_size_section select").val());
@@ -72,7 +72,7 @@ var main = function () {
                                         " color=" + config.myColor() +
                                         " komi=" + config.komiPoint() +
                                         " handicap=" + config.handicapPoint());
-            session_val.ajaxObject().initiateSessionConnection(setupSessionCallback, container_val);
+            session.ajaxObject().initiateSessionConnection(setupSessionCallback, container_val);
         });
     }
 
