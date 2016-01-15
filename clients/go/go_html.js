@@ -143,6 +143,7 @@ function GoHtmlObject(prelude_val) {
         /* name list *************************************************************/
         var peer_name_select = document.createElement("select");
         //peer_name_select.setAttribute("name", "opponent");
+        //this.logit("createSessionPeerSection", "his_name=" + session_val.hisName());
 
         i = 0;
         while (i < root.nameListLength()) {
@@ -239,11 +240,19 @@ function GoHtmlObject(prelude_val) {
         this.setHolderStyle(session_holder);
     };
 
-    this.removeSessionHolder = function () {
+    this.removeSessionHolder = function (session_val) {
         if (!this.sessionHolderOn()) {
             return;
         }
         this.setSessionHolderOn(false);
+
+        if (session_val) {
+            var his_name = $(".peer_name_paragraph select").val();
+            if (his_name) {
+                session_val.setHisName(his_name);
+                //this.logit("removeSessionHolder", "his_name=" + session_val.hisName());
+            }
+        }
 
         var main_holder = document.getElementById("body");
         var session_holder = document.getElementById("session_holder");
@@ -643,25 +652,25 @@ function GoHtmlObject(prelude_val) {
     };
 
     this.createSessionHolders = function (session_val) {
-        this.removeAllHolders();
+        this.removeAllHolders(session_val);
         this.createSessionHolder(session_val);
     };
 
     this.createConfigHolders = function () {
-        this.removeAllHolders();
+        this.removeAllHolders(null);
         this.createConfigHolder();
     };
 
     this.createPlayHolders = function () {
-        this.removeAllHolders();
+        this.removeAllHolders(null);
         this.createCanvasHolder();
         this.createScoreHolder();
     };
 
-    this.removeAllHolders = function () {
+    this.removeAllHolders = function (val) {
         this.removePreludeHolder();
         this.removeTitleHolder();
-        this.removeSessionHolder();
+        this.removeSessionHolder(val);
         this.removeConfigHolder();
         this.removeCanvasHolder();
         this.removeScoreHolder();

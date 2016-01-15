@@ -101,13 +101,15 @@ function AjaxObject(root_object_val) {
         var request0 = this.httpGetRequest();
         var root0 = this.rootObject();
 
+/*
         if (callback_param_val.objectName() === "SessionObject") {
             var his_name = $(".peer_name_paragraph select").val();
             if (his_name) {
                 callback_param_val.setHisName(his_name);
-                //this.logit("getNameList" + "his_name=" + callback_param_val.hisName());
+                this.logit("getNameList" + "his_name=" + callback_param_val.hisName());
             }
         }
+*/
 
         //this.logit("getNameList", "my_name=" + this.rootObject().myName());
         this.httpGetRequest().open("GET", this.ajaxRoute(), true);
