@@ -89,7 +89,11 @@ function SessionObject(root_object_val) {
     };
 
     this.startUpdateNameListTimer = function () {
-        this.updateNameListTimer = window.setInterval(updateNameListTimerFunc, 10000, this);
+        this.updateNameListTimer = window.setInterval(function (session_val) {
+            session_val.ajaxObject().getNameList(function (session_val) {
+                session_val.runSession();
+            }, session_val);
+        }, 10000, this);
     };
 
     this.stopUpdateNameListTimer = function () {
@@ -155,7 +159,10 @@ function SessionObject(root_object_val) {
                                             " komi=" + config.komiPoint() +
                                             " handicap=" + config.handicapPoint());
             }
-            this0.ajaxObject().initiateSessionConnection(initiateSessionConnectionCallback, this0);
+            this0.ajaxObject().initiateSessionConnection(function (session_val) {
+                session_val.stopUpdateNameListTimer();
+                session_val.containerObject().runGoGame();
+            }, this0);
         });
     };
 
@@ -176,21 +183,7 @@ function SessionObject(root_object_val) {
     this.startUpdateNameListTimer();
 }
 
-function updateNameListTimerFunc (session_val) {
-    session_val.ajaxObject().getNameList(sessionGetNameListCallback, session_val);
-}
-
-function sessionGetNameListCallback (session_val) {
-    session_val.runSession();
-}
-
-function getNameListCallback (container_val) {
+function getNameListCallback_used_by_update (container_val) {
     console.log("getNameListCallback() " + container_val.objectName());
     container_val.sessionObject().runCreateSession(container_val);
-}
- 
-function initiateSessionConnectionCallback (session_val) {
-    session_val.stopUpdateNameListTimer();
-    session_val.containerObject().runGoGame();
-    //runGoGame(container_val);
 }

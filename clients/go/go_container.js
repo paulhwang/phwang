@@ -103,7 +103,10 @@ function GoContainerObject(session_object_val) {
 
     this.startGoGame = function () {
         this.gameObject().processTheWholeMoveList();
-        this.sessionObject().setupClientReceiveCallback(ajaxReceiveCallback, this);
+        this.sessionObject().setupClientReceiveCallback(function (container_val, data_val) {
+            //console.log("ajaxReceiveCallBack" + port_val.objectName());
+            container_val.portObject().receiveStringData(data_val);
+        }, this);
     };
 
     this.runGoGame = function () {
@@ -150,11 +153,6 @@ function GoContainerObject(session_object_val) {
     this.theGameObject = new GoGameObject(this, this.lastGame());
     this.theHandlerObject = new GoHandlerObject(this);
     this.thePortObject = new GoPortObject(this);
-}
-
-function ajaxReceiveCallback (container_val, data_val) {
-    //console.log("ajaxReceiveCallBack" + port_val.objectName());
-    container_val.portObject().receiveStringData(data_val);
 }
 
 var GO = new GoDefineObject;
