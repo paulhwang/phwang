@@ -6,11 +6,10 @@
 
 function HolderPoolObject(util_val) {
     "use strict";
-    this.theObjectName = "HolderPoolObject";
     this.theUtilObject = util_val;
 
     this.objectName = function () {
-        return this.theObjectName;
+        return "HolderPoolObject";
     };
 
     this.utilObject = function () {
