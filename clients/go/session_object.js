@@ -128,6 +128,7 @@ function SessionObject(root_object_val) {
         var this0 = this;
         var container = this.containerObject();
         this.rootObject().htmlObject().createSessionHolders(this);
+        
         $(".peer_name_paragraph button").on("click", function() {
             //this0.setHisName($(".peer_main_section select").val());
             //console.log("runCreateSession() ", "peer_name=" + this0.hisName());
@@ -179,8 +180,7 @@ function updateNameListTimerFunc (session_val) {
 }
 
 function sessionGetNameListCallback (session_val) {
-    //console.log("sessionGetNameListCallback() " + session_val.objectName());
-    //runCreateSession(container_val);
+    session_val.runSession();
 }
 
 function getNameListCallback (container_val) {
