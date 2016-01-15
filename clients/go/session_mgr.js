@@ -45,6 +45,15 @@ function SessionMgrObject(root_object_val) {
         return session;
     };
 
+    this.transmitData = function () {
+        var holder = this.sessionQueue().head();
+        while (holder) {
+            var session = holder.data();
+            session.transmitData();
+            holder = holder.next();
+        }
+    };
+
     this.abend = function (str1_val, str2_val) {
         return this.utilObject().utilAbend(this.objectName() + "." + str1_val, str2_val);
     };

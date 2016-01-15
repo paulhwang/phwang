@@ -78,7 +78,7 @@ function GoPortObject(container_val) {
 
     this.transmitStringData = function (str_val) {
         this.sessionObject().transmitQueue().enQueue(str_val);
-        this.sessionObject().transmitData();
+        this.sessionMgrObject().transmitData();
     };
 
     this.receiveStringData = function (str_val) {
