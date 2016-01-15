@@ -6,15 +6,14 @@
 
 function SessionObject(root_object_val) {
     "use strict";
-    this.theObjectName = "SessionObject";
     this.theRootObject = root_object_val;
+
+    this.objectName = function () {
+        return "SessionObject";
+    };
 
     this.setHisName = function (val) {
         this.theHisName = val;
-    };
-
-    this.objectName = function () {
-        return this.theObjectName;
     };
 
     this.rootObject = function () {
@@ -94,12 +93,27 @@ function SessionObject(root_object_val) {
         return this.rootObject().utilObject();
     };
 
+    this.transmitData = function () {
+        var str;
+        while (this.transmitQueue().size() > 0) {
+            str = this.transmitQueue().deQueue();
+            if (str) {
+                this.logit("transmitData", str);
+                this.ajaxObject().postRequest(str, this);
+                this.ajaxObject().sendDataToPeer(this, this);
+            }
+            else {
+                this.abend("transmitData", "null data");
+            }
+        }
+    };
+
     this.abend = function (str1_val, str2_val) {
-        return this.utilObject().abend(this.objectName() + "." + str1_val, str2_val);
+        return this.utilObject().utilabend(this.objectName() + "." + str1_val, str2_val);
     };
 
     this.logit = function (str1_val, str2_val) {
-        return this.utilObject().logit(this.objectName() + "." + str1_val, str2_val);
+        return this.utilObject().utilLogit(this.objectName() + "." + str1_val, str2_val);
     };
 
     this.theXmtSeq = 0;
