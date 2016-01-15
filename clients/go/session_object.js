@@ -133,11 +133,13 @@ function SessionObject(root_object_val) {
         var container = this.containerObject();
         this.rootObject().htmlObject().createSessionHolders(this);
 
+        /*
         $(".peer_name_paragraph button").on("click", function() {
             //this0.setHisName($(".peer_main_section select").val());
             //console.log("runCreateSession() ", "peer_name=" + this0.hisName());
             this0.ajaxObject().getNameList(getNameListCallback, container);
         });
+        */
 
         $(".peer_game_paragraph button").on("click", function() {
             this0.setGameName($(".peer_game_paragraph select").val());
@@ -183,7 +185,9 @@ function SessionObject(root_object_val) {
     this.startUpdateNameListTimer();
 }
 
+/*
 function getNameListCallback_used_by_update (container_val) {
     console.log("getNameListCallback() " + container_val.objectName());
     container_val.sessionObject().runCreateSession(container_val);
 }
+*/

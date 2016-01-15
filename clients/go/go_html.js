@@ -159,14 +159,14 @@ function GoHtmlObject(prelude_val) {
             i += 1;
         }
 
-        var peer_update_button = document.createElement("button");
-        peer_update_button.appendChild(document.createTextNode("Update"));
+        //var peer_update_button = document.createElement("button");
+        //peer_update_button.appendChild(document.createTextNode("Update"));
 
         var peer_name_paragraph = document.createElement("p");
         peer_name_paragraph.setAttribute("class", "peer_name_paragraph");
         peer_name_paragraph.appendChild(document.createTextNode("Peer Name: "));
         peer_name_paragraph.appendChild(peer_name_select);
-        peer_name_paragraph.appendChild(peer_update_button);
+        //peer_name_paragraph.appendChild(peer_update_button);
 
         /* game list *************************************************************/
         var peer_game_select = document.createElement("select");
