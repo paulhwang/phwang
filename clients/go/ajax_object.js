@@ -8,6 +8,10 @@ function AjaxObject(root_object_val) {
     "use strict";
     this.theRootObject = root_object_val;
 
+    this.objectName = function () {
+        return "AjaxObject";
+    };
+
     this.rootObject = function () {
         return this.theRootObject;
     };
@@ -193,11 +197,11 @@ function AjaxObject(root_object_val) {
     };
 
     this.abend = function (str1_val, str2_val) {
-        return this.utilObject().utilAbend("AjxObject." + str1_val, str2_val);
+        return this.utilObject().utilAbend(this.objectName() + "." + str1_val, str2_val);
     };
 
     this.logit = function (str1_val, str2_val) {
-        return this.utilObject().utilLogit("AjxObject." + str1_val, str2_val);
+        return this.utilObject().utilLogit(this.objectName() + "." + str1_val, str2_val);
     };
 
     this.theHttpGetRequest = new XMLHttpRequest();
