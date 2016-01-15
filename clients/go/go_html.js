@@ -138,6 +138,7 @@ function GoHtmlObject(prelude_val) {
     this.createSessionPeerSection = function (session_val) {
         var root = session_val.rootObject();
         var i;
+        var done = false;
 
         /* name list *************************************************************/
         var peer_name_select = document.createElement("select");
@@ -149,6 +150,11 @@ function GoHtmlObject(prelude_val) {
             peer_name_option.setAttribute("value", root.nameListElement(i));
             peer_name_option.appendChild(document.createTextNode(root.nameListElement(i)));
             peer_name_select.appendChild(peer_name_option);
+            if (!done && (root.nameListElement(i) === session_val.hisName())) {
+                //this.logit("createSessionPeerSection", "his_name=" + session_val.hisName());
+                peer_name_option.setAttribute("selected", null);
+                done = true;
+            }
             i += 1;
         }
 

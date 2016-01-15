@@ -142,7 +142,6 @@ function SessionObject(root_object_val) {
 
         $(".peer_connect_section button").on("click", function() {
             this0.setHisName($(".peer_name_paragraph select").val());
-            this0.setHisName($(".peer_name_paragraph select").val());
             var config = container.configObject();
             if (this0.containerObject().objectName() === "GoContainerObject") {
                 config.setBoardSize($(".board_size_section select").val());
