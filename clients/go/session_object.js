@@ -81,11 +81,11 @@ function SessionObject(root_object_val) {
     };
 
     this.startUpdateNameListTimer = function () {
-
+        this.updateNameListTimer = window.setInterval(updateNameListTimerFunc, 1000, this);
     };
 
     this.stopUpdateNameListTimer = function () {
-
+        window.clearInterval(this.updateNameListTimer);
     };
 
     this.setupClientReceiveCallback = function (callback_func_val, client_val) {
@@ -133,3 +133,11 @@ function SessionObject(root_object_val) {
     this.startUpdateNameListTimer();
 }
 
+function updateNameListTimerFunc (session_val) {
+    session_val.ajaxObject().getNameList(sessionGetNameListCallback, session_val);
+}
+
+function sessionGetNameListCallback (session_val) {
+    //console.log("sessionGetNameListCallback() " + session_val.objectName());
+    //runCreateSession(container_val);
+}
