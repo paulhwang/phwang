@@ -46,22 +46,22 @@ function SessionMgrObject(root_object_val) {
     };
 
     this.enQueueSessionData = function (session_val) {
+        if (!session_val) {
+            this.abend("enQueueSessionData", "null session");
+            return;
+        }
         this.enQueue(session_val);
-        this.transmitData();
+        this.transmitData(session_val);
     };
 
-    this.transmitData = function () {
-        var session, str;
-        while (true) {
-            session = this.rootObject().sessionMgrObject().deQueue();
-            if (!session) {
-                return;
-            }
-            str = session.transmitQueue().deQueue();
+    this.transmitData = function (session_val) {
+        var str;
+        while (session_val.transmitQueue().size() > 0) {
+            str = session_val.transmitQueue().deQueue();
             if (str) {
                 //this.logit("transmitData", str);
-                this.ajxObject().postRequest(str, session);
-                this.ajxObject().sendDataToPeer(this, session);
+                this.ajxObject().postRequest(str, session_val);
+                this.ajxObject().sendDataToPeer(this, session_val);
             }
             else {
                 this.abend("transmitData", "null data");
