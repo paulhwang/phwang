@@ -66,7 +66,7 @@ function processPost(req, res) {
         his_session = my_session;
     }
     else {
-        his_session = account_mgr.search(req.body.his_name, req.body.my_name, -1);
+        his_session = account_mgr.search(req.body.my_name, req.body.his_name, -1);
         if (!his_session) {
             abend("processPost", "null his_session");
             return;
@@ -227,7 +227,7 @@ function initSession (req, res) {
     }
     session_id_str = "" + session.session_id;
     res.send(session_id_str);
-    logit("initSession", "(" + req.headers.link_id + "," + session.session_id + ") " + req.headers.his_name + "=>" + req.headers.my_name);
+    logit("initSession", "(" + req.headers.link_id + "," + session.session_id + ") " + req.headers.my_name + "=>" + req.headers.his_name);
     state = "initSession end";
 }
 
