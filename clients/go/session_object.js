@@ -144,16 +144,18 @@ function SessionObject(root_object_val) {
             this0.setHisName($(".peer_name_paragraph select").val());
             this0.setHisName($(".peer_name_paragraph select").val());
             var config = container.configObject();
-            config.setBoardSize($(".board_size_section select").val());
-            config.setMyColor($(".play_color_section select").val());
-            config.setKomiPoint($(".komi_section select").val());
-            config.setHandicapPoint($(".handicap_section select").val());
-            console.log("runConfig() ", " my_name=" + this0.rootObject().myName() +
-                                        " his_name=" + this0.hisName() +
-                                        " board_size=" + config.boardSize() +
-                                        " color=" + config.myColor() +
-                                        " komi=" + config.komiPoint() +
-                                        " handicap=" + config.handicapPoint());
+            if (this0.containerObject().objectName() === "GoContainerObject") {
+                config.setBoardSize($(".board_size_section select").val());
+                config.setMyColor($(".play_color_section select").val());
+                config.setKomiPoint($(".komi_section select").val());
+                config.setHandicapPoint($(".handicap_section select").val());
+                console.log("runConfig() ", " my_name=" + this0.rootObject().myName() +
+                                            " his_name=" + this0.hisName() +
+                                            " board_size=" + config.boardSize() +
+                                            " color=" + config.myColor() +
+                                            " komi=" + config.komiPoint() +
+                                            " handicap=" + config.handicapPoint());
+            }
             this0.ajaxObject().initiateSessionConnection(initiateSessionConnectionCallback, this0);
         });
     };
