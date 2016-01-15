@@ -25,7 +25,7 @@ function UtilObject() {
     };
 
     this.utilAbend = function (str1_val, str2_val) {
-        window.console.log(this.userIndex() + "abend: " + str1_val + "() " + str2_val);
+        window.console.log("abend: " + str1_val + "() " + str2_val);
         window.alert("abend: " + str1_val + "() " + str2_val);
         var x = junk;
     };
