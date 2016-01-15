@@ -3,8 +3,8 @@ var main = function () {
 
     document.cookie = "paul's cookie is here";
     var root = new RootObject();
-    runPrelude();
-
+    //root.runPrelude();
+/*
     function updateTimer () {
         console.log("updateTimer() ", root.sessionMgrObject().queueSize());
         if (root.sessionMgrObject().queueSize() === 0) {
@@ -18,7 +18,8 @@ var main = function () {
     function getPendingDataCallback (root_val) {
         //console.log("getPendingDataCallback " + root_val.objectName());
     }
-
+    */
+/*
     function runPrelude () {
         root.htmlObject().createPreludeHolder();
         $(".prelude_holder button").on("click", function() {
@@ -40,9 +41,12 @@ var main = function () {
 
     function getNameListCallback (container_val) {
         console.log("getNameListCallback() " + container_val.objectName());
-        runCreateSession(container_val);
-    }
+        container_val.sessionObject().runCreateSession(container_val);
 
+        //runCreateSession(container_val);
+    }
+    */
+/*
     function runCreateSession (container_val) {
         //console.log("runCreateSession() " + container_val.objectName());
         var session = container_val.sessionObject();
@@ -79,9 +83,11 @@ var main = function () {
 
     function setupSessionCallback (container_val) {
         container_val.sessionObject().stopUpdateNameListTimer();
-        runGoGame(container_val);
+        container_val.runGoGame();
+        //runGoGame(container_val);
     }
-
+    */
+/*
     function runGoGame (container_val) {
         container_val.startGoGame();
         container_val.rootObject().htmlObject().createPlayHolders();
@@ -117,6 +123,7 @@ var main = function () {
             }
         });
     }
+    */
 };
 
 $(document).ready(main);

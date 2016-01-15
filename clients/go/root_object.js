@@ -83,10 +83,52 @@ function RootObject() {
         return this.utilObject().utilAbend(this.objectName() + "." + str1_val, str2_val);
     };
 
+    this.runRoot = function () {
+        var this0 = this;
+        this.htmlObject().createPreludeHolder();
+        $(".prelude_holder button").on("click", function() {
+            this0.setMyName($(".prelude_holder input").val());
+            this0.setLanguageUsed($(".prelude_holder select").val());
+            this0.logit("runRoot", "my_name=" + this0.myName() + " language=" + this0.languageUsed());
+            if (this0.myName()) {
+                this0.ajaxObject().setupLink(rootSetupLinkCallback, this0);
+            }
+        });
+    };
+
     this.theLinkId = 0;
     this.theUtilObject = new UtilObject();
     this.theAjaxObject = new AjaxObject(this);
     this.theSessionMgrObject = new SessionMgrObject(this);
     this.theHtmlObject = new GoHtmlObject(this);
     this.theNameList = [];
+    this.runRoot();
 }
+
+function rootSetupLinkCallback (root_val) {
+    //window.setInterval(updateTimer, 1000, root_val);
+    var session = new SessionObject(root_val);
+    var container = new GoContainerObject(session);
+    root_val.ajaxObject().getNameList(rootGetNameListCallback, session);
+}
+
+function rootGetNameListCallback (session_val) {
+    session_val.runSession();
+}
+
+/*
+    function updateTimer (root_val) {
+        console.log("updateTimer() ", root_val.sessionMgrObject().queueSize());
+        if (root_val.sessionMgrObject().queueSize() === 0) {
+            //root_val.ajaxObject().getNameList(getNameListCallback, session_val);
+
+        } else {
+            root_val.ajaxObject().getPendingData(getPendingDataCallback, root_val);
+        }
+    }
+
+    function getPendingDataCallback (root_val) {
+        //console.log("getPendingDataCallback " + root_val.objectName());
+    }
+*/
+

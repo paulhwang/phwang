@@ -7,6 +7,7 @@
 function GoContainerObject(session_object_val) {
     "use strict";
     this.theSessionObject = session_object_val;
+    this.theSessionObject.setContainerObject(this);
 
     this.objectName = function () {
         return "GoContainerObject";
@@ -103,6 +104,43 @@ function GoContainerObject(session_object_val) {
     this.startGoGame = function () {
         this.gameObject().processTheWholeMoveList();
         this.sessionObject().setupClientReceiveCallback(ajaxReceiveCallback, this);
+    };
+
+    this.runGoGame = function () {
+        var this0 = this;
+        this.startGoGame();
+        this.rootObject().htmlObject().createPlayHolders();
+        this.uiObject().initElements();
+        this.uiObject().drawBoard(this.engineObject());
+
+        $("canvas").on("click", function(event) {
+            this0.uiObject().uiClickApi(event.clientX, event.clientY);
+        });
+
+        $("canvas").on("mousemove", function(event) {
+            this0.uiObject().uiMouseMove(event.clientX, event.clientY);
+        });
+
+        var addCommentFromInputBox = function () {
+            var $new_comment = $("<p>");
+            if ($(".comment-input input").val() !== "") {
+                $new_comment.text($(".comment-input input").val());
+                $new_comment.hide();
+                $(".comments").append($new_comment);
+                $new_comment.fadeIn();
+                $(".comment-input input").val("");
+            }
+        };
+
+        $(".comment-input button").on("click", function(event) {
+            addCommentFromInputBox();
+        });
+
+        $(".comment-input input").on("keypress", function(event) {
+            if (event.keyCode == 13) {
+                addCommentFromInputBox();
+            }
+        });
     };
 
     this.theConfigObject = new GoConfigObject(this);

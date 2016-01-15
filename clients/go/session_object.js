@@ -20,6 +20,10 @@ function SessionObject(root_object_val) {
         return this.theRootObject;
     };
 
+    this.containerObject = function () {
+        return this.theContainerObject;
+    };
+
     this.ajaxObject = function () {
         return this.rootObject().ajaxObject();
     };
@@ -72,6 +76,10 @@ function SessionObject(root_object_val) {
         this.theSessionId = val;
     };
 
+    this.setContainerObject = function (val) {
+        this.theContainerObject = val;
+    };
+
     //this.receiveQueue = function () {
     //    return this.theReceiveQueue;
     //};
@@ -116,6 +124,39 @@ function SessionObject(root_object_val) {
         }
     };
 
+    this.runSession = function () {
+        var this0 = this;
+        var container = this.containerObject();
+        this.rootObject().htmlObject().createSessionHolders(this);
+        $(".peer_name_paragraph button").on("click", function() {
+            //this0.setHisName($(".peer_main_section select").val());
+            //console.log("runCreateSession() ", "peer_name=" + this0.hisName());
+            this0.ajaxObject().getNameList(getNameListCallback, container);
+        });
+
+        $(".peer_game_paragraph button").on("click", function() {
+            this0.setGameName($(".peer_game_paragraph select").val());
+            this0.runSession(container);
+        });
+
+        $(".peer_connect_section button").on("click", function() {
+            this0.setHisName($(".peer_name_paragraph select").val());
+            this0.setHisName($(".peer_name_paragraph select").val());
+            var config = container.configObject();
+            config.setBoardSize($(".board_size_section select").val());
+            config.setMyColor($(".play_color_section select").val());
+            config.setKomiPoint($(".komi_section select").val());
+            config.setHandicapPoint($(".handicap_section select").val());
+            console.log("runConfig() ", " my_name=" + this0.rootObject().myName() +
+                                        " his_name=" + this0.hisName() +
+                                        " board_size=" + config.boardSize() +
+                                        " color=" + config.myColor() +
+                                        " komi=" + config.komiPoint() +
+                                        " handicap=" + config.handicapPoint());
+            this0.ajaxObject().initiateSessionConnection(initiateSessionConnectionCallback, this0);
+        });
+    };
+
     this.abend = function (str1_val, str2_val) {
         return this.utilObject().utilabend(this.objectName() + "." + str1_val, str2_val);
     };
@@ -140,4 +181,15 @@ function updateNameListTimerFunc (session_val) {
 function sessionGetNameListCallback (session_val) {
     //console.log("sessionGetNameListCallback() " + session_val.objectName());
     //runCreateSession(container_val);
+}
+
+function getNameListCallback (container_val) {
+    console.log("getNameListCallback() " + container_val.objectName());
+    container_val.sessionObject().runCreateSession(container_val);
+}
+ 
+function initiateSessionConnectionCallback (session_val) {
+    session_val.stopUpdateNameListTimer();
+    session_val.containerObject().runGoGame();
+    //runGoGame(container_val);
 }
