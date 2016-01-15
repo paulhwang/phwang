@@ -6,10 +6,9 @@
 
 function HolderEntryObject() {
     "use strict";
-    this.theObjectName = "HolderEntryObject";
 
     this.objectName = function () {
-        return this.theObjectName;
+        return "HolderEntryObject";
     };
 
     this.utilObject = function () {

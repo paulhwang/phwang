@@ -62,7 +62,7 @@ function HolderPoolObject(util_val) {
         this.abendIt("mallocEntry end");
 
         if (entry) {
-            entry.data = data_val;
+            entry.setData(data_val);
         } else {
             this.abend('mallocEntry', 'null');
         }

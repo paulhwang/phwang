@@ -90,13 +90,13 @@ function QueueObject(util_val) {
         } else if (this.head() === this.tail()) {
             this.decrementSize();
             data_entry = this.head();
-            data = data_entry.data;
+            data = data_entry.data();
             this.setHead(null);
             this.setTail(null);
         } else {
             this.decrementSize();
             data_entry = this.head();
-            data = data_entry.data;
+            data = data_entry.data();
             this.setHead(this.head().next());
             this.head().setPrev(null);
         }
