@@ -89,7 +89,7 @@ function SessionObject(root_object_val) {
     };
 
     this.startUpdateNameListTimer = function () {
-        this.updateNameListTimer = window.setInterval(updateNameListTimerFunc, 1000, this);
+        this.updateNameListTimer = window.setInterval(updateNameListTimerFunc, 10000, this);
     };
 
     this.stopUpdateNameListTimer = function () {
@@ -128,7 +128,7 @@ function SessionObject(root_object_val) {
         var this0 = this;
         var container = this.containerObject();
         this.rootObject().htmlObject().createSessionHolders(this);
-        
+
         $(".peer_name_paragraph button").on("click", function() {
             //this0.setHisName($(".peer_main_section select").val());
             //console.log("runCreateSession() ", "peer_name=" + this0.hisName());
