@@ -80,6 +80,14 @@ function SessionObject(root_object_val) {
         return this.theTransmitQueue;
     };
 
+    this.startUpdateNameListTimer = function () {
+
+    };
+
+    this.stopUpdateNameListTimer = function () {
+
+    };
+
     this.setupClientReceiveCallback = function (callback_func_val, client_val) {
         this.theClientReceiveCallbackFunc = callback_func_val;
         this.theClientObject = client_val;
@@ -122,5 +130,6 @@ function SessionObject(root_object_val) {
     //this.theReceiveQueue = new QueueObject(this.utilObject());
     this.theTransmitQueue = new QueueObject(this.utilObject());
     this.rootObject().sessionMgrObject().enQueue(this);
+    this.startUpdateNameListTimer();
 }
 

@@ -195,6 +195,7 @@ function initLink (req, res) {
 }
 
 function getNameList (req, res) {
+    logit("getNameList", "(" + link.link_id + ",0) " + req.headers.my_name + "=>server");
     state = "getNameList start";
     var my_link_id;
 

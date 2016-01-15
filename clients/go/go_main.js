@@ -78,6 +78,7 @@ var main = function () {
 
 
     function setupSessionCallback (container_val) {
+        container_val.sessionObject().stopUpdateNameListTimer();
         runGoGame(container_val);
     }
 
