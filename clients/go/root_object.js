@@ -75,6 +75,13 @@ function RootObject() {
         this.theNameList = data_val;
     };
 
+    this.startKeepAlive = function () {
+        window.setInterval(function (root_val) {
+            root_val.ajaxObject().sendKeepAlive(root_val);
+        }, 10000, this);
+
+    };
+
     this.logit = function (str1_val, str2_val) {
         return this.utilObject().utilLogit(this.objectName() + "." + str1_val, str2_val);
     };
@@ -96,6 +103,7 @@ function RootObject() {
                     var session = new SessionObject(root_val);
                     var container = new GoContainerObject(session);
                     root_val.ajaxObject().getNameList(function (session_val) {
+                        this0.startKeepAlive();
                         session_val.runSession();
                     }, session);
                 }, this0);

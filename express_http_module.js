@@ -98,6 +98,12 @@ function processPost(req, res) {
 }
 
 function processGet (req, res) {
+    logit("processGet", "command=" + req.headers.command);
+
+    if (req.headers.command === "keep_alive") {
+        return;
+    }
+
     if (req.headers.command === "get_pending_data") {
         getPendingData(req, res);
         return;

@@ -96,6 +96,16 @@ function AjaxObject(root_object_val) {
         this.httpGetRequest().send(null);
     };
 
+    this.sendKeepAlive = function (root_val) {
+        this.httpGetRequest().open("GET", this.ajaxRoute(), true);
+        this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
+        this.httpGetRequest().setRequestHeader("command", "keep_alive");
+        this.httpGetRequest().setRequestHeader("my_name", this.rootObject().myName());
+        this.httpGetRequest().setRequestHeader("link_id", this.rootObject().linkId());
+
+        this.httpGetRequest().send(null);
+    };
+
     this.getNameList = function (callback_func_val, callback_param_val) {
         var this0 = this;
         var request0 = this.httpGetRequest();
