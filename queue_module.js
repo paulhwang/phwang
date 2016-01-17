@@ -136,6 +136,8 @@ function removeElement (queue_val, func_val, input_val1, input_val2, input_val3)
 
     debug(false, "removeElement", "start");
     debug(false, "removeElement", func_val);
+    abendIt(queue_val);
+
     p = queue_val.head;
     while (p) {
         debug(false, "removeElement", "in while loop");
@@ -151,10 +153,12 @@ function removeElement (queue_val, func_val, input_val1, input_val2, input_val3)
             } else {
                 queue_val.tail = p.prev;
             }
+            queue_val.size -= 1;
             return;
         }
         p = p.next;
     }
+    abendIt(queue_val);
     debug(false, "removeElement", "not found");
 }
 
