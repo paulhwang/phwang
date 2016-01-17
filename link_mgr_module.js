@@ -6,11 +6,15 @@
 
 module.exports = {
     search: function (my_name_val, link_id_val) {
-        return searchIt(my_name_val, link_id_val);
+        return searchLink(my_name_val, link_id_val);
     },
 
     search_and_create: function (my_name_val, link_id_val) {
         return searchAndCreate(my_name_val, link_id_val);
+    },
+
+    remove_link: function (link_val) {
+        removeLink(link_val);
     },
 
     get_name_list: function () {
@@ -32,13 +36,13 @@ var link_pool = require("./link_pool_module.js");
 
 var link_queue = queue.malloc();
 
-function searchIt(my_name_val, link_id_val) {
+function searchLink(my_name_val, link_id_val) {
     debug(false, "searchIt", my_name_val + " " + link_id_val);
-    return queue.search(link_queue, compareIt, my_name_val, link_id_val);
+    return queue.search(link_queue, compareLink, my_name_val, link_id_val);
 }
 
 function searchAndCreate(my_name_val, link_id_val) {
-    var link = queue.search(link_queue, compareIt, my_name_val, link_id_val);
+    var link = queue.search(link_queue, compareLink, my_name_val, link_id_val);
     if (!link) {
         link = link_pool.malloc(my_name_val);
         debug(false, "searchAndCreate", "malloc link: name=" + link.my_name + "=link_id=" + link.link_id);
@@ -47,7 +51,7 @@ function searchAndCreate(my_name_val, link_id_val) {
     return link;
 }
 
-function compareIt (link_val, my_name_val, link_id_val) {
+function compareLink (link_val, my_name_val, link_id_val) {
     debug(false, "compareIt", my_name_val + ":" + link_val.my_name);
     if (my_name_val !== link_val.my_name) {
         return false;
@@ -57,6 +61,11 @@ function compareIt (link_val, my_name_val, link_id_val) {
     } else {
         return (link_id_val === link_val.link_id);
     }
+}
+
+function removeLink (link_val) {
+    debug(true, "removeLink", "my_name=" + link_val.my_name + " link_id=" + link_val.link_id);
+
 }
 
 function getNameList () {

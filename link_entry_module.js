@@ -7,6 +7,7 @@
 var util = require("./util_module.js");
 var queue = require("./queue_module.js");
 var ring = require("./ring_module.js");
+var link_mgr = require("./link_mgr_module.js");
 var global_link_id = 1;
 
 module.exports = {
@@ -42,8 +43,8 @@ function resetTimeout (link_val) {
     }
     debug(false, "resetTimeout", "my_name=" + link_val.my_name + " link_id=" + link_val.link_id);
     var time_out = setInterval(function (link_val) {
-        console.log("===in time out");
-        console.log("resetTimeout(***)", "my_name=" + link_val.my_name + " link_id=" + link_val.link_id);
+        //console.log("resetTimeout(***timeout occurs)", "my_name=" + link_val.my_name + " link_id=" + link_val.link_id);
+        link_mgr.remove_link(link_val);
     }, 20000, link_val);
     return time_out;
 }
