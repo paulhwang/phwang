@@ -99,7 +99,7 @@ function processPost(req, res) {
 }
 
 function processGet (req, res) {
-    logit("processGet", "command=" + req.headers.command);
+    debug(false, "processGet", "command=" + req.headers.command);
 
     if (req.headers.command === "keep_alive") {
         keepAlive(req, res);
@@ -217,7 +217,7 @@ function initLink (req, res) {
 }
 
 function getNameList (req, res) {
-    logit("getNameList", "(" + link.link_id + ",0) " + req.headers.my_name + "=>server");
+    debug(false, "getNameList", "(" + link.link_id + ",0) " + req.headers.my_name + "=>server");
     state = "getNameList start";
     var my_link_id;
 
@@ -235,7 +235,7 @@ function getNameList (req, res) {
     var name_array = link_mgr.get_name_list();
     name_array_str = JSON.stringify(name_array);
     res.send(name_array_str);
-    logit("getNameList", "(" + link.link_id + ",0) " + req.headers.my_name + "=>server " + name_array_str);
+    debug(false, "getNameList", "(" + link.link_id + ",0) " + req.headers.my_name + "=>server " + name_array_str);
     state = "getNameList end";
 }
 

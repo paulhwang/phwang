@@ -40,15 +40,16 @@ function resetTimeout (link_val) {
     if (link_val.keep_alive_timer) {
         clearInterval(link_val.keep_alive_timer);
     }
-    logit("resetTimeout", "my_name=" + link_val.my_name + " link_id=" + link_val.link_id);
-    var time_out = setInterval(function () {
+    debug(false, "resetTimeout", "my_name=" + link_val.my_name + " link_id=" + link_val.link_id);
+    var time_out = setInterval(function (link_val) {
         console.log("===in time out");
-    }, 20000);
+        console.log("resetTimeout(***)", "my_name=" + link_val.my_name + " link_id=" + link_val.link_id);
+    }, 20000, link_val);
     return time_out;
 }
 
 function keepAlive (link_val) {
-    //logit("keepAlive", "my_name=" + link_val.my_name + " link_id=" + link_val.link_id);
+    debug(false, "keepAlive", "my_name=" + link_val.my_name + " link_id=" + link_val.link_id);
     link_val.keep_alive_timer = resetTimeout(link_val);
 }
 
