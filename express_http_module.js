@@ -126,6 +126,11 @@ function processGet (req, res) {
         return;
     }
 
+    if (req.headers.command === "get_session_data") {
+        getSessionData(req, res);
+        return;
+    }
+
     debug(false, "processGet ", "start");
     debug(false, "processGet ", "link=" + req.headers.session_id + " "  + req.headers.his_name + "=>" + req.headers.my_name);
     state = "processGet start";
@@ -181,6 +186,33 @@ function processGet (req, res) {
     debug(false, "processGet ", "end");
 }
 
+function getSessionData (req, res) {
+    logit("getSessionData", "session_id=" + req.headers.session_id + " "  + req.headers.his_name + "=>" + req.headers.my_name);
+    var link_id, session_id;
+
+    link_id = Number(req.headers.link_id);
+    link = link_mgr.search(req.headers.my_name, link_id);
+    if (!link) {
+        abend("processGet", "null link");
+        return;
+    }
+
+    session_id = Number(req.headers.session_id);
+    var my_session = account_mgr.search(req.headers.my_name, req.headers.his_name, session_id);
+    if (!my_session) {
+        abend("processGet", "null my_session");
+        return;
+    }
+    if (my_session.session_id === 0) {
+        abend("processGet", "null my_session = 0");
+        return;
+    }
+    if (!my_session.queue) {
+        abend("processGet", "null queue");
+        return;
+    }
+}
+
 function getPendingData (req, res) {
     //logit("getPendingData", "");
     res.send("response from server for getPendingData");
@@ -189,14 +221,14 @@ function getPendingData (req, res) {
 function keepAlive (req, res) {
     state = "keepAlive start";
     var my_link_id = Number(req.headers.link_id);
-    //logit("keepAlive", "link_id=" + my_link_id + " my_name=" + req.headers.my_name);
+    debug(false, "keepAlive", "link_id=" + my_link_id + " my_name=" + req.headers.my_name);
     var link = link_mgr.search(req.headers.my_name, my_link_id);
     if (!link) {
         abend("keepAlive", "***null link***" + "link_id=" + my_link_id + " my_name=" + req.headers.my_name);
         return;
     }
     link_entry.keep_alive(link);
-    //res.send(null);
+    res.send(null);
     state = "keepAlive end";
 }
 
