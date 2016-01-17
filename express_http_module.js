@@ -4,6 +4,16 @@
  * File name: express_http_module.js
  */
 
+var util = require("./util_module.js");
+var queue = require("./queue_module.js");
+var ring = require("./ring_module.js");
+var account_mgr = require("./session_mgr_module.js");
+var link_mgr = require("./link_mgr_module.js");
+var link_entry = require("./link_entry_module.js");
+var express = require('express');
+var bodyParser = require('body-parser');
+var state;
+
 module.exports = {
     post: function (req, res) {
         processPost(req, res);
@@ -21,15 +31,6 @@ module.exports = {
         processFailure(err, req, res, next);
     },
 };
-
-var util = require("./util_module.js");
-var queue = require("./queue_module.js");
-var ring = require("./ring_module.js");
-var account_mgr = require("./session_mgr_module.js");
-var link_mgr = require("./link_mgr_module.js");
-var express = require('express');
-var bodyParser = require('body-parser');
-var state;
 
 function processPost(req, res) {
     var my_link_id, my_session, his_session;
@@ -101,6 +102,7 @@ function processGet (req, res) {
     logit("processGet", "command=" + req.headers.command);
 
     if (req.headers.command === "keep_alive") {
+        keepAlive(req, res);
         return;
     }
 
@@ -182,6 +184,20 @@ function processGet (req, res) {
 function getPendingData (req, res) {
     //logit("getPendingData", "");
     res.send("response from server for getPendingData");
+}
+
+function keepAlive (req, res) {
+    state = "keepAlive start";
+    var my_link_id = Number(req.headers.link_id);
+    //logit("keepAlive", "link_id=" + my_link_id + " my_name=" + req.headers.my_name);
+    var link = link_mgr.search(req.headers.my_name, my_link_id);
+    if (!link) {
+        abend("keepAlive", "null link");
+        return;
+    }
+    link_entry.keep_alive(link);
+    //res.send(null);
+    state = "keepAlive end";
 }
 
 function initLink (req, res) {

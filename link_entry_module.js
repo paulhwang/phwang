@@ -4,6 +4,7 @@
  * File name: link_entry_module.js
  */
 
+var util = require("./util_module.js");
 var queue = require("./queue_module.js");
 var ring = require("./ring_module.js");
 var global_link_id = 1;
@@ -18,6 +19,10 @@ module.exports = {
         resetIt(link, my_name_val);
         return link;
     },
+
+    keep_alive: function (link_val) {
+        keepAlive(link_val);
+    },
 };
 
 function resetIt (link_val, my_name_val) {
@@ -30,5 +35,23 @@ function resetIt (link_val, my_name_val) {
     global_link_id += 1;
 }
 
-function LinkEntryObject() {
+function keepAlive (link_val) {
+    logit("keepAlive", "my_name=" + link_val.my_name + " link_id=" + link_val.link_id);
+}
+
+function LinkEntryObject () {
+}
+
+function debug (debug_val, str1_val, str2_val) {
+    if (debug_val) {
+        logit(str1_val, "==" + str2_val);
+    }
+}
+
+function logit (str1_val, str2_val) {
+    return util.utilLogit("NodeMain." + str1_val, str2_val);
+}
+
+function abend (str1_val, str2_val) {
+    return util.utilAbend("NodeMain." + str1_val, str2_val);
 }
