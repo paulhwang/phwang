@@ -24,6 +24,10 @@ module.exports = {
         return deQueue(queue_val);
     },
 
+    remove: function (queue_val, func_val, input_val1, input_val2, input_val3) {
+        removeElement(queue_val, func_val, input_val1, input_val2, input_val3);
+    },
+
     search: function (queue_val, func_val, input_val1, input_val2, input_val3) {
         return searchIt(queue_val, func_val, input_val1, input_val2, input_val3);
     },
@@ -125,6 +129,33 @@ function deQueue (queue_val) {
 
     //logit("dequeueIt", "end");
     return data;
+}
+
+function removeElement (queue_val, func_val, input_val1, input_val2, input_val3) {
+    var p;
+
+    debug(false, "removeElement", "start");
+    debug(false, "removeElement", func_val);
+    p = queue_val.head;
+    while (p) {
+        debug(false, "removeElement", "in while loop");
+        if (func_val(p.data, input_val1, input_val2, input_val3)) {
+            debug(false, "removeElement", "found");
+            if (p.prev) {
+                p.prev.next = p.next;
+            } else {
+                queue_val.head = p.next;
+            }
+            if (p.next) {
+                p.next.prev = p.prev;
+            } else {
+                queue_val.tail = p.prev;
+            }
+            return;
+        }
+        p = p.next;
+    }
+    debug(false, "removeElement", "not found");
 }
 
 function searchIt(queue_val, func_val, input_val1, input_val2, input_val3) {

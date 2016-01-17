@@ -64,8 +64,8 @@ function compareLink (link_val, my_name_val, link_id_val) {
 }
 
 function removeLink (link_val) {
-    debug(true, "removeLink", "my_name=" + link_val.my_name + " link_id=" + link_val.link_id);
-
+    logit("removeLink", "my_name=" + link_val.my_name + " link_id=" + link_val.link_id);
+    queue.remove(link_queue, compareLink, link_val.my_name, link_val.link_id);
 }
 
 function getNameList () {
