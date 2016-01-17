@@ -25,8 +25,8 @@ function resetIt (session_val, my_name_val, his_name_val) {
     session_val.his_name = his_name_val;
     session_val.up_seq = 0;
     session_val.down_seq = 0;
-    session_val.queue = queue.malloc();
-    session_val.ring = ring.malloc();
+    session_val.receive_queue = queue.malloc();
+    session_val.receive_ring = ring.malloc();
     session_val.session_id = global_session_id;
     global_session_id += 1;
 }

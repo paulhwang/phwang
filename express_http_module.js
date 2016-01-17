@@ -79,8 +79,8 @@ function processPost(req, res) {
     }
 
     if (req.body.xmt_seq === my_session.up_seq) {
-        queue.enqueue(his_session.queue, req.body.data);
-        ring.enqueue(his_session.ring, req.body.data);
+        queue.enqueue(his_session.receive_queue, req.body.data);
+        ring.enqueue(his_session.receive_ring, req.body.data);
         my_session.up_seq += 1;
     } else if (req.body.xmt_seq < my_session.up_seq) {
          if (req.body.xmt_seq === 0) {
@@ -158,15 +158,15 @@ function processGet (req, res) {
         abend("processGet", "null my_session = 0");
         return;
     }
-    if (!my_session.queue) {
-        abend("processGet", "null queue");
+    if (!my_session.receive_queue) {
+        abend("processGet", "null receive_queue");
         return;
     }
     res.type('application/json');
     state = "get 2000";
-    var data = queue.dequeue(my_session.queue);
+    var data = queue.dequeue(my_session.receive_queue);
     state = "get 3000";
-    var data1 = ring.dequeue(my_session.ring);
+    var data1 = ring.dequeue(my_session.receive_ring);
     state = "get 4000";
     if (data !== data1) {
         logit("*****Abend: processGet", "queue and ring not match");
@@ -207,8 +207,8 @@ function getSessionData (req, res) {
         abend("processGet", "null my_session = 0");
         return;
     }
-    if (!my_session.queue) {
-        abend("processGet", "null queue");
+    if (!my_session.receive_queue) {
+        abend("processGet", "null receive_queue");
         return;
     }
 }
