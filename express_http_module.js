@@ -192,7 +192,7 @@ function keepAlive (req, res) {
     //logit("keepAlive", "link_id=" + my_link_id + " my_name=" + req.headers.my_name);
     var link = link_mgr.search(req.headers.my_name, my_link_id);
     if (!link) {
-        abend("keepAlive", "null link");
+        abend("keepAlive", "***null link***" + "link_id=" + my_link_id + " my_name=" + req.headers.my_name);
         return;
     }
     link_entry.keep_alive(link);
@@ -224,7 +224,7 @@ function getNameList (req, res) {
     my_link_id = Number(req.headers.link_id);
     my_link = link_mgr.search(req.headers.my_name, my_link_id);
     if (!my_link) {
-        abend("getNameList", "null my_link");
+        abend("getNameList", "null my_link" + "link_id=" + my_link_id + " my_name=" + req.headers.my_name);
         return;
     }
     if (my_link.link_id === 0) {

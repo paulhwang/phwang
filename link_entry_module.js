@@ -43,7 +43,7 @@ function resetTimeout (link_val) {
     }
     debug(false, "resetTimeout", "my_name=" + link_val.my_name + " link_id=" + link_val.link_id);
     var time_out = setInterval(function (link_val) {
-        //console.log("resetTimeout(***timeout occurs)", "my_name=" + link_val.my_name + " link_id=" + link_val.link_id);
+        console.log("resetTimeout(***timeout occurs)", "my_name=" + link_val.my_name + " link_id=" + link_val.link_id);
         clearInterval(link_val.keep_alive_timer);
         link_mgr.remove_link(link_val);
     }, 20000, link_val);
