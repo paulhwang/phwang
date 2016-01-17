@@ -90,10 +90,16 @@ function SessionObject(root_object_val) {
 
     this.startUpdateNameListTimer = function () {
         this.updateNameListTimer = window.setInterval(function (session_val) {
-            session_val.ajaxObject().getNameList(function (session_val) {
-                session_val.runSession();
-            }, session_val);
-        }, 10000, this);
+            if (!session_val.sessionConnected) {
+                session_val.ajaxObject().getNameList(function (session_val) {
+                    session_val.runSession();
+                }, session_val);
+            } else {
+                session_val.ajaxObject().getSessionData(function (session_val) {
+                    console.log("startUpdateNameListTimer***" + session_val.sessionId());
+                }, session_val);
+            }
+        }, 1000, this);
     };
 
     this.stopUpdateNameListTimer = function () {
@@ -162,10 +168,15 @@ function SessionObject(root_object_val) {
                                             " handicap=" + config.handicapPoint());
             }
             this0.ajaxObject().initiateSessionConnection(function (session_val) {
-                session_val.stopUpdateNameListTimer();
+                //session_val.stopUpdateNameListTimer();
+                session_val.sessionConnected = true;
                 session_val.containerObject().runGoGame();
             }, this0);
         });
+    };
+
+    this.destructor = function () {
+        window.clearInterval(this.updateNameListTimer);
     };
 
     this.abend = function (str1_val, str2_val) {
@@ -179,6 +190,7 @@ function SessionObject(root_object_val) {
     this.theXmtSeq = 0;
     this.theRcvSeq = 0;
     this.theSessionId = 0;
+    this.sessionConnected = false;
     //this.theReceiveQueue = new QueueObject(this.utilObject());
     this.theTransmitQueue = new QueueObject(this.utilObject());
     this.rootObject().sessionMgrObject().enQueue(this);

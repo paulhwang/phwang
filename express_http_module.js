@@ -187,28 +187,29 @@ function processGet (req, res) {
 }
 
 function getSessionData (req, res) {
-    logit("getSessionData", "session_id=" + req.headers.session_id + " "  + req.headers.his_name + "=>" + req.headers.my_name);
+    //console.log(req.headers);
+    debug(false, "getSessionData", "(" + req.headers.link_id + "," + req.headers.session_id + ") my_name=" + req.headers.my_name + "=>" + req.headers.his_name);
     var link_id, session_id;
 
     link_id = Number(req.headers.link_id);
     link = link_mgr.search(req.headers.my_name, link_id);
     if (!link) {
-        abend("processGet", "null link");
+        abend("getSessionData", "null link");
         return;
     }
 
     session_id = Number(req.headers.session_id);
     var my_session = account_mgr.search(req.headers.my_name, req.headers.his_name, session_id);
     if (!my_session) {
-        abend("processGet", "null my_session");
+        abend("getSessionData", "null my_session");
         return;
     }
     if (my_session.session_id === 0) {
-        abend("processGet", "null my_session = 0");
+        abend("getSessionData", "null my_session = 0");
         return;
     }
     if (!my_session.receive_queue) {
-        abend("processGet", "null receive_queue");
+        abend("getSessionData", "null receive_queue");
         return;
     }
 }
@@ -249,7 +250,6 @@ function initLink (req, res) {
 }
 
 function getNameList (req, res) {
-    debug(false, "getNameList", "(" + link.link_id + ",0) " + req.headers.my_name + "=>server");
     state = "getNameList start";
     var my_link_id;
 
