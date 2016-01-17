@@ -213,12 +213,11 @@ function getSessionData (req, res) {
         return;
     }
     res.type('application/json');
-    logit("getSessionData", "queue_size=" + queue.queue_size(my_session.receive_queue));
     if (queue.queue_size(my_session.receive_queue) === 0) {
         return;
     }
 
-    /*
+    //logit("getSessionData", "queue_size=" + queue.queue_size(my_session.receive_queue));
     var data = queue.dequeue(my_session.receive_queue);
     var data1 = ring.dequeue(my_session.receive_ring);
     if (data !== data1) {
@@ -235,7 +234,6 @@ function getSessionData (req, res) {
 
     logit("getSessionData ", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.his_name + "=>" + req.headers.my_name + " {" + data + "}");
     res.send(data);
-    */
 }
 
 function getPendingData (req, res) {

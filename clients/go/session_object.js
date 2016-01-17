@@ -99,7 +99,7 @@ function SessionObject(root_object_val) {
                     console.log("startUpdateNameListTimer***" + session_val.sessionId());
                 }, session_val);
             }
-        }, 1000, this);
+        }, 500, this);
     };
 
     this.stopUpdateNameListTimer = function () {
@@ -126,7 +126,7 @@ function SessionObject(root_object_val) {
             if (str) {
                 //this.logit("transmitData", str);
                 this.ajaxObject().postRequest(str, this);
-                this.ajaxObject().sendDataToPeer(this, this);
+                //this.ajaxObject().sendDataToPeer(this, this);
             }
             else {
                 this.abend("transmitData", "null data");

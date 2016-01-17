@@ -146,16 +146,6 @@ function AjaxObject(root_object_val) {
         var request0 = this.httpGetRequest();
         var root0 = this.rootObject();
 
-/*
-        if (callback_param_val.objectName() === "SessionObject") {
-            var his_name = $(".peer_name_paragraph select").val();
-            if (his_name) {
-                callback_param_val.setHisName(his_name);
-                this.logit("getSessionData" + "his_name=" + callback_param_val.hisName());
-            }
-        }
-*/
-
         //this.logit("getSessionData", "my_name=" + this.rootObject().myName() + " link_id=" + this.rootObject().linkId() + " session_id=" + session_val.sessionId());
         this.httpGetRequest().open("GET", this.ajaxRoute(), true);
         this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
@@ -168,11 +158,8 @@ function AjaxObject(root_object_val) {
         this.httpGetRequest().onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
                 var context_type = request0.getResponseHeader("Content-Type");
-                //this0.logit("getSessionData", "name_list= " + request0.responseText);
-                //root0.setNameList(JSON.parse(request0.responseText));
-                if (callback_func_val) {
-                    callback_func_val(session_val);
-                }
+                this0.logit("getMessage", "data= " + request0.responseText);
+                session_val.receiveData(request0.responseText);
             }
         };
         this.httpGetRequest().send(null);
