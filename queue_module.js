@@ -24,6 +24,10 @@ module.exports = {
         return deQueue(queue_val);
     },
 
+    queue_size: function (queue_val) {
+        return queue_val.size;
+    },
+
     remove: function (queue_val, func_val, input_val1, input_val2, input_val3) {
         removeElement(queue_val, func_val, input_val1, input_val2, input_val3);
     },

@@ -212,6 +212,30 @@ function getSessionData (req, res) {
         abend("getSessionData", "null receive_queue");
         return;
     }
+    res.type('application/json');
+    logit("getSessionData", "queue_size=" + queue.queue_size(my_session.receive_queue));
+    if (queue.queue_size(my_session.receive_queue) === 0) {
+        return;
+    }
+
+    /*
+    var data = queue.dequeue(my_session.receive_queue);
+    var data1 = ring.dequeue(my_session.receive_ring);
+    if (data !== data1) {
+        logit("*****Abend: getSessionData", "queue and ring not match");
+    }
+    if (!data) {
+        //logit("getSessionData", "null data");
+        return;
+    }
+    if (!data1) {
+        //logti("getSessionData", "null data1");
+        return;
+    }
+
+    logit("getSessionData ", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.his_name + "=>" + req.headers.my_name + " {" + data + "}");
+    res.send(data);
+    */
 }
 
 function getPendingData (req, res) {
