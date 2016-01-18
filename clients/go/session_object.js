@@ -72,8 +72,16 @@ function SessionObject(root_object_val) {
         return this.theSessionId;
     };
 
+    this.sessionIdString = function () {
+        return "" + this.sessionId();
+    };
+
     this.setSessionId = function (val) {
+        if (this.sessionId()) {
+            this.abend("setSessionId", "already exist");
+        }
         this.theSessionId = val;
+        this.ajaxObject().setupCallback("get_session_data", this.sessionIdString(), ajaxCallbackForGetSessionData, this);
     };
 
     this.setContainerObject = function (val) {
@@ -195,6 +203,12 @@ function SessionObject(root_object_val) {
     this.theTransmitQueue = new QueueObject(this.utilObject());
     this.rootObject().sessionMgrObject().enQueue(this);
     this.startUpdateNameListTimer();
+}
+
+var this0 = this;
+function ajaxCallbackForGetSessionData (data_val, session_val) {
+    console.log("ajaxCallbackForGetSessionData" + " data= " + data_val);
+    session_val.receiveData(data_val);
 }
 
 /*

@@ -20,6 +20,26 @@ function AjaxObject(root_object_val) {
         return this.rootObject().utilObject();
     };
 
+    this.callbackIndex = function () {
+        return this.theCallbackIndex;
+    };
+
+    this.incrementCallbackIndex = function () {
+        return this.theCallbackIndex += 1;
+    };
+
+    this.callbackArray = function () {
+        return this.theCallbackArray;
+    };
+
+    this.callbackArrayElement = function (index_val) {
+        return this.theCallbackArray[index_val];
+    };
+
+    this.setCallbackArrayElement = function (index_val, data_val) {
+        this.theCallbackArray[index_val] = data_val;
+    };
+
     this.ajaxRoute = function () {
         return "/go_msg";
     };
@@ -51,6 +71,30 @@ function AjaxObject(root_object_val) {
         session_val.incrementXmtSeq();
         return s;
     };
+
+    this.setupCallback = function (command_val, id_val, func_val, param_val1, param_val2, param_val3) {
+        this.setCallbackArrayElement(this.callbackIndex(),
+                                     {command: command_val,
+                                      id: id_val,
+                                      func: func_val,
+                                      param1: param_val1,
+                                      param2: param_val2,
+                                      param3: param_val3});
+        this.incrementCallbackIndex();
+    };
+
+    this.getCallbackInfo = function (command_val, id_val) {
+        var i = 0;
+        while (i < this.callbackArray().length) {
+            if (this.callbackArrayElement(i).command === command_val) {
+                //this.logit("getCallbackInfo", id_val + " " + this.callbackArrayElement(i).id);
+                if (!this.callbackArrayElement(i).id || this.callbackArrayElement(i).id === id_val) {
+                    return this.callbackArrayElement(i);
+                }
+            }
+            i += 1;
+        }
+    }
 
     this.getPendingData = function (callback_func_val, callback_param_val) {
         var this0 = this;
@@ -205,23 +249,18 @@ function AjaxObject(root_object_val) {
         var request0 = this.httpGetRequest();
         var root0 = this.rootObject();
 
-        //this.logit("getSessionData", "my_name=" + this.rootObject().myName() + " link_id=" + this.rootObject().linkId() + " session_id=" + session_val.sessionId());
-        //this.httpGetRequest().open("GET", this.ajaxRoute(), true);
-        //this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
-        //this.httpGetRequest().setRequestHeader("command", "get_session_data");
-        //this.httpGetRequest().setRequestHeader("my_name", this.rootObject().myName());
-        //this.httpGetRequest().setRequestHeader("his_name", session_val.hisName());
-        //this.httpGetRequest().setRequestHeader("link_id", this.rootObject().linkId());
-        //this.httpGetRequest().setRequestHeader("session_id", session_val.sessionId());
-
         this.httpGetRequest().onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
                 var context_type = request0.getResponseHeader("Content-Type");
-                this0.logit("getMessage", "data= " + request0.responseText);
-                session_val.receiveData(request0.responseText);
+                this0.logit("getSessionData", "data= " + request0.responseText);
+
+                var callback_info = this0.getCallbackInfo("get_session_data", session_val.sessionIdString());
+                if (callback_info) {
+                    callback_info.func(request0.responseText, callback_info.param1);
+                }
             }
         };
-        //this.httpGetRequest().send(null);
+
         var ajax = {
             command: "get_session_data",
             callback_func: callback_func_val,
@@ -232,14 +271,6 @@ function AjaxObject(root_object_val) {
                      {type: "his_name", value: session_val.hisName()}],
             };
         this.enqueueOutput(ajax);
-        /*
-        var header = [{type: "command", value: "get_session_data"},
-                      {type: "my_name", value: this.rootObject().myName()},
-                      {type: "his_name", value: session_val.hisName()},
-                      {type: "link_id", value: this.rootObject().linkId()},
-                      {type: "session_id", value: session_val.sessionId()}];
-        this.enqueueOutput(header);
-        */
     };
 
     this.initiateSessionConnection = function (callback_func_val, session_val) {
@@ -352,6 +383,8 @@ function AjaxObject(root_object_val) {
         return this.utilObject().utilLogit(this.objectName() + "." + str1_val, str2_val);
     };
 
+    this.theCallbackIndex = 0;
+    this.theCallbackArray = [];
     this.outputQueue = new QueueObject(this.utilObject());
     this.inputQueue = new QueueObject(this.utilObject());
     this.theHttpGetRequest = new XMLHttpRequest();
