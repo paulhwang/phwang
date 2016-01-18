@@ -111,13 +111,17 @@ function AjaxObject(root_object_val) {
     };
 
     this.sendKeepAlive = function (root_val) {
-        this.httpGetRequest().open("GET", this.ajaxRoute(), true);
-        this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
-        this.httpGetRequest().setRequestHeader("command", "keep_alive");
-        this.httpGetRequest().setRequestHeader("my_name", this.rootObject().myName());
-        this.httpGetRequest().setRequestHeader("link_id", this.rootObject().linkId());
+        //this.httpGetRequest().open("GET", this.ajaxRoute(), true);
+        //this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
+        //this.httpGetRequest().setRequestHeader("command", "keep_alive");
+        //this.httpGetRequest().setRequestHeader("my_name", this.rootObject().myName());
+        //this.httpGetRequest().setRequestHeader("link_id", this.rootObject().linkId());
 
-        this.httpGetRequest().send(null);
+        //this.httpGetRequest().send(null);
+        var header = [{type: "command", value: "keep_alive"},
+                      {type: "my_name", value: this.rootObject().myName()},
+                      {type: "link_id", value: this.rootObject().linkId()}];
+        this.ajaxJob(header);
     };
 
     this.getNameList = function (callback_func_val, callback_param_val) {
@@ -136,11 +140,11 @@ function AjaxObject(root_object_val) {
 */
 
         //this.logit("getNameList", "my_name=" + this.rootObject().myName());
-        this.httpGetRequest().open("GET", this.ajaxRoute(), true);
-        this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
-        this.httpGetRequest().setRequestHeader("command", "get_name_list");
-        this.httpGetRequest().setRequestHeader("my_name", this.rootObject().myName());
-        this.httpGetRequest().setRequestHeader("link_id", this.rootObject().linkId());
+        //this.httpGetRequest().open("GET", this.ajaxRoute(), true);
+        //this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
+        //this.httpGetRequest().setRequestHeader("command", "get_name_list");
+        //this.httpGetRequest().setRequestHeader("my_name", this.rootObject().myName());
+        //this.httpGetRequest().setRequestHeader("link_id", this.rootObject().linkId());
 
         this.httpGetRequest().onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
@@ -152,7 +156,11 @@ function AjaxObject(root_object_val) {
                 }
             }
         };
-        this.httpGetRequest().send(null);
+        //this.httpGetRequest().send(null);
+        var header = [{type: "command", value: "get_name_list"},
+                      {type: "my_name", value: this.rootObject().myName()},
+                      {type: "link_id", value: this.rootObject().linkId()}];
+        this.ajaxJob(header);
     };
 
     this.getSessionData = function (callback_func_val, session_val) {
