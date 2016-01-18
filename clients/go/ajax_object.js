@@ -94,24 +94,37 @@ function AjaxObject(root_object_val) {
             }
         };
 
-        var header = [{type: "command", value: "setup_link"},
-                      {type: "my_name", value: this.rootObject().myName()}];
-        this.enqueueOutput(header);
+        var ajax = {
+            command: "setup_link",
+            callback_func: callback_func_val,
+            callback_param: callback_param_val,
+            header: [{type: "my_name", value: this.rootObject().myName()}]
+            };
+        this.enqueueOutput(ajax);
     };
 
-    this.enqueueOutput = function (header_val) {
-        this.ajaxJob(header_val);
+    this.enqueueOutput = function (ajax_val) {
+        this.outputQueue.enQueue(ajax_val);
+        this.ajaxJob();
     };
 
-    this.ajaxJob = function (header_val) {
-        this.httpGetRequest().open("GET", this.ajaxRoute(), true);
-        this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
-        var i = 0;
-        while (i < header_val.length) {
-            this.httpGetRequest().setRequestHeader(header_val[i].type, header_val[i].value);
-            i += 1;
+    this.ajaxJob = function () {
+        if (this.outputQueue.size() === 0) {
+            this.sendKeepAlive();
         }
-        this.httpGetRequest().send(null);
+        while (this.outputQueue.size() > 0) {
+            var ajax = this.outputQueue.deQueue();
+            var header = ajax.header;
+            this.httpGetRequest().open("GET", this.ajaxRoute(), true);
+            this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
+            this.httpGetRequest().setRequestHeader("command", ajax.command);
+            var i = 0;
+            while (i < header.length) {
+                this.httpGetRequest().setRequestHeader(header[i].type, header[i].value);
+                i += 1;
+            }
+            this.httpGetRequest().send(null);
+        }
     };
 
     this.sendKeepAlive = function (root_val) {
@@ -122,10 +135,20 @@ function AjaxObject(root_object_val) {
         //this.httpGetRequest().setRequestHeader("link_id", this.rootObject().linkId());
 
         //this.httpGetRequest().send(null);
+        var ajax = {
+            command: "keep_alive",
+            callback_func: null,
+            callback_param: null,
+            header: [{type: "my_name", value: this.rootObject().myName()},
+                     {type: "link_id", value: this.rootObject().linkId()}]
+            };
+        this.enqueueOutput(ajax);
+        /*
         var header = [{type: "command", value: "keep_alive"},
                       {type: "my_name", value: this.rootObject().myName()},
                       {type: "link_id", value: this.rootObject().linkId()}];
         this.enqueueOutput(header);
+        */
     };
 
     this.getNameList = function (callback_func_val, callback_param_val) {
@@ -161,10 +184,20 @@ function AjaxObject(root_object_val) {
             }
         };
         //this.httpGetRequest().send(null);
+        var ajax = {
+            command: "get_name_list",
+            callback_func: callback_func_val,
+            callback_param: callback_param_val,
+            header: [{type: "my_name", value: this.rootObject().myName()},
+                     {type: "link_id", value: this.rootObject().linkId()}]
+            };
+        this.enqueueOutput(ajax);
+        /*
         var header = [{type: "command", value: "get_name_list"},
                       {type: "my_name", value: this.rootObject().myName()},
                       {type: "link_id", value: this.rootObject().linkId()}];
         this.enqueueOutput(header);
+        */
     };
 
     this.getSessionData = function (callback_func_val, session_val) {
@@ -189,15 +222,27 @@ function AjaxObject(root_object_val) {
             }
         };
         //this.httpGetRequest().send(null);
+        var ajax = {
+            command: "get_session_data",
+            callback_func: callback_func_val,
+            callback_param: session_val,
+            header: [{type: "my_name", value: this.rootObject().myName()},
+                     {type: "link_id", value: this.rootObject().linkId()},
+                     {type: "session_id", value: session_val.sessionId()},
+                     {type: "his_name", value: session_val.hisName()}],
+            };
+        this.enqueueOutput(ajax);
+        /*
         var header = [{type: "command", value: "get_session_data"},
                       {type: "my_name", value: this.rootObject().myName()},
                       {type: "his_name", value: session_val.hisName()},
                       {type: "link_id", value: this.rootObject().linkId()},
                       {type: "session_id", value: session_val.sessionId()}];
         this.enqueueOutput(header);
+        */
     };
 
-    this.initiateSessionConnection = function (callback_val, session_val) {
+    this.initiateSessionConnection = function (callback_func_val, session_val) {
         var this0 = this;
         var request0 = this.httpGetRequest();
 
@@ -215,15 +260,26 @@ function AjaxObject(root_object_val) {
                 var session_id = request0.responseText;
                 this0.logit("initiateSessionConnection", "session_id= " + request0.responseText);
                 session_val.setSessionId(Number(session_id));
-                callback_val(session_val);
+                callback_func_val(session_val);
             }
         };
         //this.httpGetRequest().send(null);
+        var ajax = {
+            command: "setup_session",
+            callback_func: callback_func_val,
+            callback_param: session_val,
+            header: [{type: "my_name", value: this.rootObject().myName()},
+                     {type: "link_id", value: this.rootObject().linkId()},
+                     {type: "his_name", value: session_val.hisName()}],
+            };
+        this.enqueueOutput(ajax);
+        /*
         var header = [{type: "command", value: "setup_session"},
                       {type: "my_name", value: this.rootObject().myName()},
                       {type: "his_name", value: session_val.hisName()},
                       {type: "link_id", value: this.rootObject().linkId()}];
         this.enqueueOutput(header);
+        */
     };
 
     this.sendDataToPeer = function (sesson_mgr_val, session_val) {
@@ -271,6 +327,18 @@ function AjaxObject(root_object_val) {
 */
     };
 
+    this.setupAjax = function () {
+        this.httpGetRequest().onreadystatechange = function() {
+            if ((request0.readyState === 4) && (request0.status === 200)) {
+                var context_type = request0.getResponseHeader("Content-Type");
+                var link_id = request0.responseText;
+                this0.logit("setupLink", "link_id= " + request0.responseText);
+                root0.setLinkId(Number(link_id));
+                callback_func_val(callback_param_val);
+            }
+        };
+    };
+
     this.newHttpRequest = function () {
         var request = new XMLHttpRequest();
         return request;
@@ -287,6 +355,7 @@ function AjaxObject(root_object_val) {
     this.outputQueue = new QueueObject(this.utilObject());
     this.inputQueue = new QueueObject(this.utilObject());
     this.theHttpGetRequest = new XMLHttpRequest();
+    this.setupAjax();
     this.theHttpPostRequest = new XMLHttpRequest();
 }
 
