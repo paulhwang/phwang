@@ -96,7 +96,11 @@ function AjaxObject(root_object_val) {
 
         var header = [{type: "command", value: "setup_link"},
                       {type: "my_name", value: this.rootObject().myName()}];
-        this.ajaxJob(header);
+        this.enqueueOutput(header);
+    };
+
+    this.enqueueOutput = function (header_val) {
+        this.ajaxJob(header_val);
     };
 
     this.ajaxJob = function (header_val) {
@@ -121,7 +125,7 @@ function AjaxObject(root_object_val) {
         var header = [{type: "command", value: "keep_alive"},
                       {type: "my_name", value: this.rootObject().myName()},
                       {type: "link_id", value: this.rootObject().linkId()}];
-        this.ajaxJob(header);
+        this.enqueueOutput(header);
     };
 
     this.getNameList = function (callback_func_val, callback_param_val) {
@@ -160,7 +164,7 @@ function AjaxObject(root_object_val) {
         var header = [{type: "command", value: "get_name_list"},
                       {type: "my_name", value: this.rootObject().myName()},
                       {type: "link_id", value: this.rootObject().linkId()}];
-        this.ajaxJob(header);
+        this.enqueueOutput(header);
     };
 
     this.getSessionData = function (callback_func_val, session_val) {
@@ -190,7 +194,7 @@ function AjaxObject(root_object_val) {
                       {type: "his_name", value: session_val.hisName()},
                       {type: "link_id", value: this.rootObject().linkId()},
                       {type: "session_id", value: session_val.sessionId()}];
-        this.ajaxJob(header);
+        this.enqueueOutput(header);
     };
 
     this.initiateSessionConnection = function (callback_val, session_val) {
@@ -219,7 +223,7 @@ function AjaxObject(root_object_val) {
                       {type: "my_name", value: this.rootObject().myName()},
                       {type: "his_name", value: session_val.hisName()},
                       {type: "link_id", value: this.rootObject().linkId()}];
-        this.ajaxJob(header);
+        this.enqueueOutput(header);
     };
 
     this.sendDataToPeer = function (sesson_mgr_val, session_val) {
@@ -280,6 +284,8 @@ function AjaxObject(root_object_val) {
         return this.utilObject().utilLogit(this.objectName() + "." + str1_val, str2_val);
     };
 
+    this.outputQueue = new QueueObject(this.utilObject());
+    this.inputQueue = new QueueObject(this.utilObject());
     this.theHttpGetRequest = new XMLHttpRequest();
     this.theHttpPostRequest = new XMLHttpRequest();
 }
