@@ -79,10 +79,10 @@ function AjaxObject(root_object_val) {
         var root0 = this.rootObject();
 
         this.logit("setupLink", this.rootObject().myName());
-        this.httpGetRequest().open("GET", this.ajaxRoute(), true);
-        this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
-        this.httpGetRequest().setRequestHeader("command", "setup_link");
-        this.httpGetRequest().setRequestHeader("my_name", this.rootObject().myName());
+        //this.httpGetRequest().open("GET", this.ajaxRoute(), true);
+        //this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
+        //this.httpGetRequest().setRequestHeader("command", "setup_link");
+        //this.httpGetRequest().setRequestHeader("my_name", this.rootObject().myName());
 
         this.httpGetRequest().onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
@@ -93,6 +93,20 @@ function AjaxObject(root_object_val) {
                 callback_func_val(callback_param_val);
             }
         };
+
+        var header = [{type: "command", value: "setup_link"},
+                      {type: "my_name", value: this.rootObject().myName()}];
+        this.ajaxJob(header);
+    };
+
+    this.ajaxJob = function (header_val) {
+        this.httpGetRequest().open("GET", this.ajaxRoute(), true);
+        this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
+        var i = 0;
+        while (i < header_val.length) {
+            this.httpGetRequest().setRequestHeader(header_val[i].type, header_val[i].value);
+            i += 1;
+        }
         this.httpGetRequest().send(null);
     };
 
