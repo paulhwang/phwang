@@ -169,13 +169,13 @@ function AjaxObject(root_object_val) {
         var root0 = this.rootObject();
 
         //this.logit("getSessionData", "my_name=" + this.rootObject().myName() + " link_id=" + this.rootObject().linkId() + " session_id=" + session_val.sessionId());
-        this.httpGetRequest().open("GET", this.ajaxRoute(), true);
-        this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
-        this.httpGetRequest().setRequestHeader("command", "get_session_data");
-        this.httpGetRequest().setRequestHeader("my_name", this.rootObject().myName());
-        this.httpGetRequest().setRequestHeader("his_name", session_val.hisName());
-        this.httpGetRequest().setRequestHeader("link_id", this.rootObject().linkId());
-        this.httpGetRequest().setRequestHeader("session_id", session_val.sessionId());
+        //this.httpGetRequest().open("GET", this.ajaxRoute(), true);
+        //this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
+        //this.httpGetRequest().setRequestHeader("command", "get_session_data");
+        //this.httpGetRequest().setRequestHeader("my_name", this.rootObject().myName());
+        //this.httpGetRequest().setRequestHeader("his_name", session_val.hisName());
+        //this.httpGetRequest().setRequestHeader("link_id", this.rootObject().linkId());
+        //this.httpGetRequest().setRequestHeader("session_id", session_val.sessionId());
 
         this.httpGetRequest().onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
@@ -184,7 +184,13 @@ function AjaxObject(root_object_val) {
                 session_val.receiveData(request0.responseText);
             }
         };
-        this.httpGetRequest().send(null);
+        //this.httpGetRequest().send(null);
+        var header = [{type: "command", value: "get_session_data"},
+                      {type: "my_name", value: this.rootObject().myName()},
+                      {type: "his_name", value: session_val.hisName()},
+                      {type: "link_id", value: this.rootObject().linkId()},
+                      {type: "session_id", value: session_val.sessionId()}];
+        this.ajaxJob(header);
     };
 
     this.initiateSessionConnection = function (callback_val, session_val) {
@@ -192,12 +198,12 @@ function AjaxObject(root_object_val) {
         var request0 = this.httpGetRequest();
 
         this.logit("initiateSessionConnection", session_val.myName());
-        this.httpGetRequest().open("GET", this.ajaxRoute(), true);
-        this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
-        this.httpGetRequest().setRequestHeader("command", "setup_session");
-        this.httpGetRequest().setRequestHeader("link_id", session_val.rootObject().linkId());
-        this.httpGetRequest().setRequestHeader("my_name", session_val.myName());
-        this.httpGetRequest().setRequestHeader("his_name", session_val.hisName());
+        //this.httpGetRequest().open("GET", this.ajaxRoute(), true);
+        //this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
+        //this.httpGetRequest().setRequestHeader("command", "setup_session");
+        //this.httpGetRequest().setRequestHeader("link_id", session_val.rootObject().linkId());
+        //this.httpGetRequest().setRequestHeader("my_name", session_val.myName());
+        //this.httpGetRequest().setRequestHeader("his_name", session_val.hisName());
 
         this.httpGetRequest().onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
@@ -208,7 +214,12 @@ function AjaxObject(root_object_val) {
                 callback_val(session_val);
             }
         };
-        this.httpGetRequest().send(null);
+        //this.httpGetRequest().send(null);
+        var header = [{type: "command", value: "setup_session"},
+                      {type: "my_name", value: this.rootObject().myName()},
+                      {type: "his_name", value: session_val.hisName()},
+                      {type: "link_id", value: this.rootObject().linkId()}];
+        this.ajaxJob(header);
     };
 
     this.sendDataToPeer = function (sesson_mgr_val, session_val) {
