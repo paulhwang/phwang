@@ -97,17 +97,17 @@ function SessionObject(root_object_val) {
     };
 
     this.startUpdateNameListTimer = function () {
-        this.updateNameListTimer = window.setInterval(function (session_val) {
+        this.updateNameListTimer = window.setInterval(function (ajax_id_val, session_val) {
             if (!session_val.sessionConnected) {
                 session_val.ajaxObject().getNameList(function (session_val) {
                     session_val.runSession();
                 }, session_val);
             } else {
-                session_val.ajaxObject().getSessionData(function (session_val) {
+                session_val.ajaxObject().getSessionData(function (ajax_id_val, session_val) {
                     console.log("startUpdateNameListTimer***" + session_val.sessionId());
-                }, session_val);
+                }, ajax_id_val, session_val);
             }
-        }, 500, this);
+        }, 500, this.ajaxId(), this);
     };
 
     this.stopUpdateNameListTimer = function () {

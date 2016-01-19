@@ -244,7 +244,7 @@ function AjaxObject(root_object_val) {
         */
     };
 
-    this.getSessionData = function (callback_func_val, session_val) {
+    this.getSessionData = function (callback_func_val, ajax_id_val, session_val) {
         var this0 = this;
         var request0 = this.httpGetRequest();
         var root0 = this.rootObject();
@@ -265,7 +265,8 @@ function AjaxObject(root_object_val) {
             command: "get_session_data",
             callback_func: callback_func_val,
             callback_param: session_val,
-            header: [{type: "my_name", value: this.rootObject().myName()},
+            header: [{type: "ajax_id", value: ajax_id_val},
+                     {type: "my_name", value: this.rootObject().myName()},
                      {type: "link_id", value: this.rootObject().linkId()},
                      {type: "session_id", value: session_val.sessionId()},
                      {type: "his_name", value: session_val.hisName()}],
