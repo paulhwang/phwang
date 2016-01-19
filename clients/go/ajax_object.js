@@ -88,9 +88,9 @@ function AjaxObject(root_object_val) {
         while (i < this.callbackArray().length) {
             if (this.callbackArrayElement(i).command === command_val) {
                 //this.logit("getCallbackInfo", ajax_id_val + " " + this.callbackArrayElement(i).id);
-                if (!this.callbackArrayElement(i).id || this.callbackArrayElement(i).id === ajax_id_val) {
+                //if (!this.callbackArrayElement(i).id || this.callbackArrayElement(i).id === ajax_id_val) {
                     return this.callbackArrayElement(i);
-                }
+                //}
             }
             i += 1;
         }
@@ -131,8 +131,10 @@ function AjaxObject(root_object_val) {
         this.httpGetRequest().onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
                 var context_type = request0.getResponseHeader("Content-Type");
-                var link_id = request0.responseText;
-                this0.logit("setupLink", "link_id= " + request0.responseText);
+                var json = JSON.parse(request0.responseText);
+                this0.logit("setupLink", "command=" + json.command + " ajax_id=" + json.ajax_id + " data=" + json.data);
+                var link_id = json.data;
+                this0.logit("setupLink", "link_id= " + json.data);
                 root0.setLinkId(Number(link_id));
                 callback_func_val(callback_param_val);
             }
@@ -142,7 +144,8 @@ function AjaxObject(root_object_val) {
             command: "setup_link",
             callback_func: callback_func_val,
             callback_param: callback_param_val,
-            header: [{type: "my_name", value: this.rootObject().myName()}]
+            header: [{type: "ajax_id", value: this.rootObject().myName()},
+                     {type: "my_name", value: this.rootObject().myName()}]
             };
         this.enqueueOutput(ajax);
     };
@@ -302,7 +305,8 @@ function AjaxObject(root_object_val) {
             command: "setup_session",
             callback_func: callback_func_val,
             callback_param: session_val,
-            header: [{type: "my_name", value: this.rootObject().myName()},
+            header: [{type: "ajax_id", value: this.rootObject().linkId()},
+                     {type: "my_name", value: this.rootObject().myName()},
                      {type: "link_id", value: this.rootObject().linkId()},
                      {type: "his_name", value: session_val.hisName()}],
             };

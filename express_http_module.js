@@ -273,7 +273,13 @@ function initLink (req, res) {
     //var name_array = link_mgr.get_name_list();
     //var data = {link_id: link.link_id, name_list: name_array};
     //var data_str = JSON.stringify(data);
-    res.send(link_id_str);
+    var json_str = JSON.stringify({
+                    command: req.headers.command,
+                    ajax_id: req.headers.ajax_id,
+                    data: link_id_str,
+                });
+
+    res.send(json_str);
     logit("initLink   ", "(" + link.link_id + ",0) " + req.headers.my_name + "=>server " + link_id_str);
     state = "initLink end";
 }
