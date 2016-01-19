@@ -261,29 +261,8 @@ function AjaxObject(root_object_val) {
     };
 
     this.initiateSessionConnection = function (callback_func_val, ajax_id_val, session_val) {
-        var this0 = this;
-        var request0 = this.httpGetRequest();
-
         this.logit("initiateSessionConnection", session_val.myName());
-        //this.httpGetRequest().open("GET", this.ajaxRoute(), true);
-        //this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
-        //this.httpGetRequest().setRequestHeader("command", "setup_session");
-        //this.httpGetRequest().setRequestHeader("link_id", session_val.rootObject().linkId());
-        //this.httpGetRequest().setRequestHeader("my_name", session_val.myName());
-        //this.httpGetRequest().setRequestHeader("his_name", session_val.hisName());
-
-        this.httpGetRequest().onreadystatechange = function() {
-            if ((request0.readyState === 4) && (request0.status === 200)) {
-                var context_type = request0.getResponseHeader("Content-Type");
-                var json = JSON.parse(request0.responseText);
-                this0.logit("getSessionData", "command=" + json.command + " ajax_id=" + json.ajax_id + " data=" + json.data);
-                var session_id = json.data;
-                this0.logit("initiateSessionConnection", "session_id= " + json.data);
-                //session_val.setSessionId(Number(session_id));
-                callback_func_val(json.data, session_val);
-            }
-        };
-        //this.httpGetRequest().send(null);
+        this.waitOnreadyStateChange();
         var ajax = {
             command: "setup_session",
             callback_func: callback_func_val,
@@ -294,13 +273,6 @@ function AjaxObject(root_object_val) {
                      {type: "his_name", value: session_val.hisName()}],
             };
         this.enqueueOutput(ajax);
-        /*
-        var header = [{type: "command", value: "setup_session"},
-                      {type: "my_name", value: this.rootObject().myName()},
-                      {type: "his_name", value: session_val.hisName()},
-                      {type: "link_id", value: this.rootObject().linkId()}];
-        this.enqueueOutput(header);
-        */
     };
 
     this.sendDataToPeer = function (sesson_mgr_val, session_val) {
