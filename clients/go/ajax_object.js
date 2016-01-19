@@ -260,7 +260,7 @@ function AjaxObject(root_object_val) {
         this.enqueueOutput(ajax);
     };
 
-    this.initiateSessionConnection = function (callback_func_val, session_val) {
+    this.initiateSessionConnection = function (callback_func_val, ajax_id_val, session_val) {
         var this0 = this;
         var request0 = this.httpGetRequest();
 
@@ -279,8 +279,8 @@ function AjaxObject(root_object_val) {
                 this0.logit("getSessionData", "command=" + json.command + " ajax_id=" + json.ajax_id + " data=" + json.data);
                 var session_id = json.data;
                 this0.logit("initiateSessionConnection", "session_id= " + json.data);
-                session_val.setSessionId(Number(session_id));
-                callback_func_val(session_val);
+                //session_val.setSessionId(Number(session_id));
+                callback_func_val(json.data, session_val);
             }
         };
         //this.httpGetRequest().send(null);

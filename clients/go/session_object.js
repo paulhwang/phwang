@@ -178,11 +178,13 @@ function SessionObject(root_object_val) {
                                             " komi=" + config.komiPoint() +
                                             " handicap=" + config.handicapPoint());
             }
-            this0.ajaxObject().initiateSessionConnection(function (session_val) {
+            this0.ajaxObject().initiateSessionConnection(function (session_id_val, session_val) {
                 //session_val.stopUpdateNameListTimer();
+                this0.logit("runSession", "session_id= " + session_id_val);
+                session_val.setSessionId(Number(session_id_val));
                 session_val.sessionConnected = true;
                 session_val.containerObject().runGoGame();
-            }, this0);
+            }, null, this0);
         });
     };
 
