@@ -83,12 +83,12 @@ function AjaxObject(root_object_val) {
         this.incrementCallbackIndex();
     };
 
-    this.getCallbackInfo = function (command_val, id_val) {
+    this.getCallbackInfo = function (command_val, ajax_id_val) {
         var i = 0;
         while (i < this.callbackArray().length) {
             if (this.callbackArrayElement(i).command === command_val) {
-                //this.logit("getCallbackInfo", id_val + " " + this.callbackArrayElement(i).id);
-                if (!this.callbackArrayElement(i).id || this.callbackArrayElement(i).id === id_val) {
+                //this.logit("getCallbackInfo", ajax_id_val + " " + this.callbackArrayElement(i).id);
+                if (!this.callbackArrayElement(i).id || this.callbackArrayElement(i).id === ajax_id_val) {
                     return this.callbackArrayElement(i);
                 }
             }
