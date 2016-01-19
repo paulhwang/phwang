@@ -204,23 +204,6 @@ function AjaxObject(root_object_val) {
         var request0 = this.httpGetRequest();
         var root0 = this.rootObject();
 
-/*
-        if (callback_param_val.objectName() === "SessionObject") {
-            var his_name = $(".peer_name_paragraph select").val();
-            if (his_name) {
-                callback_param_val.setHisName(his_name);
-                this.logit("getNameList" + "his_name=" + callback_param_val.hisName());
-            }
-        }
-*/
-
-        //this.logit("getNameList", "my_name=" + this.rootObject().myName());
-        //this.httpGetRequest().open("GET", this.ajaxRoute(), true);
-        //this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
-        //this.httpGetRequest().setRequestHeader("command", "get_name_list");
-        //this.httpGetRequest().setRequestHeader("my_name", this.rootObject().myName());
-        //this.httpGetRequest().setRequestHeader("link_id", this.rootObject().linkId());
-
         this.httpGetRequest().onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
                 var context_type = request0.getResponseHeader("Content-Type");
@@ -233,7 +216,6 @@ function AjaxObject(root_object_val) {
                 }
             }
         };
-        //this.httpGetRequest().send(null);
         var ajax = {
             command: "get_name_list",
             callback_func: callback_func_val,
@@ -243,33 +225,28 @@ function AjaxObject(root_object_val) {
                      {type: "link_id", value: this.rootObject().linkId()}]
             };
         this.enqueueOutput(ajax);
-        /*
-        var header = [{type: "command", value: "get_name_list"},
-                      {type: "my_name", value: this.rootObject().myName()},
-                      {type: "link_id", value: this.rootObject().linkId()}];
-        this.enqueueOutput(header);
-        */
     };
 
-    this.getSessionData = function (callback_func_val, ajax_id_val, session_val) {
+    this.waitOnreadyStateChange = function () {
         var this0 = this;
         var request0 = this.httpGetRequest();
-        var root0 = this.rootObject();
-
-        //this.logit("getSessionData", "ajax_id=", ajax_id_val);
 
         this.httpGetRequest().onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
-                this0.logit("getSessionData", "json_str= " + request0.responseText);
+                this0.logit("waitOnreadyStateChange", "json_str= " + request0.responseText);
                 var json = JSON.parse(request0.responseText);
-                this0.logit("getSessionData", "command=" + json.command + " ajax_id=" + json.ajax_id + " data=" + json.data);
+                this0.logit("waitOnreadyStateChange", "command=" + json.command + " ajax_id=" + json.ajax_id + " data=" + json.data);
                 var callback_info = this0.getCallbackInfo(json.command, json.ajax_id);
                 if (callback_info) {
                     callback_info.func(json.data, callback_info.param1);
                 }
             }
         };
+    };
 
+    this.getSessionData = function (callback_func_val, ajax_id_val, session_val) {
+        //this.logit("getSessionData", "ajax_id=", ajax_id_val);
+        this.waitOnreadyStateChange();
         var ajax = {
             command: "get_session_data",
             callback_func: callback_func_val,
