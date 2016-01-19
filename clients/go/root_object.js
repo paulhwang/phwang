@@ -55,6 +55,10 @@ function RootObject() {
         return this.theLinkId;
     };
 
+    this.ajaxId = function () {
+        return "" + this.linkId();
+    };
+
     this.setLinkId = function (val) {
         this.theLinkId = val;
     };
