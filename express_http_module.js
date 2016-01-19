@@ -131,6 +131,11 @@ function processGet (req, res) {
         return;
     }
 
+    if (req.headers.command === "put_session_data") {
+        putSessionData(req, res);
+        return;
+    }
+
     debug(false, "processGet ", "start");
     debug(false, "processGet ", "link=" + req.headers.session_id + " "  + req.headers.his_name + "=>" + req.headers.my_name);
     state = "processGet start";
@@ -241,6 +246,69 @@ function getSessionData (req, res) {
     debug(false, "getSessionData ", "ajax_id=" + req.headers.ajax_id);
     logit("getSessionData ", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.his_name + "=>" + req.headers.my_name + " {" + data + "}");
     res.send(json_str);
+}
+
+function putSessionData (req, res) {
+    //console.log(req.headers);
+    debug(false, "putSessionData ", "ajax_id=" + req.headers.ajax_id);
+    logit("putSessionData ", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.his_name + "=>" + req.headers.my_name + " {" + req.headers.data + "}");
+
+    var link_id = Number(req.headers.link_id);
+    var session_id = Number(req.headers.session_id);
+    var xmt_seq = Number(req.headers.xmt_seq);
+
+    link = link_mgr.search(req.headers.my_name, link_id);
+    if (!link) {
+        abend("putSessionData", "null link");
+        return;
+    }
+
+    var my_session = account_mgr.search(req.headers.my_name, req.headers.his_name, session_id);
+    if (!my_session) {
+        abend("putSessionData", "null my_session");
+        return;
+    }
+    if (my_session.session_id === 0) {
+        abend("putSessionData", "null my_session = 0");
+        return;
+    }
+
+    logit("putSessionData", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.my_name + "=>" + req.headers.his_name + " {" + req.headers.data + "} " + req.headers.xmt_seq + "=>" + my_session.up_seq);
+
+    if (req.headers.my_name === req.headers.his_name) {
+        his_session = my_session;
+    }
+    else {
+        his_session = account_mgr.search(req.headers.my_name, req.headers.his_name, -1);
+        if (!his_session) {
+            abend("putSessionData", "null his_session");
+            return;
+        }
+        if (his_session.session_id === 0) {
+            abend("putSessionData", "null his_session = 0");
+            return;
+        }
+    }
+
+    if (xmt_seq === my_session.up_seq) {
+        queue.enqueue(his_session.receive_queue, req.headers.data);
+        ring.enqueue(his_session.receive_ring, req.headers.data);
+        my_session.up_seq += 1;
+    } else if (xmt_seq < my_session.up_seq) {
+         if (xmt_seq === 0) {
+            queue.enqueue(his_session.queue, req.headers.data);
+            ring.enqueue(his_session.ring, req.headers.data);
+            my_session.up_seq = 1;
+            logit("putSessionData", req.headers.data + " post " + xmt_seq + " reset");
+        } else {
+            logit("putSessionData", "(" + link_id + "," + session_id + ") "  + req.headers.my_name + "=>" + req.headers.his_name + " {" + req.headers.data + "} " + xmt_seq + " dropped");
+        }
+    } else {
+        logit("***abend: putSessionData", req.headers.data + " post seq=" + xmt_seq + " dropped");
+    }
+
+    //logit("putSessionData", "queue_size=" + queue.queue_size(my_session.receive_queue));
+    res.send(null);
 }
 
 function getPendingData (req, res) {

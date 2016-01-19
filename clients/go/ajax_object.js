@@ -178,6 +178,24 @@ function AjaxObject(root_object_val) {
     };
 
 
+    this.putSessionData = function (ajax_id_val, session_val, data_val) {
+        //this.logit("getSessionData", "ajax_id=", ajax_id_val);
+        //var json_str = this.formJsonString(data_val, session_val);
+        //this.logit("postMessage", "json=" + json_str);
+        var ajax = {
+            command: "put_session_data",
+            header: [{type: "ajax_id", value: ajax_id_val},
+                     {type: "my_name", value: this.rootObject().myName()},
+                     {type: "link_id", value: this.rootObject().linkId()},
+                     {type: "session_id", value: session_val.sessionId()},
+                     {type: "his_name", value: session_val.hisName()},
+                     {type: "xmt_seq", value: session_val.xmtSeq()},
+                     {type: "data", value: data_val}],
+            };
+        session_val.incrementXmtSeq();
+        this.enqueueOutput(ajax);
+    };
+
     this.waitOnreadyStateChange = function () {
         var this0 = this;
         var request0 = this.httpGetRequest();

@@ -130,7 +130,8 @@ function SessionObject(root_object_val) {
             str = this.transmitQueue().deQueue();
             if (str) {
                 //this.logit("transmitData", str);
-                this.ajaxObject().postRequest(str, this);
+                this.ajaxObject().putSessionData (this.ajaxId(), this, str);
+                //this.ajaxObject().postRequest(str, this);
                 //this.ajaxObject().sendDataToPeer(this, this);
             }
             else {
