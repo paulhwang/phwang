@@ -131,8 +131,7 @@ function AjaxObject(root_object_val) {
                 this0.logit("setupLink", "command=" + json.command + " ajax_id=" + json.ajax_id + " data=" + json.data);
                 var link_id = json.data;
                 this0.logit("setupLink", "link_id= " + json.data);
-                root0.setLinkId(Number(link_id));
-                callback_func_val(callback_param_val);
+                callback_func_val(link_id, callback_param_val);
             }
         };
 
