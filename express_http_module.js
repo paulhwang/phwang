@@ -258,7 +258,14 @@ function keepAlive (req, res) {
         return;
     }
     link_entry.keep_alive(link);
-    res.send(null);
+
+    var json_str = JSON.stringify({
+                    command: req.headers.command,
+                    ajax_id: req.headers.ajax_id,
+                });
+
+
+    res.send(json_str);
     state = "keepAlive end";
 }
 

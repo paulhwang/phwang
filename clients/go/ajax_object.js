@@ -186,7 +186,8 @@ function AjaxObject(root_object_val) {
             command: "keep_alive",
             callback_func: null,
             callback_param: null,
-            header: [{type: "my_name", value: this.rootObject().myName()},
+            header: [{type: "ajax_id", value: this.rootObject().myName()},
+                     {type: "my_name", value: this.rootObject().myName()},
                      {type: "link_id", value: this.rootObject().linkId()}]
             };
         this.enqueueOutput(ajax);
@@ -235,7 +236,8 @@ function AjaxObject(root_object_val) {
             command: "get_name_list",
             callback_func: callback_func_val,
             callback_param: callback_param_val,
-            header: [{type: "my_name", value: this.rootObject().myName()},
+            header: [{type: "ajax_id", value: this.rootObject().linkId()},
+                     {type: "my_name", value: this.rootObject().myName()},
                      {type: "link_id", value: this.rootObject().linkId()}]
             };
         this.enqueueOutput(ajax);
