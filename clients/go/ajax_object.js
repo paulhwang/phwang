@@ -117,16 +117,12 @@ function AjaxObject(root_object_val) {
         this.httpGetRequest().send(null);
     };
 
-    this.setupLink = function (callback_func_val, callback_param_val) {
+    this.setupLink = function (callback_func_val, ajax_id_val, callback_param_val) {
         var this0 = this;
         var request0 = this.httpGetRequest();
         var root0 = this.rootObject();
 
         this.logit("setupLink", this.rootObject().myName());
-        //this.httpGetRequest().open("GET", this.ajaxRoute(), true);
-        //this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
-        //this.httpGetRequest().setRequestHeader("command", "setup_link");
-        //this.httpGetRequest().setRequestHeader("my_name", this.rootObject().myName());
 
         this.httpGetRequest().onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
@@ -175,13 +171,6 @@ function AjaxObject(root_object_val) {
     };
 
     this.sendKeepAlive = function (root_val) {
-        //this.httpGetRequest().open("GET", this.ajaxRoute(), true);
-        //this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
-        //this.httpGetRequest().setRequestHeader("command", "keep_alive");
-        //this.httpGetRequest().setRequestHeader("my_name", this.rootObject().myName());
-        //this.httpGetRequest().setRequestHeader("link_id", this.rootObject().linkId());
-
-        //this.httpGetRequest().send(null);
         var ajax = {
             command: "keep_alive",
             callback_func: null,
@@ -191,12 +180,6 @@ function AjaxObject(root_object_val) {
                      {type: "link_id", value: this.rootObject().linkId()}]
             };
         this.enqueueOutput(ajax);
-        /*
-        var header = [{type: "command", value: "keep_alive"},
-                      {type: "my_name", value: this.rootObject().myName()},
-                      {type: "link_id", value: this.rootObject().linkId()}];
-        this.enqueueOutput(header);
-        */
     };
 
     this.getNameList = function (callback_func_val, callback_param_val) {

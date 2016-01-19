@@ -112,7 +112,7 @@ function RootObject() {
                         this0.startKeepAlive();
                         session_val.runSession();
                     }, session);
-                }, this0);
+                }, this0.myName(), this0);
             }
         });
     };
