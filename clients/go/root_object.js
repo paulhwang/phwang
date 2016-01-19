@@ -121,13 +121,13 @@ function ajaxCallbackForInitLink (link_id_val, root_val) {
     root_val.setLinkId(Number(link_id_val));
     var session = new SessionObject(root_val);
     var container = new GoContainerObject(session);
-    root_val.ajaxObject().getNameList(function (json_data_val, session_val) {
-        root_val.logit("runRoot", "name_list=" + json_data_val);
-        root_val.setNameList(JSON.parse(json_data_val));
-        root_val.startKeepAlive();
-        session_val.runSession();
-    }, root_val.ajaxId(), session);
+    root_val.ajaxObject().getNameList(ajaxCallbackForGetNameList, root_val.ajaxId(), session);
 }
 
-function ajaxCallbackForGetNameList (json_data_val, root_val) {
+function ajaxCallbackForGetNameList (json_data_val, session_val) {
+    var root_val = session_val.rootObject();
+    root_val.logit("ajaxCallbackForGetNameList", "name_list=" + json_data_val);
+    root_val.setNameList(JSON.parse(json_data_val));
+    root_val.startKeepAlive();
+    session_val.runSession();
 }
