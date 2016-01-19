@@ -298,8 +298,10 @@ function AjaxObject(root_object_val) {
         this.httpGetRequest().onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
                 var context_type = request0.getResponseHeader("Content-Type");
-                var session_id = request0.responseText;
-                this0.logit("initiateSessionConnection", "session_id= " + request0.responseText);
+                var json = JSON.parse(request0.responseText);
+                this0.logit("getSessionData", "command=" + json.command + " ajax_id=" + json.ajax_id + " data=" + json.data);
+                var session_id = json.data;
+                this0.logit("initiateSessionConnection", "session_id= " + json.data);
                 session_val.setSessionId(Number(session_id));
                 callback_func_val(session_val);
             }

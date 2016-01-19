@@ -302,13 +302,11 @@ function getNameList (req, res) {
 
     var name_array = link_mgr.get_name_list();
     name_array_str = JSON.stringify(name_array);
-
     var json_str = JSON.stringify({
                     command: req.headers.command,
                     ajax_id: req.headers.ajax_id,
                     data: name_array_str,
                 });
-
     res.send(json_str);
     debug(false, "getNameList", "(" + link.link_id + ",0) " + req.headers.my_name + "=>server " + name_array_str);
     state = "getNameList end";
@@ -323,7 +321,12 @@ function initSession (req, res) {
         return;
     }
     session_id_str = "" + session.session_id;
-    res.send(session_id_str);
+    var json_str = JSON.stringify({
+                    command: req.headers.command,
+                    ajax_id: req.headers.ajax_id,
+                    data: session_id_str,
+                });
+    res.send(json_str);
     logit("initSession", "(" + req.headers.link_id + "," + session.session_id + ") " + req.headers.my_name + "=>" + req.headers.his_name);
     state = "initSession end";
 }
