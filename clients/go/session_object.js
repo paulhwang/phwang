@@ -106,9 +106,7 @@ function SessionObject(root_object_val) {
                     session_val.runSession();
                 }, this0.rootObject().ajaxId(), session_val);
             } else {
-                session_val.ajaxObject().getSessionData(function (ajax_id_val, session_val) {
-                    console.log("startUpdateNameListTimer***" + session_val.sessionId());
-                }, ajax_id_val, session_val);
+                session_val.ajaxObject().getSessionData(ajax_id_val, session_val);
             }
         }, 500, this.ajaxId(), this);
     };
@@ -179,7 +177,7 @@ function SessionObject(root_object_val) {
                                             " handicap=" + config.handicapPoint());
             }
             this0.ajaxObject().setupCallback("setup_session", this0.rootObject().ajaxId(), ajaxCallbackForInitSession, this0);
-            this0.ajaxObject().initiateSessionConnection(ajaxCallbackForInitSession, this0.rootObject().ajaxId(), this0);
+            this0.ajaxObject().initiateSessionConnection(this0.rootObject().ajaxId(), this0);
         });
     };
 

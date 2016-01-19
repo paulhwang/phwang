@@ -155,13 +155,11 @@ function AjaxObject(root_object_val) {
         this.enqueueOutput(ajax);
     };
 
-    this.setupLink = function (callback_func_val, ajax_id_val, callback_param_val) {
+    this.setupLink = function (ajax_id_val, callback_param_val) {
         this.logit("setupLink", this.rootObject().myName());
         this.waitOnreadyStateChange();
         var ajax = {
             command: "setup_link",
-            callback_func: callback_func_val,
-            callback_param: callback_param_val,
             header: [{type: "ajax_id", value: this.rootObject().myName()},
                      {type: "my_name", value: this.rootObject().myName()}]
             };
@@ -213,13 +211,11 @@ function AjaxObject(root_object_val) {
         };
     };
 
-    this.getSessionData = function (callback_func_val, ajax_id_val, session_val) {
+    this.getSessionData = function (ajax_id_val, session_val) {
         //this.logit("getSessionData", "ajax_id=", ajax_id_val);
         this.waitOnreadyStateChange();
         var ajax = {
             command: "get_session_data",
-            callback_func: callback_func_val,
-            callback_param: session_val,
             header: [{type: "ajax_id", value: session_val.sessionId()},
                      {type: "my_name", value: this.rootObject().myName()},
                      {type: "link_id", value: this.rootObject().linkId()},
@@ -229,13 +225,11 @@ function AjaxObject(root_object_val) {
         this.enqueueOutput(ajax);
     };
 
-    this.initiateSessionConnection = function (callback_func_val, ajax_id_val, session_val) {
+    this.initiateSessionConnection = function (ajax_id_val, session_val) {
         this.logit("initiateSessionConnection", session_val.myName());
         this.waitOnreadyStateChange();
         var ajax = {
             command: "setup_session",
-            callback_func: callback_func_val,
-            callback_param: session_val,
             header: [{type: "ajax_id", value: this.rootObject().linkId()},
                      {type: "my_name", value: this.rootObject().myName()},
                      {type: "link_id", value: this.rootObject().linkId()},
