@@ -100,7 +100,7 @@ function SessionObject(root_object_val) {
         var this0 = this;
         this.updateNameListTimer = window.setInterval(function (ajax_id_val, session_val) {
             if (!session_val.sessionConnected) {
-                session_val.ajaxObject().getNameList(function (session_val, json_data_val) {
+                session_val.ajaxObject().getNameList(function (json_data_val, session_val) {
                     this0.logit("startUpdateNameListTimer", "name_list=" + json_data_val);
                     this0.rootObject().setNameList(JSON.parse(json_data_val));
                     session_val.runSession();

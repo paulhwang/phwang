@@ -229,7 +229,7 @@ function AjaxObject(root_object_val) {
                 this0.logit("getNameList", "name_list= " + json.data);
                 //root0.setNameList(JSON.parse(json.data));
                 if (callback_func_val) {
-                    callback_func_val(callback_param_val, json.data);
+                    callback_func_val(json.data, callback_param_val);
                 }
             }
         };
