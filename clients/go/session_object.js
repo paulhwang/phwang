@@ -178,13 +178,7 @@ function SessionObject(root_object_val) {
                                             " komi=" + config.komiPoint() +
                                             " handicap=" + config.handicapPoint());
             }
-            this0.ajaxObject().initiateSessionConnection(function (session_id_val, session_val) {
-                //session_val.stopUpdateNameListTimer();
-                this0.logit("runSession", "session_id= " + session_id_val);
-                session_val.setSessionId(Number(session_id_val));
-                session_val.sessionConnected = true;
-                session_val.containerObject().runGoGame();
-            }, null, this0);
+            this0.ajaxObject().initiateSessionConnection(ajaxCallbackForInitSession, this0.rootObject().ajaxId(), this0);
         });
     };
 
@@ -210,10 +204,16 @@ function SessionObject(root_object_val) {
     this.startUpdateNameListTimer();
 }
 
-var this0 = this;
 function ajaxCallbackForGetSessionData (data_val, session_val) {
-    console.log("ajaxCallbackForGetSessionData" + " data= " + data_val);
+    session_val.logit("ajaxCallbackForGetSessionData" + " data= " + data_val);
     session_val.receiveData(data_val);
+}
+
+function ajaxCallbackForInitSession (session_id_val, session_val) {
+    session_val.logit("ajaxCallbackForInitSession", "session_id= " + session_id_val);
+    session_val.setSessionId(Number(session_id_val));
+    session_val.sessionConnected = true;
+    session_val.containerObject().runGoGame();
 }
 
 /*
