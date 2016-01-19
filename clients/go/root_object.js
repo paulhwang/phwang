@@ -102,18 +102,7 @@ function RootObject() {
             this0.setLanguageUsed($(".prelude_holder select").val());
             this0.logit("runRoot", "my_name=" + this0.myName() + " language=" + this0.languageUsed());
             if (this0.myName()) {
-                this0.ajaxObject().setupLink(function (link_id_val, root_val) {
-                    //window.setInterval(updateTimer, 1000, root_val);
-                    root_val.setLinkId(Number(link_id_val));
-                    var session = new SessionObject(root_val);
-                    var container = new GoContainerObject(session);
-                    root_val.ajaxObject().getNameList(function (json_data_val, session_val) {
-                        this0.logit("runRoot", "name_list=" + json_data_val);
-                        this0.setNameList(JSON.parse(json_data_val));
-                        this0.startKeepAlive();
-                        session_val.runSession();
-                    }, session);
-                }, this0.myName(), this0);
+                this0.ajaxObject().setupLink(ajaxCallbackForInitLink, this0.myName(), this0);
             }
         });
     };
@@ -128,4 +117,13 @@ function RootObject() {
 }
 
 function ajaxCallbackForInitLink (link_id_val, root_val) {
+    root_val.setLinkId(Number(link_id_val));
+    var session = new SessionObject(root_val);
+    var container = new GoContainerObject(session);
+    root_val.ajaxObject().getNameList(function (json_data_val, session_val) {
+        root_val.logit("runRoot", "name_list=" + json_data_val);
+        root_val.setNameList(JSON.parse(json_data_val));
+        root_val.startKeepAlive();
+        session_val.runSession();
+    }, session);
 }
