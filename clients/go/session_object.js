@@ -104,7 +104,7 @@ function SessionObject(root_object_val) {
                     this0.logit("startUpdateNameListTimer", "name_list=" + json_data_val);
                     this0.rootObject().setNameList(JSON.parse(json_data_val));
                     session_val.runSession();
-                }, session_val);
+                }, this0.rootObject().ajaxId(), session_val);
             } else {
                 session_val.ajaxObject().getSessionData(function (ajax_id_val, session_val) {
                     console.log("startUpdateNameListTimer***" + session_val.sessionId());

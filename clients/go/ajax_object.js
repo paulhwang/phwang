@@ -168,7 +168,7 @@ function AjaxObject(root_object_val) {
         this.enqueueOutput(ajax);
     };
 
-    this.getNameList = function (callback_func_val, callback_param_val) {
+    this.getNameList = function (callback_func_val, ajax_id_val, callback_param_val) {
         var this0 = this;
         var request0 = this.httpGetRequest();
         var root0 = this.rootObject();

@@ -126,5 +126,8 @@ function ajaxCallbackForInitLink (link_id_val, root_val) {
         root_val.setNameList(JSON.parse(json_data_val));
         root_val.startKeepAlive();
         session_val.runSession();
-    }, session);
+    }, root_val.ajaxId(), session);
+}
+
+function ajaxCallbackForGetNameList (json_data_val, root_val) {
 }
