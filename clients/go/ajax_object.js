@@ -96,7 +96,8 @@ function AjaxObject(root_object_val) {
         }
     }
 
-    this.getPendingData = function (callback_func_val, callback_param_val) {
+/*
+    this.getPendingData11111 = function (callback_func_val, callback_param_val) {
         var this0 = this;
         var request0 = this.httpGetRequest();
         var root0 = this.rootObject();
@@ -116,19 +117,7 @@ function AjaxObject(root_object_val) {
         };
         this.httpGetRequest().send(null);
     };
-
-    this.setupLink = function (callback_func_val, ajax_id_val, callback_param_val) {
-        this.logit("setupLink", this.rootObject().myName());
-        this.waitOnreadyStateChange();
-        var ajax = {
-            command: "setup_link",
-            callback_func: callback_func_val,
-            callback_param: callback_param_val,
-            header: [{type: "ajax_id", value: this.rootObject().myName()},
-                     {type: "my_name", value: this.rootObject().myName()}]
-            };
-        this.enqueueOutput(ajax);
-    };
+*/
 
     this.enqueueOutput = function (ajax_val) {
         this.outputQueue.enQueue(ajax_val);
@@ -162,6 +151,19 @@ function AjaxObject(root_object_val) {
             header: [{type: "ajax_id", value: this.rootObject().myName()},
                      {type: "my_name", value: this.rootObject().myName()},
                      {type: "link_id", value: this.rootObject().linkId()}]
+            };
+        this.enqueueOutput(ajax);
+    };
+
+    this.setupLink = function (callback_func_val, ajax_id_val, callback_param_val) {
+        this.logit("setupLink", this.rootObject().myName());
+        this.waitOnreadyStateChange();
+        var ajax = {
+            command: "setup_link",
+            callback_func: callback_func_val,
+            callback_param: callback_param_val,
+            header: [{type: "ajax_id", value: this.rootObject().myName()},
+                     {type: "my_name", value: this.rootObject().myName()}]
             };
         this.enqueueOutput(ajax);
     };
