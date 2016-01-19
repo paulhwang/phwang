@@ -166,28 +166,11 @@ function AjaxObject(root_object_val) {
         this.enqueueOutput(ajax);
     };
 
-    this.getNameList = function (callback_func_val, ajax_id_val, callback_param_val) {
-        var this0 = this;
-        var request0 = this.httpGetRequest();
-        var root0 = this.rootObject();
-
-        this.httpGetRequest().onreadystatechange = function() {
-            if ((request0.readyState === 4) && (request0.status === 200)) {
-                var context_type = request0.getResponseHeader("Content-Type");
-                var json = JSON.parse(request0.responseText);
-                this0.logit("getSessionData", "command=" + json.command + " ajax_id=" + json.ajax_id + " data=" + json.data);
-                this0.logit("getNameList", "name_list= " + json.data);
-                //root0.setNameList(JSON.parse(json.data));
-                if (callback_func_val) {
-                    callback_func_val(json.data, callback_param_val);
-                }
-            }
-        };
+    this.getNameList = function (ajax_id_val, callback_param_val) {
+        this.waitOnreadyStateChange();
         var ajax = {
             command: "get_name_list",
-            callback_func: callback_func_val,
-            callback_param: callback_param_val,
-            header: [{type: "ajax_id", value: this.rootObject().linkId()},
+            header: [{type: "ajax_id", value: ajax_id_val},
                      {type: "my_name", value: this.rootObject().myName()},
                      {type: "link_id", value: this.rootObject().linkId()}]
             };
