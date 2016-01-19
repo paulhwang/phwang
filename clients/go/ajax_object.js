@@ -224,8 +224,10 @@ function AjaxObject(root_object_val) {
         this.httpGetRequest().onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
                 var context_type = request0.getResponseHeader("Content-Type");
-                this0.logit("getNameList", "name_list= " + request0.responseText);
-                root0.setNameList(JSON.parse(request0.responseText));
+                var json = JSON.parse(request0.responseText);
+                this0.logit("getSessionData", "command=" + json.command + " ajax_id=" + json.ajax_id + " data=" + json.data);
+                this0.logit("getNameList", "name_list= " + json.data);
+                root0.setNameList(JSON.parse(json.data));
                 if (callback_func_val) {
                     callback_func_val(callback_param_val);
                 }

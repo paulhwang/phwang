@@ -258,13 +258,10 @@ function keepAlive (req, res) {
         return;
     }
     link_entry.keep_alive(link);
-
     var json_str = JSON.stringify({
                     command: req.headers.command,
                     ajax_id: req.headers.ajax_id,
                 });
-
-
     res.send(json_str);
     state = "keepAlive end";
 }
@@ -277,9 +274,6 @@ function initLink (req, res) {
         return;
     }
     var link_id_str = "" + link.link_id;
-    //var name_array = link_mgr.get_name_list();
-    //var data = {link_id: link.link_id, name_list: name_array};
-    //var data_str = JSON.stringify(data);
     var json_str = JSON.stringify({
                     command: req.headers.command,
                     ajax_id: req.headers.ajax_id,
@@ -308,7 +302,14 @@ function getNameList (req, res) {
 
     var name_array = link_mgr.get_name_list();
     name_array_str = JSON.stringify(name_array);
-    res.send(name_array_str);
+
+    var json_str = JSON.stringify({
+                    command: req.headers.command,
+                    ajax_id: req.headers.ajax_id,
+                    data: name_array_str,
+                });
+
+    res.send(json_str);
     debug(false, "getNameList", "(" + link.link_id + ",0) " + req.headers.my_name + "=>server " + name_array_str);
     state = "getNameList end";
 }
