@@ -72,7 +72,7 @@ function SessionObject(root_object_val) {
         return this.theSessionId;
     };
 
-    this.sessionIdString = function () {
+    this.ajaxId = function () {
         return "" + this.sessionId();
     };
 
@@ -81,7 +81,7 @@ function SessionObject(root_object_val) {
             this.abend("setSessionId", "already exist");
         }
         this.theSessionId = val;
-        this.ajaxObject().setupCallback("get_session_data", this.sessionIdString(), ajaxCallbackForGetSessionData, this);
+        this.ajaxObject().setupCallback("get_session_data", this.ajaxId(), ajaxCallbackForGetSessionData, this);
     };
 
     this.setContainerObject = function (val) {

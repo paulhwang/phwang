@@ -254,7 +254,7 @@ function AjaxObject(root_object_val) {
                 var context_type = request0.getResponseHeader("Content-Type");
                 this0.logit("getSessionData", "data= " + request0.responseText);
 
-                var callback_info = this0.getCallbackInfo("get_session_data", session_val.sessionIdString());
+                var callback_info = this0.getCallbackInfo("get_session_data", session_val.ajaxId());
                 if (callback_info) {
                     callback_info.func(request0.responseText, callback_info.param1);
                 }
