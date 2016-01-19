@@ -249,14 +249,16 @@ function AjaxObject(root_object_val) {
         var request0 = this.httpGetRequest();
         var root0 = this.rootObject();
 
+        //this.logit("getSessionData", "ajax_id=", ajax_id_val);
+
         this.httpGetRequest().onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
-                var context_type = request0.getResponseHeader("Content-Type");
-                this0.logit("getSessionData", "data= " + request0.responseText);
-
-                var callback_info = this0.getCallbackInfo("get_session_data", session_val.ajaxId());
+                this0.logit("getSessionData", "json_str= " + request0.responseText);
+                var json = JSON.parse(request0.responseText);
+                this0.logit("getSessionData", "command=" + json.command + " ajax_id=" + json.ajax_id + " data=" + json.data);
+                var callback_info = this0.getCallbackInfo(json.command, json.ajax_id);
                 if (callback_info) {
-                    callback_info.func(request0.responseText, callback_info.param1);
+                    callback_info.func(json.data, callback_info.param1);
                 }
             }
         };
@@ -265,7 +267,7 @@ function AjaxObject(root_object_val) {
             command: "get_session_data",
             callback_func: callback_func_val,
             callback_param: session_val,
-            header: [{type: "ajax_id", value: ajax_id_val},
+            header: [{type: "ajax_id", value: session_val.sessionId()},
                      {type: "my_name", value: this.rootObject().myName()},
                      {type: "link_id", value: this.rootObject().linkId()},
                      {type: "session_id", value: session_val.sessionId()},

@@ -232,8 +232,15 @@ function getSessionData (req, res) {
         return;
     }
 
+    var json_str = JSON.stringify({
+                    command: req.headers.command,
+                    ajax_id: req.headers.ajax_id,
+                    data: data,
+                });
+
+    debug(false, "getSessionData ", "ajax_id=" + req.headers.ajax_id);
     logit("getSessionData ", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.his_name + "=>" + req.headers.my_name + " {" + data + "}");
-    res.send(data);
+    res.send(json_str);
 }
 
 function getPendingData (req, res) {
