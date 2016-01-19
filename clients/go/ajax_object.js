@@ -118,23 +118,8 @@ function AjaxObject(root_object_val) {
     };
 
     this.setupLink = function (callback_func_val, ajax_id_val, callback_param_val) {
-        var this0 = this;
-        var request0 = this.httpGetRequest();
-        var root0 = this.rootObject();
-
         this.logit("setupLink", this.rootObject().myName());
-
-        this.httpGetRequest().onreadystatechange = function() {
-            if ((request0.readyState === 4) && (request0.status === 200)) {
-                var context_type = request0.getResponseHeader("Content-Type");
-                var json = JSON.parse(request0.responseText);
-                this0.logit("setupLink", "command=" + json.command + " ajax_id=" + json.ajax_id + " data=" + json.data);
-                var link_id = json.data;
-                this0.logit("setupLink", "link_id= " + json.data);
-                callback_func_val(link_id, callback_param_val);
-            }
-        };
-
+        this.waitOnreadyStateChange();
         var ajax = {
             command: "setup_link",
             callback_func: callback_func_val,

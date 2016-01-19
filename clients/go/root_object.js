@@ -102,6 +102,7 @@ function RootObject() {
             this0.setLanguageUsed($(".prelude_holder select").val());
             this0.logit("runRoot", "my_name=" + this0.myName() + " language=" + this0.languageUsed());
             if (this0.myName()) {
+                this0.ajaxObject().setupCallback("setup_link", this0.myName(), ajaxCallbackForInitLink, this0);
                 this0.ajaxObject().setupLink(ajaxCallbackForInitLink, this0.myName(), this0);
             }
         });
