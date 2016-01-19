@@ -227,9 +227,9 @@ function AjaxObject(root_object_val) {
                 var json = JSON.parse(request0.responseText);
                 this0.logit("getSessionData", "command=" + json.command + " ajax_id=" + json.ajax_id + " data=" + json.data);
                 this0.logit("getNameList", "name_list= " + json.data);
-                root0.setNameList(JSON.parse(json.data));
+                //root0.setNameList(JSON.parse(json.data));
                 if (callback_func_val) {
-                    callback_func_val(callback_param_val);
+                    callback_func_val(callback_param_val, json.data);
                 }
             }
         };

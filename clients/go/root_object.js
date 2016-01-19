@@ -102,7 +102,9 @@ function RootObject() {
                     //window.setInterval(updateTimer, 1000, root_val);
                     var session = new SessionObject(root_val);
                     var container = new GoContainerObject(session);
-                    root_val.ajaxObject().getNameList(function (session_val) {
+                    root_val.ajaxObject().getNameList(function (session_val, json_data_val) {
+                        this0.logit("runRoot", "name_list=" + json_data_val);
+                        this0.setNameList(JSON.parse(json_data_val));
                         this0.startKeepAlive();
                         session_val.runSession();
                     }, session);
