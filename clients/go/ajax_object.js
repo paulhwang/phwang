@@ -20,6 +20,38 @@ function AjaxObject(root_object_val) {
         return this.rootObject().utilObject();
     };
 
+    this.ajaxSetupLinkCommand = function () {
+        return "setup_link";
+    };
+
+    this.ajaxGetLinkDataCommand = function () {
+        return "get_link_data";
+    };
+
+    this.ajaxPutLinkDataCommand = function () {
+        return "put_link_data";
+    };
+
+    this.ajaxKeepAliveCommand = function () {
+        return "keep_alive";
+    };
+
+    this.ajaxGetNameListCommand = function () {
+        return "get_name_list";
+    };
+
+    this.ajaxSetupSessionCommand = function () {
+        return "setup_session";
+    };
+
+    this.ajaxGetSessionDataCommand = function () {
+        return "get_session_data";
+    };
+
+    this.ajaxPutSessionDataCommand = function () {
+        return "put_session_data";
+    };
+
     this.callbackIndex = function () {
         return this.theCallbackIndex;
     };
@@ -174,7 +206,7 @@ function AjaxObject(root_object_val) {
     this.setupLink = function (ajax_id_val, callback_param_val) {
         this.logit("setupLink", this.rootObject().myName());
         var ajax = {
-            command: this.rootObject().ajaxSetupLinkCommand(),
+            command: this.ajaxSetupLinkCommand(),
             header: [{type: "ajax_id", value: this.rootObject().myName()},
                      {type: "my_name", value: this.rootObject().myName()}]
             };
@@ -184,7 +216,7 @@ function AjaxObject(root_object_val) {
 
     this.keepAlive = function (root_val) {
         var ajax = {
-            command: this.rootObject().ajaxKeepAliveCommand(),
+            command: this.ajaxKeepAliveCommand(),
             header: [{type: "ajax_id", value: this.rootObject().myName()},
                      {type: "my_name", value: this.rootObject().myName()},
                      {type: "link_id", value: this.rootObject().linkId()}]
@@ -194,7 +226,7 @@ function AjaxObject(root_object_val) {
 
     this.getNameList = function (ajax_id_val, callback_param_val) {
         var ajax = {
-            command: this.rootObject().ajaxGetNameListCommand(),
+            command: this.ajaxGetNameListCommand(),
             header: [{type: "ajax_id", value: ajax_id_val},
                      {type: "my_name", value: this.rootObject().myName()},
                      {type: "link_id", value: this.rootObject().linkId()}]
@@ -205,7 +237,7 @@ function AjaxObject(root_object_val) {
     this.setupSession = function (ajax_id_val, session_val) {
         this.logit("initiateSessionConnection", session_val.myName());
         var ajax = {
-            command: this.rootObject().ajaxSetupSessionCommand(),
+            command: this.ajaxSetupSessionCommand(),
             header: [{type: "ajax_id", value: this.rootObject().linkId()},
                      {type: "my_name", value: this.rootObject().myName()},
                      {type: "link_id", value: this.rootObject().linkId()},
@@ -217,7 +249,7 @@ function AjaxObject(root_object_val) {
     this.getSessionData = function (ajax_id_val, session_val) {
         this.debug(false, "getSessionData", "ajax_id=" + ajax_id_val + " sessionId=" + session_val.sessionId());
         var ajax = {
-            command: this.rootObject().ajaxGetSessionDataCommand(),
+            command: this.ajaxGetSessionDataCommand(),
             header: [{type: "ajax_id", value: ajax_id_val},
                      {type: "my_name", value: this.rootObject().myName()},
                      {type: "link_id", value: this.rootObject().linkId()},
@@ -233,7 +265,7 @@ function AjaxObject(root_object_val) {
         //var json_str = this.formJsonString(data_val, session_val);
         //this.logit("postMessage", "json=" + json_str);
         var ajax = {
-            command: this.rootObject().ajaxPutSessionDataCommand(),
+            command: this.ajaxPutSessionDataCommand(),
             header: [{type: "ajax_id", value: ajax_id_val},
                      {type: "my_name", value: this.rootObject().myName()},
                      {type: "link_id", value: this.rootObject().linkId()},

@@ -173,7 +173,7 @@ function SessionObject(root_object_val) {
                                             " komi=" + config.komiPoint() +
                                             " handicap=" + config.handicapPoint());
             }
-            this0.ajaxObject().setupCallback(this0.rootObject().ajaxSetupSessionCommand(), this0.rootObject().ajaxId(), ajaxCallbackForInitSession, this0);
+            this0.ajaxObject().setupCallback(this0.ajaxObject().ajaxSetupSessionCommand(), this0.rootObject().ajaxId(), ajaxCallbackForInitSession, this0);
             this0.ajaxObject().setupSession(this0.rootObject().ajaxId(), this0);
         });
     };

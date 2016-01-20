@@ -11,30 +11,6 @@ function RootObject() {
         return "RootObject";
     };
 
-    this.ajaxSetupLinkCommand = function () {
-        return "setup_link";
-    };
-
-    this.ajaxKeepAliveCommand = function () {
-        return "keep_alive";
-    };
-
-    this.ajaxGetNameListCommand = function () {
-        return "get_name_list";
-    };
-
-    this.ajaxSetupSessionCommand = function () {
-        return "setup_session";
-    };
-
-    this.ajaxGetSessionDataCommand = function () {
-        return "get_session_data";
-    };
-
-    this.ajaxPutSessionDataCommand = function () {
-        return "put_session_data";
-    };
-
     this.htmlObject = function () {
         return this.theHtmlObject;
     };
@@ -127,7 +103,7 @@ function RootObject() {
             this0.setLanguageUsed($(".prelude_holder select").val());
             this0.logit("runRoot", "my_name=" + this0.myName() + " language=" + this0.languageUsed());
             if (this0.myName()) {
-                this0.ajaxObject().setupCallback(this0.ajaxSetupLinkCommand(), this0.myName(), ajaxCallbackForInitLink, this0);
+                this0.ajaxObject().setupCallback(this0.ajaxObject().ajaxSetupLinkCommand(), this0.myName(), ajaxCallbackForInitLink, this0);
                 this0.ajaxObject().setupLink(this0.myName(), this0);
             }
         });
@@ -148,7 +124,7 @@ function ajaxCallbackForInitLink(link_id_val, root_val) {
     root_val.setLinkId(Number(link_id_val));
     var session = new SessionObject(root_val);
     var container = new GoContainerObject(session);
-    root_val.ajaxObject().setupCallback(root_val.ajaxGetNameListCommand(), root_val.ajaxId(), ajaxCallbackForGetNameList, session);
+    root_val.ajaxObject().setupCallback(root_val.ajaxObject().ajaxGetNameListCommand(), root_val.ajaxId(), ajaxCallbackForGetNameList, session);
     root_val.ajaxObject().getNameList(root_val.ajaxId(), session);
 }
 
