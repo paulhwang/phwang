@@ -140,59 +140,7 @@ function processGet (req, res) {
         return;
     }
 
-    debug(false, "processGet ", "start");
-    debug(false, "processGet ", "link=" + req.headers.session_id + " "  + req.headers.his_name + "=>" + req.headers.my_name);
-    state = "processGet start";
-
-    var my_link_id, session_id;
-
-    my_link_id = Number(req.headers.link_id);
-    my_link = link_mgr.search(req.headers.my_name, my_link_id);
-    if (!my_link) {
-        abend("processGet", "null my_link");
-        return;
-    }
-    if (my_link.link_id === 0) {
-        abend("processGet", "null my_link = 0");
-        return;
-    }
-   
-    session_id = Number(req.headers.session_id);
-    var my_session = account_mgr.search(req.headers.my_name, req.headers.his_name, session_id);
-    if (!my_session) {
-        abend("processGet", "null my_session");
-        return;
-    }
-    if (my_session.session_id === 0) {
-        abend("processGet", "null my_session = 0");
-        return;
-    }
-    if (!my_session.receive_queue) {
-        abend("processGet", "null receive_queue");
-        return;
-    }
-    res.type('application/json');
-    state = "get 2000";
-    var data = queue.dequeue(my_session.receive_queue);
-    state = "get 3000";
-    var data1 = ring.dequeue(my_session.receive_ring);
-    state = "get 4000";
-    if (data !== data1) {
-        logit("*****Abend: processGet", "queue and ring not match");
-    }
-    if (!data) {
-        //logit("processGet", "null data");
-        return;
-    }
-    if (!data1) {
-        //logti("processGet", "null data1");
-        return;
-    }
-
-    logit("processGet ", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.his_name + "=>" + req.headers.my_name + " {" + data + "}");
-    res.send(data);
-    state = "processGet end";
-    debug(false, "processGet ", "end");
+    abend("processGet", "what?");
 }
 
 function jsonStingifyData (command_val, ajax_id_val, data_val) {
@@ -205,7 +153,6 @@ function jsonStingifyData (command_val, ajax_id_val, data_val) {
 }
 
 function getSessionData (req, res) {
-    //console.log(req.headers);
     debug(false, "getSessionData", "(" + req.headers.link_id + "," + req.headers.session_id + ") my_name=" + req.headers.my_name + "=>" + req.headers.his_name);
     var link_id, session_id;
 
@@ -325,13 +272,7 @@ function putSessionData (req, res) {
     res.send(jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
 }
 
-function getPendingData (req, res) {
-    //logit("getPendingData", "");
-    res.send("response from server for getPendingData");
-}
-
 function keepAlive (req, res) {
-    state = "keepAlive start";
     var my_link_id = Number(req.headers.link_id);
     debug(false, "keepAlive", "link_id=" + my_link_id + " my_name=" + req.headers.my_name);
     var link = link_mgr.search(req.headers.my_name, my_link_id);
@@ -345,11 +286,9 @@ function keepAlive (req, res) {
                     ajax_id: req.headers.ajax_id,
                 });
     res.send(json_str);
-    state = "keepAlive end";
 }
 
 function initLink (req, res) {
-    state = "initLink start";
     var link = link_mgr.search_and_create(req.headers.my_name, 0);
     if (!link) {
         abend("initLink", "null link");
@@ -364,11 +303,9 @@ function initLink (req, res) {
 
     res.send(json_str);
     logit("initLink   ", "(" + link.link_id + ",0) " + req.headers.my_name + "=>server " + link_id_str);
-    state = "initLink end";
 }
 
 function getNameList (req, res) {
-    state = "getNameList start";
     var my_link_id;
 
     my_link_id = Number(req.headers.link_id);
@@ -392,11 +329,9 @@ function getNameList (req, res) {
                 });
     res.send(json_str);
     debug(true, "getNameList", "(" + my_link.link_id + ",0) " + req.headers.my_name + "=>server " + name_array_str);
-    state = "getNameList end";
 }
 
 function initSession (req, res) {
-    state = "initSession start";
     var session, session_id_str;
     session = account_mgr.search_and_create(req.headers.my_name, req.headers.his_name, 0);
     if (!session) {
@@ -411,7 +346,6 @@ function initSession (req, res) {
                 });
     res.send(json_str);
     logit("initSession", "(" + req.headers.link_id + "," + session.session_id + ") " + req.headers.my_name + "=>" + req.headers.his_name);
-    state = "initSession end";
 }
 
 function processNotFound (req, res) {
