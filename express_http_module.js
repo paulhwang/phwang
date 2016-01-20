@@ -391,7 +391,7 @@ function getNameList (req, res) {
                     data: name_array_str,
                 });
     res.send(json_str);
-    debug(true, "getNameList", "(" + link.link_id + ",0) " + req.headers.my_name + "=>server " + name_array_str);
+    debug(true, "getNameList", "(" + my_link.link_id + ",0) " + req.headers.my_name + "=>server " + name_array_str);
     state = "getNameList end";
 }
 
