@@ -32,6 +32,24 @@ function GoGameObject(container_val, str_val) {
         return this.containerObject().portObject();
     };
 
+    this.outstandingUiClick = function () {
+        return this.theOutstandingUiClick;
+    };
+
+    this.incrementOutstandingUiClick = function () {
+        if (this.outstandingUiClick() !== 0) {
+            this.abend("incrementOutstandingUiClick", " " + this.outstandingUiClick());
+        }
+        this.theOutstandingUiClick += 1;
+    };
+
+    this.decrementOutstandingUiClick = function () {
+        if (this.outstandingUiClick() !== 1) {
+            this.abend("decrementOutstandingUiClick", " " + this.outstandingUiClick());
+        }
+        this.theOutstandingUiClick -= 1;
+    };
+
     this.maxMove = function () {
         return this.theMaxMove;
     };
@@ -140,10 +158,10 @@ function GoGameObject(container_val, str_val) {
             return;
         }
 
-        if (this.uiObject().outstandingUiClick() !== 0) {
+        if (this.outstandingUiClick() !== 0) {
             return;
         }
-        this.uiObject().incrementOutstandingUiClick();
+        this.incrementOutstandingUiClick();
 
         var move = new GoMoveObject(null, x_val, y_val, this.nextColor(), this.totalMoves(), this.containerObject());
         if (!this.configObject().playBothSides()) {
@@ -580,6 +598,7 @@ function GoGameObject(container_val, str_val) {
         this.thePassReceived = false;
     };
 
+    this.theOutstandingUiClick = 0;
     this.resetGameObjectData();
     //str_val = this.containerObject().restoreLastGame();
     if (str_val) {

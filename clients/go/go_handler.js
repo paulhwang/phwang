@@ -29,10 +29,10 @@ function GoHandlerObject(container_val) {
 
     this.aMoveIsPlayed = function (str_val) {
         //this.goLog("aMoveIsPlayed", str_val);
+        this.gameObject().decrementOutstandingUiClick();
         var move = new GoMoveObject(str_val, 0, 0, 0, 0, this.containerObject());
         this.gameObject().addNewMoveAndFight(move);
         this.uiObject().drawBoard(this.engineObject());
-        this.uiObject().decrementOutstandingUiClick();
     };
 
     this.aSpecialMoveIsPlayed = function (special_str) {
