@@ -99,7 +99,11 @@ function processPost(req, res) {
 }
 
 function processGet (req, res) {
-    debug(false, "processGet", "command=" + req.headers.command);
+    if ((req.headers.command !== "keep_alive") &&
+        (req.headers.command !== "get_name_list") &&
+        (req.headers.command !== "get_session_data")) {
+        debug(false, "processGet", "command=" + req.headers.command);
+    }
 
     if (req.headers.command === "keep_alive") {
         keepAlive(req, res);
@@ -191,6 +195,15 @@ function processGet (req, res) {
     debug(false, "processGet ", "end");
 }
 
+function jsonStingifyData (command_val, ajax_id_val, data_val) {
+    var json_str = JSON.stringify({
+                    command: command_val,
+                    ajax_id: ajax_id_val,
+                    data: data_val,
+                });
+    return json_str;
+}
+
 function getSessionData (req, res) {
     //console.log(req.headers);
     debug(false, "getSessionData", "(" + req.headers.link_id + "," + req.headers.session_id + ") my_name=" + req.headers.my_name + "=>" + req.headers.his_name);
@@ -202,6 +215,7 @@ function getSessionData (req, res) {
         abend("getSessionData", "null link");
         return;
     }
+    link_entry.keep_alive(link);
 
     session_id = Number(req.headers.session_id);
     var my_session = account_mgr.search(req.headers.my_name, req.headers.his_name, session_id);
@@ -219,6 +233,8 @@ function getSessionData (req, res) {
     }
     res.type('application/json');
     if (queue.queue_size(my_session.receive_queue) === 0) {
+        debug(false, "getSessionData", "empty queue");
+        res.send(jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
         return;
     }
 
@@ -229,11 +245,8 @@ function getSessionData (req, res) {
         logit("*****Abend: getSessionData", "queue and ring not match");
     }
     if (!data) {
-        //logit("getSessionData", "null data");
-        return;
-    }
-    if (!data1) {
-        //logti("getSessionData", "null data1");
+        logit("getSessionData", "null data");
+        res.send(null);
         return;
     }
 
@@ -243,15 +256,15 @@ function getSessionData (req, res) {
                     data: data,
                 });
 
-    debug(false, "getSessionData ", "ajax_id=" + req.headers.ajax_id);
-    logit("getSessionData ", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.his_name + "=>" + req.headers.my_name + " {" + data + "}");
+    debug(false, "getSessionData", "ajax_id=" + req.headers.ajax_id);
+    logit("getSessionData", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.his_name + "=>" + req.headers.my_name + " {" + data + "}");
     res.send(json_str);
 }
 
 function putSessionData (req, res) {
     //console.log(req.headers);
     debug(false, "putSessionData ", "ajax_id=" + req.headers.ajax_id);
-    logit("putSessionData ", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.his_name + "=>" + req.headers.my_name + " {" + req.headers.data + "}");
+    debug(false, "putSessionData ", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.his_name + "=>" + req.headers.my_name + " {" + req.headers.data + "}");
 
     var link_id = Number(req.headers.link_id);
     var session_id = Number(req.headers.session_id);
@@ -262,6 +275,7 @@ function putSessionData (req, res) {
         abend("putSessionData", "null link");
         return;
     }
+    link_entry.keep_alive(link);
 
     var my_session = account_mgr.search(req.headers.my_name, req.headers.his_name, session_id);
     if (!my_session) {
@@ -308,7 +322,7 @@ function putSessionData (req, res) {
     }
 
     //logit("putSessionData", "queue_size=" + queue.queue_size(my_session.receive_queue));
-    res.send(null);
+    res.send(jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
 }
 
 function getPendingData (req, res) {
@@ -367,6 +381,7 @@ function getNameList (req, res) {
         abend("getNameList", "null my_link = 0");
         return;
     }
+    link_entry.keep_alive(my_link);
 
     var name_array = link_mgr.get_name_list();
     name_array_str = JSON.stringify(name_array);
@@ -376,7 +391,7 @@ function getNameList (req, res) {
                     data: name_array_str,
                 });
     res.send(json_str);
-    debug(false, "getNameList", "(" + link.link_id + ",0) " + req.headers.my_name + "=>server " + name_array_str);
+    debug(true, "getNameList", "(" + link.link_id + ",0) " + req.headers.my_name + "=>server " + name_array_str);
     state = "getNameList end";
 }
 

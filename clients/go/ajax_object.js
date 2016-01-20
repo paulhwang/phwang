@@ -28,6 +28,24 @@ function AjaxObject(root_object_val) {
         return this.theCallbackIndex += 1;
     };
 
+    this.oustandingRequestCount = function () {
+        return this.theOustandingRequestCount;
+    };
+
+    this.incrementOustandingRequestCount = function () {
+        this.theOustandingRequestCount += 1;
+        if (this.theOustandingRequestCount !== 1) {
+            this.abend("decrementOustandingRequestCount", "not 1");
+        }
+    };
+
+    this.decrementOustandingRequestCount = function () {
+        this.theOustandingRequestCount -= 1;
+        if (this.theOustandingRequestCount !== 0) {
+            this.abend("decrementOustandingRequestCount", "not 0");
+        }
+    };
+
     this.callbackArray = function () {
         return this.theCallbackArray;
     };
@@ -98,26 +116,35 @@ function AjaxObject(root_object_val) {
 
     this.enqueueOutput = function (ajax_val) {
         this.outputQueue.enQueue(ajax_val);
-        this.ajaxJob();
+        //this.ajaxJob();
     };
 
     this.ajaxJob = function () {
+        if (this.oustandingRequestCount() > 0) {
+            return;
+        }
+
         if (this.outputQueue.size() === 0) {
             this.sendKeepAlive();
         }
-        while (this.outputQueue.size() > 0) {
-            var ajax = this.outputQueue.deQueue();
-            var header = ajax.header;
-            this.httpGetRequest().open("GET", this.ajaxRoute(), true);
-            this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
-            this.httpGetRequest().setRequestHeader("command", ajax.command);
-            var i = 0;
-            while (i < header.length) {
-                this.httpGetRequest().setRequestHeader(header[i].type, header[i].value);
-                i += 1;
-            }
-            this.httpGetRequest().send(null);
+
+        var ajax = this.outputQueue.deQueue();
+        var header = ajax.header;
+        this.httpGetRequest().open("GET", this.ajaxRoute(), true);
+        this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
+        this.httpGetRequest().setRequestHeader("command", ajax.command);
+        if ((ajax.command !== "keep_alive") && 
+            (ajax.command !== "get_name_list") &&
+            (ajax.command !== "get_session_data")) {
+            this.debug(false, "ajaxJob", "command=" + ajax.command);
         }
+        var i = 0;
+        while (i < header.length) {
+            this.httpGetRequest().setRequestHeader(header[i].type, header[i].value);
+            i += 1;
+        }
+        this.httpGetRequest().send(null);
+        this.incrementOustandingRequestCount();
     };
 
     this.setupLink = function (ajax_id_val, callback_param_val) {
@@ -128,6 +155,7 @@ function AjaxObject(root_object_val) {
                      {type: "my_name", value: this.rootObject().myName()}]
             };
         this.enqueueOutput(ajax);
+        this.ajaxJob();
     };
 
     this.sendKeepAlive = function (root_val) {
@@ -165,10 +193,10 @@ function AjaxObject(root_object_val) {
     };
 
     this.getSessionData = function (ajax_id_val, session_val) {
-        //this.logit("getSessionData", "ajax_id=", ajax_id_val);
+        this.debug(false, "getSessionData", "ajax_id=" + ajax_id_val + " sessionId=" + session_val.sessionId());
         var ajax = {
             command: "get_session_data",
-            header: [{type: "ajax_id", value: session_val.sessionId()},
+            header: [{type: "ajax_id", value: ajax_id_val},
                      {type: "my_name", value: this.rootObject().myName()},
                      {type: "link_id", value: this.rootObject().linkId()},
                      {type: "session_id", value: session_val.sessionId()},
@@ -179,7 +207,7 @@ function AjaxObject(root_object_val) {
 
 
     this.putSessionData = function (ajax_id_val, session_val, data_val) {
-        //this.logit("getSessionData", "ajax_id=", ajax_id_val);
+        this.logit("putSessionData", "ajax_id=" + ajax_id_val + " data=" + data_val);
         //var json_str = this.formJsonString(data_val, session_val);
         //this.logit("postMessage", "json=" + json_str);
         var ajax = {
@@ -202,13 +230,17 @@ function AjaxObject(root_object_val) {
 
         this.httpGetRequest().onreadystatechange = function() {
             if ((request0.readyState === 4) && (request0.status === 200)) {
-                this0.logit("waitOnreadyStateChange", "json_str= " + request0.responseText);
+                this0.debug(false, "waitOnreadyStateChange", "json_str= " + request0.responseText);
                 var json = JSON.parse(request0.responseText);
-                this0.logit("waitOnreadyStateChange", "command=" + json.command + " ajax_id=" + json.ajax_id + " data=" + json.data);
+                if (json.command !== "keep_alive") {
+                    this0.logit("waitOnreadyStateChange", "command=" + json.command + " ajax_id=" + json.ajax_id + " data=" + json.data);
+                }
                 var callback_info = this0.getCallbackInfo(json.command, json.ajax_id);
                 if (callback_info) {
                     callback_info.func(json.data, callback_info.param1);
                 }
+                this0.decrementOustandingRequestCount();
+                this0.ajaxJob();
             }
         };
     };
@@ -275,6 +307,13 @@ function AjaxObject(root_object_val) {
         return request;
     };
 
+    this.debug = function (debug_val, str1_val, str2_val) {
+        if (!debug_val) {
+            return;
+        }
+        return this.utilObject().utilLogit(this.objectName() + "." + str1_val, "==" + str2_val);
+    };
+
     this.abend = function (str1_val, str2_val) {
         return this.utilObject().utilAbend(this.objectName() + "." + str1_val, str2_val);
     };
@@ -283,6 +322,7 @@ function AjaxObject(root_object_val) {
         return this.utilObject().utilLogit(this.objectName() + "." + str1_val, str2_val);
     };
 
+    this.theOustandingRequestCount = 0;
     this.theCallbackIndex = 0;
     this.theCallbackArray = [];
     this.outputQueue = new QueueObject(this.utilObject());
