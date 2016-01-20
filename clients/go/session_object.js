@@ -211,6 +211,7 @@ function SessionObject(root_object_val) {
 function ajaxCallbackForGetSessionData (data_val, session_val) {
     session_val.debug(false, "ajaxCallbackForGetSessionData", "data=" + data_val);
     if (data_val) {
+        session_val.logit("ajaxCallbackForGetSessionData", "data=" + data_val);
         session_val.receiveData(data_val);
     }
     session_val.ajaxObject().getSessionData(session_val.ajaxId(), session_val);
