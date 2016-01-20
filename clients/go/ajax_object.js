@@ -178,7 +178,7 @@ function AjaxObject(root_object_val) {
         this.enqueueOutput(ajax);
     };
 
-    this.initiateSessionConnection = function (ajax_id_val, session_val) {
+    this.setupSession = function (ajax_id_val, session_val) {
         this.logit("initiateSessionConnection", session_val.myName());
         var ajax = {
             command: this.rootObject().ajaxSetupSessionCommand(),

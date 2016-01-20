@@ -174,7 +174,7 @@ function SessionObject(root_object_val) {
                                             " handicap=" + config.handicapPoint());
             }
             this0.ajaxObject().setupCallback(this0.rootObject().ajaxSetupSessionCommand(), this0.rootObject().ajaxId(), ajaxCallbackForInitSession, this0);
-            this0.ajaxObject().initiateSessionConnection(this0.rootObject().ajaxId(), this0);
+            this0.ajaxObject().setupSession(this0.rootObject().ajaxId(), this0);
         });
     };
 
