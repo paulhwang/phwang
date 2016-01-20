@@ -251,11 +251,6 @@ function AjaxObject(root_object_val) {
         this.httpPostRequest().send(json_str);
     };
 
-    this.newHttpRequest = function () {
-        var request = new XMLHttpRequest();
-        return request;
-    };
-
     this.debug = function (debug_val, str1_val, str2_val) {
         if (!debug_val) {
             return;
