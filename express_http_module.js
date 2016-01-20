@@ -293,7 +293,7 @@ function putSessionData (req, res) {
         his_session = my_session;
     }
     else {
-        his_session = account_mgr.search(req.headers.my_name, req.headers.his_name, -1);
+        his_session = account_mgr.search(req.headers.his_name, req.headers.my_name, -1);
         if (!his_session) {
             abend("putSessionData", "null his_session");
             return;
