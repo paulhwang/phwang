@@ -111,7 +111,7 @@ function RootObject() {
         this.theNameList = data_val;
     };
 
-    this.startKeepAlive = function () {
+    this.startKeepAlive_________________________ = function () {
         window.setInterval(function (root_val) {
             root_val.ajaxObject().sendKeepAlive(root_val);
         }, 10000, this);

@@ -223,10 +223,3 @@ function ajaxCallbackForInitSession (session_id_val, session_val) {
     session_val.ajaxObject().getSessionData(session_val.ajaxId(), session_val);
     session_val.containerObject().runGoGame();
 }
-
-/*
-function getNameListCallback_used_by_update (container_val) {
-    console.log("getNameListCallback() " + container_val.objectName());
-    container_val.sessionObject().runCreateSession(container_val);
-}
-*/
