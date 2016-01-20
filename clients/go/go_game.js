@@ -139,6 +139,7 @@ function GoGameObject(container_val, str_val) {
         if (!this.engineObject().isValidMoveOnBoard(x_val, y_val)) {
             return;
         }
+        this.uiObject().incrementOutstandingUiClick();
 
         var move = new GoMoveObject(null, x_val, y_val, this.nextColor(), this.totalMoves(), this.containerObject());
         if (!this.configObject().playBothSides()) {

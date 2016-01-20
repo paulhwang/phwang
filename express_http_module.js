@@ -208,7 +208,7 @@ function getLinkData (req, res) {
                 });
 
     debug(false, "getLinkData", "ajax_id=" + req.headers.ajax_id);
-    logit("getLinkData", "link_id=" + req.headers.link_id + " my_name="  + req.headers.my_name + " data={" + data + "}");
+    //logit("getLinkData", "link_id=" + req.headers.link_id + " my_name="  + req.headers.my_name + " data={" + data + "}");
     res.send(json_str);
 }
 

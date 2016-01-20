@@ -86,16 +86,16 @@ function GoUiObject(container_val) {
 
     this.incrementOutstandingUiClick = function () {
         if (this.outstandingUiClick() !== 0) {
-            this.abend("incrementOutstandingUiClick", "not 0");
+            this.abend("incrementOutstandingUiClick", " " + this.outstandingUiClick());
         }
         this.theOutstandingUiClick += 1;
     };
 
-    this.decrementutstandingUiClick = function () {
-        this.theOutstandingUiClick -= 1;
-        if (this.outstandingUiClick() !== 0) {
-            this.abend("decrementOutstandingUiClick", "not 0");
+    this.decrementOutstandingUiClick = function () {
+        if (this.outstandingUiClick() !== 1) {
+            this.abend("decrementOutstandingUiClick", " " + this.outstandingUiClick());
         }
+        this.theOutstandingUiClick -= 1;
     };
 
     this.getGridLength = function () {
@@ -117,8 +117,7 @@ function GoUiObject(container_val) {
 
     this.uiClick = function (event_x, event_y) {
         if (this.outstandingUiClick() !== 0) {
-            //this.abend("uiClick", "outstandingUiClick");
-            //return;
+            return;
         }
 
         var arrow_len = this.getArrowUnitLength();
@@ -212,7 +211,6 @@ function GoUiObject(container_val) {
             return;
         }
 
-        //this.incrementOutstandingUiClick();
         this.gameObject().enterGameFromUi(x, y);
         this.drawBoard(this.engineObject());
     };
