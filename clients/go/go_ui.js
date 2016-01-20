@@ -80,6 +80,14 @@ function GoUiObject(container_val) {
         this.theEncodedMoveList = val;
     };
 
+    this.uiClickAllowed = function () {
+        return this.theUiClickAllowed;
+    };
+
+    this.setUiClickAllowed = function (val) {
+        this.theUiClickAllowed = val;
+    };
+
     this.getGridLength = function () {
         return this.canvasElement().width / (this.configObject().boardSize() + 1);
     };
@@ -98,6 +106,11 @@ function GoUiObject(container_val) {
     };
 
     this.uiClick = function (event_x, event_y) {
+        if (!this.uiClickAllowed()) {
+            this.abend("uiClick", "not allowed");
+            return;
+        }
+
         var arrow_len = this.getArrowUnitLength();
         var grid_len = this.getGridLength();
         //var canvas_extra = go.canvas.height - go.canvas.width;
@@ -572,6 +585,7 @@ function GoUiObject(container_val) {
     this.theLastMouseX = 9;
     this.theLastMouseY = 9;
     this.theEncodedMoveList = null;
+    this.theUiClickAllowed = true;
 
     this.initElements = function () {
         this.theCanvasElement = window.document.getElementById(this.canvasId());

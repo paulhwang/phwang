@@ -165,6 +165,7 @@ function AjaxObject(root_object_val) {
         request_val.setRequestHeader("Content-Type", this.jsonContext());
         request_val.setRequestHeader("command", ajax.command);
         if ((ajax.command !== "keep_alive") && 
+            (ajax.command !== "get_link_data") &&
             (ajax.command !== "get_name_list") &&
             (ajax.command !== "get_session_data")) {
             this.debug(false, "ajaxJob", "command=" + ajax.command);
@@ -184,7 +185,10 @@ function AjaxObject(root_object_val) {
             if ((request_val.readyState === 4) && (request_val.status === 200)) {
                 this0.debug(false, "waitOnreadyStateChange", "json_str= " + request_val.responseText);
                 var json = JSON.parse(request_val.responseText);
-                if (json.command !== "keep_alive") {
+                if ((json.command !== "keep_alive") &&
+                    (json.command !== "get_link_data") &&
+                    (json.command !== "get_name_list") &&
+                    (json.command !== "get_session_data")) {
                     this0.logit("waitOnreadyStateChange", "command=" + json.command + " ajax_id=" + json.ajax_id + " data=" + json.data);
                 }
                 var callback_info = this0.getCallbackInfo(json.command, json.ajax_id);

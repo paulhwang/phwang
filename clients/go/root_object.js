@@ -141,7 +141,7 @@ function ajaxGetLinkDataCallback(data_val, root_val) {
     "use strict";
     root_val.debug(false, "ajaxCallbackForGetSessionData", "data=" + data_val);
     if (data_val) {
-        root_val.logit("ajaxCallbackForGetSessionData", "data=" + data_val);
+        //root_val.logit("ajaxCallbackForGetSessionData", "data=" + data_val);
     }
     root_val.ajaxObject().getLinkData(root_val.ajaxId());
 }
