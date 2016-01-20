@@ -105,28 +105,23 @@ function processGet (req, res) {
         debug(false, "processGet", "command=" + req.headers.command);
     }
 
+    if (req.headers.command === "setup_link") {
+        setupLink(req, res);
+        return;
+    }
+
     if (req.headers.command === "keep_alive") {
         keepAlive(req, res);
         return;
     }
 
-    if (req.headers.command === "get_pending_data") {
-        getPendingData(req, res);
-        return;
-    }
-
-    if (req.headers.command === "setup_link") {
-        initLink(req, res);
+    if (req.headers.command === "get_name_list") {
+        getNameList(req, res);
         return;
     }
 
     if (req.headers.command === "setup_session") {
-        initSession(req, res);
-        return;
-    }
-
-    if (req.headers.command === "get_name_list") {
-        getNameList(req, res);
+        setupSession(req, res);
         return;
     }
 
@@ -152,6 +147,87 @@ function jsonStingifyData (command_val, ajax_id_val, data_val) {
     return json_str;
 }
 
+function setupLink (req, res) {
+    var link = link_mgr.search_and_create(req.headers.my_name, 0);
+    if (!link) {
+        res.send(jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
+        abend("setupLink", "null link");
+        return;
+    }
+    var link_id_str = "" + link.link_id;
+    var json_str = JSON.stringify({
+                    command: req.headers.command,
+                    ajax_id: req.headers.ajax_id,
+                    data: link_id_str,
+                });
+
+    res.send(json_str);
+    logit("setupLink", "(" + link.link_id + ",0) " + req.headers.my_name + "=>server " + link_id_str);
+}
+
+function keepAlive (req, res) {
+    var my_link_id = Number(req.headers.link_id);
+    debug(false, "keepAlive", "link_id=" + my_link_id + " my_name=" + req.headers.my_name);
+    var link = link_mgr.search(req.headers.my_name, my_link_id);
+    if (!link) {
+        res.send(jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
+        abend("keepAlive", "***null link***" + "link_id=" + my_link_id + " my_name=" + req.headers.my_name);
+        return;
+    }
+    link_entry.keep_alive(link);
+    var json_str = JSON.stringify({
+                    command: req.headers.command,
+                    ajax_id: req.headers.ajax_id,
+                });
+    res.send(json_str);
+}
+
+function getNameList (req, res) {
+    var my_link_id;
+
+    my_link_id = Number(req.headers.link_id);
+    my_link = link_mgr.search(req.headers.my_name, my_link_id);
+    if (!my_link) {
+        res.send(jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
+        abend("getNameList", "null my_link" + "link_id=" + my_link_id + " my_name=" + req.headers.my_name);
+        return;
+    }
+    if (my_link.link_id === 0) {
+        res.send(jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
+        abend("getNameList", "null my_link = 0");
+        return;
+    }
+    link_entry.keep_alive(my_link);
+
+    var name_array = link_mgr.get_name_list();
+    name_array_str = JSON.stringify(name_array);
+    var json_str = JSON.stringify({
+                    command: req.headers.command,
+                    ajax_id: req.headers.ajax_id,
+                    data: name_array_str,
+                });
+    res.send(json_str);
+    debug(true, "getNameList", "(" + my_link.link_id + ",0) " + req.headers.my_name + "=>server " + name_array_str);
+}
+
+function setupSession (req, res) {
+    var session, session_id_str;
+    session = account_mgr.search_and_create(req.headers.my_name, req.headers.his_name, 0);
+    if (!session) {
+        res.send(jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
+        abend("setupSession", "null session");
+        return;
+    }
+    session_id_str = "" + session.session_id;
+    var json_str = JSON.stringify({
+                    command: req.headers.command,
+                    ajax_id: req.headers.ajax_id,
+                    data: session_id_str,
+                });
+    res.send(json_str);
+    logit("setupSession", "(" + req.headers.link_id + "," + session.session_id + ") " + req.headers.my_name + "=>" + req.headers.his_name);
+}
+
 function getSessionData (req, res) {
     debug(false, "getSessionData", "(" + req.headers.link_id + "," + req.headers.session_id + ") my_name=" + req.headers.my_name + "=>" + req.headers.his_name);
     var link_id, session_id;
@@ -159,6 +235,7 @@ function getSessionData (req, res) {
     link_id = Number(req.headers.link_id);
     link = link_mgr.search(req.headers.my_name, link_id);
     if (!link) {
+        res.send(jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
         abend("getSessionData", "null link");
         return;
     }
@@ -167,14 +244,17 @@ function getSessionData (req, res) {
     session_id = Number(req.headers.session_id);
     var my_session = account_mgr.search(req.headers.my_name, req.headers.his_name, session_id);
     if (!my_session) {
+        res.send(jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
         abend("getSessionData", "null my_session");
         return;
     }
     if (my_session.session_id === 0) {
+        res.send(jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
         abend("getSessionData", "null my_session = 0");
         return;
     }
     if (!my_session.receive_queue) {
+        res.send(jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
         abend("getSessionData", "null receive_queue");
         return;
     }
@@ -193,7 +273,7 @@ function getSessionData (req, res) {
     }
     if (!data) {
         logit("getSessionData", "null data");
-        res.send(null);
+        res.send(jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
         return;
     }
 
@@ -219,6 +299,7 @@ function putSessionData (req, res) {
 
     link = link_mgr.search(req.headers.my_name, link_id);
     if (!link) {
+        res.send(jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
         abend("putSessionData", "null link");
         return;
     }
@@ -226,10 +307,12 @@ function putSessionData (req, res) {
 
     var my_session = account_mgr.search(req.headers.my_name, req.headers.his_name, session_id);
     if (!my_session) {
+        res.send(jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
         abend("putSessionData", "null my_session");
         return;
     }
     if (my_session.session_id === 0) {
+        res.send(jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
         abend("putSessionData", "null my_session = 0");
         return;
     }
@@ -242,10 +325,12 @@ function putSessionData (req, res) {
     else {
         his_session = account_mgr.search(req.headers.his_name, req.headers.my_name, -1);
         if (!his_session) {
+            res.send(jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
             abend("putSessionData", "null his_session");
             return;
         }
         if (his_session.session_id === 0) {
+            res.send(jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
             abend("putSessionData", "null his_session = 0");
             return;
         }
@@ -270,82 +355,6 @@ function putSessionData (req, res) {
 
     //logit("putSessionData", "queue_size=" + queue.queue_size(my_session.receive_queue));
     res.send(jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-}
-
-function keepAlive (req, res) {
-    var my_link_id = Number(req.headers.link_id);
-    debug(false, "keepAlive", "link_id=" + my_link_id + " my_name=" + req.headers.my_name);
-    var link = link_mgr.search(req.headers.my_name, my_link_id);
-    if (!link) {
-        abend("keepAlive", "***null link***" + "link_id=" + my_link_id + " my_name=" + req.headers.my_name);
-        return;
-    }
-    link_entry.keep_alive(link);
-    var json_str = JSON.stringify({
-                    command: req.headers.command,
-                    ajax_id: req.headers.ajax_id,
-                });
-    res.send(json_str);
-}
-
-function initLink (req, res) {
-    var link = link_mgr.search_and_create(req.headers.my_name, 0);
-    if (!link) {
-        abend("initLink", "null link");
-        return;
-    }
-    var link_id_str = "" + link.link_id;
-    var json_str = JSON.stringify({
-                    command: req.headers.command,
-                    ajax_id: req.headers.ajax_id,
-                    data: link_id_str,
-                });
-
-    res.send(json_str);
-    logit("initLink   ", "(" + link.link_id + ",0) " + req.headers.my_name + "=>server " + link_id_str);
-}
-
-function getNameList (req, res) {
-    var my_link_id;
-
-    my_link_id = Number(req.headers.link_id);
-    my_link = link_mgr.search(req.headers.my_name, my_link_id);
-    if (!my_link) {
-        abend("getNameList", "null my_link" + "link_id=" + my_link_id + " my_name=" + req.headers.my_name);
-        return;
-    }
-    if (my_link.link_id === 0) {
-        abend("getNameList", "null my_link = 0");
-        return;
-    }
-    link_entry.keep_alive(my_link);
-
-    var name_array = link_mgr.get_name_list();
-    name_array_str = JSON.stringify(name_array);
-    var json_str = JSON.stringify({
-                    command: req.headers.command,
-                    ajax_id: req.headers.ajax_id,
-                    data: name_array_str,
-                });
-    res.send(json_str);
-    debug(true, "getNameList", "(" + my_link.link_id + ",0) " + req.headers.my_name + "=>server " + name_array_str);
-}
-
-function initSession (req, res) {
-    var session, session_id_str;
-    session = account_mgr.search_and_create(req.headers.my_name, req.headers.his_name, 0);
-    if (!session) {
-        abend("initSession", "null session");
-        return;
-    }
-    session_id_str = "" + session.session_id;
-    var json_str = JSON.stringify({
-                    command: req.headers.command,
-                    ajax_id: req.headers.ajax_id,
-                    data: session_id_str,
-                });
-    res.send(json_str);
-    logit("initSession", "(" + req.headers.link_id + "," + session.session_id + ") " + req.headers.my_name + "=>" + req.headers.his_name);
 }
 
 function processNotFound (req, res) {

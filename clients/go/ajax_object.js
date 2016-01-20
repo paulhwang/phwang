@@ -114,39 +114,6 @@ function AjaxObject(root_object_val) {
         }
     }
 
-    this.enqueueOutput = function (ajax_val) {
-        this.outputQueue.enQueue(ajax_val);
-        //this.ajaxJob();
-    };
-
-    this.ajaxJob = function () {
-        if (this.oustandingRequestCount() > 0) {
-            return;
-        }
-
-        if (this.outputQueue.size() === 0) {
-            this.sendKeepAlive();
-        }
-
-        var ajax = this.outputQueue.deQueue();
-        var header = ajax.header;
-        this.httpGetRequest().open("GET", this.ajaxRoute(), true);
-        this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
-        this.httpGetRequest().setRequestHeader("command", ajax.command);
-        if ((ajax.command !== "keep_alive") && 
-            (ajax.command !== "get_name_list") &&
-            (ajax.command !== "get_session_data")) {
-            this.debug(false, "ajaxJob", "command=" + ajax.command);
-        }
-        var i = 0;
-        while (i < header.length) {
-            this.httpGetRequest().setRequestHeader(header[i].type, header[i].value);
-            i += 1;
-        }
-        this.httpGetRequest().send(null);
-        this.incrementOustandingRequestCount();
-    };
-
     this.setupLink = function (ajax_id_val, callback_param_val) {
         this.logit("setupLink", this.rootObject().myName());
         var ajax = {
@@ -158,7 +125,7 @@ function AjaxObject(root_object_val) {
         this.ajaxJob();
     };
 
-    this.sendKeepAlive = function (root_val) {
+    this.keepAlive = function (root_val) {
         var ajax = {
             command: this.rootObject().ajaxKeepAliveCommand(),
             header: [{type: "ajax_id", value: this.rootObject().myName()},
@@ -222,6 +189,38 @@ function AjaxObject(root_object_val) {
         this.enqueueOutput(ajax);
     };
 
+    this.enqueueOutput = function (ajax_val) {
+        this.outputQueue.enQueue(ajax_val);
+    };
+
+    this.ajaxJob = function () {
+        if (this.oustandingRequestCount() > 0) {
+            return;
+        }
+
+        if (this.outputQueue.size() === 0) {
+            this.keepAlive();
+        }
+
+        var ajax = this.outputQueue.deQueue();
+        var header = ajax.header;
+        this.httpGetRequest().open("GET", this.ajaxRoute(), true);
+        this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
+        this.httpGetRequest().setRequestHeader("command", ajax.command);
+        if ((ajax.command !== "keep_alive") && 
+            (ajax.command !== "get_name_list") &&
+            (ajax.command !== "get_session_data")) {
+            this.debug(false, "ajaxJob", "command=" + ajax.command);
+        }
+        var i = 0;
+        while (i < header.length) {
+            this.httpGetRequest().setRequestHeader(header[i].type, header[i].value);
+            i += 1;
+        }
+        this.httpGetRequest().send(null);
+        this.incrementOustandingRequestCount();
+    };
+
     this.waitOnreadyStateChange = function () {
         var this0 = this;
         var request0 = this.httpGetRequest();
@@ -243,61 +242,13 @@ function AjaxObject(root_object_val) {
         };
     };
 
-    this.sendDataToPeer = function (sesson_mgr_val, session_val) {
-        this.httpGetRequest().open("GET", this.ajaxRoute(), true);
-        this.httpGetRequest().setRequestHeader("Content-Type", this.jsonContext());
-        this.httpGetRequest().setRequestHeader("command", "peer");
-        this.httpGetRequest().setRequestHeader("my_name", session_val.myName());
-        this.httpGetRequest().setRequestHeader("his_name", session_val.hisName());
-        this.httpGetRequest().setRequestHeader("link_id", this.rootObject().linkId());
-        this.httpGetRequest().setRequestHeader("session_id", session_val.sessionId());
-
-        this.getRequest(sesson_mgr_val, session_val);
-    };
-
-    this.getRequest = function (sesson_mgr_val, session_val) {
-        var this0 = this;
-        var request0 = this.httpGetRequest();
-
-        this.httpGetRequest().onreadystatechange = function() {
-            if ((request0.readyState === 4) && (request0.status === 200)) {
-                var context_type = request0.getResponseHeader("Content-Type");
-                this0.logit("getMessage", "data= " + request0.responseText);
-                session_val.receiveData(request0.responseText);
-            }
-        };
-        this.httpGetRequest().send(null);
-    };
-
-    this.postRequest = function (msg_val, session_val) {
+    this.postRequest___ = function (msg_val, session_val) {
         this.httpPostRequest().open("POST", this.ajaxRoute(), true);
         this.httpPostRequest().setRequestHeader("Content-Type", this.jsonContext());
 
         var json_str = this.formJsonString(msg_val, session_val);
         this.logit("postMessage", "json=" + json_str);
         this.httpPostRequest().send(json_str);
-
-/*
-        $.ajax({
-            data: {data: msg_val},
-            url: dir_val,
-            type: 'post',
-            dataType: 'json',
-
-        });
-*/
-    };
-
-    this.setupAjax = function () {
-        this.httpGetRequest().onreadystatechange = function() {
-            if ((request0.readyState === 4) && (request0.status === 200)) {
-                var context_type = request0.getResponseHeader("Content-Type");
-                var link_id = request0.responseText;
-                this0.logit("setupLink", "link_id= " + request0.responseText);
-                root0.setLinkId(Number(link_id));
-                callback_func_val(callback_param_val);
-            }
-        };
     };
 
     this.newHttpRequest = function () {
@@ -326,7 +277,6 @@ function AjaxObject(root_object_val) {
     this.outputQueue = new QueueObject(this.utilObject());
     this.inputQueue = new QueueObject(this.utilObject());
     this.theHttpGetRequest = new XMLHttpRequest();
-    this.setupAjax();
     this.theHttpPostRequest = new XMLHttpRequest();
     this.waitOnreadyStateChange();
 }

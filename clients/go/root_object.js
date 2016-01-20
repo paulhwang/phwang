@@ -111,13 +111,6 @@ function RootObject() {
         this.theNameList = data_val;
     };
 
-    this.startKeepAlive_________________________ = function () {
-        window.setInterval(function (root_val) {
-            root_val.ajaxObject().sendKeepAlive(root_val);
-        }, 10000, this);
-
-    };
-
     this.logit = function (str1_val, str2_val) {
         return this.utilObject().utilLogit(this.objectName() + "." + str1_val, str2_val);
     };
