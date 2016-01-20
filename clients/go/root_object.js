@@ -63,6 +63,14 @@ function RootObject() {
         this.theLinkId = val;
     };
 
+    this.lastJsonNameList = function () {
+        return this.theLastJsonNameList;
+    };
+
+    this.setLastJsonNameList = function (val) {
+        this.theLastJsonNameList = val;
+    };
+
     this.nameListLength = function () {
         return this.theNameList.length;
     };
@@ -109,6 +117,7 @@ function RootObject() {
     };
 
     this.theLinkId = 0;
+    this.theLastJsonNameList = null;
     this.theUtilObject = new UtilObject();
     this.theAjaxObject = new AjaxObject(this);
     this.theSessionMgrObject = new SessionMgrObject(this);
@@ -128,7 +137,9 @@ function ajaxCallbackForInitLink (link_id_val, root_val) {
 function ajaxCallbackForGetNameList (json_data_val, session_val) {
     var root_val = session_val.rootObject();
     root_val.logit("ajaxCallbackForGetNameList", "name_list=" + json_data_val);
-    root_val.setNameList(JSON.parse(json_data_val));
-    //root_val.startKeepAlive();
-    session_val.runSession();
+    if (root_val.lastJsonNameList() !== json_data_val) {
+        root_val.setLastJsonNameList(json_data_val);
+        root_val.setNameList(JSON.parse(json_data_val));
+        session_val.runSession();
+    }
 }
