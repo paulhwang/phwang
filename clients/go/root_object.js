@@ -87,6 +87,13 @@ function RootObject() {
         this.theNameList = data_val;
     };
 
+    this.debug = function (debug_val, str1_val, str2_val) {
+        if (!debug_val) {
+            return;
+        }
+        return this.utilObject().utilLogit(this.objectName() + "." + str1_val + "==", str2_val);
+    };
+
     this.logit = function (str1_val, str2_val) {
         return this.utilObject().utilLogit(this.objectName() + "." + str1_val, str2_val);
     };
@@ -103,7 +110,7 @@ function RootObject() {
             this0.setLanguageUsed($(".prelude_holder select").val());
             this0.logit("runRoot", "my_name=" + this0.myName() + " language=" + this0.languageUsed());
             if (this0.myName()) {
-                this0.ajaxObject().setupCallback(this0.ajaxObject().ajaxSetupLinkCommand(), this0.myName(), ajaxCallbackForInitLink, this0);
+                this0.ajaxObject().setupCallback(this0.ajaxObject().ajaxSetupLinkCommand(), this0.myName(), ajaxSetupLinkCallback, this0);
                 this0.ajaxObject().setupLink(this0.myName(), this0);
             }
         });
@@ -119,16 +126,27 @@ function RootObject() {
     this.runRoot();
 }
 
-function ajaxCallbackForInitLink(link_id_val, root_val) {
+function ajaxSetupLinkCallback(link_id_val, root_val) {
     "use strict";
     root_val.setLinkId(Number(link_id_val));
     var session = new SessionObject(root_val);
     var container = new GoContainerObject(session);
-    root_val.ajaxObject().setupCallback(root_val.ajaxObject().ajaxGetNameListCommand(), root_val.ajaxId(), ajaxCallbackForGetNameList, session);
+    root_val.ajaxObject().setupCallback(root_val.ajaxObject().ajaxGetLinkDataCommand(), root_val.ajaxId(), ajaxGetLinkDataCallback, root_val);
+    root_val.ajaxObject().getLinkData(root_val.ajaxId());
+    root_val.ajaxObject().setupCallback(root_val.ajaxObject().ajaxGetNameListCommand(), root_val.ajaxId(), ajaxGetNameListCallback, session);
     root_val.ajaxObject().getNameList(root_val.ajaxId(), session);
 }
 
-function ajaxCallbackForGetNameList(json_data_val, session_val) {
+function ajaxGetLinkDataCallback(data_val, root_val) {
+    "use strict";
+    root_val.debug(false, "ajaxCallbackForGetSessionData", "data=" + data_val);
+    if (data_val) {
+        root_val.logit("ajaxCallbackForGetSessionData", "data=" + data_val);
+    }
+    root_val.ajaxObject().getLinkData(root_val.ajaxId());
+}
+
+function ajaxGetNameListCallback(json_data_val, session_val) {
     "use strict";
     var root_val = session_val.rootObject();
     root_val.logit("ajaxCallbackForGetNameList", "name_list=" + json_data_val);

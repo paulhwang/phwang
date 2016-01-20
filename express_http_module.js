@@ -115,6 +115,11 @@ function processGet (req, res) {
         return;
     }
 
+    if (req.headers.command === "get_link_data") {
+        getLinkData(req, res);
+        return;
+    }
+
     if (req.headers.command === "get_name_list") {
         getNameList(req, res);
         return;
@@ -179,6 +184,31 @@ function keepAlive (req, res) {
                     command: req.headers.command,
                     ajax_id: req.headers.ajax_id,
                 });
+    res.send(json_str);
+}
+
+function getLinkData (req, res) {
+    debug(false, "getLinkData", "(" + req.headers.link_id + "," + req.headers.session_id + ") my_name=" + req.headers.my_name + "=>" + req.headers.his_name);
+
+    var link_id = Number(req.headers.link_id);
+    link = link_mgr.search(req.headers.my_name, link_id);
+    if (!link) {
+        res.send(jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
+        abend("getLinkData", "null link");
+        return;
+    }
+    link_entry.keep_alive(link);
+    res.type('application/json');
+
+    var data = "hello";
+    var json_str = JSON.stringify({
+                    command: req.headers.command,
+                    ajax_id: req.headers.ajax_id,
+                    data: data,
+                });
+
+    debug(false, "getLinkData", "ajax_id=" + req.headers.ajax_id);
+    logit("getLinkData", "link_id=" + req.headers.link_id + " my_name="  + req.headers.my_name + " data={" + data + "}");
     res.send(json_str);
 }
 

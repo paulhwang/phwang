@@ -189,7 +189,6 @@ function SessionObject(root_object_val) {
         return this.utilObject().utilLogit(this.objectName() + "." + str1_val + "==", str2_val);
     };
 
-
     this.abend = function (str1_val, str2_val) {
         return this.utilObject().utilabend(this.objectName() + "." + str1_val, str2_val);
     };
