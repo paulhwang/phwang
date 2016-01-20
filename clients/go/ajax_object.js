@@ -270,7 +270,6 @@ function AjaxObject(root_object_val) {
     this.theCallbackIndex = 0;
     this.theCallbackArray = [];
     this.outputQueue = new QueueObject(this.utilObject());
-    this.inputQueue = new QueueObject(this.utilObject());
     this.theHttpGetRequest = new XMLHttpRequest();
     this.theHttpPostRequest = new XMLHttpRequest();
     this.waitOnreadyStateChange();
