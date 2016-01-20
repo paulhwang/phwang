@@ -11,6 +11,30 @@ function RootObject() {
         return "RootObject";
     };
 
+    this.ajaxSetupLinkCommand = function () {
+        return "setup_link";
+    };
+
+    this.ajaxKeepAliveCommand = function () {
+        return "keep_alive";
+    };
+
+    this.ajaxGetNameListCommand = function () {
+        return "get_name_list";
+    };
+
+    this.ajaxSetupSessionCommand = function () {
+        return "setup_session";
+    };
+
+    this.ajaxGetSessionDataCommand = function () {
+        return "get_session_data";
+    };
+
+    this.ajaxPutSessionDataCommand = function () {
+        return "put_session_data";
+    };
+
     this.htmlObject = function () {
         return this.theHtmlObject;
     };
@@ -110,7 +134,7 @@ function RootObject() {
             this0.setLanguageUsed($(".prelude_holder select").val());
             this0.logit("runRoot", "my_name=" + this0.myName() + " language=" + this0.languageUsed());
             if (this0.myName()) {
-                this0.ajaxObject().setupCallback("setup_link", this0.myName(), ajaxCallbackForInitLink, this0);
+                this0.ajaxObject().setupCallback(this0.ajaxSetupLinkCommand(), this0.myName(), ajaxCallbackForInitLink, this0);
                 this0.ajaxObject().setupLink(this0.myName(), this0);
             }
         });
@@ -126,15 +150,17 @@ function RootObject() {
     this.runRoot();
 }
 
-function ajaxCallbackForInitLink (link_id_val, root_val) {
+function ajaxCallbackForInitLink(link_id_val, root_val) {
+    "use strict";
     root_val.setLinkId(Number(link_id_val));
     var session = new SessionObject(root_val);
     var container = new GoContainerObject(session);
-    root_val.ajaxObject().setupCallback("get_name_list", root_val.ajaxId(), ajaxCallbackForGetNameList, session);
+    root_val.ajaxObject().setupCallback(root_val.ajaxGetNameListCommand(), root_val.ajaxId(), ajaxCallbackForGetNameList, session);
     root_val.ajaxObject().getNameList(root_val.ajaxId(), session);
 }
 
-function ajaxCallbackForGetNameList (json_data_val, session_val) {
+function ajaxCallbackForGetNameList(json_data_val, session_val) {
+    "use strict";
     var root_val = session_val.rootObject();
     root_val.logit("ajaxCallbackForGetNameList", "name_list=" + json_data_val);
     if (root_val.lastJsonNameList() !== json_data_val) {

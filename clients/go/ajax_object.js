@@ -150,7 +150,7 @@ function AjaxObject(root_object_val) {
     this.setupLink = function (ajax_id_val, callback_param_val) {
         this.logit("setupLink", this.rootObject().myName());
         var ajax = {
-            command: "setup_link",
+            command: this.rootObject().ajaxSetupLinkCommand(),
             header: [{type: "ajax_id", value: this.rootObject().myName()},
                      {type: "my_name", value: this.rootObject().myName()}]
             };
@@ -160,9 +160,7 @@ function AjaxObject(root_object_val) {
 
     this.sendKeepAlive = function (root_val) {
         var ajax = {
-            command: "keep_alive",
-            callback_func: null,
-            callback_param: null,
+            command: this.rootObject().ajaxKeepAliveCommand(),
             header: [{type: "ajax_id", value: this.rootObject().myName()},
                      {type: "my_name", value: this.rootObject().myName()},
                      {type: "link_id", value: this.rootObject().linkId()}]
@@ -172,7 +170,7 @@ function AjaxObject(root_object_val) {
 
     this.getNameList = function (ajax_id_val, callback_param_val) {
         var ajax = {
-            command: "get_name_list",
+            command: this.rootObject().ajaxGetNameListCommand(),
             header: [{type: "ajax_id", value: ajax_id_val},
                      {type: "my_name", value: this.rootObject().myName()},
                      {type: "link_id", value: this.rootObject().linkId()}]
@@ -183,7 +181,7 @@ function AjaxObject(root_object_val) {
     this.initiateSessionConnection = function (ajax_id_val, session_val) {
         this.logit("initiateSessionConnection", session_val.myName());
         var ajax = {
-            command: "setup_session",
+            command: this.rootObject().ajaxSetupSessionCommand(),
             header: [{type: "ajax_id", value: this.rootObject().linkId()},
                      {type: "my_name", value: this.rootObject().myName()},
                      {type: "link_id", value: this.rootObject().linkId()},
@@ -195,7 +193,7 @@ function AjaxObject(root_object_val) {
     this.getSessionData = function (ajax_id_val, session_val) {
         this.debug(false, "getSessionData", "ajax_id=" + ajax_id_val + " sessionId=" + session_val.sessionId());
         var ajax = {
-            command: "get_session_data",
+            command: this.rootObject().ajaxGetSessionDataCommand(),
             header: [{type: "ajax_id", value: ajax_id_val},
                      {type: "my_name", value: this.rootObject().myName()},
                      {type: "link_id", value: this.rootObject().linkId()},
@@ -211,7 +209,7 @@ function AjaxObject(root_object_val) {
         //var json_str = this.formJsonString(data_val, session_val);
         //this.logit("postMessage", "json=" + json_str);
         var ajax = {
-            command: "put_session_data",
+            command: this.rootObject().ajaxPutSessionDataCommand(),
             header: [{type: "ajax_id", value: ajax_id_val},
                      {type: "my_name", value: this.rootObject().myName()},
                      {type: "link_id", value: this.rootObject().linkId()},
