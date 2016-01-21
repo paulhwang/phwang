@@ -79,8 +79,8 @@ function processPost(req, res) {
     }
 
     if (req.body.xmt_seq === my_session.up_seq) {
-        queue.enqueue(his_session.receive_queue, req.body.data);
-        ring.enqueue(his_session.receive_ring, req.body.data);
+        queue.enqueue(his_session.receiveQueue(), req.body.data);
+        ring.enqueue(his_session.receiveRing(), req.body.data);
         my_session.up_seq += 1;
     } else if (req.body.xmt_seq < my_session.up_seq) {
          if (req.body.xmt_seq === 0) {
@@ -283,21 +283,21 @@ function getSessionData (req, res) {
         abend("getSessionData", "null my_session = 0");
         return;
     }
-    if (!my_session.receive_queue) {
+    if (!my_session.receiveQueue()) {
         res.send(jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-        abend("getSessionData", "null receive_queue");
+        abend("getSessionData", "null receiveQueue");
         return;
     }
     res.type('application/json');
-    if (queue.queue_size(my_session.receive_queue) === 0) {
+    if (queue.queue_size(my_session.receiveQueue()) === 0) {
         debug(false, "getSessionData", "empty queue");
         res.send(jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
         return;
     }
 
-    //logit("getSessionData", "queue_size=" + queue.queue_size(my_session.receive_queue));
-    var data = queue.dequeue(my_session.receive_queue);
-    var data1 = ring.dequeue(my_session.receive_ring);
+    //logit("getSessionData", "queue_size=" + queue.queue_size(my_session.receiveQueue));
+    var data = queue.dequeue(my_session.receiveQueue());
+    var data1 = ring.dequeue(my_session.receiveRing());
     if (data !== data1) {
         logit("*****Abend: getSessionData", "queue and ring not match");
     }
@@ -367,8 +367,8 @@ function putSessionData (req, res) {
     }
 
     if (xmt_seq === my_session.up_seq) {
-        queue.enqueue(his_session.receive_queue, req.headers.data);
-        ring.enqueue(his_session.receive_ring, req.headers.data);
+        queue.enqueue(his_session.receiveQueue(), req.headers.data);
+        ring.enqueue(his_session.receiveRing(), req.headers.data);
         my_session.up_seq += 1;
     } else if (xmt_seq < my_session.up_seq) {
          if (xmt_seq === 0) {
@@ -383,7 +383,7 @@ function putSessionData (req, res) {
         logit("***abend: putSessionData", req.headers.data + " post seq=" + xmt_seq + " dropped");
     }
 
-    //logit("putSessionData", "queue_size=" + queue.queue_size(my_session.receive_queue));
+    //logit("putSessionData", "queue_size=" + queue.queue_size(my_session.receiveQueue));
     res.send(jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
 }
 

@@ -4,32 +4,65 @@
  * File name: session_entry_module.js
  */
 
-var queue = require("./queue_module.js");
-var ring = require("./ring_module.js");
-var global_session_id = 1;
-
 module.exports = {
     reset: function (session_val, my_name_val, his_name_val) {
-        resetIt(session_val, my_name_val, his_name_val);
+        session_val.resetIt(my_name_val, his_name_val);
    },
 
     malloc: function (my_name_val, his_name_val) {
-        link = new SessionEntryObject();
-        resetIt(link, my_name_val, his_name_val);
-        return link;
+        session = new SessionEntryObject();
+        session.resetIt(my_name_val, his_name_val);
+        return session;
     },
 };
 
-function resetIt (session_val, my_name_val, his_name_val) {
-    session_val.my_name = my_name_val;
-    session_val.his_name = his_name_val;
-    session_val.up_seq = 0;
-    session_val.down_seq = 0;
-    session_val.receive_queue = queue.malloc();
-    session_val.receive_ring = ring.malloc();
-    session_val.session_id = global_session_id;
-    global_session_id += 1;
-}
-
 function SessionEntryObject() {
+    "use strict";
+
+    this.objectName = function () {
+        return "SessionEntryObject";
+    };
+
+    this.utilModule = function () {
+        return this.theUtilModule;
+    };
+
+    this.queueModule = function () {
+        return this.theQueueModule;
+    };
+
+    this.ringModule = function () {
+        return this.theRingModule;
+    };
+
+    this.receiveQueue = function () {
+        return this.theReceiveQueue;
+    };
+
+    this.receiveRing = function () {
+        return this.theReceiveRing;
+    };
+
+    this.globalSessionId = function () {
+        return this.theGlobalSessionId;
+    };
+
+    this.incrementGlobalSessionId = function () {
+        return this.theGlobalSessionId += 1;
+    };
+
+    this.resetIt = function (my_name_val, his_name_val) {
+        this.my_name = my_name_val;
+        this.his_name = his_name_val;
+        this.up_seq = 0;
+        this.down_seq = 0;
+        this.theReceiveQueue = this.queueModule().malloc();
+        this.theReceiveRing = this.ringModule().malloc();
+        this.session_id = this.globalSessionId();
+        this.incrementGlobalSessionId();
+    };
+
+    this.theQueueModule = require("./queue_module.js");
+    this.theRingModule = require("./ring_module.js");
+    this.theGlobalSessionId = 1;
 }
