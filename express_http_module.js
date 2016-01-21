@@ -91,7 +91,7 @@ function ExpressHttpObject(root_object_val) {
         if (req.body.my_name === req.body.his_name) {
             his_session = my_session;
         } else {
-            his_session = account_mgr.search(req.body.my_name, req.body.his_name, -1);
+            his_session = this.sessionMgrObject().search(req.body.my_name, req.body.his_name, -1);
             if (!his_session) {
                 this.abend("processPost", "null his_session");
                 return;
