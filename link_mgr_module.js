@@ -11,6 +11,10 @@ module.exports = {
         theLinkMgrObject = new LinkMgrObject(root_object_val);
     },
 
+    object: function () {
+        return theLinkMgrObject;
+    },
+    
     search: function (my_name_val, link_id_val) {
         return theLinkMgrObject.searchLink(my_name_val, link_id_val);
     },

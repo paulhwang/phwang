@@ -35,6 +35,14 @@ function RootObject () {
         return this.theSessionMgrModule;
     };
 
+    this.linkMgrObject = function () {
+        return this.linkMgrModule().object();
+    };
+
+    this.sessionMgrObject = function () {
+        return this.sessionMgrModule().object();
+    };
+
     this.debug = function (debug_val, str1_val, str2_val) {
         if (debug_val) {
             this.logit(str1_val, "==" + str2_val);

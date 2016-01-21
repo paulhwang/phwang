@@ -11,6 +11,10 @@ module.exports = {
         theSessionMgrObject = new SessionMgrObject(root_object_val);
     },
 
+    object: function () {
+        return theSessionMgrObject;
+    },
+
     search: function (my_name_val, his_name_val, session_id_val) {
         return theSessionMgrObject.searchIt(my_name_val, his_name_val, session_id_val);
     },
