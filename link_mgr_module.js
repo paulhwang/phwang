@@ -88,15 +88,8 @@ function LinkMgrObject(root_object_val) {
     this.searchLink = function (my_name_val, link_id_val) {
         this.debug(false, "searchIt", my_name_val + " " + link_id_val);
         return this.linkQueue().searchIt(function (link_val, my_name_val, link_id_val) {
-            //debug(false, "compareIt", my_name_val + ":" + link_val.my_name);
-            if (my_name_val !== link_val.my_name) {
-                return false;
-            }
-            if (link_id_val === -1) {
-                return true;
-            } else {
-                return (link_id_val === link_val.link_id);
-            }
+            return (link_id_val === -1) ||
+                   ((my_name_val === link_val.my_name) && (link_id_val === link_val.link_id));
         }, my_name_val, link_id_val);
     };
 
@@ -112,7 +105,10 @@ function LinkMgrObject(root_object_val) {
 
     this.removeLink = function (link_val) {
         this.logit("removeLink", "my_name=" + link_val.my_name + " link_id=" + link_val.link_id);
-        this.linkQueue().removeElement(compareLink, link_val.my_name, link_val.link_id);
+        this.linkQueue().removeElement(function (link_val, my_name_val, link_id_val) {
+            return (link_id_val === -1) ||
+                   ((my_name_val === link_val.my_name) && (link_id_val === link_val.link_id));
+        }, link_val.my_name, link_val.link_id);
     };
 
     this.getNameList = function () {
