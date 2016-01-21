@@ -4,7 +4,8 @@
  * File name: session_pool_module.js
  */
 
-module.exports = {
+//module.exports = {
+    /*
     malloc: function (my_name_val, his_name_val) {
          return theSessionPoolObject.mallocIt(my_name_val, his_name_val);
     },
@@ -12,8 +13,10 @@ module.exports = {
     free: function (entry_val) {
         theSessionPoolObject.freeIt(entry_val);
     },
-};
+    */
+//};
 
+/*
 var theSessionPoolObject = new SessionPoolObject();
 
 function SessionPoolObject() {
@@ -108,3 +111,4 @@ function SessionPoolObject() {
         this.utilModule().logit(this.objectName() + "." + str1_val, str2_val);
     };
 }
+*/

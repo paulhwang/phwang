@@ -4,7 +4,8 @@
  * File name: link_pool_module.js
  */
 
-module.exports = {
+//module.exports = {
+    /*
     malloc: function (my_name_val) {
         return theLinkPoolObject.mallocIt(my_name_val);
     },
@@ -12,16 +13,17 @@ module.exports = {
     free: function (entry_val) {
         theLinkPoolObject.freeIt(entry_val);
     },
-};
-
+    */
+//
+/*
 var theLinkPoolObject = new LinkPoolObject();
 
 function LinkPoolObject() {
     "use strict";
     this.theUtilModule = require("./util_module.js");
     this.theLinkModule = require("./link_entry_module.js");
-    this.theHead = null;
-    this.theSize = 0;
+    this.thePoolHead = null;
+    this.thePoolSize = 0;
 
     this.objectName = function () {
         return "LinkPoolObject";
@@ -35,35 +37,35 @@ function LinkPoolObject() {
         return this.theLinkModule;
     };
 
-    this.head = function () {
-        return this.theHead;
+    this.poolHead = function () {
+        return this.thePoolHead;
     };
 
-    this.setHead = function (val) {
-        this.theHead = val;
+    this.setPoolHead = function (val) {
+        this.thePoolHead = val;
     };
 
-    this.size = function () {
-        return this.theSize;
+    this.poolSize = function () {
+        return this.thePoolSize;
     };
 
-    this.incrementSize = function () {
-        return this.theSize += 1;
+    this.incrementPoolSize = function () {
+        return this.thePoolSize += 1;
     };
 
-    this.decrementSize = function () {
-        return this.theSize -= 1;
+    this.decrementPoolSize = function () {
+        return this.thePoolSize -= 1;
     };
 
     this.mallocIt = function (my_name_val) {
         var entry;
-        if (!this.head()) {
+        if (!this.poolHead()) {
             entry = this.linkModule().malloc(my_name_val);
         } else {
-            entry = this.head();
+            entry = this.poolHead();
             this.linkModule().reset(entry, my_name_val);
             this.setHead(entry.next);
-            this.decrementSize();
+            this.decrementPoolSize();
         }
 
         this.abendIt();
@@ -71,25 +73,25 @@ function LinkPoolObject() {
     };
 
     this.freeIt = function (entry_val) {
-        this.incrementSize();
-        entry_val.next = this.head();
+        this.incrementPoolSize();
+        entry_val.next = this.poolHead();
         this.setHead(entry_val);
         this.abendIt();
     };
 
     this.abendIt = function () {
         var i = 0;
-        var p = this.head();
+        var p = this.poolHead();
         while (p) {
             p = p.next;
             i += 1;
         }
-        if (i !== this.size()) {
-            this.abend("abendIt", "size=" + this.size() + " i=" + i);
+        if (i !== this.poolSize()) {
+            this.abend("abendIt", "size=" + this.poolSize() + " i=" + i);
         }
 
-        if (this.size() > 5) {
-            this.abend("abendIt", "size=" + this.size());
+        if (this.poolSize() > 5) {
+            this.abend("abendIt", "size=" + this.poolSize());
         }
     };
 
@@ -107,4 +109,5 @@ function LinkPoolObject() {
         this.utilModule().logit(this.objectName() + "." + str1_val, str2_val);
     };
 }
+*/
 

@@ -39,6 +39,7 @@ module.exports = {
 function LinkMgrObject(root_object_val) {
     "use strict";
     this.theRootObject = root_object_val;
+    this.theLinkModule = require("./link_entry_module.js");
 
     this.objectName = function () {
         return "LinkMgrObject";
@@ -46,6 +47,10 @@ function LinkMgrObject(root_object_val) {
 
     this.rootObject = function () {
         return this.theRootObject;
+    };
+
+    this.linkModule = function () {
+        return this.theLinkModule;
     };
 
     this.utilObject = function () {
@@ -56,8 +61,24 @@ function LinkMgrObject(root_object_val) {
         return this.rootObject().queueModule();
     };
 
-    this.linkPoolModule = function () {
-        return this.theLinkPoolModule;
+    this.poolHead = function () {
+        return this.thePoolHead;
+    };
+
+    this.setPoolHead = function (val) {
+        this.thePoolHead = val;
+    };
+
+    this.poolSize = function () {
+        return this.thePoolSize;
+    };
+
+    this.incrementPoolSize = function () {
+        return this.thePoolSize += 1;
+    };
+
+    this.decrementPoolSize = function () {
+        return this.thePoolSize -= 1;
     };
 
     this.linkQueue = function () {
@@ -72,7 +93,7 @@ function LinkMgrObject(root_object_val) {
     this.searchAndCreate = function (my_name_val, link_id_val) {
         var link = this.queueModule().search(this.linkQueue(), compareLink, my_name_val, link_id_val);
         if (!link) {
-            link = this.linkPoolModule().malloc(my_name_val);
+            link = this.mallocIt(my_name_val);
             this.debug(false, "searchAndCreate", "malloc link: name=" + link.my_name + "=link_id=" + link.link_id);
             this.queueModule().enqueue(this.linkQueue(), link);
         }
@@ -98,14 +119,41 @@ function LinkMgrObject(root_object_val) {
     };
 
     this.mallocIt = function (my_name_val) {
-        var acc = link_pool.malloc(my_name_val);
-        return acc;
+        var entry;
+        if (!this.poolHead()) {
+            entry = this.linkModule().malloc(my_name_val);
+        } else {
+            entry = this.poolHead();
+            this.linkModule().reset(entry, my_name_val);
+            this.setHead(entry.next);
+            this.decrementPoolSize();
+        }
+
+        this.abendIt();
+        return entry;
     };
 
     this.freeIt = function (entry_val) {
+        this.incrementPoolSize();
+        entry_val.next = this.poolHead();
+        this.setHead(entry_val);
+        this.abendIt();
     };
 
     this.abendIt = function () {
+        var i = 0;
+        var p = this.poolHead();
+        while (p) {
+            p = p.next;
+            i += 1;
+        }
+        if (i !== this.poolSize()) {
+            this.abend("abendIt", "size=" + this.poolSize() + " i=" + i);
+        }
+
+        if (this.poolSize() > 5) {
+            this.abend("abendIt", "size=" + this.poolSize());
+        }
     };
 
     this.debug = function (debug_val, str1_val, str2_val) {
@@ -122,7 +170,8 @@ function LinkMgrObject(root_object_val) {
         this.utilObject().logit(this.objectName() + "." + str1_val, str2_val);
     };
 
-    this.theLinkPoolModule = require("./link_pool_module.js");
+    this.thePoolHead = null;
+    this.thePoolSize = 0;
     this.theLinkQueue = this.queueModule().malloc();
 }
 
