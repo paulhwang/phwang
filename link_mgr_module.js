@@ -91,7 +91,7 @@ function LinkMgrObject(root_object_val) {
     };
 
     this.searchAndCreate = function (my_name_val, link_id_val) {
-        var link = this.linkQueue().searchIt(compareLink, my_name_val, link_id_val);
+        var link = this.searchLink(my_name_val, link_id_val);
         if (!link) {
             link = this.mallocIt(my_name_val);
             this.debug(false, "searchAndCreate", "malloc link: name=" + link.my_name + "=link_id=" + link.link_id);

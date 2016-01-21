@@ -81,7 +81,7 @@ function SessionMgrObject(root_object_val) {
     };
 
     this.searchAndCreate = function (my_name_val, his_name_val, session_id_val) {
-        var session = this.sessionQueue().searchIt(compareIt, my_name_val, his_name_val, session_id_val);
+        var session = this.searchIt(my_name_val, his_name_val, session_id_val);
         if (!session) {
             session = this.mallocIt(my_name_val, his_name_val);
             this.sessionQueue().enQueue(session);
