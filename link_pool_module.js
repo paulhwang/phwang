@@ -6,78 +6,84 @@
 
 module.exports = {
     malloc: function (my_name_val) {
-        return mallocIt(my_name_val);
+        return theLinkPoolObject.mallocIt(my_name_val);
     },
 
     free: function (entry_val) {
-        freeIt(entry_val);
+        theLinkPoolObject.freeIt(entry_val);
     },
 };
+
+var theLinkPoolObject = new LinkPoolObject();
 
 var util = require("./util_module.js");
 var link = require("./link_entry_module.js");
 var head = null;
 var size = 0;
 
-function mallocIt(my_name_val) {
-    "use strict";
-    var entry;
-    if (!head) {
-        entry = link.malloc(my_name_val);
-    } else {
-        entry = head;
-        link.reset(entry, my_name_val);
-        head = entry.next;
-        size -= 1;
-    }
-
-    abendIt();
-    return entry;
-}
-
-function freeIt(entry_val) {
+function LinkPoolObject() {
     "use strict";
 
-    size += 1;
-    entry_val.next = head;
-    head = entry_val;
-    abendIt();
-}
+    this.objectName = function () {
+        return "LinkPoolObject";
+    };
 
-function abendIt() {
-    "use strict";
-    var i, p;
+    this.utilModule = function () {
+        return this.theUtilModule;
+    };
 
-    //logit('abendIt', 'before');
+    this.mallocIt = function (my_name_val) {
+        var entry;
+        if (!head) {
+            entry = link.malloc(my_name_val);
+        } else {
+            entry = head;
+            link.reset(entry, my_name_val);
+            head = entry.next;
+            size -= 1;
+        }
 
-    i = 0;
-    p = head;
-    while (p) {
-        p = p.next;
-        i += 1;
-    }
-    if (i !== size) {
-        abend("abendIt", "size=" + size + " i=" + i);
-    }
+        this.abendIt();
+        return entry;
+    };
 
-    if (size > 5) {
-         abend("abendIt", "size=" + size);
-    }
+    this.freeIt = function (entry_val) {
+        size += 1;
+        entry_val.next = head;
+        head = entry_val;
+        this.abendIt();
+    };
 
-    //logit('abendIt', 'succeed');
- }
+    this.abendIt = function () {
+        var i, p;
 
-function debug(debug_val, str1_val, str2_val) {
-    if (debug_val) {
-        logit(str1_val, "==" + str2_val);
-    }
-}
+        i = 0;
+        p = head;
+        while (p) {
+            p = p.next;
+            i += 1;
+        }
+        if (i !== size) {
+            this.abend("abendIt", "size=" + size + " i=" + i);
+        }
 
-function abend (str1_val, str2_val) {
-    util.abend("LinkPoolModule." + str1_val, str2_val);
-}
+        if (size > 5) {
+            this.abend("abendIt", "size=" + size);
+        }
+    };
 
-function logit (str1_val, str2_val) {
-    util.logit("LinkPoolModule." + str1_val, str2_val);
+    this.debug = function (debug_val, str1_val, str2_val) {
+        if (debug_val) {
+            logit(str1_val, "==" + str2_val);
+        }
+    };
+
+    this.abend = function (str1_val, str2_val) {
+        this.utilModule().abend(this.objectName() + "." + str1_val, str2_val);
+    };
+
+    this.logit = function (str1_val, str2_val) {
+        this.utilModule().logit(this.objectName() + "." + str1_val, str2_val);
+    };
 }
 
