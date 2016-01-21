@@ -118,7 +118,7 @@ function LinkMgrObject(root_object_val) {
     this.getNameList = function () {
         var name_array = [];
         var i = 0;
-        var queue_element = this.linkQueue().tail;
+        var queue_element = this.linkQueue().tail();
         while (queue_element) {
             var link = queue_element.data();
             name_array[i] = link.my_name;

@@ -38,9 +38,9 @@ function QueueObject () {
     "use strict";
     this.theUtilModule = require("./util_module.js");
     this.theHolderPoolModule = require("./holder_pool_module.js");
-    this.head = null;
-    this.tail = null;
-    this.size = 0;
+    this.theHead = null;
+    this.theTail = null;
+    this.theSize = 0;
 
     this.objectName = function () {
         return "QueueObject";
@@ -53,6 +53,34 @@ function QueueObject () {
     this.holderPoolModule = function () {
         return this.theHolderPoolModule;
     };
+
+    this.head = function () {
+        return this.theHead;
+    }
+
+    this.setHead = function (val) {
+        this.theHead = val;
+    }
+
+    this.tail = function () {
+        return this.theTail;
+    }
+
+    this.setTail = function (val) {
+        this.theTail = val;
+    }
+
+    this.size = function () {
+        return this.theSize;
+    }
+
+    this.incrementSize = function () {
+        this.theSize += 1;
+    }
+
+    this.decrementSize = function () {
+        this.theSize -= 1;
+    }
 
     this.enQueue = function (data_val) {
         if (!data_val) {
@@ -68,17 +96,17 @@ function QueueObject () {
             return;
         }
 
-        this.size += 1;
-        if (!this.head) {
+        this.incrementSize();
+        if (!this.head()) {
             data_entry.setPrev(null);
             data_entry.setNext(null);
-            this.head = data_entry;
-            this.tail = data_entry;
+            this.setHead(data_entry);
+            this.setTail(data_entry);
         } else {
-            this.tail.setNext(data_entry);
-            data_entry.setPrev(this.tail);
+            this.tail().setNext(data_entry);
+            data_entry.setPrev(this.tail());
             data_entry.setNext(null);
-            this.tail = data_entry;
+            this.setTail(data_entry);
         }
         this.abendIt();
     };
@@ -89,21 +117,21 @@ function QueueObject () {
 
         this.abendIt();
 
-        if (!this.head) {
+        if (!this.head()) {
             data_entry = null;
             data = null;
-        } else if (this.head === this.tail) {
-            this.size -= 1;
-            data_entry = this.head;
+        } else if (this.head() === this.tail()) {
+            this.decrementSize();
+            data_entry = this.head();
             data = data_entry.data();
-            this.head = null;
-            this.tail = null;
+            this.setHead(null);
+            this.setTail(null);
         } else {
-            this.size -= 1;
-            data_entry = this.head;
+            this.decrementSize();
+            data_entry = this.head();
             data = data_entry.data();
-            this.head = this.head.next();
-            this.head.setPrev(null);
+            this.setHead(this.head().next());
+            this.head().setPrev(null);
         }
 
         if (data_entry) {
@@ -111,7 +139,7 @@ function QueueObject () {
             this.holderPoolModule().free(data_entry);
         }
         else {
-            this.logit("deQueue", "null");
+            //this.logit("deQueue", "null");
         }
 
         this.abendIt();
@@ -121,7 +149,7 @@ function QueueObject () {
     this.removeElement = function (func_val, input_val1, input_val2, input_val3) {
         this.abendIt();
 
-        var p = this.head;
+        var p = this.head();
         while (p) {
             this.debug(false, "removeElement", "in while loop");
             if (func_val(p.data(), input_val1, input_val2, input_val3)) {
@@ -129,14 +157,14 @@ function QueueObject () {
                 if (p.prev()) {
                     p.prev().setNext(p.next());
                 } else {
-                    this.head = p.next();
+                    this.setHead(p.next());
                 }
                 if (p.next()) {
                     p.next().setPrev(p.prev());
                 } else {
-                    this.tail = p.prev();
+                    this.setTail(p.prev());
                 }
-                this.size -= 1;
+                this.decrementSize();
                 return;
             }
             p = p.next();
@@ -146,7 +174,7 @@ function QueueObject () {
     };
 
     this.searchIt = function (func_val, input_val1, input_val2, input_val3) {
-        var p = this.head;
+        var p = this.head();
         while (p) {
             this.debug(false, "searchIt", "in while loop");
             if (func_val(p.data(), input_val1, input_val2, input_val3)) {
@@ -161,23 +189,23 @@ function QueueObject () {
 
     this.abendIt = function () {
         var i = 0;
-        var p = this.head;
+        var p = this.head();
         while (p) {
             p = p.next();
             i += 1;
         }
-        if (i !== this.size) {
-            this.abend("abendIt", "head: size=" + this.size + " i=" + i);
+        if (i !== this.size()) {
+            this.abend("abendIt", "head: size=" + this.size() + " i=" + i);
         }
 
         i = 0;
-        p = this.tail;
+        p = this.tail();
         while (p) {
             p = p.prev();
             i += 1;
         }
-        if (i !== this.size) {
-            this.abend("abendIt", "tail: size=" + this.size + " i=" + i);
+        if (i !== this.size()) {
+            this.abend("abendIt", "tail: size=" + this.size() + " i=" + i);
         }
     };
 

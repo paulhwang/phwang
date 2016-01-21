@@ -326,7 +326,7 @@ function ExpressHttpObject(root_object_val) {
             this.logit("*****Abend: getSessionData", "queue and ring not match");
         }
         if (!data) {
-            this.logit("getSessionData", "null data");
+            this.debug(false, "getSessionData", "null data");
             res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
             return;
         }
