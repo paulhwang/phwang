@@ -92,7 +92,7 @@ function SessionPoolObject() {
 
     this.debug = function (debug_val, str1_val, str2_val) {
         if (debug_val) {
-            logit(str1_val, "==" + str2_val);
+            this.logit(str1_val, "==" + str2_val);
         }
     };
 

@@ -62,6 +62,20 @@ function SessionEntryObject() {
         this.incrementGlobalSessionId();
     };
 
+    this.debug = function (debug_val, str1_val, str2_val) {
+        if (debug_val) {
+            logit(str1_val, "==" + str2_val);
+        }
+    };
+
+    this.abend = function (str1_val, str2_val) {
+        this.utilModule().abend(this.objectName() + "." + str1_val, str2_val);
+    };
+
+    this.logit = function (str1_val, str2_val) {
+        this.utilModule().logit(this.objectName() + "." + str1_val, str2_val);
+    };
+
     this.theQueueModule = require("./queue_module.js");
     this.theRingModule = require("./ring_module.js");
     this.theGlobalSessionId = 1;
