@@ -14,8 +14,6 @@ module.exports = {
     },
 };
 
-var theUtilObject = require("./util_module.js");
-var theSessionObject = require("./session_entry_module.js");
 var theSessionPoolObject = new SessionPoolObject();
 
 function SessionPoolObject() {
@@ -25,12 +23,12 @@ function SessionPoolObject() {
         return "SessionPoolObject";
     };
 
-    this.utilObject = function () {
-        return theUtilObject;
+    this.utilModule = function () {
+        return this.theUtilModule;
     };
 
-    this.sessionObject = function () {
-        return theSessionObject;
+    this.sessionModule = function () {
+        return this.theSessionModule;
     };
 
     this.head = function () {
@@ -57,10 +55,10 @@ function SessionPoolObject() {
         var entry;
 
         if (!this.head()) {
-            entry = this.sessionObject().malloc(my_name_val, his_name_val);
+            entry = this.sessionModule().malloc(my_name_val, his_name_val);
         } else {
             entry = this.head();
-            this.sessionObject().reset(entry, my_name_val, his_name_val);
+            this.sessionModule().reset(entry, my_name_val, his_name_val);
             this.setHead(entry.next);
             this.decrementSize();
         }
@@ -99,12 +97,15 @@ function SessionPoolObject() {
     };
 
     this.abend = function (str1_val, str2_val) {
-        this.utilObject().abend(this.objectName() + "." + str1_val, str2_val);
-    }
+        this.utilModule().abend(this.objectName() + "." + str1_val, str2_val);
+    };
 
     this.logit = function (str1_val, str2_val) {
-        this.utilObject().logit(this.objectName() + "." + str1_val, str2_val);
-    }
+        this.utilModule().logit(this.objectName() + "." + str1_val, str2_val);
+    };
+
+    this.theUtilModule = require("./util_module.js");
+    this.theSessionModule = require("./session_entry_module.js");
     this.theHead = null;
     this.theSize = 0;
 }

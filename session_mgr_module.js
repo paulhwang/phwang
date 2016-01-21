@@ -6,44 +6,93 @@
 
 module.exports = {
     search: function (my_name_val, his_name_val, session_id_val) {
-        return searchIt(my_name_val, his_name_val, session_id_val);
+        return theSessionMgrObject.searchIt(my_name_val, his_name_val, session_id_val);
     },
 
     search_and_create: function (my_name_val, his_name_val, session_id_val) {
-        return searchAndCreate(my_name_val, his_name_val, session_id_val);
+        return theSessionMgrObject.searchAndCreate(my_name_val, his_name_val, session_id_val);
     },
 
     malloc: function (my_name_val, his_name_val) {
-         return mallocIt(my_name_val, his_name_val);
+         return theSessionMgrObject.mallocIt(my_name_val, his_name_val);
     },
 
     free: function (entry_val) {
-        freeIt(entry_val);
+        theSessionMgrObject.freeIt(entry_val);
     },
 };
 
-var util = require("./util_module.js");
-var queue = require("./queue_module.js");
-var session_pool = require("./session_pool_module.js");
-var session_queue = queue.malloc();
+var theSessionMgrObject = new SessionMgrObject();
 
-function searchIt(my_name_val, his_name_val, session_id_val) {
+function SessionMgrObject() {
     "use strict";
-    return queue.search(session_queue, compareIt, my_name_val, his_name_val, session_id_val);
-}
 
-function searchAndCreate(my_name_val, his_name_val, session_id_val) {
-    "use strict";
-    var session = queue.search(session_queue, compareIt, my_name_val, his_name_val, session_id_val);
-    if (!session) {
-        session = session_pool.malloc(my_name_val, his_name_val);
-        queue.enqueue(session_queue, session);
-    }
-    return session;
+    this.objectName = function () {
+        return "SessionMgrObject";
+    };
+
+    this.utilModule = function () {
+        return this.theUtilModile;
+    };
+
+    this.queueModule = function () {
+        return this.theQueueModule;
+    };
+
+    this.sessionPoolModule = function () {
+        return this.theSessionPoolModule;
+    };
+
+    this.sessionQueue = function () {
+        return this.theSessionQueue;
+    };
+
+    this.searchIt = function (my_name_val, his_name_val, session_id_val) {
+        return this.queueModule().search(this.sessionQueue(), compareIt, my_name_val, his_name_val, session_id_val);
+    };
+
+    this.searchAndCreate = function (my_name_val, his_name_val, session_id_val) {
+        var session = this.queueModule().search(this.sessionQueue(), compareIt, my_name_val, his_name_val, session_id_val);
+        if (!session) {
+            session = this.sessionPoolModule().malloc(my_name_val, his_name_val);
+            this.queueModule().enqueue(this.sessionQueue(), session);
+        }
+        return session;
+    };
+
+    this.mallocIt = function (my_name_val, his_name_val) {
+        var acc = this.sessionPoolModule().malloc(my_name_val, his_name_val);
+        return acc;
+    };
+
+    this.freeIt = function (entry_val) {
+    };
+
+    this.abendIt = function () {
+    };
+
+    this.debug = function (debug_val, str1_val, str2_val) {
+        if (debug_val) {
+            logit(str1_val, "==" + str2_val);
+        }
+    };
+
+    this.abend = function (str1_val, str2_val) {
+        this.utilModule().abend(this.objectName() + "." + str1_val, str2_val);
+    };
+
+    this.logit = function (str1_val, str2_val) {
+        this.utilModule().logit(this.objectName() + "." + str1_val, str2_val);
+    };
+
+    this.theUtilModile = require("./util_module.js");
+    this.theSessionPoolModule = require("./session_pool_module.js");
+    this.theQueueModule = require("./queue_module.js");
+    this.theSessionQueue = this.queueModule().malloc();
 }
 
 function compareIt (session_val, my_name_val, his_name_val, session_id_val) {
-    debug(false, "compareIt", my_name_val + ":" + session_val.my_name + " " + his_name_val + ":" + session_val.his_name);
+    //console.log("compareIt", my_name_val + ":" + session_val.my_name + " " + his_name_val + ":" + session_val.his_name);
     if ((my_name_val !== session_val.my_name) || (his_name_val !== session_val.his_name)) {
         return false;
     }
@@ -52,34 +101,5 @@ function compareIt (session_val, my_name_val, his_name_val, session_id_val) {
     } else {
         return (session_id_val === session_val.session_id);
     }
-}
-
-function mallocIt(my_name_val, his_name_val) {
-    "use strict";
-    var acc = session_pool.malloc(my_name_val, his_name_val);
-    return acc;
-}
-
-function freeIt(entry_val) {
-    "use strict";
-}
-
-function abendIt() {
- }
-
-function debug(debug_val, str1_val, str2_val) {
-    if (debug_val) {
-        logit(str1_val, "==" + str2_val);
-    }
-}
-
-function abend (str1_val, str2_val) {
-    "use strict";
-    util.abend("SessionMgrModule." + str1_val, str2_val);
-}
-
-function logit (str1_val, str2_val) {
-    "use strict";
-    util.logit("SessionMgrModule." + str1_val, str2_val);
 }
 
