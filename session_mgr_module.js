@@ -77,7 +77,17 @@ function SessionMgrObject(root_object_val) {
     };
 
     this.searchIt = function (my_name_val, his_name_val, session_id_val) {
-        return this.sessionQueue().searchIt(compareIt, my_name_val, his_name_val, session_id_val);
+        return this.sessionQueue().searchIt(function (session_val, my_name_val, his_name_val, session_id_val) {
+            //console.log("compareIt", my_name_val + ":" + session_val.my_name + " " + his_name_val + ":" + session_val.his_name);
+            if ((my_name_val !== session_val.my_name) || (his_name_val !== session_val.his_name)) {
+                return false;
+            }
+            if (session_id_val === -1) {
+                return true;
+            } else {
+                return (session_id_val === session_val.session_id);
+            }
+        }, my_name_val, his_name_val, session_id_val);
     };
 
     this.searchAndCreate = function (my_name_val, his_name_val, session_id_val) {
@@ -147,16 +157,3 @@ function SessionMgrObject(root_object_val) {
     this.thePoolHead = null;
     this.thePoolSize = 0;
 }
-
-function compareIt (session_val, my_name_val, his_name_val, session_id_val) {
-    //console.log("compareIt", my_name_val + ":" + session_val.my_name + " " + his_name_val + ":" + session_val.his_name);
-    if ((my_name_val !== session_val.my_name) || (his_name_val !== session_val.his_name)) {
-        return false;
-    }
-    if (session_id_val === -1) {
-        return true;
-    } else {
-        return (session_id_val === session_val.session_id);
-    }
-}
-
