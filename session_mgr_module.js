@@ -45,7 +45,7 @@ function SessionMgrObject(root_object_val) {
     };
 
     this.queueModule = function () {
-        return this.theQueueModule;
+        return this.rootObject().queueModule();
     };
 
     this.sessionPoolModule = function () {
@@ -95,7 +95,6 @@ function SessionMgrObject(root_object_val) {
     };
 
     this.theSessionPoolModule = require("./session_pool_module.js");
-    this.theQueueModule = require("./queue_module.js");
     this.theSessionQueue = this.queueModule().malloc();
 }
 

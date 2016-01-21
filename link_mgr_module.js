@@ -53,7 +53,7 @@ function LinkMgrObject(root_object_val) {
     };
 
     this.queueModule = function () {
-        return this.theQueueModule;
+        return this.rootObject().queueModule();
     };
 
     this.linkPoolModule = function () {
@@ -123,7 +123,6 @@ function LinkMgrObject(root_object_val) {
     };
 
     this.theLinkPoolModule = require("./link_pool_module.js");
-    this.theQueueModule = require("./queue_module.js");
     this.theLinkQueue = this.queueModule().malloc();
 }
 

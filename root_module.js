@@ -23,6 +23,10 @@ function RootObject () {
         return this.theUtilObject;
     };
 
+    this.queueModule = function () {
+        return this.theQueueModule;
+    };
+
     this.linkMgrObject = function () {
         return this.theLinkMgrObject;
     };
@@ -46,6 +50,7 @@ function RootObject () {
     };
 
     this.theUtilObject = require("./util_module.js");
+    this.theQueueModule = require("./queue_module.js");
     this.theLinkMgrObject = require("./link_mgr_module.js");
     this.theSessionMgrObject = require("./session_mgr_module.js");
     this.linkMgrObject().init(this);
