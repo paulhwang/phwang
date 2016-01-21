@@ -6,79 +6,105 @@
 
 module.exports = {
     malloc: function (my_name_val, his_name_val) {
-         return mallocIt(my_name_val, his_name_val);
+         return theSessionPoolObject.mallocIt(my_name_val, his_name_val);
     },
 
     free: function (entry_val) {
-        freeIt(entry_val);
+        theSessionPoolObject.freeIt(entry_val);
     },
 };
 
-var util = require("./util_module.js");
-var session = require("./session_entry_module.js");
-var head = null;
-var size = 0;
+var theUtilObject = require("./util_module.js");
+var theSessionObject = require("./session_entry_module.js");
+var theSessionPoolObject = new SessionPoolObject();
 
-function mallocIt(my_name_val, his_name_val) {
-    "use strict";
-    var entry;
-
-    if (!head) {
-        entry = session.malloc(my_name_val, his_name_val);
-    } else {
-        entry = head;
-        session.reset(entry, my_name_val, his_name_val);
-        head = entry.next;
-        size -= 1;
-    }
-
-    abendIt();
-    return entry;
-}
-
-function freeIt(entry_val) {
+function SessionPoolObject() {
     "use strict";
 
-    size += 1;
-    entry_val.next = head;
-    head = entry_val;
-    abendIt();
-}
+    this.objectName = function () {
+        return "SessionPoolObject";
+    };
 
-function abendIt() {
-    "use strict";
-    var i, p;
+    this.utilObject = function () {
+        return theUtilObject;
+    };
 
-    //logit('abendIt', 'before');
+    this.sessionObject = function () {
+        return theSessionObject;
+    };
 
-    i = 0;
-    p = head;
-    while (p) {
-        p = p.next;
-        i += 1;
+    this.head = function () {
+        return this.theHead;
+    };
+
+    this.setHead = function (val) {
+        this.theHead = val;
+    };
+
+    this.size = function () {
+        return this.theSize;
+    };
+
+    this.incrementSize = function () {
+        return this.theSize += 1;
+    };
+
+    this.decrementSize = function () {
+        return this.theSize -= 1;
+    };
+
+    this.mallocIt = function (my_name_val, his_name_val) {
+        var entry;
+
+        if (!this.head()) {
+            entry = this.sessionObject().malloc(my_name_val, his_name_val);
+        } else {
+            entry = this.head();
+            this.sessionObject().reset(entry, my_name_val, his_name_val);
+            this.setHead(entry.next);
+            this.decrementSize();
+        }
+
+        this.abendIt();
+        return entry;
+    };
+
+    this.freeIt = function (entry_val) {
+        this.incrementSize();
+        entry_val.next = this.head();
+        this.setHead(entry_val);
+        this.abendIt();
+    };
+
+    this.abendIt = function () {
+        var i = 0;
+        var p = this.head();
+        while (p) {
+            p = p.next;
+            i += 1;
+        }
+        if (i !== this.size()) {
+            this.abend("abendIt", "size=" + this.size() + " i=" + i);
+        }
+
+        if (this.size() > 5) {
+            this.abend("abendIt", "size=" + this.size());
+        }
+    };
+
+    this.debug = function (debug_val, str1_val, str2_val) {
+        if (debug_val) {
+            logit(str1_val, "==" + str2_val);
+        }
+    };
+
+    this.abend = function (str1_val, str2_val) {
+        this.utilObject().abend(this.objectName() + "." + str1_val, str2_val);
     }
-    if (i !== size) {
-        abend("abendIt", "size=" + size + " i=" + i);
+
+    this.logit = function (str1_val, str2_val) {
+        this.utilObject().logit(this.objectName() + "." + str1_val, str2_val);
     }
-
-    if (size > 5) {
-         abend("abendIt", "size=" + size);
-    }
-
-    //logit('abendIt', 'succeed');
- }
-
-function debug(debug_val, str1_val, str2_val) {
-    if (debug_val) {
-        logit(str1_val, "==" + str2_val);
-    }
+    this.theHead = null;
+    this.theSize = 0;
 }
-
-function abend (str1_val, str2_val) {
-    util.abend("SessionPoolModule." + str1_val, str2_val);
-}
-
-function logit (str1_val, str2_val) {
-    util.logit("SessionPoolModule." + str1_val, str2_val);
-}
-
