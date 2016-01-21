@@ -48,8 +48,8 @@ function LinkMgrObject(root_object_val) {
         return this.theRootObject;
     };
 
-    this.utilModule = function () {
-        return this.rootObject().utilModile();
+    this.utilObject = function () {
+        return this.rootObject().utilObject();
     };
 
     this.queueModule = function () {
@@ -115,14 +115,13 @@ function LinkMgrObject(root_object_val) {
     };
 
     this.abend = function (str1_val, str2_val) {
-        this.utilModule().abend(this.objectName() + "." + str1_val, str2_val);
+        this.utilObject().abend(this.objectName() + "." + str1_val, str2_val);
     };
 
     this.logit = function (str1_val, str2_val) {
-        this.utilModule().logit(this.objectName() + "." + str1_val, str2_val);
+        this.utilObject().logit(this.objectName() + "." + str1_val, str2_val);
     };
 
-    this.theUtilModile = require("./util_module.js");
     this.theLinkPoolModule = require("./link_pool_module.js");
     this.theQueueModule = require("./queue_module.js");
     this.theLinkQueue = this.queueModule().malloc();
