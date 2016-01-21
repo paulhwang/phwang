@@ -61,6 +61,10 @@ function LinkMgrObject(root_object_val) {
         return this.rootObject().queueModule();
     };
 
+    this.linkQueue = function () {
+        return this.theLinkQueue;
+    };
+
     this.poolHead = function () {
         return this.thePoolHead;
     };
@@ -81,28 +85,24 @@ function LinkMgrObject(root_object_val) {
         return this.thePoolSize -= 1;
     };
 
-    this.linkQueue = function () {
-        return this.theLinkQueue;
-    };
-
     this.searchLink = function (my_name_val, link_id_val) {
         this.debug(false, "searchIt", my_name_val + " " + link_id_val);
-        return this.queueModule().search(this.linkQueue(), compareLink, my_name_val, link_id_val);
+        return this.linkQueue().searchIt(compareLink, my_name_val, link_id_val);
     };
 
     this.searchAndCreate = function (my_name_val, link_id_val) {
-        var link = this.queueModule().search(this.linkQueue(), compareLink, my_name_val, link_id_val);
+        var link = this.linkQueue().searchIt(compareLink, my_name_val, link_id_val);
         if (!link) {
             link = this.mallocIt(my_name_val);
             this.debug(false, "searchAndCreate", "malloc link: name=" + link.my_name + "=link_id=" + link.link_id);
-            this.queueModule().enqueue(this.linkQueue(), link);
+            this.linkQueue().enQueue(link);
         }
         return link;
     };
 
     this.removeLink = function (link_val) {
         this.logit("removeLink", "my_name=" + link_val.my_name + " link_id=" + link_val.link_id);
-        this.queueModule().remove(this.linkQueue(), compareLink, link_val.my_name, link_val.link_id);
+        this.linkQueue().removeElement(compareLink, link_val.my_name, link_val.link_id);
     };
 
     this.getNameList = function () {
