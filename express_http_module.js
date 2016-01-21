@@ -12,9 +12,6 @@ var link_entry = require("./link_entry_module.js");
 var express = require('express');
 var bodyParser = require('body-parser');
 var state;
-var util = root.object().utilObject();
-var link_mgr = root.object().linkMgrObject();
-var account_mgr = root.object().sessionMgrObject();
 
 var theExpressHttpObject = new ExpressHttpObject(root.object());
 
@@ -79,7 +76,7 @@ function ExpressHttpObject(root_object_val) {
         }
 
         var my_session_id = Number(req.body.session_id);
-        my_session = account_mgr.search(req.body.my_name, req.body.his_name, my_session_id);
+        my_session = this.sessionMgrObject().search(req.body.my_name, req.body.his_name, my_session_id);
         if (!my_session) {
             this.abend("processPost", "null my_session");
             return;
@@ -269,7 +266,7 @@ function ExpressHttpObject(root_object_val) {
 
     this.setupSession = function (req, res) {
         var session, session_id_str;
-        session = account_mgr.search_and_create(req.headers.my_name, req.headers.his_name, 0);
+        session = this.sessionMgrObject().search_and_create(req.headers.my_name, req.headers.his_name, 0);
         if (!session) {
             res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
             this.abend("setupSession", "null session");
@@ -299,7 +296,7 @@ function ExpressHttpObject(root_object_val) {
         link_entry.keep_alive(link);
 
         session_id = Number(req.headers.session_id);
-        var my_session = account_mgr.search(req.headers.my_name, req.headers.his_name, session_id);
+        var my_session = this.sessionMgrObject().search(req.headers.my_name, req.headers.his_name, session_id);
         if (!my_session) {
             res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
             this.abend("getSessionData", "null my_session");
@@ -363,7 +360,7 @@ function ExpressHttpObject(root_object_val) {
         }
         link_entry.keep_alive(link);
 
-        var my_session = account_mgr.search(req.headers.my_name, req.headers.his_name, session_id);
+        var my_session = this.sessionMgrObject().search(req.headers.my_name, req.headers.his_name, session_id);
         if (!my_session) {
             res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
             this.abend("putSessionData", "null my_session");
