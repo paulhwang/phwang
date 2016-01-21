@@ -4,15 +4,17 @@
  * File name: express_http_module.js
  */
 
-var util = require("./util_module.js");
+//var util = require("./util_module.js");
+var root = require("./root_module.js");
 var queue = require("./queue_module.js");
 var ring = require("./ring_module.js");
-var account_mgr = require("./session_mgr_module.js");
-var link_mgr = require("./link_mgr_module.js");
 var link_entry = require("./link_entry_module.js");
 var express = require('express');
 var bodyParser = require('body-parser');
 var state;
+var util = root.object().utilObject();
+var link_mgr = root.object().linkMgrObject();
+var account_mgr = root.object().sessionMgrObject();
 
 module.exports = {
     post: function (req, res) {
@@ -372,8 +374,8 @@ function putSessionData (req, res) {
         my_session.up_seq += 1;
     } else if (xmt_seq < my_session.up_seq) {
          if (xmt_seq === 0) {
-            queue.enqueue(his_session.queue, req.headers.data);
-            ring.enqueue(his_session.ring, req.headers.data);
+            queue.enqueue(his_session.receiveQueue(), req.headers.data);
+            ring.enqueue(his_session.receiveRing(), req.headers.data);
             my_session.up_seq = 1;
             logit("putSessionData", req.headers.data + " post " + xmt_seq + " reset");
         } else {
