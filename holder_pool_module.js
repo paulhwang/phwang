@@ -4,94 +4,124 @@
  * File name: holder_pool_module.js
  */
 
-var theHolderPoolObject;
-
 module.exports = {
     malloc: function (data_val) {
-         return mallocEntry(data_val);
+         return theHolderPoolObject.mallocEntry(data_val);
     },
 
     free: function (entry_val) {
-        freeEntry(entry_val);
+        theHolderPoolObject.freeEntry(entry_val);
     },
 };
 
-var util = require("./util_module.js");
-var holder_entry = require("./holder_entry_module.js");
-var head = null;
-var size = 0;
 
-function mallocEntry(data_val) {
+
+var theHolderPoolObject = new HolderPoolObject();
+
+function HolderPoolObject () {
     "use strict";
-    var entry;
+    this.theUtilModule = require("./util_module.js");
+    this.theHolderEntryModule = require("./holder_entry_module.js");
+    this.theHead = null;
+    this.theSize = 0;
 
-    abendIt("mallocEntry start");
+    this.objectName = function () {
+        return "HolderPoolObject";
+    };
 
-    if (!head) {
-        entry = holder_entry.malloc();
-    } else {
-        entry = head;
-        head = entry.next;
-        size -= 1;
-    }
+    this.utilModule = function () {
+        return this.theUtilModile;
+    };
 
-    abendIt("mallocEntry end");
+    this.holderEntryModule = function () {
+        return this.theHolderEntryModule;
+    };
 
-    if (entry) {
-        entry.data = data_val;
-    } else {
-        abend('mallocEntry', 'null');
-    }
+    this.head = function () {
+        return this.theHead;
+    };
 
-    return entry;
-}
+    this.setHead = function (val) {
+        this.theHead = val;
+    };
 
-function freeEntry(entry_val) {
-    "use strict";
+    this.size = function () {
+        return this.theSize;
+    };
 
-    abendIt("freeEntry start");
-    if (!entry_val) {
-        return;
-    }
+    this.incrementSize = function () {
+        this.theSize += 1;
+    };
 
-    abendIt("freeEntry 1000");
-    size += 1;
-    entry_val.next = head;
-    head = entry_val;
+    this.decrementSize = function () {
+        this.theSize -= 1;
+    };
 
-    abendIt("freeEntry end" + size);
-    abendIt("freeEntry end");
-}
+    this.mallocEntry = function (data_val) {
+        var entry;
 
-function abendIt(val) {
-    "use strict";
-    var i, p;
+        this.abendIt();
 
-    //logit('abendIt', 'before');
+        if (!this.head()) {
+            entry = this.holderEntryModule().malloc();
+        } else {
+            entry = this.head();
+            this.setHead(entry.next);
+            this.decrementSize();
+        }
 
-    i = 0;
-    p = head;
-    while (p) {
-        p = p.next;
-        i += 1;
-    }
-    if (i !== size) {
-        abend("abendIt", val + "size=" + size + " i=" + i);
-    }
+        this.abendIt();
 
-    if (size > 5) {
-         abend("abendIt", val + " size=" + size);
-    }
+        if (entry) {
+            entry.data = data_val;
+        } else {
+            this.abend('mallocEntry', 'null');
+        }
 
-    //logit('abendIt', 'succeed');
- }
+        return entry;
+    };
 
-function abend (str1_val, str2_val) {
-    "use strict";
-    util.abend("HolderPoolModule." + str1_val, str2_val);
-}
+    this.freeEntry = function (entry_val) {
+        this.abendIt();
+        if (!entry_val) {
+            return;
+        }
 
-function logit (str1_val, str2_val) {
-    "use strict";
-    util.logit("HolderPoolModule." + str1_val, str2_val);
+        this.abendIt();
+        this.incrementSize();
+        entry_val.next = this.head();
+        this.setHead(entry_val);
+
+        this.abendIt();
+    };
+
+    this.abendIt = function () {
+        var i = 0;
+        var p = this.head();
+        while (p) {
+            p = p.next;
+            i += 1;
+        }
+        if (i !== this.size()) {
+            this.abend("abendIt", "size=" + this.size() + " i=" + i);
+        }
+
+        if (this.size() > 5) {
+            this.abend("abendIt", " size=" + this.size());
+        }
+    };
+
+    this.debug = function (debug_val, str1_val, str2_val) {
+        if (debug_val) {
+            this.logit(str1_val, "==" + str2_val);
+        }
+    };
+
+    this.abend = function (str1_val, str2_val) {
+        this.utilModule().abend(this.objectName() + "." + str1_val, str2_val);
+    };
+
+    this.logit = function (str1_val, str2_val) {
+        this.utilModule().logit(this.objectName() + "." + str1_val, str2_val);
+    };
 }

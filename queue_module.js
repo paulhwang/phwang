@@ -38,6 +38,9 @@ function QueueObject () {
     "use strict";
     this.theUtilModule = require("./util_module.js");
     this.theHolderPoolModule = require("./holder_pool_module.js");
+    this.head = null;
+    this.tail = null;
+    this.size = 0;
 
     this.objectName = function () {
         return "QueueObject";
@@ -191,8 +194,4 @@ function QueueObject () {
     this.logit = function (str1_val, str2_val) {
         this.utilModule().logit(this.objectName() + "." + str1_val, str2_val);
     };
-
-    this.head = null;
-    this.tail = null;
-    this.size = 0;
 }
