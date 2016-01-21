@@ -77,14 +77,14 @@ function SessionMgrObject(root_object_val) {
     };
 
     this.searchIt = function (my_name_val, his_name_val, session_id_val) {
-        return this.queueModule().search(this.sessionQueue(), compareIt, my_name_val, his_name_val, session_id_val);
+        return this.sessionQueue().searchIt(compareIt, my_name_val, his_name_val, session_id_val);
     };
 
     this.searchAndCreate = function (my_name_val, his_name_val, session_id_val) {
-        var session = this.queueModule().search(this.sessionQueue(), compareIt, my_name_val, his_name_val, session_id_val);
+        var session = this.sessionQueue().searchIt(compareIt, my_name_val, his_name_val, session_id_val);
         if (!session) {
             session = this.mallocIt(my_name_val, his_name_val);
-            this.queueModule().enqueue(this.sessionQueue(), session);
+            this.sessionQueue().enQueue(session);
         }
         return session;
     };
