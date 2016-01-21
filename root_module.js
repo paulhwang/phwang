@@ -48,4 +48,6 @@ function RootObject () {
     this.theUtilObject = require("./util_module.js");
     this.theLinkMgrObject = require("./link_mgr_module.js");
     this.theSessionMgrObject = require("./session_mgr_module.js");
+    this.linkMgrObject().init(this);
+    this.sessionMgrObject().init(this);
 }

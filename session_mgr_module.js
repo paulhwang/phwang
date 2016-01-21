@@ -4,7 +4,13 @@
  * File name: session_mgr_module.js
  */
 
+var theSessionMgrObject;
+
 module.exports = {
+    init: function (root_object_val) {
+        theSessionMgrObject = new SessionMgrObject(root_object_val);
+    },
+
     search: function (my_name_val, his_name_val, session_id_val) {
         return theSessionMgrObject.searchIt(my_name_val, his_name_val, session_id_val);
     },
@@ -22,17 +28,20 @@ module.exports = {
     },
 };
 
-var theSessionMgrObject = new SessionMgrObject();
-
-function SessionMgrObject() {
+function SessionMgrObject(root_object_val) {
     "use strict";
+    this.theRootObject = root_object_val;
 
     this.objectName = function () {
         return "SessionMgrObject";
     };
 
+    this.rootObject = function () {
+        return this.theRootObject;
+    };
+
     this.utilModule = function () {
-        return this.theUtilModile;
+        return this.rootObject().utilModile();
     };
 
     this.queueModule = function () {

@@ -4,7 +4,13 @@
  * File name: link_mgr_module.js
  */
 
+var theLinkMgrObject;
+
 module.exports = {
+    init: function (root_object_val) {
+        theLinkMgrObject = new LinkMgrObject(root_object_val);
+    },
+
     search: function (my_name_val, link_id_val) {
         return theLinkMgrObject.searchLink(my_name_val, link_id_val);
     },
@@ -30,29 +36,20 @@ module.exports = {
     },
 };
 
-var theLinkMgrObject = new LinkMgrObject();
-
-function compareLink (link_val, my_name_val, link_id_val) {
-    //debug(false, "compareIt", my_name_val + ":" + link_val.my_name);
-    if (my_name_val !== link_val.my_name) {
-        return false;
-    }
-    if (link_id_val === -1) {
-        return true;
-    } else {
-        return (link_id_val === link_val.link_id);
-    }
-}
-
-function LinkMgrObject() {
+function LinkMgrObject(root_object_val) {
     "use strict";
+    this.theRootObject = root_object_val;
 
     this.objectName = function () {
         return "LinkMgrObject";
     };
 
+    this.rootObject = function () {
+        return this.theRootObject;
+    };
+
     this.utilModule = function () {
-        return this.theUtilModile;
+        return this.rootObject().utilModile();
     };
 
     this.queueModule = function () {
@@ -129,4 +126,16 @@ function LinkMgrObject() {
     this.theLinkPoolModule = require("./link_pool_module.js");
     this.theQueueModule = require("./queue_module.js");
     this.theLinkQueue = this.queueModule().malloc();
+}
+
+function compareLink (link_val, my_name_val, link_id_val) {
+    //debug(false, "compareIt", my_name_val + ":" + link_val.my_name);
+    if (my_name_val !== link_val.my_name) {
+        return false;
+    }
+    if (link_id_val === -1) {
+        return true;
+    } else {
+        return (link_id_val === link_val.link_id);
+    }
 }
