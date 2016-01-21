@@ -4,7 +4,6 @@
  * File name: util_module.js
  */
 
-
 module.exports = {
     logit: function (str1_val, str2_val) {
         theUtilObject.logit(str1_val, str2_val);
@@ -27,10 +26,9 @@ var theUtilObject = new UtilObject();
 
 function UtilObject() {
     "use strict";
-    this.theObjectName = "UtilObject";
 
     this.objectName = function () {
-        return this.theObjectName;
+        return "UtilObject";
     };
 
     this.userIndex = function () {
