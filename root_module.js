@@ -27,12 +27,12 @@ function RootObject () {
         return this.theQueueModule;
     };
 
-    this.linkMgrObject = function () {
-        return this.theLinkMgrObject;
+    this.linkMgrModule = function () {
+        return this.theLinkMgrModule;
     };
 
-    this.sessionMgrObject = function () {
-        return this.theSessionMgrObject;
+    this.sessionMgrModule = function () {
+        return this.theSessionMgrModule;
     };
 
     this.debug = function (debug_val, str1_val, str2_val) {
@@ -51,8 +51,8 @@ function RootObject () {
 
     this.theUtilObject = require("./util_module.js");
     this.theQueueModule = require("./queue_module.js");
-    this.theLinkMgrObject = require("./link_mgr_module.js");
-    this.theSessionMgrObject = require("./session_mgr_module.js");
-    this.linkMgrObject().init(this);
-    this.sessionMgrObject().init(this);
+    this.theLinkMgrModule = require("./link_mgr_module.js");
+    this.theSessionMgrModule = require("./session_mgr_module.js");
+    this.linkMgrModule().init(this);
+    this.sessionMgrModule().init(this);
 }
