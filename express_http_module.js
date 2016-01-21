@@ -49,14 +49,6 @@ function ExpressHttpObject(root_object_val) {
         return this.rootObject().utilObject();
     };
 
-    this.linkMgrModule = function () {
-        return this.rootObject().linkMgrModule();
-    };
-
-    this.sessionMgrModule = function () {
-        return this.rootObject().sessionMgrModule();
-    };
-
     this.linkMgrObject = function () {
         return this.rootObject().linkMgrObject();
     };
@@ -261,7 +253,7 @@ function ExpressHttpObject(root_object_val) {
         }
         link_entry.keep_alive(my_link);
 
-        var name_array = this.linkMgrModule().get_name_list();
+        var name_array = this.linkMgrObject().getNameList();
         var name_array_str = JSON.stringify(name_array);
         var json_str = JSON.stringify({
                         command: req.headers.command,
