@@ -22,6 +22,11 @@ module.exports = {
 
 function LinkEntryObject() {
     "use strict";
+    this.theUtilModule = require("./util_module.js");
+    this.theQueueModule = require("./queue_module.js");
+    this.theRingModule = require("./ring_module.js");
+    this.theLinkMgrModule = require("./link_mgr_module.js");
+    this.theGlobalLinkId = 1;
 
     this.objectName = function () {
         return "LinkEntryObject";
@@ -101,10 +106,4 @@ function LinkEntryObject() {
     this.logit = function (str1_val, str2_val) {
         this.utilModule().logit(this.objectName() + "." + str1_val, str2_val);
     };
-
-    this.theUtilModule = require("./util_module.js");
-    this.theQueueModule = require("./queue_module.js");
-    this.theRingModule = require("./ring_module.js");
-    this.theLinkMgrModule = require("./link_mgr_module.js");
-    this.theGlobalLinkId = 1;
 }

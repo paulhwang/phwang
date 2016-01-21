@@ -18,6 +18,10 @@ var theSessionPoolObject = new SessionPoolObject();
 
 function SessionPoolObject() {
     "use strict";
+    this.theUtilModule = require("./util_module.js");
+    this.theSessionModule = require("./session_entry_module.js");
+    this.theHead = null;
+    this.theSize = 0;
 
     this.objectName = function () {
         return "SessionPoolObject";
@@ -103,9 +107,4 @@ function SessionPoolObject() {
     this.logit = function (str1_val, str2_val) {
         this.utilModule().logit(this.objectName() + "." + str1_val, str2_val);
     };
-
-    this.theUtilModule = require("./util_module.js");
-    this.theSessionModule = require("./session_entry_module.js");
-    this.theHead = null;
-    this.theSize = 0;
 }

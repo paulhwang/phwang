@@ -14,8 +14,6 @@ module.exports = {
     },
 };
 
-
-
 var theHolderPoolObject = new HolderPoolObject();
 
 function HolderPoolObject () {

@@ -18,6 +18,10 @@ var theLinkPoolObject = new LinkPoolObject();
 
 function LinkPoolObject() {
     "use strict";
+    this.theUtilModule = require("./util_module.js");
+    this.theLinkModule = require("./link_entry_module.js");
+    this.theHead = null;
+    this.theSize = 0;
 
     this.objectName = function () {
         return "LinkPoolObject";
@@ -102,10 +106,5 @@ function LinkPoolObject() {
     this.logit = function (str1_val, str2_val) {
         this.utilModule().logit(this.objectName() + "." + str1_val, str2_val);
     };
-
-    this.theUtilModule = require("./util_module.js");
-    this.theLinkModule = require("./link_entry_module.js");
-    this.theHead = null;
-    this.theSize = 0;
 }
 

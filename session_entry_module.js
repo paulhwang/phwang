@@ -18,6 +18,9 @@ module.exports = {
 
 function SessionEntryObject() {
     "use strict";
+    this.theQueueModule = require("./queue_module.js");
+    this.theRingModule = require("./ring_module.js");
+    this.theGlobalSessionId = 1;
 
     this.objectName = function () {
         return "SessionEntryObject";
@@ -75,8 +78,4 @@ function SessionEntryObject() {
     this.logit = function (str1_val, str2_val) {
         this.utilModule().logit(this.objectName() + "." + str1_val, str2_val);
     };
-
-    this.theQueueModule = require("./queue_module.js");
-    this.theRingModule = require("./ring_module.js");
-    this.theGlobalSessionId = 1;
 }

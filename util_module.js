@@ -26,6 +26,7 @@ var theUtilObject = new UtilObject();
 
 function UtilObject() {
     "use strict";
+    this.theUserIndex = 0;
 
     this.objectName = function () {
         return "UtilObject";
@@ -70,6 +71,4 @@ function UtilObject() {
         alert("abend: " + str1_val + "() " + str2_val);
         var x = junk;
     };
-
-    this.theUserIndex = 0;
 }
