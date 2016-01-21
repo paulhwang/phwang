@@ -4,8 +4,6 @@
  * File name: queue_module.js
  */
 
-var holder_pool = require("./holder_pool_module.js");
-
 module.exports = {
     malloc: function () {
         que = new QueueObject();
@@ -38,6 +36,8 @@ module.exports = {
 
 function QueueObject () {
     "use strict";
+    this.theUtilModule = require("./util_module.js");
+    this.theHolderPoolModule = require("./holder_pool_module.js");
 
     this.objectName = function () {
         return "QueueObject";
@@ -45,6 +45,10 @@ function QueueObject () {
 
     this.utilModule = function () {
         return this.theUtilModule;
+    };
+
+    this.holderPoolModule = function () {
+        return this.theHolderPoolModule;
     };
 
     this.enQueue = function (data_val) {
@@ -55,7 +59,7 @@ function QueueObject () {
 
         this.abendIt();
 
-        var data_entry = holder_pool.malloc(data_val);
+        var data_entry = this.holderPoolModule().malloc(data_val);
         if (!data_entry) {
             this.abend("enQueue", "null data_entry");
             return;
@@ -103,7 +107,7 @@ function QueueObject () {
 
         if (data_entry) {
             this.logit("deQueue", "data=" + data_entry.data);
-            holder_pool.free(data_entry);
+            this.holderPoolModule().free(data_entry);
         }
         else {
             this.logit("deQueue", "6000");
@@ -190,7 +194,6 @@ function QueueObject () {
         this.utilModule().logit(this.objectName() + "." + str1_val, str2_val);
     };
 
-    this.theUtilModule = require("./util_module.js");
     this.head = null;
     this.tail = null;
     this.size = 0;
