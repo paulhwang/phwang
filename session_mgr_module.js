@@ -96,7 +96,7 @@ function SessionMgrObject(root_object_val) {
             entry = this.sessionModule().malloc(my_name_val, his_name_val);
         } else {
             entry = this.poolHead();
-            this.sessionModule().reset(entry, my_name_val, his_name_val);
+            entry.resetIt(my_name_val, his_name_val);
             this.setHead(entry.next);
             this.decrementPoolSize();
         }

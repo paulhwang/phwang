@@ -5,9 +5,9 @@
  */
 
 module.exports = {
-    reset: function (session_val, my_name_val, his_name_val) {
-        session_val.resetIt(my_name_val, his_name_val);
-   },
+    //reset: function (session_val, my_name_val, his_name_val) {
+   //     session_val.resetIt(my_name_val, his_name_val);
+   //},
 
     malloc: function (my_name_val, his_name_val) {
         session = new SessionEntryObject();
