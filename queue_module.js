@@ -67,13 +67,11 @@ function QueueObject () {
 
         this.size += 1;
         if (!this.head) {
-            //logit("enqueueIt", "1000");
             data_entry.prev = null;
             data_entry.next = null;
             this.head = data_entry;
             this.tail = data_entry;
         } else {
-            //logit("enqueueIt", "2000");
             this.tail.next = data_entry;
             data_entry.prev = this.tail;
             data_entry.next = null;
@@ -106,11 +104,11 @@ function QueueObject () {
         }
 
         if (data_entry) {
-            this.logit("deQueue", "data=" + data_entry.data);
+            //this.logit("deQueue", "data=" + data_entry.data);
             this.holderPoolModule().free(data_entry);
         }
         else {
-            this.logit("deQueue", "6000");
+            this.logit("deQueue", "null");
         }
 
         this.abendIt();

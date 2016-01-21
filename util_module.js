@@ -4,18 +4,8 @@
  * File name: util_module.js
  */
 
-var theUtilObject;
 
 module.exports = {
-    init: function () {
-        theUtilObject = new UtilObject();
-        theUtilObject.setUserIndex(0);
-    },
-
-    setIndex: function (index_val) {
-        userIndex = index_val;
-    },
-
     logit: function (str1_val, str2_val) {
         theUtilObject.logit(str1_val, str2_val);
     },
@@ -32,6 +22,8 @@ module.exports = {
         theUtilObject.utilAbend(str1_val, str2_val);
     },
 };
+
+var theUtilObject = new UtilObject();
 
 function UtilObject() {
     "use strict";
@@ -80,4 +72,6 @@ function UtilObject() {
         alert("abend: " + str1_val + "() " + str2_val);
         var x = junk;
     };
+
+    this.theUserIndex = 0;
 }
