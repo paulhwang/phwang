@@ -174,10 +174,12 @@ function GoEngineObject(container_object_val) {
         }
 
         if (dead_count !== 0) {
-            if (move_val.color === GO.BLACK_STONE()) {
+            if (move_val.myColor() === GO.BLACK_STONE()) {
                 this.addBlackCaptureStones(dead_count);
+            } else if (move_val.myColor() === GO.WHITE_STONE()) {
+               this.addWhiteCaptureStones(dead_count);
             } else {
-                this.addWhiteCaptureStones(dead_count);
+                this.goAbend("enterWar", "color=" + move_val.myColor());
             }
         }
         this.abendEngine();
@@ -188,8 +190,10 @@ function GoEngineObject(container_object_val) {
 
         if (move_val.myColor() === GO.BLACK_STONE()) {
             g_list = this.blackGroupList();
-        } else {
+        } else if (move_val.myColor() === GO.WHITE_STONE()) {
             g_list = this.whiteGroupList();
+        } else {
+            this.goAbend("insertStoneToGroupList", "color=" + move_val.myColor());
         }
 
         var group = g_list.findCandidateGroup(move_val.xX(), move_val.yY());
