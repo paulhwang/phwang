@@ -31,15 +31,35 @@ function LinkPoolObject() {
         return this.theLinkModule;
     };
 
+    this.head = function () {
+        return this.theHead;
+    };
+
+    this.setHead = function (val) {
+        this.theHead = val;
+    };
+
+    this.size = function () {
+        return this.theSize;
+    };
+
+    this.incrementSize = function () {
+        return this.theSize += 1;
+    };
+
+    this.decrementSize = function () {
+        return this.theSize -= 1;
+    };
+
     this.mallocIt = function (my_name_val) {
         var entry;
-        if (!this.head) {
+        if (!this.head()) {
             entry = this.linkModule().malloc(my_name_val);
         } else {
-            entry = this.head;
+            entry = this.head();
             this.linkModule().reset(entry, my_name_val);
-            head = entry.next;
-            this.size -= 1;
+            this.setHead(entry.next);
+            this.decrementSize();
         }
 
         this.abendIt();
@@ -47,27 +67,25 @@ function LinkPoolObject() {
     };
 
     this.freeIt = function (entry_val) {
-        this.size += 1;
-        entry_val.next = this.head;
-        head = entry_val;
+        this.incrementSize();
+        entry_val.next = this.head();
+        this.setHead(entry_val);
         this.abendIt();
     };
 
     this.abendIt = function () {
-        var i, p;
-
-        i = 0;
-        p = this.head;
+        var i = 0;
+        var p = this.head();
         while (p) {
             p = p.next;
             i += 1;
         }
-        if (i !== this.size) {
-            this.abend("abendIt", "size=" + this.size + " i=" + i);
+        if (i !== this.size()) {
+            this.abend("abendIt", "size=" + this.size() + " i=" + i);
         }
 
-        if (this.size > 5) {
-            this.abend("abendIt", "size=" + this.size);
+        if (this.size() > 5) {
+            this.abend("abendIt", "size=" + this.size());
         }
     };
 
@@ -87,7 +105,7 @@ function LinkPoolObject() {
 
     this.theUtilModule = require("./util_module.js");
     this.theLinkModule = require("./link_entry_module.js");
-    this.head = null;
-    this.size = 0;
+    this.theHead = null;
+    this.theSize = 0;
 }
 
