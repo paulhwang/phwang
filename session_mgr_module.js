@@ -48,12 +48,32 @@ function SessionMgrObject(root_object_val) {
         return this.rootObject().queueModule();
     };
 
-    this.sessionPoolModule = function () {
-        return this.theSessionPoolModule;
+    this.sessionModule = function () {
+        return this.theSessionModule;
     };
 
     this.sessionQueue = function () {
         return this.theSessionQueue;
+    };
+
+    this.poolHead = function () {
+        return this.thePoolHead;
+    };
+
+    this.setHead = function (val) {
+        this.thePoolHead = val;
+    };
+
+    this.poolSize = function () {
+        return this.thePoolSize;
+    };
+
+    this.incrementPoolSize = function () {
+        return this.thePoolSize += 1;
+    };
+
+    this.decrementPoolSize = function () {
+        return this.thePoolSize -= 1;
     };
 
     this.searchIt = function (my_name_val, his_name_val, session_id_val) {
@@ -63,21 +83,49 @@ function SessionMgrObject(root_object_val) {
     this.searchAndCreate = function (my_name_val, his_name_val, session_id_val) {
         var session = this.queueModule().search(this.sessionQueue(), compareIt, my_name_val, his_name_val, session_id_val);
         if (!session) {
-            session = this.sessionPoolModule().malloc(my_name_val, his_name_val);
+            session = this.mallocIt(my_name_val, his_name_val);
             this.queueModule().enqueue(this.sessionQueue(), session);
         }
         return session;
     };
 
     this.mallocIt = function (my_name_val, his_name_val) {
-        var acc = this.sessionPoolModule().malloc(my_name_val, his_name_val);
-        return acc;
+        var entry;
+
+        if (!this.poolHead()) {
+            entry = this.sessionModule().malloc(my_name_val, his_name_val);
+        } else {
+            entry = this.poolHead();
+            this.sessionModule().reset(entry, my_name_val, his_name_val);
+            this.setHead(entry.next);
+            this.decrementPoolSize();
+        }
+
+        this.abendIt();
+        return entry;
     };
 
     this.freeIt = function (entry_val) {
+        this.incrementPoolSize();
+        entry_val.next = this.poolHead();
+        this.setHead(entry_val);
+        this.abendIt();
     };
 
     this.abendIt = function () {
+        var i = 0;
+        var p = this.poolHead();
+        while (p) {
+            p = p.next;
+            i += 1;
+        }
+        if (i !== this.poolSize()) {
+            this.abend("abendIt", "size=" + this.poolSize() + " i=" + i);
+        }
+
+        if (this.poolSize() > 5) {
+            this.abend("abendIt", "size=" + this.poolSize());
+        }
     };
 
     this.debug = function (debug_val, str1_val, str2_val) {
@@ -94,8 +142,10 @@ function SessionMgrObject(root_object_val) {
         this.utilObject().logit(this.objectName() + "." + str1_val, str2_val);
     };
 
-    this.theSessionPoolModule = require("./session_pool_module.js");
+    this.theSessionModule = require("./session_entry_module.js");
     this.theSessionQueue = this.queueModule().malloc();
+    this.thePoolHead = null;
+    this.thePoolSize = 0;
 }
 
 function compareIt (session_val, my_name_val, his_name_val, session_id_val) {
