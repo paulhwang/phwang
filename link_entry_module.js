@@ -4,70 +4,107 @@
  * File name: link_entry_module.js
  */
 
-var util = require("./util_module.js");
-var queue = require("./queue_module.js");
-var ring = require("./ring_module.js");
-var link_mgr = require("./link_mgr_module.js");
-var global_link_id = 1;
-
 module.exports = {
     reset: function (link_val, my_name_val) {
-        resetIt(link_val, my_name_val);
+        link_val.resetIt(my_name_val);
    },
 
     malloc: function (my_name_val) {
         link = new LinkEntryObject();
-        resetIt(link, my_name_val);
+        link.resetIt(my_name_val);
         return link;
     },
 
     keep_alive: function (link_val) {
-        keepAlive(link_val);
+        link_val.keepAlive();
     },
 };
 
-function resetIt (link_val, my_name_val) {
-    link_val.my_name = my_name_val;
-    link_val.up_seq = 0;
-    link_val.down_seq = 0;
-    link_val.queue = queue.malloc();
-    link_val.ring = ring.malloc();
-    link_val.link_id = global_link_id;
-    global_link_id += 1;
-    link_val.keep_alive_timer = resetTimeout(link_val);
-}
+function LinkEntryObject() {
+    "use strict";
 
-function resetTimeout (link_val) {
-    if (link_val.keep_alive_timer) {
-        clearInterval(link_val.keep_alive_timer);
-    }
-    debug(false, "resetTimeout", "my_name=" + link_val.my_name + " link_id=" + link_val.link_id);
-    var time_out = setInterval(function (link_val) {
-        console.log("resetTimeout(***timeout occurs)", "my_name=" + link_val.my_name + " link_id=" + link_val.link_id);
-        clearInterval(link_val.keep_alive_timer);
-        link_mgr.remove_link(link_val);
-    }, 20000, link_val);
-    return time_out;
-}
+    this.objectName = function () {
+        return "LinkEntryObject";
+    };
 
-function keepAlive (link_val) {
-    debug(false, "keepAlive", "my_name=" + link_val.my_name + " link_id=" + link_val.link_id);
-    link_val.keep_alive_timer = resetTimeout(link_val);
-}
+    this.utilModule = function () {
+        return this.theUtilModule;
+    };
 
-function LinkEntryObject () {
-}
+    this.queueModule = function () {
+        return this.theQueueModule;
+    };
 
-function debug (debug_val, str1_val, str2_val) {
-    if (debug_val) {
-        logit(str1_val, "==" + str2_val);
-    }
-}
+    this.ringModule = function () {
+        return this.theRingModule;
+    };
 
-function logit (str1_val, str2_val) {
-    return util.utilLogit("NodeMain." + str1_val, str2_val);
-}
+    this.linkMgrModule = function () {
+        return this.theLinkMgrModule;
+    };
 
-function abend (str1_val, str2_val) {
-    return util.utilAbend("NodeMain." + str1_val, str2_val);
+    this.receiveQueue = function () {
+        return this.theReceiveQueue;
+    };
+
+    this.receiveRing = function () {
+        return this.theReceiveRing;
+    };
+
+    this.globalLinkId = function () {
+        return this.theGlobalLinkId;
+    };
+
+    this.incrementGlobalLinkId = function () {
+        return this.theGlobalLinkId += 1;
+    };
+
+    this.resetIt = function (my_name_val) {
+        this.my_name = my_name_val;
+        this.up_seq = 0;
+        this.down_seq = 0;
+        this.queue = this.queueModule().malloc();
+        this.ring = this.ringModule().malloc();
+        this.link_id = this.globalLinkId();
+        this.incrementGlobalLinkId();
+        this.keep_alive_timer = this.resetTimeout();
+    };
+
+    this.keepAlive = function () {
+        this.debug(false, "keepAlive", "my_name=" + this.my_name + " link_id=" + this.link_id);
+        this.keep_alive_timer = this.resetTimeout();
+    };
+
+    this.resetTimeout = function () {
+        if (this.keep_alive_timer) {
+            clearInterval(this.keep_alive_timer);
+        }
+        this.debug(false, "resetTimeout", "my_name=" + this.my_name + " link_id=" + this.link_id);
+        var time_out = setInterval(function (link_val) {
+            console.log("resetTimeout(***timeout occurs)", "my_name=" + link_val.my_name + " link_id=" + link_val.link_id);
+            clearInterval(link_val.keep_alive_timer);
+            link_val.linkMgrModule().remove_link(link_val);
+        }, 20000, this);
+        return time_out;
+    };
+
+    this.debug = function (debug_val, str1_val, str2_val) {
+        if (debug_val) {
+            logit(str1_val, "==" + str2_val);
+        }
+    };
+
+    this.abend = function (str1_val, str2_val) {
+        this.utilModule().abend(this.objectName() + "." + str1_val, str2_val);
+    };
+
+    this.logit = function (str1_val, str2_val) {
+        this.utilModule().logit(this.objectName() + "." + str1_val, str2_val);
+    };
+
+    this.theUtilModule = require("./util_module.js");
+    this.theQueueModule = require("./queue_module.js");
+    this.theRingModule = require("./ring_module.js");
+    this.theLinkMgrModule = require("./link_mgr_module.js");
+    this.theGlobalLinkId = 1;
 }
