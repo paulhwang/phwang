@@ -104,7 +104,7 @@ function SessionMgrObject(root_object_val) {
         } else {
             entry = this.poolHead();
             entry.resetIt(my_name_val, his_name_val);
-            this.setHead(entry.next);
+            this.setHead(entry.next());
             this.decrementPoolSize();
         }
 
@@ -114,7 +114,7 @@ function SessionMgrObject(root_object_val) {
 
     this.freeIt = function (entry_val) {
         this.incrementPoolSize();
-        entry_val.next = this.poolHead();
+        entry_val.setNext(this.poolHead());
         this.setHead(entry_val);
         this.abendIt();
     };
@@ -123,7 +123,7 @@ function SessionMgrObject(root_object_val) {
         var i = 0;
         var p = this.poolHead();
         while (p) {
-            p = p.next;
+            p = p.next();
             i += 1;
         }
         if (i !== this.poolSize()) {

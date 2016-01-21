@@ -64,14 +64,14 @@ function HolderPoolObject () {
             entry = this.holderEntryModule().malloc();
         } else {
             entry = this.head();
-            this.setHead(entry.next);
+            this.setHead(entry.next());
             this.decrementSize();
         }
 
         this.abendIt();
 
         if (entry) {
-            entry.data = data_val;
+            entry.setData(data_val);
         } else {
             this.abend('mallocEntry', 'null');
         }
@@ -87,7 +87,7 @@ function HolderPoolObject () {
 
         this.abendIt();
         this.incrementSize();
-        entry_val.next = this.head();
+        entry_val.setNext(this.head());
         this.setHead(entry_val);
 
         this.abendIt();
@@ -97,7 +97,7 @@ function HolderPoolObject () {
         var i = 0;
         var p = this.head();
         while (p) {
-            p = p.next;
+            p = p.next();
             i += 1;
         }
         if (i !== this.size()) {

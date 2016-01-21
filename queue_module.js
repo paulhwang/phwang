@@ -70,14 +70,14 @@ function QueueObject () {
 
         this.size += 1;
         if (!this.head) {
-            data_entry.prev = null;
-            data_entry.next = null;
+            data_entry.setPrev(null);
+            data_entry.setNext(null);
             this.head = data_entry;
             this.tail = data_entry;
         } else {
-            this.tail.next = data_entry;
-            data_entry.prev = this.tail;
-            data_entry.next = null;
+            this.tail.setNext(data_entry);
+            data_entry.setPrev(this.tail);
+            data_entry.setNext(null);
             this.tail = data_entry;
         }
         this.abendIt();
@@ -95,15 +95,15 @@ function QueueObject () {
         } else if (this.head === this.tail) {
             this.size -= 1;
             data_entry = this.head;
-            data = data_entry.data;
+            data = data_entry.data();
             this.head = null;
             this.tail = null;
         } else {
             this.size -= 1;
             data_entry = this.head;
-            data = data_entry.data;
-            this.head = this.head.next;
-            this.head.prev = null;
+            data = data_entry.data();
+            this.head = this.head.next();
+            this.head.setPrev(null);
         }
 
         if (data_entry) {
@@ -124,22 +124,22 @@ function QueueObject () {
         var p = this.head;
         while (p) {
             this.debug(false, "removeElement", "in while loop");
-            if (func_val(p.data, input_val1, input_val2, input_val3)) {
+            if (func_val(p.data(), input_val1, input_val2, input_val3)) {
                 this.debug(false, "removeElement", "found");
-                if (p.prev) {
-                    p.prev.next = p.next;
+                if (p.prev()) {
+                    p.prev().setNext(p.next());
                 } else {
-                    this.head = p.next;
+                    this.head = p.next();
                 }
-                if (p.next) {
-                    p.next.prev = p.prev;
+                if (p.next()) {
+                    p.next().setPrev(p.prev());
                 } else {
-                    this.tail = p.prev;
+                    this.tail = p.prev();
                 }
                 this.size -= 1;
                 return;
             }
-            p = p.next;
+            p = p.next();
         }
         this.abendIt();
         this.debug(false, "removeElement", "not found");
@@ -149,11 +149,11 @@ function QueueObject () {
         var p = this.head;
         while (p) {
             this.debug(false, "searchIt", "in while loop");
-            if (func_val(p.data, input_val1, input_val2, input_val3)) {
+            if (func_val(p.data(), input_val1, input_val2, input_val3)) {
             this.debug(false, "searchIt", "found");
-                return p.data;
+                return p.data();
             }
-            p = p.next;
+            p = p.next();
         }
         this.debug(false, "searchIt", "not found");
         return null;
@@ -163,7 +163,7 @@ function QueueObject () {
         var i = 0;
         var p = this.head;
         while (p) {
-            p = p.next;
+            p = p.next();
             i += 1;
         }
         if (i !== this.size) {
@@ -173,7 +173,7 @@ function QueueObject () {
         i = 0;
         p = this.tail;
         while (p) {
-            p = p.prev;
+            p = p.prev();
             i += 1;
         }
         if (i !== this.size) {

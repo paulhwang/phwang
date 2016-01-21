@@ -14,7 +14,7 @@ module.exports = {
     object: function () {
         return theLinkMgrObject;
     },
-    
+
     search: function (my_name_val, link_id_val) {
         return theLinkMgrObject.searchLink(my_name_val, link_id_val);
     },
@@ -120,10 +120,10 @@ function LinkMgrObject(root_object_val) {
         var i = 0;
         var queue_element = this.linkQueue().tail;
         while (queue_element) {
-            var link = queue_element.data;
+            var link = queue_element.data();
             name_array[i] = link.my_name;
             i += 1;
-            queue_element = queue_element.prev;
+            queue_element = queue_element.prev();
         }
         return name_array;
     };
@@ -135,7 +135,7 @@ function LinkMgrObject(root_object_val) {
         } else {
             entry = this.poolHead();
             this.linkModule().reset(entry, my_name_val);
-            this.setHead(entry.next);
+            this.setHead(entry.next());
             this.decrementPoolSize();
         }
 
@@ -145,7 +145,7 @@ function LinkMgrObject(root_object_val) {
 
     this.freeIt = function (entry_val) {
         this.incrementPoolSize();
-        entry_val.next = this.poolHead();
+        entry_val.setNext(this.poolHead());
         this.setHead(entry_val);
         this.abendIt();
     };
@@ -154,7 +154,7 @@ function LinkMgrObject(root_object_val) {
         var i = 0;
         var p = this.poolHead();
         while (p) {
-            p = p.next;
+            p = p.next();
             i += 1;
         }
         if (i !== this.poolSize()) {
