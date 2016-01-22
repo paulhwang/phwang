@@ -219,7 +219,8 @@ function ExpressHttpObject(root_object_val) {
             this.abend("keepAlive", "***null link***" + "link_id=" + my_link_id + " my_name=" + req.headers.my_name);
             return;
         }
-        link_entry.keep_alive(link);
+        link.resetKeepAliveTimer();
+        
         var json_str = JSON.stringify({
                         command: req.headers.command,
                         ajax_id: req.headers.ajax_id,
@@ -234,8 +235,7 @@ function ExpressHttpObject(root_object_val) {
         if (!link) {
             return;
         }
-
-        link_entry.keep_alive(link);
+        link.resetKeepAliveTimer();
 
         var data = "hello";
         var json_str = JSON.stringify({
@@ -255,8 +255,7 @@ function ExpressHttpObject(root_object_val) {
         if (!link) {
             return;
         }
-
-        link_entry.keep_alive(link);
+        link.resetKeepAliveTimer();
 
         var name_array = this.linkMgrObject().getNameList();
         var name_array_str = JSON.stringify(name_array);
@@ -296,7 +295,7 @@ function ExpressHttpObject(root_object_val) {
         if (!link) {
             return;
         }
-        link_entry.keep_alive(link);
+        link.resetKeepAliveTimer();
 
         var session = this.sessionMgrObject().searchIt(req.headers.my_name, req.headers.his_name, Number(req.headers.session_id));
         if (!session) {
@@ -348,8 +347,7 @@ function ExpressHttpObject(root_object_val) {
         if (!link) {
             return;
         }
-
-        link_entry.keep_alive(link);
+        link.resetKeepAliveTimer();
 
         var session = this.sessionMgrObject().searchIt(req.headers.my_name, req.headers.his_name, Number(req.headers.session_id));
         if (!session) {

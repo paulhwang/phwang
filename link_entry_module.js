@@ -10,10 +10,6 @@ module.exports = {
         link.resetIt(my_name_val, link_id_val);
         return link;
     },
-
-    keep_alive: function (link_val) {
-        link_val.keepAlive();
-    },
 };
 
 function LinkEntryObject() {
@@ -61,7 +57,7 @@ function LinkEntryObject() {
         this.keep_alive_timer = this.resetTimeout();
     };
 
-    this.keepAlive = function () {
+    this.resetKeepAliveTimer = function () {
         this.debug(false, "keepAlive", "my_name=" + this.my_name + " link_id=" + this.link_id);
         this.keep_alive_timer = this.resetTimeout();
     };
