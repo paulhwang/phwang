@@ -39,6 +39,14 @@ function LinkEntryObject() {
         return this.theLinkMgrModule;
     };
 
+    this.linkId = function () {
+        return this.theLinkId;
+    };
+
+    this.setLinkId = function (val) {
+        this.theLinkId = val;
+    };
+
     this.myName = function () {
         return this.theMyName;
     };

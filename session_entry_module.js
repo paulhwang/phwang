@@ -33,6 +33,14 @@ function SessionEntryObject() {
         return this.theRingModule;
     };
 
+    this.sessionId = function () {
+        return this.theSessionId;
+    };
+
+    this.setSessionId = function (val) {
+        this.theSessionId = val;
+    };
+
     this.myName = function () {
         return this.theMyName;
     };
