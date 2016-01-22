@@ -92,7 +92,7 @@ function SessionMgrObject(root_object_val) {
         return this.sessionQueue().searchIt(function (session_val, my_name_val, his_name_val, session_id_val) {
             return ((my_name_val === session_val.myName()) &&
                     (his_name_val === session_val.hisName()) &&
-                    ((session_id_val === session_val.session_id) || (session_id_val === 0)));
+                    ((session_id_val === session_val.sessionId()) || (session_id_val === 0)));
         }, my_name_val, his_name_val, session_id_val);
     };
 

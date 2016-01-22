@@ -315,14 +315,14 @@ function ExpressHttpObject(root_object_val) {
             }
         }
 
-        var session_id_str = "" + session.session_id;
+        var session_id_str = "" + session.sessionId();
         var json_str = JSON.stringify({
                         command: req.headers.command,
                         ajax_id: req.headers.ajax_id,
                         data: session_id_str,
                     });
         res.send(json_str);
-        this.logit("setupSession", "(" + req.headers.link_id + "," + session.session_id + "," + session.hisSession().session_id + ") " + req.headers.my_name + "=>" + req.headers.his_name);
+        this.logit("setupSession", "(" + req.headers.link_id + "," + session.sessionId() + "," + session.hisSession().sessionId() + ") " + req.headers.my_name + "=>" + req.headers.his_name);
     };
 
     this.getSessionData = function (req, res) {

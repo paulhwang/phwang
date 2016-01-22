@@ -74,6 +74,7 @@ function SessionEntryObject() {
     };
 
     this.resetIt = function (my_name_val, his_name_val, session_id_val) {
+        this.theSessionId = session_id_val;
         this.theMyName = my_name_val;
         this.theHisName = his_name_val;
         this.theHisSession = null;
@@ -81,7 +82,6 @@ function SessionEntryObject() {
         this.down_seq = 0;
         this.theReceiveQueue = this.queueModule().malloc();
         this.theReceiveRing = this.ringModule().malloc();
-        this.session_id = session_id_val;
     };
 
     this.debug = function (debug_val, str1_val, str2_val) {
