@@ -68,6 +68,14 @@ function SessionMgrObject(root_object_val) {
         this.thePoolHead = val;
     };
 
+    this.globalSessionId = function () {
+        return this.theGlobalSessionId;
+    };
+
+    this.incrementGlobalSessionId = function () {
+        return this.theGlobalSessionId += 1;
+    };
+
     this.poolSize = function () {
         return this.thePoolSize;
     };
@@ -101,13 +109,14 @@ function SessionMgrObject(root_object_val) {
         var entry;
 
         if (!this.poolHead()) {
-            entry = this.sessionModule().malloc(my_name_val, his_name_val);
+            entry = this.sessionModule().malloc(my_name_val, his_name_val, this.globalSessionId());
         } else {
             entry = this.poolHead();
-            entry.resetIt(my_name_val, his_name_val);
+            entry.resetIt(my_name_val, his_name_val, this.globalSessionId());
             this.setHead(entry.next());
             this.decrementPoolSize();
         }
+        this.incrementGlobalSessionId();
 
         this.abendIt();
         return entry;
@@ -152,6 +161,7 @@ function SessionMgrObject(root_object_val) {
 
     this.theSessionModule = require("./session_entry_module.js");
     this.theSessionQueue = this.queueModule().malloc();
+    this.theGlobalSessionId = 1000;
     this.thePoolHead = null;
     this.thePoolSize = 0;
 }

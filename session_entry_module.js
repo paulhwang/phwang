@@ -9,9 +9,9 @@ module.exports = {
    //     session_val.resetIt(my_name_val, his_name_val);
    //},
 
-    malloc: function (my_name_val, his_name_val) {
+    malloc: function (my_name_val, his_name_val, session_id_val) {
         session = new SessionEntryObject();
-        session.resetIt(my_name_val, his_name_val);
+        session.resetIt(my_name_val, his_name_val, session_id_val);
         return session;
     },
 };
@@ -20,7 +20,6 @@ function SessionEntryObject() {
     "use strict";
     this.theQueueModule = require("./queue_module.js");
     this.theRingModule = require("./ring_module.js");
-    this.theGlobalSessionId = 1;
 
     this.objectName = function () {
         return "SessionEntryObject";
@@ -46,23 +45,15 @@ function SessionEntryObject() {
         return this.theReceiveRing;
     };
 
-    this.globalSessionId = function () {
-        return this.theGlobalSessionId;
-    };
-
-    this.incrementGlobalSessionId = function () {
-        return this.theGlobalSessionId += 1;
-    };
-
-    this.resetIt = function (my_name_val, his_name_val) {
+    this.resetIt = function (my_name_val, his_name_val, session_id_val) {
         this.my_name = my_name_val;
         this.his_name = his_name_val;
+        this.his_session = null;
         this.up_seq = 0;
         this.down_seq = 0;
         this.theReceiveQueue = this.queueModule().malloc();
         this.theReceiveRing = this.ringModule().malloc();
-        this.session_id = this.globalSessionId();
-        this.incrementGlobalSessionId();
+        this.session_id = session_id_val;
     };
 
     this.debug = function (debug_val, str1_val, str2_val) {
