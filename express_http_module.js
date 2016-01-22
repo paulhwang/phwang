@@ -236,22 +236,29 @@ function ExpressHttpObject(root_object_val) {
         res.send(json_str);
     };
 
-    this.getNameList = function (req, res) {
-        var my_link_id;
+    this.getLink = function (req, res) {
+        var link_id = Number(req.headers.link_id);
+        var link = this.linkMgrObject().searchLink(req.headers.my_name, link_id);
+        if (!link) {
+            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
+            this.abend("getLink", "null link" + "link_id=" + link_id + " my_name=" + req.headers.my_name);
+            return null;
+        }
+        if (link.link_id === 0) {
+            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
+            this.abend("getLink", "link_id = 0");
+            return null;
+        }
+        return link;
+    };
 
-        my_link_id = Number(req.headers.link_id);
-        var my_link = this.linkMgrObject().searchLink(req.headers.my_name, my_link_id);
-        if (!my_link) {
-            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-            this.abend("getNameList", "null my_link" + "link_id=" + my_link_id + " my_name=" + req.headers.my_name);
+    this.getNameList = function (req, res) {
+        var link = this.getLink(req, res);
+        if (!link) {
             return;
         }
-        if (my_link.link_id === 0) {
-            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-            this.abend("getNameList", "null my_link = 0");
-            return;
-        }
-        link_entry.keep_alive(my_link);
+
+        link_entry.keep_alive(link);
 
         var name_array = this.linkMgrObject().getNameList();
         var name_array_str = JSON.stringify(name_array);
@@ -261,7 +268,7 @@ function ExpressHttpObject(root_object_val) {
                         data: name_array_str,
                     });
         res.send(json_str);
-        this.debug(true, "getNameList", "(" + my_link.link_id + ",0) " + req.headers.my_name + "=>server " + name_array_str);
+        this.debug(true, "getNameList", "(" + link.link_id + ",0) " + req.headers.my_name + "=>server " + name_array_str);
     };
 
     this.setupSession = function (req, res) {
@@ -284,18 +291,13 @@ function ExpressHttpObject(root_object_val) {
 
     this.getSessionData = function (req, res) {
         this.debug(false, "getSessionData", "(" + req.headers.link_id + "," + req.headers.session_id + ") my_name=" + req.headers.my_name + "=>" + req.headers.his_name);
-        var link_id, session_id;
-
-        link_id = Number(req.headers.link_id);
-        link = this.linkMgrObject().searchLink(req.headers.my_name, link_id);
+        var link = this.getLink(req, res);
         if (!link) {
-            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-            this.abend("getSessionData", "null link");
             return;
         }
         link_entry.keep_alive(link);
 
-        session_id = Number(req.headers.session_id);
+        var session_id = Number(req.headers.session_id);
         var my_session = this.sessionMgrObject().searchIt(req.headers.my_name, req.headers.his_name, session_id);
         if (!my_session) {
             res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
@@ -347,17 +349,15 @@ function ExpressHttpObject(root_object_val) {
         this.debug(false, "putSessionData ", "ajax_id=" + req.headers.ajax_id);
         this.debug(false, "putSessionData ", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.his_name + "=>" + req.headers.my_name + " {" + req.headers.data + "}");
 
-        var link_id = Number(req.headers.link_id);
         var session_id = Number(req.headers.session_id);
         var xmt_seq = Number(req.headers.xmt_seq);
         var his_session;
 
-        link = this.linkMgrObject().searchLink(req.headers.my_name, link_id);
+        var link = this.getLink(req, res);
         if (!link) {
-            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-            this.abend("putSessionData", "null link");
             return;
         }
+
         link_entry.keep_alive(link);
 
         var my_session = this.sessionMgrObject().searchIt(req.headers.my_name, req.headers.his_name, session_id);
