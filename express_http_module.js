@@ -198,7 +198,10 @@ function ExpressHttpObject(root_object_val) {
             res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
             this.abend("setupLink", "null link");
             return;
+        } else {
+            link.resetKeepAliveTimer();
         }
+
         var link_id_str = "" + link.link_id;
         var json_str = JSON.stringify({
                         command: req.headers.command,
@@ -220,7 +223,7 @@ function ExpressHttpObject(root_object_val) {
             return;
         }
         link.resetKeepAliveTimer();
-        
+
         var json_str = JSON.stringify({
                         command: req.headers.command,
                         ajax_id: req.headers.ajax_id,
