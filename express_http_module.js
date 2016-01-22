@@ -57,6 +57,43 @@ function ExpressHttpObject(root_object_val) {
         return this.rootObject().sessionMgrObject();
     };
 
+    this.getLink = function (req, res) {
+        var link_id = Number(req.headers.link_id);
+        var link = this.linkMgrObject().searchLink(req.headers.my_name, link_id);
+        if (!link) {
+            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
+            this.abend("getLink", "null link" + "link_id=" + link_id + " my_name=" + req.headers.my_name);
+            return null;
+        }
+        if (link.link_id === 0) {
+            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
+            this.abend("getLink", "link_id = 0");
+            return null;
+        }
+        return link;
+    };
+
+    this.getSession = function (req, res, mine_val) {
+        var session_id = Number(req.headers.session_id);
+        var session;
+        if (mine_val) {
+            session = this.sessionMgrObject().searchIt(req.headers.my_name, req.headers.his_name, session_id);
+        } else {
+            session = this.sessionMgrObject().searchIt(req.headers.his_name, req.headers.my_name, session_id);
+        }
+        if (!session) {
+            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
+            this.abend("getSession", "null session");
+            return null;
+        }
+        if (session.session_id === 0) {
+            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
+            this.abend("getSession", "session_id = 0");
+            return null;
+        }
+        return session;
+    };
+
     this.processPost = function (req, res) {
         var my_link_id, my_session, his_session;
 
@@ -214,15 +251,12 @@ function ExpressHttpObject(root_object_val) {
     this.getLinkData = function (req, res) {
         this.debug(false, "getLinkData", "(" + req.headers.link_id + "," + req.headers.session_id + ") my_name=" + req.headers.my_name + "=>" + req.headers.his_name);
 
-        var link_id = Number(req.headers.link_id);
-        var link = this.linkMgrObject().searchLink(req.headers.my_name, link_id);
+        var link = this.getLink(req, res);
         if (!link) {
-            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-            this.abend("getLinkData", "null link");
             return;
         }
+
         link_entry.keep_alive(link);
-        res.type('application/json');
 
         var data = "hello";
         var json_str = JSON.stringify({
@@ -233,23 +267,8 @@ function ExpressHttpObject(root_object_val) {
 
         this.debug(false, "getLinkData", "ajax_id=" + req.headers.ajax_id);
         //logit("getLinkData", "link_id=" + req.headers.link_id + " my_name="  + req.headers.my_name + " data={" + data + "}");
+        res.type('application/json');
         res.send(json_str);
-    };
-
-    this.getLink = function (req, res) {
-        var link_id = Number(req.headers.link_id);
-        var link = this.linkMgrObject().searchLink(req.headers.my_name, link_id);
-        if (!link) {
-            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-            this.abend("getLink", "null link" + "link_id=" + link_id + " my_name=" + req.headers.my_name);
-            return null;
-        }
-        if (link.link_id === 0) {
-            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-            this.abend("getLink", "link_id = 0");
-            return null;
-        }
-        return link;
     };
 
     this.getNameList = function (req, res) {
@@ -273,6 +292,7 @@ function ExpressHttpObject(root_object_val) {
 
     this.setupSession = function (req, res) {
         var session, session_id_str;
+
         session = this.sessionMgrObject().searchAndCreate(req.headers.my_name, req.headers.his_name, 0);
         if (!session) {
             res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
@@ -289,22 +309,6 @@ function ExpressHttpObject(root_object_val) {
         this.logit("setupSession", "(" + req.headers.link_id + "," + session.session_id + ") " + req.headers.my_name + "=>" + req.headers.his_name);
     };
 
-    this.getSession = function (req, res) {
-        var session_id = Number(req.headers.session_id);
-        var session = this.sessionMgrObject().searchIt(req.headers.my_name, req.headers.his_name, session_id);
-        if (!session) {
-            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-            this.abend("getSession", "null session");
-            return null;
-        }
-        if (session.session_id === 0) {
-            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-            this.abend("getSession", "session_id = 0");
-            return null;
-        }
-        return session;
-    };
-
     this.getSessionData = function (req, res) {
         this.debug(false, "getSessionData", "(" + req.headers.link_id + "," + req.headers.session_id + ") my_name=" + req.headers.my_name + "=>" + req.headers.his_name);
         var link = this.getLink(req, res);
@@ -318,12 +322,6 @@ function ExpressHttpObject(root_object_val) {
             return;
         }
 
-        if (!session.receiveQueue()) {
-            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-            this.abend("getSessionData", "null receiveQueue");
-            return;
-        }
-        res.type('application/json');
         if (queue.queue_size(session.receiveQueue()) === 0) {
             this.debug(false, "getSessionData", "empty queue");
             res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
@@ -350,6 +348,7 @@ function ExpressHttpObject(root_object_val) {
 
         this.debug(false, "getSessionData", "ajax_id=" + req.headers.ajax_id);
         this.logit("getSessionData", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.his_name + "=>" + req.headers.my_name + " {" + data + "}");
+        res.type('application/json');
         res.send(json_str);
     };
 
@@ -369,7 +368,7 @@ function ExpressHttpObject(root_object_val) {
 
         link_entry.keep_alive(link);
 
-        var session = this.getSession(req, res);
+        var session = this.getSession(req, res, true);
         if (!session) {
             return;
         }
@@ -379,15 +378,8 @@ function ExpressHttpObject(root_object_val) {
         if (req.headers.my_name === req.headers.his_name) {
             his_session = session;
         } else {
-            his_session = this.sessionMgrObject().searchIt(req.headers.his_name, req.headers.my_name, -1);
+            var his_session = this.getSession(req, res, false);
             if (!his_session) {
-                res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-                this.abend("putSessionData", "null his_session");
-                return;
-            }
-            if (his_session.session_id === 0) {
-                res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-                this.abend("putSessionData", "null his_session = 0");
                 return;
             }
         }
