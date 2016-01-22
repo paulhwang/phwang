@@ -289,6 +289,22 @@ function ExpressHttpObject(root_object_val) {
         this.logit("setupSession", "(" + req.headers.link_id + "," + session.session_id + ") " + req.headers.my_name + "=>" + req.headers.his_name);
     };
 
+    this.getSession = function (req, res) {
+        var session_id = Number(req.headers.session_id);
+        var session = this.sessionMgrObject().searchIt(req.headers.my_name, req.headers.his_name, session_id);
+        if (!session) {
+            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
+            this.abend("getSessionData", "null session");
+            return null;
+        }
+        if (session.session_id === 0) {
+            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
+            this.abend("getSessionData", "session_id = 0");
+            return null;
+        }
+        return session;
+    };
+
     this.getSessionData = function (req, res) {
         this.debug(false, "getSessionData", "(" + req.headers.link_id + "," + req.headers.session_id + ") my_name=" + req.headers.my_name + "=>" + req.headers.his_name);
         var link = this.getLink(req, res);
@@ -297,33 +313,26 @@ function ExpressHttpObject(root_object_val) {
         }
         link_entry.keep_alive(link);
 
-        var session_id = Number(req.headers.session_id);
-        var my_session = this.sessionMgrObject().searchIt(req.headers.my_name, req.headers.his_name, session_id);
-        if (!my_session) {
-            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-            this.abend("getSessionData", "null my_session");
+        var session = this.getSession(req, res);
+        if (!session) {
             return;
         }
-        if (my_session.session_id === 0) {
-            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-            this.abend("getSessionData", "null my_session = 0");
-            return;
-        }
-        if (!my_session.receiveQueue()) {
+
+        if (!session.receiveQueue()) {
             res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
             this.abend("getSessionData", "null receiveQueue");
             return;
         }
         res.type('application/json');
-        if (queue.queue_size(my_session.receiveQueue()) === 0) {
+        if (queue.queue_size(session.receiveQueue()) === 0) {
             this.debug(false, "getSessionData", "empty queue");
             res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
             return;
         }
 
-        //logit("getSessionData", "queue_size=" + queue.queue_size(my_session.receiveQueue));
-        var data = queue.dequeue(my_session.receiveQueue());
-        var data1 = ring.dequeue(my_session.receiveRing());
+        //logit("getSessionData", "queue_size=" + queue.queue_size(session.receiveQueue));
+        var data = queue.dequeue(session.receiveQueue());
+        var data1 = ring.dequeue(session.receiveRing());
         if (data !== data1) {
             this.logit("*****Abend: getSessionData", "queue and ring not match");
         }
