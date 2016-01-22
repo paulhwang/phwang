@@ -5,10 +5,6 @@
  */
 
 module.exports = {
-    reset: function (link_val, my_name_val, link_id_val) {
-        link_val.resetIt(my_name_val, link_id_val);
-   },
-
     malloc: function (my_name_val, link_id_val) {
         link = new LinkEntryObject();
         link.resetIt(my_name_val, link_id_val);

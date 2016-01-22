@@ -142,7 +142,7 @@ function LinkMgrObject(root_object_val) {
             entry = this.linkModule().malloc(my_name_val, this.globalLinkId());
         } else {
             entry = this.poolHead();
-            this.linkModule().reset(entry, my_name_val, this.globalLinkId());
+            entry.resetIt(my_name_val, this.globalLinkId());
             this.setHead(entry.next());
             this.decrementPoolSize();
         }
