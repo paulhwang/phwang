@@ -33,6 +33,22 @@ function SessionEntryObject() {
         return this.theRingModule;
     };
 
+    this.myName = function () {
+        return this.theMyName;
+    };
+
+    this.setMyName = function (val) {
+        this.theMyName = val;
+    };
+
+    this.hisName = function () {
+        return this.theHisName;
+    };
+
+    this.setHisName = function (val) {
+        this.theHisName = val;
+    };
+
     this.hisSession = function () {
         return this.theHisSession;
     };
@@ -50,8 +66,8 @@ function SessionEntryObject() {
     };
 
     this.resetIt = function (my_name_val, his_name_val, session_id_val) {
-        this.my_name = my_name_val;
-        this.his_name = his_name_val;
+        this.theMyName = my_name_val;
+        this.theHisName = his_name_val;
         this.theHisSession = null;
         this.up_seq = 0;
         this.down_seq = 0;
