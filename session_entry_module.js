@@ -33,6 +33,14 @@ function SessionEntryObject() {
         return this.theRingModule;
     };
 
+    this.hisSession = function () {
+        return this.theHisSession;
+    };
+
+    this.setHisSession = function (val) {
+        this.theHisSession = val;
+    };
+
     this.receiveQueue = function () {
         return this.theReceiveQueue;
     };
@@ -44,7 +52,7 @@ function SessionEntryObject() {
     this.resetIt = function (my_name_val, his_name_val, session_id_val) {
         this.my_name = my_name_val;
         this.his_name = his_name_val;
-        this.his_session = null;
+        this.theHisSession = null;
         this.up_seq = 0;
         this.down_seq = 0;
         this.theReceiveQueue = this.queueModule().malloc();

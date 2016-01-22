@@ -100,7 +100,11 @@ function SessionMgrObject(root_object_val) {
         var session = this.searchIt(my_name_val, his_name_val, session_id_val);
         if (!session) {
             session = this.mallocIt(my_name_val, his_name_val);
+            var his_session = this.mallocIt(his_name_val, my_name_val);
+            session.setHisSession(his_session);
+            his_session.setHisSession(session);
             this.sessionQueue().enQueue(session);
+            this.sessionQueue().enQueue(his_session);
         }
         return session;
     };

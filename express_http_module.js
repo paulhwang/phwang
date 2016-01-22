@@ -322,7 +322,7 @@ function ExpressHttpObject(root_object_val) {
                         data: session_id_str,
                     });
         res.send(json_str);
-        this.logit("setupSession", "(" + req.headers.link_id + "," + session.session_id + ") " + req.headers.my_name + "=>" + req.headers.his_name);
+        this.logit("setupSession", "(" + req.headers.link_id + "," + session.session_id + "," + session.hisSession().session_id + ") " + req.headers.my_name + "=>" + req.headers.his_name);
     };
 
     this.getSessionData = function (req, res) {
