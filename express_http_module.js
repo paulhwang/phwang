@@ -363,8 +363,8 @@ function ExpressHttpObject(root_object_val) {
         if (req.headers.my_name === req.headers.his_name) {
             his_session = session;
         } else {
-            var session = this.sessionMgrObject().searchIt(req.headers.his_name, req.headers.my_name, Number(req.headers.session_id));
-            if (!session) {
+            var his_session = this.sessionMgrObject().searchIt(req.headers.his_name, req.headers.my_name, Number(req.headers.session_id));
+            if (!his_session) {
                 res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
                 this.abend("putSessionData", "null session");
                 return;

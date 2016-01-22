@@ -82,8 +82,9 @@ function SessionMgrObject(root_object_val) {
 
     this.searchIt = function (my_name_val, his_name_val, session_id_val) {
         return this.sessionQueue().searchIt(function (session_val, my_name_val, his_name_val, session_id_val) {
-            return (session_id_val === -1) ||
-                   ((his_name_val === session_val.his_name) && (session_id_val === session_val.session_id));
+            return ((my_name_val === session_val.my_name) &&
+                    (his_name_val === session_val.his_name) &&
+                    ((session_id_val === session_val.session_id) || (session_id_val === 0)));
         }, my_name_val, his_name_val, session_id_val);
     };
 
