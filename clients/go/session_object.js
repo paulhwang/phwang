@@ -81,7 +81,7 @@ function SessionObject(root_object_val) {
             this.abend("setSessionId", "already exist");
         }
         this.theSessionId = val;
-        this.ajaxObject().setupCallback("get_session_data", this.ajaxId(), ajaxCallbackForGetSessionData, this);
+        this.ajaxObject().setupCallback("get_session_data", this.ajaxId(), ajaxGetSessionDataCallback, this);
     };
 
     this.setContainerObject = function (val) {
@@ -173,8 +173,12 @@ function SessionObject(root_object_val) {
                                             " komi=" + config.komiPoint() +
                                             " handicap=" + config.handicapPoint());
             }
-            this0.ajaxObject().setupCallback(this0.ajaxObject().ajaxSetupSessionCommand(), this0.rootObject().ajaxId(), ajaxCallbackForInitSession, this0);
-            this0.ajaxObject().setupSession(this0.rootObject().ajaxId(), this0, "handshake");
+            this0.ajaxObject().setupCallback(this0.ajaxObject().ajaxSetupSessionCommand(), this0.rootObject().ajaxId(), ajaxSetupSessionCallback, this0);
+            var data = JSON.stringify({
+                        target: "Go",
+                        config: "config",
+                    });
+            this0.ajaxObject().setupSession(this0.rootObject().ajaxId(), this0, data);
         });
     };
 
@@ -207,23 +211,23 @@ function SessionObject(root_object_val) {
     this.startUpdateNameListTimer();
 }
 
-function ajaxCallbackForGetSessionData (data_val, session_val) {
-    session_val.debug(false, "ajaxCallbackForGetSessionData", "data=" + data_val);
+function ajaxGetSessionDataCallback (data_val, session_val) {
+    session_val.debug(false, "ajaxGetSessionDataCallback", "data=" + data_val);
     if (data_val) {
-        session_val.logit("ajaxCallbackForGetSessionData", "data=" + data_val);
+        session_val.logit("ajaxGetSessionDataCallback", "data=" + data_val);
         session_val.receiveData(data_val);
     }
     session_val.ajaxObject().getSessionData(session_val.ajaxId(), session_val);
 }
 
-function ajaxCallbackForInitSession (data_val, session_val) {
-    //session_val.logit("ajaxCallbackForInitSession", "data=" + data_val);
+function ajaxSetupSessionCallback (data_val, session_val) {
+    //session_val.logit("ajaxSetupSessionCallback", "data=" + data_val);
     if (!data_val) {
         return;
     }
     var data = JSON.parse(data_val);
     session_val.setSessionId(Number(data.session_id));
-    session_val.logit("ajaxCallbackForInitSession", "session_id=" + session_val.sessionId() + " extra=" + data.extra_data);
+    session_val.logit("ajaxSetupSessionCallback", "session_id=" + session_val.sessionId() + " extra=" + data.extra_data);
     session_val.sessionConnected = true;
     session_val.ajaxObject().getSessionData(session_val.ajaxId(), session_val);
     session_val.containerObject().runGoGame();

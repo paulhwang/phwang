@@ -139,9 +139,9 @@ function ajaxSetupLinkCallback(link_id_val, root_val) {
 
 function ajaxGetLinkDataCallback(data_val, root_val) {
     "use strict";
-    root_val.debug(false, "ajaxCallbackForGetSessionData", "data=" + data_val);
+    root_val.debug(false, "ajaxGetLinkDataCallback", "data=" + data_val);
     if (data_val) {
-        //root_val.logit("ajaxCallbackForGetSessionData", "data=" + data_val);
+        root_val.logit("ajaxGetLinkDataCallback", "data=" + data_val);
     }
     root_val.ajaxObject().getLinkData(root_val.ajaxId());
 }
@@ -149,7 +149,7 @@ function ajaxGetLinkDataCallback(data_val, root_val) {
 function ajaxGetNameListCallback(json_data_val, session_val) {
     "use strict";
     var root_val = session_val.rootObject();
-    root_val.logit("ajaxCallbackForGetNameList", "name_list=" + json_data_val);
+    root_val.logit("ajaxGetNameListCallback", "name_list=" + json_data_val);
     if (root_val.lastJsonNameList() !== json_data_val) {
         root_val.setLastJsonNameList(json_data_val);
         root_val.setNameList(JSON.parse(json_data_val));
