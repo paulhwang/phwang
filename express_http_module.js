@@ -320,8 +320,12 @@ function ExpressHttpObject(root_object_val) {
             res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
             return;
         }
-        his_link.receiveQueue().enQueue(req.headers.data);
 
+        his_link.receiveQueue().enQueue(req.headers.data);
+        this.setupSessionReply(req, res);
+    }
+
+    this.setupSessionReply = function (req, res) {
         var session_id_str = "" + session.sessionId();
         var data = JSON.stringify({
                         session_id: session_id_str,
