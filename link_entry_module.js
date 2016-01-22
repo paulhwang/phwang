@@ -39,6 +39,14 @@ function LinkEntryObject() {
         return this.theLinkMgrModule;
     };
 
+    this.myName = function () {
+        return this.theMyName;
+    };
+
+    this.setMyName = function (val) {
+        this.theMyName = val;
+    };
+
     this.receiveQueue = function () {
         return this.theReceiveQueue;
     };
@@ -48,7 +56,7 @@ function LinkEntryObject() {
     };
 
     this.resetIt = function (my_name_val, link_id_val) {
-        this.my_name = my_name_val;
+        this.theMyName = my_name_val;
         this.up_seq = 0;
         this.down_seq = 0;
         this.queue = this.queueModule().malloc();

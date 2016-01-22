@@ -100,7 +100,7 @@ function LinkMgrObject(root_object_val) {
     this.searchLink = function (my_name_val, link_id_val) {
         this.debug(false, "searchIt", my_name_val + " " + link_id_val);
         return this.linkQueue().searchIt(function (link_val, my_name_val, link_id_val) {
-            return ((my_name_val === link_val.my_name) &&
+            return ((my_name_val === link_val.myName()) &&
                     ((link_id_val === link_val.link_id) || (link_id_val === 0)));
         }, my_name_val, link_id_val);
     };
@@ -109,7 +109,7 @@ function LinkMgrObject(root_object_val) {
         var link = this.searchLink(my_name_val, link_id_val);
         if (!link) {
             link = this.mallocIt(my_name_val);
-            this.debug(false, "searchAndCreate", "malloc link: name=" + link.my_name + "=link_id=" + link.link_id);
+            this.debug(false, "searchAndCreate", "malloc link: name=" + link.myName() + "=link_id=" + link.link_id);
             this.linkQueue().enQueue(link);
         }
         return link;
@@ -118,7 +118,7 @@ function LinkMgrObject(root_object_val) {
     this.removeLink = function (link_val) {
         this.logit("removeLink", "my_name=" + link_val.my_name + " link_id=" + link_val.link_id);
         this.linkQueue().removeElement(function (link_val, my_name_val, link_id_val) {
-            return ((my_name_val === link_val.my_name) && (link_id_val === link_val.link_id));
+            return ((my_name_val === link_val.myName()) && (link_id_val === link_val.link_id));
         }, link_val.my_name, link_val.link_id);
     };
 
@@ -128,7 +128,7 @@ function LinkMgrObject(root_object_val) {
         var queue_element = this.linkQueue().tail();
         while (queue_element) {
             var link = queue_element.data();
-            name_array[i] = link.my_name;
+            name_array[i] = link.myName();
             i += 1;
             queue_element = queue_element.prev();
         }
