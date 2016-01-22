@@ -245,7 +245,7 @@ function ExpressHttpObject(root_object_val) {
         }
         link.resetKeepAliveTimer();
 
-        var data = "hello get link data";
+        var data = link.receiveQueue().deQueue();
         var json_str = JSON.stringify({
                         command: req.headers.command,
                         ajax_id: req.headers.ajax_id,
@@ -253,7 +253,9 @@ function ExpressHttpObject(root_object_val) {
                     });
 
         this.debug(false, "getLinkData", "ajax_id=" + req.headers.ajax_id);
-        //logit("getLinkData", "link_id=" + req.headers.link_id + " my_name="  + req.headers.my_name + " data={" + data + "}");
+        if (data) {
+            this.logit("getLinkData", "link_id=" + req.headers.link_id + " my_name="  + req.headers.my_name + " data={" + data + "}");
+        }
         res.type('application/json');
         res.send(json_str);
     };
