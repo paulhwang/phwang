@@ -294,12 +294,12 @@ function ExpressHttpObject(root_object_val) {
         var session = this.sessionMgrObject().searchIt(req.headers.my_name, req.headers.his_name, session_id);
         if (!session) {
             res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-            this.abend("getSessionData", "null session");
+            this.abend("getSession", "null session");
             return null;
         }
         if (session.session_id === 0) {
             res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-            this.abend("getSessionData", "session_id = 0");
+            this.abend("getSession", "session_id = 0");
             return null;
         }
         return session;
@@ -369,22 +369,15 @@ function ExpressHttpObject(root_object_val) {
 
         link_entry.keep_alive(link);
 
-        var my_session = this.sessionMgrObject().searchIt(req.headers.my_name, req.headers.his_name, session_id);
-        if (!my_session) {
-            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-            this.abend("putSessionData", "null my_session");
-            return;
-        }
-        if (my_session.session_id === 0) {
-            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-            this.abend("putSessionData", "null my_session = 0");
+        var session = this.getSession(req, res);
+        if (!session) {
             return;
         }
 
-        this.logit("putSessionData", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.my_name + "=>" + req.headers.his_name + " {" + req.headers.data + "} " + req.headers.xmt_seq + "=>" + my_session.up_seq);
+        this.logit("putSessionData", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.my_name + "=>" + req.headers.his_name + " {" + req.headers.data + "} " + req.headers.xmt_seq + "=>" + session.up_seq);
 
         if (req.headers.my_name === req.headers.his_name) {
-            his_session = my_session;
+            his_session = session;
         } else {
             his_session = this.sessionMgrObject().searchIt(req.headers.his_name, req.headers.my_name, -1);
             if (!his_session) {
@@ -399,15 +392,15 @@ function ExpressHttpObject(root_object_val) {
             }
         }
 
-        if (xmt_seq === my_session.up_seq) {
+        if (xmt_seq === session.up_seq) {
             queue.enqueue(his_session.receiveQueue(), req.headers.data);
             ring.enqueue(his_session.receiveRing(), req.headers.data);
-            my_session.up_seq += 1;
-        } else if (xmt_seq < my_session.up_seq) {
+            session.up_seq += 1;
+        } else if (xmt_seq < session.up_seq) {
             if (xmt_seq === 0) {
                 queue.enqueue(his_session.receiveQueue(), req.headers.data);
                 ring.enqueue(his_session.receiveRing(), req.headers.data);
-                my_session.up_seq = 1;
+                session.up_seq = 1;
                 this.logit("putSessionData", req.headers.data + " post " + xmt_seq + " reset");
             } else {
                 this.logit("putSessionData", "(" + link_id + "," + session_id + ") "  + req.headers.my_name + "=>" + req.headers.his_name + " {" + req.headers.data + "} " + xmt_seq + " dropped");
@@ -416,7 +409,7 @@ function ExpressHttpObject(root_object_val) {
             this.logit("***abend: putSessionData", req.headers.data + " post seq=" + xmt_seq + " dropped");
         }
 
-        //logit("putSessionData", "queue_size=" + queue.queue_size(my_session.receiveQueue));
+        //logit("putSessionData", "queue_size=" + queue.queue_size(session.receiveQueue));
         res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
     };
 
