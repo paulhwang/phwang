@@ -207,7 +207,7 @@ function ExpressHttpObject(root_object_val) {
                     });
 
         res.send(json_str);
-        this.logit("setupLink", "(" + link.link_id + ",0) " + req.headers.my_name + "=>server " + link_id_str);
+        this.logit("setupLink", "name=" + req.headers.my_name + " link_id=" + link.link_id);
     };
 
     this.keepAlive = function (req, res) {
@@ -298,7 +298,7 @@ function ExpressHttpObject(root_object_val) {
         }
         link_entry.keep_alive(link);
 
-        var session = this.sessionMgrObject().searchIt(req.headers.my_name, req.headers.his_name, Number(req.headers.link_id));
+        var session = this.sessionMgrObject().searchIt(req.headers.my_name, req.headers.his_name, Number(req.headers.session_id));
         if (!session) {
             res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
             this.abend("getSessionData", "null session");
@@ -351,7 +351,7 @@ function ExpressHttpObject(root_object_val) {
 
         link_entry.keep_alive(link);
 
-        var session = this.sessionMgrObject().searchIt(req.headers.my_name, req.headers.his_name, Number(req.headers.link_id));
+        var session = this.sessionMgrObject().searchIt(req.headers.my_name, req.headers.his_name, Number(req.headers.session_id));
         if (!session) {
             res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
             this.abend("putSessionData", "null session");
@@ -363,7 +363,7 @@ function ExpressHttpObject(root_object_val) {
         if (req.headers.my_name === req.headers.his_name) {
             his_session = session;
         } else {
-            var session = this.sessionMgrObject().searchIt(req.headers.his_name, req.headers.my_name, Number(req.headers.link_id));
+            var session = this.sessionMgrObject().searchIt(req.headers.his_name, req.headers.my_name, Number(req.headers.session_id));
             if (!session) {
                 res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
                 this.abend("putSessionData", "null session");

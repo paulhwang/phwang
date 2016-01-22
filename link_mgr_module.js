@@ -69,6 +69,14 @@ function LinkMgrObject(root_object_val) {
         return this.theLinkQueue;
     };
 
+    this.globalLinkId = function () {
+        return this.theGlobalLinkId;
+    };
+
+    this.incrementGlobalLinkId = function () {
+        return this.theGlobalLinkId += 1;
+    };
+
     this.poolHead = function () {
         return this.thePoolHead;
     };
@@ -131,13 +139,14 @@ function LinkMgrObject(root_object_val) {
     this.mallocIt = function (my_name_val) {
         var entry;
         if (!this.poolHead()) {
-            entry = this.linkModule().malloc(my_name_val);
+            entry = this.linkModule().malloc(my_name_val, this.globalLinkId());
         } else {
             entry = this.poolHead();
-            this.linkModule().reset(entry, my_name_val);
+            this.linkModule().reset(entry, my_name_val, this.globalLinkId());
             this.setHead(entry.next());
             this.decrementPoolSize();
         }
+        this.incrementGlobalLinkId();
 
         this.abendIt();
         return entry;
@@ -180,6 +189,7 @@ function LinkMgrObject(root_object_val) {
         this.utilObject().logit(this.objectName() + "." + str1_val, str2_val);
     };
 
+    this.theGlobalLinkId = 10;
     this.thePoolHead = null;
     this.thePoolSize = 0;
     this.theLinkQueue = this.queueModule().malloc();

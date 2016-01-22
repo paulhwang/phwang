@@ -5,13 +5,13 @@
  */
 
 module.exports = {
-    reset: function (link_val, my_name_val) {
-        link_val.resetIt(my_name_val);
+    reset: function (link_val, my_name_val, link_id_val) {
+        link_val.resetIt(my_name_val, link_id_val);
    },
 
-    malloc: function (my_name_val) {
+    malloc: function (my_name_val, link_id_val) {
         link = new LinkEntryObject();
-        link.resetIt(my_name_val);
+        link.resetIt(my_name_val, link_id_val);
         return link;
     },
 
@@ -26,7 +26,6 @@ function LinkEntryObject() {
     this.theQueueModule = require("./queue_module.js");
     this.theRingModule = require("./ring_module.js");
     this.theLinkMgrModule = require("./link_mgr_module.js");
-    this.theGlobalLinkId = 1;
 
     this.objectName = function () {
         return "LinkEntryObject";
@@ -56,22 +55,13 @@ function LinkEntryObject() {
         return this.theReceiveRing;
     };
 
-    this.globalLinkId = function () {
-        return this.theGlobalLinkId;
-    };
-
-    this.incrementGlobalLinkId = function () {
-        return this.theGlobalLinkId += 1;
-    };
-
-    this.resetIt = function (my_name_val) {
+    this.resetIt = function (my_name_val, link_id_val) {
         this.my_name = my_name_val;
         this.up_seq = 0;
         this.down_seq = 0;
         this.queue = this.queueModule().malloc();
         this.ring = this.ringModule().malloc();
-        this.link_id = this.globalLinkId();
-        this.incrementGlobalLinkId();
+        this.link_id = link_id_val;
         this.keep_alive_timer = this.resetTimeout();
     };
 
