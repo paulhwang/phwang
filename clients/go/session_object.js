@@ -174,7 +174,7 @@ function SessionObject(root_object_val) {
                                             " handicap=" + config.handicapPoint());
             }
             this0.ajaxObject().setupCallback(this0.ajaxObject().ajaxSetupSessionCommand(), this0.rootObject().ajaxId(), ajaxCallbackForInitSession, this0);
-            this0.ajaxObject().setupSession(this0.rootObject().ajaxId(), this0);
+            this0.ajaxObject().setupSession(this0.rootObject().ajaxId(), this0, "handshake");
         });
     };
 
@@ -216,9 +216,14 @@ function ajaxCallbackForGetSessionData (data_val, session_val) {
     session_val.ajaxObject().getSessionData(session_val.ajaxId(), session_val);
 }
 
-function ajaxCallbackForInitSession (session_id_val, session_val) {
-    session_val.logit("ajaxCallbackForInitSession", "session_id= " + session_id_val);
-    session_val.setSessionId(Number(session_id_val));
+function ajaxCallbackForInitSession (data_val, session_val) {
+    //session_val.logit("ajaxCallbackForInitSession", "data=" + data_val);
+    if (!data_val) {
+        return;
+    }
+    var data = JSON.parse(data_val);
+    session_val.setSessionId(Number(data.session_id));
+    session_val.logit("ajaxCallbackForInitSession", "session_id=" + session_val.sessionId() + " extra=" + data.extra_data);
     session_val.sessionConnected = true;
     session_val.ajaxObject().getSessionData(session_val.ajaxId(), session_val);
     session_val.containerObject().runGoGame();

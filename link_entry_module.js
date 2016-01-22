@@ -68,8 +68,8 @@ function LinkEntryObject() {
         this.theMyName = my_name_val;
         this.up_seq = 0;
         this.down_seq = 0;
-        this.queue = this.queueModule().malloc();
-        this.ring = this.ringModule().malloc();
+        this.theReceiveQueue = this.queueModule().malloc();
+        this.theReceiveRing = this.ringModule().malloc();
         this.keep_alive_timer = this.resetTimeout();
     };
 
@@ -84,7 +84,7 @@ function LinkEntryObject() {
         }
         this.debug(false, "resetTimeout", "my_name=" + this.my_name + " link_id=" + this.link_id);
         var time_out = setInterval(function (link_val) {
-            console.log("resetTimeout(***timeout occurs)", "my_name=" + link_val.my_name + " link_id=" + link_val.link_id);
+            console.log("resetTimeout(***timeout occurs)", "my_name=" + link_val.myName() + " link_id=" + link_val.linkId());
             clearInterval(link_val.keep_alive_timer);
             link_val.linkMgrModule().remove_link(link_val);
         }, 20000, this);

@@ -301,7 +301,7 @@ function ExpressHttpObject(root_object_val) {
                         data: name_array_str,
                     });
         res.send(json_str);
-        this.debug(true, "getNameList", "(" + link.link_id + ",0) " + req.headers.my_name + "=>server " + name_array_str);
+        this.debug(true, "getNameList", "(" + link.linkId() + ",0) " + req.headers.my_name + "=>server " + name_array_str);
     };
 
     this.setupSession = function (req, res) {
@@ -315,11 +315,22 @@ function ExpressHttpObject(root_object_val) {
             }
         }
 
+        var his_link = this.linkMgrObject().searchLink(req.headers.his_name, 0);
+        if (!his_link) {
+            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
+            return;
+        }
+        his_link.receiveQueue().enQueue(req.headers.data);
+
         var session_id_str = "" + session.sessionId();
+        var data = JSON.stringify({
+                        session_id: session_id_str,
+                        extra_data: req.headers.data,
+                    });
         var json_str = JSON.stringify({
                         command: req.headers.command,
                         ajax_id: req.headers.ajax_id,
-                        data: session_id_str,
+                        data: data,
                     });
         res.send(json_str);
         this.logit("setupSession", "(" + req.headers.link_id + "," + session.sessionId() + "," + session.hisSession().sessionId() + ") " + req.headers.my_name + "=>" + req.headers.his_name);

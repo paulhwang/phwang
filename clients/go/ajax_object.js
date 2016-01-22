@@ -193,7 +193,7 @@ function AjaxObject(root_object_val) {
                 }
                 var callback_info = this0.getCallbackInfo(json.command, json.ajax_id);
                 if (callback_info) {
-                    callback_info.func(json.data, callback_info.param1);
+                    callback_info.func(json.data, callback_info.param1, callback_info.param2, callback_info.param3);
                 }
                 this0.decrementOustandingRequestCount();
                 this0.ajaxJob(request_val);
@@ -249,14 +249,15 @@ function AjaxObject(root_object_val) {
         this.enqueueOutput(ajax);
     };
 
-    this.setupSession = function (ajax_id_val, session_val) {
+    this.setupSession = function (ajax_id_val, session_val, data_val) {
         this.logit("initiateSessionConnection", session_val.myName());
         var ajax = {
             command: this.ajaxSetupSessionCommand(),
             header: [{type: "ajax_id", value: ajax_id_val},
                      {type: "my_name", value: this.rootObject().myName()},
                      {type: "link_id", value: this.rootObject().linkId()},
-                     {type: "his_name", value: session_val.hisName()}],
+                     {type: "his_name", value: session_val.hisName()},
+                     {type: "data", value: data_val}],
             };
         this.enqueueOutput(ajax);
     };
