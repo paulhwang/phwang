@@ -64,12 +64,12 @@ function LinkEntryObject() {
     };
 
     this.resetIt = function (my_name_val, link_id_val) {
+        this.theLinkId = link_id_val;
         this.theMyName = my_name_val;
         this.up_seq = 0;
         this.down_seq = 0;
         this.queue = this.queueModule().malloc();
         this.ring = this.ringModule().malloc();
-        this.link_id = link_id_val;
         this.keep_alive_timer = this.resetTimeout();
     };
 

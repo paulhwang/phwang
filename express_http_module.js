@@ -207,7 +207,7 @@ function ExpressHttpObject(root_object_val) {
             link.resetKeepAliveTimer();
         }
 
-        var link_id_str = "" + link.link_id;
+        var link_id_str = "" + link.linkId();
         var json_str = JSON.stringify({
                         command: req.headers.command,
                         ajax_id: req.headers.ajax_id,
@@ -215,7 +215,7 @@ function ExpressHttpObject(root_object_val) {
                     });
 
         res.send(json_str);
-        this.logit("setupLink", "name=" + req.headers.my_name + " link_id=" + link.link_id);
+        this.logit("setupLink", "name=" + req.headers.my_name + " link_id=" + link.linkId());
     };
 
     this.keepAlive = function (req, res) {

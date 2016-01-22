@@ -101,7 +101,7 @@ function LinkMgrObject(root_object_val) {
         this.debug(false, "searchIt", my_name_val + " " + link_id_val);
         return this.linkQueue().searchIt(function (link_val, my_name_val, link_id_val) {
             return ((my_name_val === link_val.myName()) &&
-                    ((link_id_val === link_val.link_id) || (link_id_val === 0)));
+                    ((link_id_val === link_val.linkId()) || (link_id_val === 0)));
         }, my_name_val, link_id_val);
     };
 
@@ -116,10 +116,10 @@ function LinkMgrObject(root_object_val) {
     };
 
     this.removeLink = function (link_val) {
-        this.logit("removeLink", "my_name=" + link_val.my_name + " link_id=" + link_val.link_id);
+        this.logit("removeLink", "my_name=" + link_val.myName() + " link_id=" + link_val.linkId());
         this.linkQueue().removeElement(function (link_val, my_name_val, link_id_val) {
-            return ((my_name_val === link_val.myName()) && (link_id_val === link_val.link_id));
-        }, link_val.my_name, link_val.link_id);
+            return ((my_name_val === link_val.myName()) && (link_id_val === link_val.linkId()));
+        }, link_val.myName(), link_val.linkId());
     };
 
     this.getNameList = function () {
