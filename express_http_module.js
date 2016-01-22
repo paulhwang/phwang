@@ -321,7 +321,14 @@ function ExpressHttpObject(root_object_val) {
             return;
         }
 
-        his_link.receiveQueue().enQueue(req.headers.data);
+        var session_id_str = "" + session.hisSession().sessionId();
+        var data = JSON.stringify({
+                        session_id: session_id_str,
+                        his_name: req.headers.my_name,
+                        extra_data: req.headers.data,
+                    });
+        his_link.receiveQueue().enQueue(data);
+
         this.setupSessionReply(req, res);
     }
 
