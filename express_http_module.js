@@ -160,6 +160,11 @@ function ExpressHttpObject(root_object_val) {
             return;
         }
 
+        if (req.headers.command === "put_link_data") {
+            this.putLinkData(req, res);
+            return;
+        }
+
         if (req.headers.command === "get_name_list") {
             this.getNameList(req, res);
             return;
@@ -240,7 +245,7 @@ function ExpressHttpObject(root_object_val) {
         }
         link.resetKeepAliveTimer();
 
-        var data = "hello";
+        var data = "hello get link data";
         var json_str = JSON.stringify({
                         command: req.headers.command,
                         ajax_id: req.headers.ajax_id,
@@ -249,6 +254,34 @@ function ExpressHttpObject(root_object_val) {
 
         this.debug(false, "getLinkData", "ajax_id=" + req.headers.ajax_id);
         //logit("getLinkData", "link_id=" + req.headers.link_id + " my_name="  + req.headers.my_name + " data={" + data + "}");
+        res.type('application/json');
+        res.send(json_str);
+    };
+
+    this.putLinkData = function (req, res) {
+        this.debug(false, "putLinkData", "(" + req.headers.link_id + "," + req.headers.session_id + ") my_name=" + req.headers.my_name + "=>" + req.headers.his_name);
+
+        var my_link = this.getLink(req, res);
+        if (!my_link) {
+            return;
+        }
+        my_link.resetKeepAliveTimer();
+
+        var his_link = this.linkMgrObject().searchLink(req.headers.his_name, 0);
+        if (!his_link) {
+            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
+            return;
+        }
+
+        var data = "hello put link data";
+        var json_str = JSON.stringify({
+                        command: req.headers.command,
+                        ajax_id: req.headers.ajax_id,
+                        data: data,
+                    });
+
+        this.debug(false, "putLinkData", "ajax_id=" + req.headers.ajax_id);
+        //logit("putLinkData", "link_id=" + req.headers.link_id + " my_name="  + req.headers.my_name + " data={" + data + "}");
         res.type('application/json');
         res.send(json_str);
     };
