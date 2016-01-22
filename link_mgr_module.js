@@ -100,7 +100,8 @@ function LinkMgrObject(root_object_val) {
     this.searchLink = function (my_name_val, link_id_val) {
         this.debug(false, "searchIt", my_name_val + " " + link_id_val);
         return this.linkQueue().searchIt(function (link_val, my_name_val, link_id_val) {
-            return ((my_name_val === link_val.my_name) && (link_id_val === link_val.link_id));
+            return ((my_name_val === link_val.my_name) &&
+                    ((link_id_val === link_val.link_id) || (link_id_val === 0)));
         }, my_name_val, link_id_val);
     };
 
