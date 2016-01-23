@@ -115,6 +115,7 @@ function RootObject() {
                         var session = this.createGoSession(extra_data.data);
                         session.setSessionId(Number(data_val.session_id));
                         this.debug(true, "getLinkData", "session_id=" + session.sessionId());
+                        session.startGoGame();
                     }
                 }
             }
