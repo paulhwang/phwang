@@ -147,7 +147,11 @@ function ajaxGetLinkDataCallback(data_val, root_val) {
             root_val.logit("ajaxGetLinkDataCallback", "extra_data=" + data.extra_data);
             var extra_data = JSON.parse(data.extra_data);
             if (extra_data.target === "Go") {
-                root_val.logit("ajaxGetLinkDataCallback", "config=" + extra_data.config);
+                root_val.logit("ajaxGetLinkDataCallback", "command=" + extra_data.command);
+                if (extra_data.command === "config") {
+                    root_val.logit("ajaxGetLinkDataCallback", "config=" + extra_data.data);
+
+                }
             }
         }
     }
