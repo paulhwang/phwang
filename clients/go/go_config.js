@@ -63,6 +63,10 @@ function GoConfigObject(container_val) {
         }
     };
 
+    this.setMyColor_ = function (val) {
+        this.theMyColor = Number(val);
+    };
+
     this.handicapPoint = function () {
         return this.theHandicapPoint;
     };

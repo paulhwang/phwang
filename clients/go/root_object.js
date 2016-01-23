@@ -112,16 +112,28 @@ function RootObject() {
                 this.logit("getLinkData", "command=" + extra_data.command);
                 if (extra_data.command === "config") {
                     this.logit("getLinkData", "config=" + extra_data.data);
+                    this.createGoSession(extra_data.data);
                 }
             }
         }
     };
 
-    this.createGoSession = function () {
+    this.createGoSession = function (json_config_val) {
         var session = new SessionObject(this);
         var container = new GoContainerObject(session);
         this.ajaxObject().setupCallback(this.ajaxObject().ajaxGetNameListCommand(), this.ajaxId(), ajaxGetNameListCallback, session);
         this.ajaxObject().getNameList(this.ajaxId(), session);
+        if (json_config_val) {
+            var config = JSON.parse(json_config_val);
+            container.configObject().setBoardSize(config.board_size);
+            container.configObject().setMyColor_(config.my_color);
+            container.configObject().setKomiPoint(config.komi);
+            container.configObject().setHandicapPoint(config.handicap);
+            this.logit("createGoSession", "board_size=" + container.configObject().boardSize() +
+                                          " color=" + container.configObject().myColor() +
+                                          " komi=" + container.configObject().komiPoint() +
+                                          " handicap=" + container.configObject().handicapPoint());
+        }
     };
 
     this.runRoot = function () {
@@ -153,7 +165,7 @@ function ajaxSetupLinkCallback(link_id_val, root_val) {
     root_val.setLinkId(Number(link_id_val));
     root_val.ajaxObject().setupCallback(root_val.ajaxObject().ajaxGetLinkDataCommand(), root_val.ajaxId(), ajaxGetLinkDataCallback, root_val);
     root_val.ajaxObject().getLinkData(root_val.ajaxId());
-    root_val.createGoSession();
+    root_val.createGoSession(null);
 }
 
 function ajaxGetLinkDataCallback(data_val, root_val) {

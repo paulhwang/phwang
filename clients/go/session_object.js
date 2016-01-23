@@ -174,20 +174,14 @@ function SessionObject(root_object_val) {
                                             " handicap=" + config.handicapPoint());
             }
             this0.ajaxObject().setupCallback(this0.ajaxObject().ajaxSetupSessionCommand(), this0.rootObject().ajaxId(), ajaxSetupSessionCallback, this0);
-            var config_data = JSON.stringify({
-                board_size: config.boardSize(),
-                color: config.hisColor(),
-                komi: config.komiPoint(),
-                handicap: config.handicapPoint(),
-                });
             var data = JSON.stringify({
                         target: "Go",
                         command: "config",
                         data: JSON.stringify({
-                            board_size: config.boardSize(),
-                            color: config.hisColor(),
-                            komi: config.komiPoint(),
-                            handicap: config.handicapPoint(),
+                                board_size: config.boardSize(),
+                                color: config.hisColor(),
+                                komi: config.komiPoint(),
+                                handicap: config.handicapPoint(),
                         }),
                     });
             this0.ajaxObject().setupSession(this0.rootObject().ajaxId(), this0, data);
