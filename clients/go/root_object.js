@@ -118,8 +118,12 @@ function RootObject() {
     };
 
     this.createGoSession = function () {
+        var session = new SessionObject(this);
+        var container = new GoContainerObject(session);
+        this.ajaxObject().setupCallback(this.ajaxObject().ajaxGetNameListCommand(), this.ajaxId(), ajaxGetNameListCallback, session);
+        this.ajaxObject().getNameList(this.ajaxId(), session);
+    };
 
-    }
     this.runRoot = function () {
         var this0 = this;
         this.htmlObject().createPreludeHolder();
@@ -147,12 +151,8 @@ function RootObject() {
 function ajaxSetupLinkCallback(link_id_val, root_val) {
     "use strict";
     root_val.setLinkId(Number(link_id_val));
-    var session = new SessionObject(root_val);
-    var container = new GoContainerObject(session);
     root_val.ajaxObject().setupCallback(root_val.ajaxObject().ajaxGetLinkDataCommand(), root_val.ajaxId(), ajaxGetLinkDataCallback, root_val);
     root_val.ajaxObject().getLinkData(root_val.ajaxId());
-    root_val.ajaxObject().setupCallback(root_val.ajaxObject().ajaxGetNameListCommand(), root_val.ajaxId(), ajaxGetNameListCallback, session);
-    root_val.ajaxObject().getNameList(root_val.ajaxId(), session);
     root_val.createGoSession();
 }
 
