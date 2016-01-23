@@ -44,6 +44,10 @@ function AjaxObject(root_object_val) {
         return "setup_session";
     };
 
+    this.ajaxSetupSessionReplyCommand = function () {
+        return "setup_session_reply";
+    };
+
     this.ajaxGetSessionDataCommand = function () {
         return "get_session_data";
     };
@@ -250,9 +254,22 @@ function AjaxObject(root_object_val) {
     };
 
     this.setupSession = function (ajax_id_val, session_val, data_val) {
-        this.logit("initiateSessionConnection", session_val.myName());
+        this.logit("setupSession", session_val.myName());
         var ajax = {
             command: this.ajaxSetupSessionCommand(),
+            header: [{type: "ajax_id", value: ajax_id_val},
+                     {type: "my_name", value: this.rootObject().myName()},
+                     {type: "link_id", value: this.rootObject().linkId()},
+                     {type: "his_name", value: session_val.hisName()},
+                     {type: "data", value: data_val}],
+            };
+        this.enqueueOutput(ajax);
+    };
+
+    this.setupSessionReply = function (ajax_id_val, session_val, data_val) {
+        this.logit("setupSessionReply", session_val.myName());
+        var ajax = {
+            command: this.ajaxSetupSessionReplyCommand(),
             header: [{type: "ajax_id", value: ajax_id_val},
                      {type: "my_name", value: this.rootObject().myName()},
                      {type: "link_id", value: this.rootObject().linkId()},
