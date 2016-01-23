@@ -68,7 +68,7 @@ function UtilObject() {
         } else {
             console.log("***abend***" + this.userIndex() + ": " + str1_val + "() " + str2_val);
         }
-        alert("abend: " + str1_val + "() " + str2_val);
-        var x = junk;
+        //alert("abend: " + str1_val + "() " + str2_val);
+        //var x = junk;
     };
 }

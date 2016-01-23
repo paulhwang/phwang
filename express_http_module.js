@@ -364,7 +364,7 @@ function ExpressHttpObject(root_object_val) {
         var session = this.sessionMgrObject().searchIt(req.headers.my_name, req.headers.his_name, Number(req.headers.session_id));
         if (!session) {
             res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-            this.abend("getSessionData", "null session");
+            this.abend("getSessionData", "null session" + " session_id=" + req.headers.session_id);
             return;
         }
 
@@ -416,7 +416,7 @@ function ExpressHttpObject(root_object_val) {
         var session = this.sessionMgrObject().searchIt(req.headers.my_name, req.headers.his_name, Number(req.headers.session_id));
         if (!session) {
             res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-            this.abend("putSessionData", "null session");
+            this.abend("putSessionData", "null my_session" + " session_id=" + req.headers.session_id + " my_name=" + req.headers.my_name + " his_name=" + req.headers.his_name);
             return;
         }
 
@@ -428,7 +428,7 @@ function ExpressHttpObject(root_object_val) {
             var his_session = this.sessionMgrObject().searchIt(req.headers.his_name, req.headers.my_name, Number(req.headers.session_id));
             if (!his_session) {
                 res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-                this.abend("putSessionData", "null session");
+                this.abend("putSessionData", "null his_session" + " session_id=" + req.headers.session_id + " my_name=" + req.headers.my_name + " his_name=" + req.headers.his_name);
                 return;
             }
         }

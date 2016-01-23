@@ -113,6 +113,7 @@ function RootObject() {
                     if (data_val.his_name != this.myName()) {
                         this.debug(true, "getLinkData", "config=" + extra_data.data);
                         var session = this.createGoSession(extra_data.data);
+                        session.setHisName(data_val.his_name);
                         session.setSessionId(Number(data_val.session_id));
                         this.debug(true, "getLinkData", "session_id=" + session.sessionId());
                         session.startGoGame();
