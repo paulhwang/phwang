@@ -102,6 +102,24 @@ function RootObject() {
         return this.utilObject().utilAbend(this.objectName() + "." + str1_val, str2_val);
     };
 
+    this.getLinkData = function (data_val) {
+        this.logit("getLinkData", "data=" + data_val);
+        var data = JSON.parse(data_val);
+        if (data.extra_data) {
+            this.logit("getLinkData", "extra_data=" + data.extra_data);
+            var extra_data = JSON.parse(data.extra_data);
+            if (extra_data.target === "Go") {
+                this.logit("getLinkData", "command=" + extra_data.command);
+                if (extra_data.command === "config") {
+                    this.logit("getLinkData", "config=" + extra_data.data);
+                }
+            }
+        }
+    };
+
+    this.createGoSession = function () {
+
+    }
     this.runRoot = function () {
         var this0 = this;
         this.htmlObject().createPreludeHolder();
@@ -135,25 +153,14 @@ function ajaxSetupLinkCallback(link_id_val, root_val) {
     root_val.ajaxObject().getLinkData(root_val.ajaxId());
     root_val.ajaxObject().setupCallback(root_val.ajaxObject().ajaxGetNameListCommand(), root_val.ajaxId(), ajaxGetNameListCallback, session);
     root_val.ajaxObject().getNameList(root_val.ajaxId(), session);
+    root_val.createGoSession();
 }
 
 function ajaxGetLinkDataCallback(data_val, root_val) {
     "use strict";
     root_val.debug(false, "ajaxGetLinkDataCallback", "data=" + data_val);
     if (data_val) {
-        root_val.logit("ajaxGetLinkDataCallback", "data=" + data_val);
-        var data = JSON.parse(data_val);
-        if (data.extra_data) {
-            root_val.logit("ajaxGetLinkDataCallback", "extra_data=" + data.extra_data);
-            var extra_data = JSON.parse(data.extra_data);
-            if (extra_data.target === "Go") {
-                root_val.logit("ajaxGetLinkDataCallback", "command=" + extra_data.command);
-                if (extra_data.command === "config") {
-                    root_val.logit("ajaxGetLinkDataCallback", "config=" + extra_data.data);
-
-                }
-            }
-        }
+        root_val.getLinkData(data_val);
     }
     root_val.ajaxObject().getLinkData(root_val.ajaxId());
 }
