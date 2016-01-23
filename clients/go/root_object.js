@@ -102,24 +102,30 @@ function RootObject() {
         return this.utilObject().utilAbend(this.objectName() + "." + str1_val, str2_val);
     };
 
-    this.getLinkData = function (data_val) {
-        this.debug(true, "getLinkData", "data=" + data_val);
-        var data = JSON.parse(data_val);
-        this.debug(true, "getLinkData",  "my_name=" + data.my_name + " his_name=" + data.his_name + " session_id=" + data.session_id);
-        if (data.extra_data) {
-            this.debug(false, "getLinkData", "extra_data=" + data.extra_data);
-            var extra_data = JSON.parse(data.extra_data);
+    this.processReceiveSetupSession = function (data_val) {
+        this.debug(true, "getLinkData",  "order=" + data_val.order + " my_name=" + data_val.my_name + " his_name=" + data_val.his_name + " session_id=" + data_val.session_id);
+        if (data_val.extra_data) {
+            this.debug(false, "getLinkData", "extra_data=" + data_val.extra_data);
+            var extra_data = JSON.parse(data_val.extra_data);
             if (extra_data.target === "Go") {
                 this.debug(false, "getLinkData", "command=" + extra_data.command);
                 if (extra_data.command === "config") {
-                    if (data.his_name != this.myName()) {
+                    if (data_val.his_name != this.myName()) {
                         this.debug(true, "getLinkData", "config=" + extra_data.data);
                         var session = this.createGoSession(extra_data.data);
-                        session.setSessionId(Number(data.session_id));
+                        session.setSessionId(Number(data_val.session_id));
                         this.debug(true, "getLinkData", "session_id=" + session.sessionId());
                     }
                 }
             }
+        }
+    };
+
+    this.getLinkData = function (data_val) {
+        this.debug(true, "getLinkData", "data=" + data_val);
+        var data = JSON.parse(data_val);
+        if (data.order === "setup_session") {
+            this.processReceiveSetupSession(data);
         }
     };
 

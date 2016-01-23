@@ -323,8 +323,11 @@ function ExpressHttpObject(root_object_val) {
             return;
         }
 
+        this.debug(false, "setupSession", "(" + req.headers.link_id + "," + session.sessionId() + "," + session.hisSession().sessionId() + ") " + req.headers.my_name + "=>" + req.headers.his_name);
+
         var session_id_str = "" + session.hisSession().sessionId();
         var data = JSON.stringify({
+                        order: "setup_session",
                         session_id: session_id_str,
                         his_name: req.headers.my_name,
                         my_name: req.headers.his_name,
@@ -332,11 +335,11 @@ function ExpressHttpObject(root_object_val) {
                     });
         his_link.receiveQueue().enQueue(data);
 
-        this.setupSessionReply(req, res);
+        this.setupSessionReply(req, res, session);
     }
 
-    this.setupSessionReply = function (req, res) {
-        var session_id_str = "" + session.sessionId();
+    this.setupSessionReply = function (req, res, session_val) {
+        var session_id_str = "" + session_val.sessionId();
         var data = JSON.stringify({
                         session_id: session_id_str,
                         extra_data: req.headers.data,
@@ -347,7 +350,7 @@ function ExpressHttpObject(root_object_val) {
                         data: data,
                     });
         res.send(json_str);
-        this.logit("setupSession", "(" + req.headers.link_id + "," + session.sessionId() + "," + session.hisSession().sessionId() + ") " + req.headers.my_name + "=>" + req.headers.his_name);
+        this.logit("setupSessionReply", "(" + req.headers.link_id + "," + session_val.sessionId() + "," + session_val.hisSession().sessionId() + ") " + req.headers.my_name + "=>" + req.headers.his_name);
     };
 
     this.getSessionData = function (req, res) {
