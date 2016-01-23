@@ -103,16 +103,21 @@ function RootObject() {
     };
 
     this.getLinkData = function (data_val) {
-        this.logit("getLinkData", "data=" + data_val);
+        this.debug(true, "getLinkData", "data=" + data_val);
         var data = JSON.parse(data_val);
+        this.debug(true, "getLinkData",  "my_name=" + data.my_name + " his_name=" + data.his_name + " session_id=" + data.session_id);
         if (data.extra_data) {
-            this.logit("getLinkData", "extra_data=" + data.extra_data);
+            this.debug(false, "getLinkData", "extra_data=" + data.extra_data);
             var extra_data = JSON.parse(data.extra_data);
             if (extra_data.target === "Go") {
-                this.logit("getLinkData", "command=" + extra_data.command);
+                this.debug(false, "getLinkData", "command=" + extra_data.command);
                 if (extra_data.command === "config") {
-                    this.logit("getLinkData", "config=" + extra_data.data);
-                    this.createGoSession(extra_data.data);
+                    if (data.his_name != this.myName()) {
+                        this.debug(true, "getLinkData", "config=" + extra_data.data);
+                        var session = this.createGoSession(extra_data.data);
+                        session.setSessionId(Number(data.session_id));
+                        this.debug(true, "getLinkData", "session_id=" + session.sessionId());
+                    }
                 }
             }
         }
@@ -134,6 +139,7 @@ function RootObject() {
                                           " komi=" + container.configObject().komiPoint() +
                                           " handicap=" + container.configObject().handicapPoint());
         }
+        return session;
     };
 
     this.runRoot = function () {

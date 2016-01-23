@@ -327,6 +327,7 @@ function ExpressHttpObject(root_object_val) {
         var data = JSON.stringify({
                         session_id: session_id_str,
                         his_name: req.headers.my_name,
+                        my_name: req.headers.his_name,
                         extra_data: req.headers.data,
                     });
         his_link.receiveQueue().enQueue(data);
