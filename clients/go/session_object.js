@@ -140,6 +140,12 @@ function SessionObject(root_object_val) {
         }
     };
 
+    this.startGoGame = function () {
+        this.sessionConnected = true;
+        this.ajaxObject().getSessionData(this.ajaxId(), this);
+        this.containerObject().runGoGame();
+    };
+
     this.runSession = function () {
         var this0 = this;
         var container = this.containerObject();
@@ -234,7 +240,5 @@ function ajaxSetupSessionCallback (data_val, session_val) {
     var data = JSON.parse(data_val);
     session_val.setSessionId(Number(data.session_id));
     session_val.logit("ajaxSetupSessionCallback", "session_id=" + session_val.sessionId() + " extra=" + data.extra_data);
-    session_val.sessionConnected = true;
-    session_val.ajaxObject().getSessionData(session_val.ajaxId(), session_val);
-    session_val.containerObject().runGoGame();
+    session_val.startGoGame();
 }
