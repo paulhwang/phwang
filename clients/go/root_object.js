@@ -126,7 +126,7 @@ function RootObject() {
         if (json_config_val) {
             var config = JSON.parse(json_config_val);
             container.configObject().setBoardSize(config.board_size);
-            container.configObject().setMyColor_(config.my_color);
+            container.configObject().setMyColor_(config.color);
             container.configObject().setKomiPoint(config.komi);
             container.configObject().setHandicapPoint(config.handicap);
             this.logit("createGoSession", "board_size=" + container.configObject().boardSize() +
