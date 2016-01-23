@@ -8,6 +8,10 @@ function GoGameObject(container_val, str_val) {
     "use strict";
     this.theContainerObject = container_val;
 
+    this.objectName = function () {
+        return "GoGameObject";
+    };
+
     this.containerObject = function () {
         return this.theContainerObject;
     };
@@ -453,6 +457,17 @@ function GoGameObject(container_val, str_val) {
         }
     };
 
+    this.initOutstandingUiClick = function () {
+        if (this.configObject().myColor() === GO.BLACK_STONE()) {
+            this.theOutstandingUiClick = 0;
+        } else if (this.configObject().myColor() === GO.WHITE_STONE()) {
+            this.theOutstandingUiClick = 1;
+        } else {
+            this.abend("GoGameObject", "color=" + this.configObject().myColor());
+        }
+        this.logit("initOutstandingUiClick", "value=" + this.outstandingUiClick());
+    };
+
     this.encodeMoveList = function (do_mine_val) {
         var buf = "";
 
@@ -526,6 +541,14 @@ function GoGameObject(container_val, str_val) {
 
     this.goLog = function (str1_val, str2_val) {
         return this.containerObject().goLog("GoGameObject." + str1_val, str2_val);
+    };
+
+    this.abend = function (str1_val, str2_val) {
+        return this.containerObject().goAbend(this.objectName() + "." + str1_val, str2_val);
+    };
+
+    this.logit = function (str1_val, str2_val) {
+        return this.containerObject().goLog(this.objectName() + "." + str1_val, str2_val);
     };
 
     this.decodeMoveList = function (str_val) {

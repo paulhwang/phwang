@@ -24,6 +24,10 @@ function GoConfigObject(container_val) {
         return this.sessionObject().rootObject();
     };
 
+    this.gameObject = function () {
+        return this.containerObject().gameObject();
+    };
+
     this.myName = function () {
         return this.rootObject().myName();
     };
@@ -61,10 +65,14 @@ function GoConfigObject(container_val) {
         } else {
             this.abend("setMyColor", val);
         }
+
+        this.gameObject().initOutstandingUiClick()
     };
 
     this.setMyColor_ = function (val) {
         this.theMyColor = Number(val);
+
+        this.gameObject().initOutstandingUiClick()
     };
 
     this.handicapPoint = function () {
