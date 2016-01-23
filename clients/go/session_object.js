@@ -183,7 +183,12 @@ function SessionObject(root_object_val) {
             var data = JSON.stringify({
                         target: "Go",
                         command: "config",
-                        data: config_data,
+                        data: JSON.stringify({
+                            board_size: config.boardSize(),
+                            color: config.hisColor(),
+                            komi: config.komiPoint(),
+                            handicap: config.handicapPoint(),
+                        }),
                     });
             this0.ajaxObject().setupSession(this0.rootObject().ajaxId(), this0, data);
         });
