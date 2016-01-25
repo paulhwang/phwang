@@ -237,7 +237,7 @@ function ExpressHttpObject(root_object_val) {
     };
 
     this.getLinkData = function (req, res) {
-        this.debug(false, "getLinkData", "(" + req.headers.link_id + "," + req.headers.session_id + ") my_name=" + req.headers.my_name + "=>" + req.headers.his_name);
+        this.debug(false, "getLinkData", "link_id=" + req.headers.link_id + " my_name=" + req.headers.my_name + " ajax_id=" + req.headers.ajax_id);
 
         var link = this.getLink(req, res);
         if (!link) {
@@ -252,7 +252,6 @@ function ExpressHttpObject(root_object_val) {
                         data: data,
                     });
 
-        this.debug(false, "getLinkData", "ajax_id=" + req.headers.ajax_id);
         if (data) {
             this.logit("getLinkData", "link_id=" + req.headers.link_id + " my_name="  + req.headers.my_name + " data={" + data + "}");
         }
