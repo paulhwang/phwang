@@ -260,7 +260,7 @@ function ExpressHttpObject(root_object_val) {
     };
 
     this.putLinkData = function (req, res) {
-        this.debug(true, "putLinkData", "link_id=" + req.headers.link_id + " my_name=" + req.headers.my_name + " ajax_id=" + req.headers.ajax_id);
+        this.debug(true, "putLinkData", "link_id=" + req.headers.link_id + " my_name=" + req.headers.my_name + " data=" + req.headers.data);
 
         var my_link = this.getLink(req, res);
         if (!my_link) {
@@ -268,15 +268,9 @@ function ExpressHttpObject(root_object_val) {
         }
         my_link.resetKeepAliveTimer();
 
-        var data = "hello put link data";
-        var json_str = JSON.stringify({
-                        command: req.headers.command,
-                        ajax_id: req.headers.ajax_id,
-                        data: data,
-                    });
+        this.logit("putLinkData", req.headers.data);
+        var data = JSON.parse(req.headers.data);
 
-        this.debug(false, "putLinkData", "ajax_id=" + req.headers.ajax_id);
-        //logit("putLinkData", "link_id=" + req.headers.link_id + " my_name="  + req.headers.my_name + " data={" + data + "}");
         res.type('application/json');
         res.send(json_str);
     };

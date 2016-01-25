@@ -60,6 +60,10 @@ function SessionMgrObject(root_object_val) {
         return this.theSessionQueue;
     };
 
+    this.preSessionQueue = function () {
+        return this.thePreSessionQueue;
+    };
+
     this.poolHead = function () {
         return this.thePoolHead;
     };
@@ -165,6 +169,7 @@ function SessionMgrObject(root_object_val) {
 
     this.theSessionModule = require("./session_entry_module.js");
     this.theSessionQueue = this.queueModule().malloc();
+    this.thePreSessionQueue = this.queueModule().malloc();
     this.theGlobalSessionId = 1000;
     this.thePoolHead = null;
     this.thePoolSize = 0;
