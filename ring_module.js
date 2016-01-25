@@ -16,18 +16,18 @@ module.exports = {
         ring.size = 2;
         ring.left = ring.size;
         ring.array = [ring.size];
-        return ring;
+        return ring1;
 
     },
 
     enqueue: function (ring_val, data_val) {
-        enQueue(ring_val, data_val);
+        //enQueue(ring_val, data_val);
         ring1.enQueue(data_val);
     },
 
     dequeue: function (ring_val) {
-        ring1.deQueue();
-        return deQueue(ring_val);
+        return ring1.deQueue();
+        //return deQueue(ring_val);
     },
 };
 var ring1;
