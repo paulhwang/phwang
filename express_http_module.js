@@ -260,19 +260,13 @@ function ExpressHttpObject(root_object_val) {
     };
 
     this.putLinkData = function (req, res) {
-        this.debug(false, "putLinkData", "(" + req.headers.link_id + "," + req.headers.session_id + ") my_name=" + req.headers.my_name + "=>" + req.headers.his_name);
+        this.debug(true, "putLinkData", "link_id=" + req.headers.link_id + " my_name=" + req.headers.my_name + " ajax_id=" + req.headers.ajax_id);
 
         var my_link = this.getLink(req, res);
         if (!my_link) {
             return;
         }
         my_link.resetKeepAliveTimer();
-
-        var his_link = this.linkMgrObject().searchLink(req.headers.his_name, 0);
-        if (!his_link) {
-            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-            return;
-        }
 
         var data = "hello put link data";
         var json_str = JSON.stringify({
