@@ -368,15 +368,15 @@ function ExpressHttpObject(root_object_val) {
             return;
         }
 
-        if (queue.queue_size(session.receiveQueue()) === 0) {
+        if (session.receiveQueue().size() === 0) {
             this.debug(false, "getSessionData", "empty queue");
             res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
             return;
         }
 
         //logit("getSessionData", "queue_size=" + queue.queue_size(session.receiveQueue));
-        var data = queue.dequeue(session.receiveQueue());
-        var data1 = ring.dequeue(session.receiveRing());
+        var data = session.receiveQueue().deQueue();
+        var data1 = session.receiveRing().deQueue();
         if (data !== data1) {
             this.logit("*****Abend: getSessionData", "queue and ring not match");
         }
@@ -434,13 +434,13 @@ function ExpressHttpObject(root_object_val) {
         }
 
         if (xmt_seq === my_session.up_seq) {
-            queue.enqueue(his_session.receiveQueue(), req.headers.data);
-            ring.enqueue(his_session.receiveRing(), req.headers.data);
+            his_session.receiveQueue().enQueue(req.headers.data);
+            his_session.receiveRing().enQueue(req.headers.data);
             my_session.up_seq += 1;
         } else if (xmt_seq < my_session.up_seq) {
             if (xmt_seq === 0) {
-                queue.enqueue(his_session.receiveQueue(), req.headers.data);
-                ring.enqueue(his_session.receiveRing(), req.headers.data);
+                his_session.receiveQueue().enQueue(req.headers.data);
+                his_session.receiveRing().enQueue(req.headers.data);
                 my_session.up_seq = 1;
                 this.logit("putSessionData", req.headers.data + " post " + xmt_seq + " reset");
             } else {

@@ -6,23 +6,7 @@
 
 module.exports = {
     malloc: function () {
-        que = new QueueObject();
-        return que;
-    },
-
-    enqueue: function (queue_val, data_val) {
-        if (!queue_val) {
-            return;
-        }
-        queue_val.enQueue(data_val);
-    },
-
-    dequeue: function (queue_val) {
-        return queue_val.deQueue();
-    },
-
-    queue_size: function (queue_val) {
-        return queue_val.size;
+        return new QueueObject();
     },
 
     remove: function (queue_val, func_val, input_val1, input_val2, input_val3) {
