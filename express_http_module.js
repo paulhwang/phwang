@@ -268,8 +268,15 @@ function ExpressHttpObject(root_object_val) {
         }
         my_link.resetKeepAliveTimer();
 
-        this.logit("putLinkData", req.headers.data);
-        var data = JSON.parse(req.headers.data);
+        if (data.order === "setup_session_reply") {
+            var data_str = this.sessionMgrObject().preSessionQueue().unQueue(function(data_val, param_val1) {
+                return (data_val === param_val1);
+            }, req.headers.data);
+            if (data_str) {
+                var data = JSON.parse(req.headers.data);
+            }
+
+        }
 
         res.type('application/json');
         res.send(json_str);
@@ -321,7 +328,7 @@ function ExpressHttpObject(root_object_val) {
                         extra_data: req.headers.data,
                     });
         his_link.receiveQueue().enQueue(data);
-
+        this.sessionMgrObject().preSessionQueue().enQueue(data)
         this.setupSessionReply(req, res, session);
     }
 

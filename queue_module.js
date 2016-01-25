@@ -130,14 +130,14 @@ function QueueObject () {
         return data;
     };
 
-    this.removeElement = function (func_val, input_val1, input_val2, input_val3) {
+    this.unQueue = function (func_val, input_val1, input_val2, input_val3) {
         this.abendIt();
 
         var p = this.head();
         while (p) {
-            this.debug(false, "removeElement", "in while loop");
+            this.debug(false, "unQueue", "in while loop");
             if (func_val(p.data(), input_val1, input_val2, input_val3)) {
-                this.debug(false, "removeElement", "found");
+                this.debug(false, "unQueue", "found");
                 if (p.prev()) {
                     p.prev().setNext(p.next());
                 } else {
@@ -149,12 +149,12 @@ function QueueObject () {
                     this.setTail(p.prev());
                 }
                 this.decrementSize();
-                return;
+                return p;
             }
             p = p.next();
         }
         this.abendIt();
-        this.debug(false, "removeElement", "not found");
+        this.debug(false, "unQueue", "not found");
     };
 
     this.searchIt = function (func_val, input_val1, input_val2, input_val3) {
