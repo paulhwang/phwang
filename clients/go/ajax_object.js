@@ -113,6 +113,14 @@ function AjaxObject(root_object_val) {
         return this.theHttpPostRequest;
     };
 
+    this.packetId = function () {
+        return this.thePacketId;
+    };
+
+    this.incrementPacketId = function () {
+        this.thePacketId += 1;
+    };
+
     this.formJsonString = function (msg_val, session_val) {
         var s = JSON.stringify({
             his_name: session_val.hisName(),
@@ -179,6 +187,9 @@ function AjaxObject(root_object_val) {
             request_val.setRequestHeader(header[i].type, header[i].value);
             i += 1;
         }
+        request_val.setRequestHeader("packet_id", this.packetId());
+        this.incrementPacketId();
+
         request_val.send(null);
         this.incrementOustandingRequestCount();
     };
@@ -233,7 +244,7 @@ function AjaxObject(root_object_val) {
     };
 
     this.getLinkData = function (ajax_id_val) {
-        this.debug(false, "getLinkData", "ajax_id=" + ajax_id_val + " sessionId=" + this.rootObject().linkId());
+        this.debug(false, "getLinkData", "ajax_id=" + ajax_id_val + " LinkId=" + this.rootObject().linkId());
         var ajax = {
             command: this.ajaxGetLinkDataCommand(),
             header: [{type: "ajax_id", value: ajax_id_val},
@@ -332,6 +343,7 @@ function AjaxObject(root_object_val) {
         return this.utilObject().utilLogit(this.objectName() + "." + str1_val, str2_val);
     };
 
+    this.thePacketId = 1;
     this.theOustandingRequestCount = 0;
     this.theCallbackIndex = 0;
     this.theCallbackArray = [];
