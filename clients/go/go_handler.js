@@ -15,6 +15,10 @@ function GoHandlerObject(container_val) {
         return this.theContainerObject;
     };
 
+    this.boardObject = function () {
+        return this.containerObject().boardObject();
+    };
+
     this.gameObject = function () {
         return this.containerObject().gameObject();
     };
@@ -33,6 +37,19 @@ function GoHandlerObject(container_val) {
         var move = new GoMoveObject(str_val, 0, 0, 0, 0, this.containerObject());
         this.gameObject().addNewMoveAndFight(move);
         this.uiObject().drawBoard(this.engineObject());
+    };
+
+    this.updataBoard = function (str_val) {
+        //this.goLog("aMoveIsPlayed", str_val);
+        var board = new GoBoardObject(this.containerObject());
+        board.decodeBoard(str_val);
+        this.boardObject().compareBoards(board);
+        this.uiObject().drawBoard(this.engineObject());
+    };
+
+    this.boardUpdate = function (str_val) {
+        this.goLog("boardUpdate", str_val);
+
     };
 
     this.aSpecialMoveIsPlayed = function (special_str) {

@@ -184,6 +184,7 @@ function GoGameObject(container_val, str_val) {
 
         this.insertMoveToMoveList(move_val);
         this.engineObject().enterWar(move_val);
+        this.portObject().thansmitBoardData(this.boardObject());
         this.setNextColor(GO.getOppositeColor(move_val.myColor()));
     };
 

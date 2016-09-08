@@ -14,6 +14,7 @@ function GoPortObject(container_val) {
     this.GO_PROTOCOL_CODE_CONFIRM = "Confirm";
     this.GO_PROTOCOL_CODE_MOVE_DATA = "Move   ";
     this.GO_PROTOCOL_CODE_SPECIAL_MOVE = "Special";
+    this.GO_PROTOCOL_CODE_BOARD_DATA = "Board  ";
 
     this.objectName = function () {
         return this.theObjectName;
@@ -76,6 +77,12 @@ function GoPortObject(container_val) {
         this.transmitStringData(data);
     };
 
+    this.thansmitBoardData = function (board_val) {
+        //this.goLog("transmitBoardData", "data=" + board_val);
+        var data = this.GO_PROTOCOL_CODE_BOARD_DATA + board_val.encodeBoard();
+        this.transmitStringData(data);
+    };
+
     this.transmitStringData = function (str_val) {
         this.sessionObject().transmitQueue().enQueue(str_val);
         this.sessionMgrObject().transmitData();
@@ -98,6 +105,12 @@ function GoPortObject(container_val) {
             this.GoHandlerObject().aMoveIsPlayed(data);
             return;
         }
+
+        if (code == this.GO_PROTOCOL_CODE_BOARD_DATA) {
+            this.GoHandlerObject().updataBoard(data);
+            return;
+        }
+
         if (code == this.GO_PROTOCOL_CODE_SPECIAL_MOVE) {
             this.GoHandlerObject().aSpecialMoveIsPlayed(data);
             return;
