@@ -210,7 +210,7 @@ function GoUiObject(container_val) {
             //GO.goLog("GoUiObject.uiMouseMove--", this.canvasId_() + "(" + x + "," + y + ")");
             this.setLastMouseX(x);
             this.setLastMouseY(y);
-            this.drawBoard(this.engineObject());
+            this.drawBoard();
         }
     };
 
