@@ -85,6 +85,56 @@ function GoBoardObject(container_val) {
         return this.containerObject().goLog(this.objectName() + "." + str1_val, str2_val);
     };
 
+    this.encodeBoard = function () {
+        var buf = "";
+        var i, j;
+
+        i = 0;
+        while (i < this.boardSize()) {
+            j = 0;
+            while (j < this.boardSize()) {
+                buf = buf + this.theBoardArray[i][j];
+                j += 1;
+            }
+            i += 1;
+        }
+        this.logit("encodeBoard", "data=" + buf);
+        return buf;
+    };
+
+    this.decodeBoard = function (str_val) {
+        this.logit("decodeBoard", "input=" + str_val);
+        var index = 0;
+        var i, j;
+
+        i = 0;
+        while (i < this.boardSize()) {
+            j = 0;
+            while (j < this.boardSize()) {
+                this.theBoardArray[i][j] = str_val.charAt(index++) - '0';
+                j += 1;
+            }
+            i += 1;
+        }
+    };
+
+    this.compareBoards = function (board_val) {
+        var i, j;
+
+        i = 0;
+        while (i < this.boardSize()) {
+            j = 0;
+            while (j < this.boardSize()) {
+                if (this.theBoardArray[i][j] !== board_val.theBoardArray[i][j]) {
+                    this.abend("compareBoards", "(" + i + "," + j + ")");
+                }
+                j += 1;
+            }
+            i += 1;
+        }
+    };
+
+
     this.resetMarkedBoardObjectData = function () {
         var i, j;
 
