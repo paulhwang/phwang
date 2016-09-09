@@ -1,35 +1,40 @@
 /*
  * Copyrights phwang
  * Written by Paul Hwang
- * File name: container_module.js
+ * File name: topic_module.js
  */
 
 module.exports = {
     malloc: function (session_val) {
-        return new containerObject(session_val);
+        return new topicObject(session_val);
     },
 };
 
-function containerObject (session_val) {
+function topicObject (session_val) {
     "use strict";
     this.theUtilModule = require("./util_module.js");
     this.theGoContainerModule = require("./go_game/go_container_module.js")
-    this.theMySession = session_val;
+
+    this.theSessionObject = session_val;
 
     this.objectName = function () {
-        return "containerObject";
+        return "topicObject";
     };
 
     this.utilModule = function () {
         return this.theUtilModule;
     };
 
-    this.mySession = function () {
-        return this.theMySession;
-    };
-
     this.goContainerModule = function () {
         return this.theGoContainerModule;
+    };
+
+    this.sessionObject = function () {
+        return this.theSessionObject;
+    };
+
+    this.goContainerObject = function () {
+        return this.theGoContainerObject;
     };
 
     this.debug = function (debug_val, str1_val, str2_val) {
@@ -48,5 +53,5 @@ function containerObject (session_val) {
 
     this.logit(this.objectName(), "aaa");
 
-    this.theGoContainer = this.goContainerModule().malloc(this);
+    this.theGoContainerObject = this.goContainerModule().malloc(this);
 }

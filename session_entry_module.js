@@ -16,6 +16,7 @@ function SessionEntryObject() {
     "use strict";
     this.theQueueModule = require("./queue_module.js");
     this.theRingModule = require("./ring_module.js");
+    this.theTopicModule = require("./topic_module.js");
 
     this.objectName = function () {
         return "SessionEntryObject";
@@ -31,6 +32,10 @@ function SessionEntryObject() {
 
     this.ringModule = function () {
         return this.theRingModule;
+    };
+
+    this.topicModule = function () {
+        return this.theTopicModule;
     };
 
     this.sessionId = function () {
@@ -73,6 +78,10 @@ function SessionEntryObject() {
         return this.theReceiveRing;
     };
 
+    this.topicObject = function () {
+        return this.theTopicObject;
+    };
+
     this.resetIt = function (my_name_val, his_name_val, session_id_val) {
         this.theSessionId = session_id_val;
         this.theMyName = my_name_val;
@@ -82,6 +91,7 @@ function SessionEntryObject() {
         this.down_seq = 0;
         this.theReceiveQueue = this.queueModule().malloc();
         this.theReceiveRing = this.ringModule().malloc();
+        this.theTopicObject = this.topicModule().malloc(this);
     };
 
     this.debug = function (debug_val, str1_val, str2_val) {
