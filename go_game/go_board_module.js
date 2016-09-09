@@ -22,6 +22,10 @@ function GoBoardObject(container_val) {
         return this.theContainerObject;
     };
 
+    this.GO = function () {
+        return this.containerObject().GO();
+    };
+
     this.configObject = function () {
         return this.containerObject().configObject();
     };
@@ -47,7 +51,7 @@ function GoBoardObject(container_val) {
     };
 
     this.addStoneToBoard = function (x_val, y_val, color_val) {
-        if (!GO.isValidCoordinates(x_val, y_val, this.configObject().boardSize())) {
+        if (!this.GO().isValidCoordinates(x_val, y_val, this.configObject().boardSize())) {
             this.goAbend("addStoneToBoard", "x=" + x_val + " y=" + y_val);
             return;
         }
@@ -70,14 +74,14 @@ function GoBoardObject(container_val) {
             return;
         }
 
-        this.setMarkedBoardArray(x_val, y_val, GO.EMPTY_STONE());
+        this.setMarkedBoardArray(x_val, y_val, this.GO().EMPTY_STONE());
     };
 
     this.isEmptySpace = function (x_val, y_val) {
-        if (!GO.isValidCoordinates(x_val, y_val, this.configObject().boardSize())) {
+        if (!this.GO().isValidCoordinates(x_val, y_val, this.configObject().boardSize())) {
             return false;
         }
-        if (this.boardArray(x_val, y_val) !== GO.EMPTY_STONE()) {
+        if (this.boardArray(x_val, y_val) !== this.GO().EMPTY_STONE()) {
             return false;
         }
         return true;
@@ -148,7 +152,7 @@ function GoBoardObject(container_val) {
         while (i < this.boardSize()) {
             j = 0;
             while (j < this.boardSize()) {
-                this.setMarkedBoardArray(i, j, GO.EMPTY_STONE());
+                this.setMarkedBoardArray(i, j, this.GO().EMPTY_STONE());
                 j += 1;
             }
             i += 1;
@@ -163,7 +167,7 @@ function GoBoardObject(container_val) {
         while (i < this.boardSize()) {
             j = 0;
             while (j < this.boardSize()) {
-                this.setBoardArray(i, j, GO.EMPTY_STONE());
+                this.setBoardArray(i, j, this.GO().EMPTY_STONE());
                 j += 1;
             }
             i += 1;

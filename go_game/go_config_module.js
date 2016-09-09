@@ -146,4 +146,6 @@ function GoConfigObject(container_val) {
     this.logit = function (str1_val, str2_val) {
         return this.containerObject().goLog(this.objectName() + "." + str1_val, str2_val);
     };
+
+    this.theBoardSize = 19;
 }

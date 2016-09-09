@@ -212,7 +212,7 @@ function GoGameObject(container_val, str_val) {
         this.insertMoveToMoveList(move_val);
         this.engineObject().enterWar(move_val);
         this.portObject().thansmitBoardData(this.boardObject());
-        this.setNextColor(GO.getOppositeColor(move_val.myColor()));
+        this.setNextColor(this.GO().getOppositeColor(move_val.myColor()));
     };
 
     this.addNewMoveWithoutFight = function (x_val, y_val, color_val, turn_val) {
@@ -220,7 +220,7 @@ function GoGameObject(container_val, str_val) {
             this.goAbend("addNewMoveWithoutFight", "turn=" + turn_val + " " + this.totalMoves());
         }
 
-        var move = new GoMoveObject(null, x_val, y_val, color_val, this.totalMoves(), this.containerObject());
+        var move = this.moveModule.malloc(null, x_val, y_val, color_val, this.totalMoves(), this.containerObject());
         this.insertMoveToMoveList(move);
     };
 

@@ -1,12 +1,18 @@
 /*
  * Copyrights phwang
  * Written by Paul Hwang
- * File name: go_group.js
+ * File name: go_group_module.js
  */
 
+module.exports = {
+    malloc: function (group_list_val) {
+        return new GoGroupObject(group_list_val);
+    },
+};
 
 function GoGroupObject(group_list_val) {
     "use strict";
+
     this.objectName = function () {
     return this.theObjectName;
     };
@@ -21,6 +27,10 @@ function GoGroupObject(group_list_val) {
 
     this.containerObject = function () {
         return this.groupListObject().containerObject();
+    };
+
+    this.GO = function () {
+        return this.containerObject().GO();
     };
 
     this.engineObject = function () {
@@ -531,9 +541,9 @@ function GoGroupObject(group_list_val) {
     this.theGroupListObject = group_list_val;
     this.theIndexNumber = this.groupListObject().groupCount();
     this.theMyColor = this.groupListObject().myColor();
-    this.theHisColor = (this.myColor() === GO.EMPTY_STONE())
-        ? GO.EMPTY_STONE()
-        : GO.getOppositeColor(this.myColor());
+    this.theHisColor = (this.myColor() === this.GO().EMPTY_STONE())
+        ? this.GO().EMPTY_STONE()
+        : this.GO().getOppositeColor(this.myColor());
     this.theStoneCount = 0;
     this.theExistMatrix = this.createMatrix(this.boardSize());
     this.theDeadMatrix = this.createMatrix(this.boardSize());

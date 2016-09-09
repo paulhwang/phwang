@@ -380,6 +380,10 @@ function ExpressHttpObject(root_object_val) {
             return;
         }
 
+        //session.topicObject().receiveStringData(data);
+        //var res_data = session.transmitQueue().deQueue();
+        //this.logit("getSessionData", "res_data=" + res_data);
+
         var json_str = JSON.stringify({
                         command: req.headers.command,
                         ajax_id: req.headers.ajax_id,

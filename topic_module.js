@@ -1,7 +1,7 @@
 /*
  * Copyrights phwang
  * Written by Paul Hwang
- * File name: topic_module.js
+ * File name: go_topic_module.js
  */
 
 module.exports = {
@@ -49,6 +49,10 @@ function topicObject (session_val) {
 
     this.logit = function (str1_val, str2_val) {
         this.utilModule().logit(this.objectName() + "." + str1_val, str2_val);
+    };
+
+    this.receiveStringData = function (str_val) {
+        this.goContainerObject().portObject().receiveStringData(str_val);
     };
 
     this.logit(this.objectName(), "aaa");

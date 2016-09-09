@@ -5,8 +5,8 @@
  */
 
 module.exports = {
-    malloc: function (container_val) {
-        return new goContainerObject(container_val);
+    malloc: function (topic_object_val) {
+        return new goContainerObject(topic_object_val);
     },
 };
 
@@ -19,6 +19,9 @@ function goContainerObject (topic_object_val) {
     this.theGameModule = require("./go_game_module.js");
     this.theEngineModule = require("./go_engine_module.js");
     this.theBoardModule = require("./go_board_module.js");
+    this.theHandlerModule = require("./go_handler_module.js");
+    this.thePortModule = require("./go_port_module.js");
+    this.theGoDefineModule = require("./go_define_module.js");
 
     this.theTopicObject = topic_object_val;
     //this.theSessionObject.setContainerObject(this);
@@ -33,6 +36,10 @@ function goContainerObject (topic_object_val) {
 
     this.topicModule = function () {
         return this.theTopicModule;
+    };
+
+    this.GO = function () {
+        return this.theGoDefineModule;
     };
 
     this.sessionModule = function () {
@@ -55,20 +62,24 @@ function goContainerObject (topic_object_val) {
         return this.theBoardModule;
     };
 
+    this.handlerModule = function () {
+        return this.theHandlerModule;
+    };
+
+    this.portModule = function () {
+        return this.thePortModule;
+    };
+
     this.topicObject = function () {
         return this.theTopicObject;
     };
 
     this.sessionObject = function () {
-        return this.containerObject().sessionObject();
+        return this.topicObject().sessionObject();
     };
 
     this.rootObject = function () {
         return this.sessionObject().rootObject();
-    };
-
-    this.sessionObject = function () {
-        return this.theSessionObject;
     };
 
     this.configObject = function () {
@@ -140,11 +151,11 @@ function goContainerObject (topic_object_val) {
     };
 
     this.goLog = function (s1_val, s2_val) {
-        this.utilObject().utilLogit(this.sessionObject().sessionId() + s1_val, s2_val);
+        this.utilModule().utilLogit(this.sessionObject().sessionId() + s1_val, s2_val);
     };
 
     this.goAbend = function (s1_val, s2_val) {
-        this.utilObject().utilAbend(this.sessionObject().sessionId() + s1_val, s2_val);
+        this.utilModule().utilAbend(this.sessionObject().sessionId() + s1_val, s2_val);
     };
 
     this.startGoGame = function () {
@@ -197,8 +208,8 @@ function goContainerObject (topic_object_val) {
     this.theBoardObject = this.boardModule().malloc(this);
     this.theEngineObject = this.engineModule().malloc(this);
     this.theGameObject = this.gameModule().malloc(this);
-    //this.theHandlerObject = new GoHandlerObject(this);
-    //this.thePortObject = new GoPortObject(this);
+    this.theHandlerObject = this.handlerModule().malloc(this);
+    this.thePortObject = this.portModule().malloc(this);
 }
 
 var GO = new GoDefineObject;

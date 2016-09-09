@@ -117,7 +117,7 @@ function SessionMgrObject(root_object_val) {
         var entry;
 
         if (!this.poolHead()) {
-            entry = this.sessionModule().malloc(my_name_val, his_name_val, this.globalSessionId());
+            entry = this.sessionModule().malloc(this, my_name_val, his_name_val, this.globalSessionId());
         } else {
             entry = this.poolHead();
             entry.resetIt(my_name_val, his_name_val, this.globalSessionId());

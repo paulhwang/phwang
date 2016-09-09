@@ -5,9 +5,9 @@
  */
 
 module.exports = {
-    malloc: function (my_name_val, his_name_val, session_id_val) {
+    malloc: function (session_mgr_val, my_name_val, his_name_val, session_id_val) {
         session = new SessionEntryObject();
-        session.resetIt(my_name_val, his_name_val, session_id_val);
+        session.resetIt(session_mgr_val, my_name_val, his_name_val, session_id_val);
         return session;
     },
 };
@@ -74,6 +74,10 @@ function SessionEntryObject() {
         return this.theReceiveQueue;
     };
 
+    this.transmitQueue = function () {
+        return this.theTransmitQueue;
+    };
+
     this.receiveRing = function () {
         return this.theReceiveRing;
     };
@@ -82,7 +86,12 @@ function SessionEntryObject() {
         return this.theTopicObject;
     };
 
-    this.resetIt = function (my_name_val, his_name_val, session_id_val) {
+    this.sessionMgrObject = function () {
+        return this.theSessionMgrObject;
+    };
+
+    this.resetIt = function (session_mgr_val, my_name_val, his_name_val, session_id_val) {
+        this.theSessionMgrObject = session_mgr_val;
         this.theSessionId = session_id_val;
         this.theMyName = my_name_val;
         this.theHisName = his_name_val;
@@ -90,6 +99,7 @@ function SessionEntryObject() {
         this.up_seq = 0;
         this.down_seq = 0;
         this.theReceiveQueue = this.queueModule().malloc();
+        this.theTransmitQueue = this.queueModule().malloc();
         this.theReceiveRing = this.ringModule().malloc();
         this.theTopicObject = this.topicModule().malloc(this);
     };

@@ -1,14 +1,30 @@
 /*
  * Copyrights phwang
  * Written by Paul Hwang
- * File name: go_handler.js
+ * File name: go_handler_module.js
  */
 
-"use strict";
+module.exports = {
+    malloc: function (container_val) {
+        return new GoHandlerObject(container_val);
+    },
+};
 
 function GoHandlerObject(container_val) {
+    "use strict";
+    this.theUtilModule = require("./../util_module.js");
+    //this.theGoContainerModule = require("./go_container_module.js")
+    this.theGoMoveModule = require("./go_move_module.js")
+
+    this.theObjectName = "GoHandlerObject";
+    this.theContainerObject = container_val;
+
     this.objectName = function () {
         return this.theObjectName;
+    };
+
+    this.moveModule = function () {
+        return this.theGoMoveModule;
     };
 
     this.containerObject = function () {
@@ -34,9 +50,9 @@ function GoHandlerObject(container_val) {
     this.aMoveIsPlayed = function (str_val) {
         //this.goLog("aMoveIsPlayed", str_val);
         this.gameObject().decrementOutstandingUiClick();
-        var move = new GoMoveObject(str_val, 0, 0, 0, 0, this.containerObject());
+        var move = this.moveModule().malloc(str_val, 0, 0, 0, 0, this.containerObject());
         this.gameObject().addNewMoveAndFight(move);
-        this.uiObject().drawBoard(this.engineObject());
+        ////////////////////////this.uiObject().drawBoard(this.engineObject());
     };
 
     this.updataBoard = function (str_val) {
@@ -65,8 +81,5 @@ function GoHandlerObject(container_val) {
     this.goLog = function (str1_val, str2_val) {
         return this.containerObject().goLog(this.objectName() + "." + str1_val, str2_val);
     };
-
-    this.theObjectName = "GoHandlerObject";
-    this.theContainerObject = container_val;
 }
 

@@ -5,16 +5,28 @@
  */
 
 module.exports = {
-    malloc: function (container_val) {
-        return new goContainerObject(container_val);
+    malloc: function (str_val, x_val, y_val, color_val, turn_val, container_val) {
+        return new GoMoveObject(str_val, x_val, y_val, color_val, turn_val, container_val);
     },
 };
 
-"use strict";
-
 function GoMoveObject(str_val, x_val, y_val, color_val, turn_val, container_val) {
+    "use strict";
+
     this.objectName = function () {
         return this.theObjectName;
+    };
+
+    this.utilModule = function () {
+        return this.theUtilModule;
+    };
+
+    this.GO = function () {
+        return this.theGoDefineModule;
+    };
+
+    this.containerModule = function () {
+        return this.theContainerModule;
     };
 
     this.containerObject = function () {

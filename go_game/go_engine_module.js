@@ -16,6 +16,7 @@ function GoEngineObject(container_object_val) {
     this.theGoDefineModule = require("./go_define_module.js");
     this.theContainerModule = require("./go_container_module.js");
     this.theGroupListModule = require("./go_group_list_module.js");
+    this.theGroupModule = require("./go_group_module.js");
 
 
     this.objectName = function () {
@@ -36,6 +37,10 @@ function GoEngineObject(container_object_val) {
 
     this.groupListModule = function () {
         return this.theGroupListModule;
+    };
+
+    this.groupModule = function () {
+        return this.theGroupModule;
     };
 
     this.containerObject = function () {
@@ -215,9 +220,9 @@ function GoEngineObject(container_object_val) {
     this.insertStoneToGroupList = function (move_val) {
         var g_list;
 
-        if (move_val.myColor() === GO.BLACK_STONE()) {
+        if (move_val.myColor() === this.GO().BLACK_STONE()) {
             g_list = this.blackGroupList();
-        } else if (move_val.myColor() === GO.WHITE_STONE()) {
+        } else if (move_val.myColor() === this.GO().WHITE_STONE()) {
             g_list = this.whiteGroupList();
         } else {
             this.goAbend("insertStoneToGroupList", "color=" + move_val.myColor());
@@ -225,7 +230,7 @@ function GoEngineObject(container_object_val) {
 
         var group = g_list.findCandidateGroup(move_val.xX(), move_val.yY());
         if (!group) {
-            group = new GoGroupObject(g_list);
+            group = this.groupModule().malloc(g_list);
             group.insertStoneToGroup(move_val.xX(), move_val.yY(), false);
             g_list.insertGroupToGroupList(group);
             //g_list.printGroupList();

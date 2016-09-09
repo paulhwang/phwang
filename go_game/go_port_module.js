@@ -47,7 +47,7 @@ function GoPortObject(container_val) {
     };
 
     this.sessionMgrObject = function () {
-        return this.rootObject().sessionMgrObject();
+        return this.sessionObject().sessionMgrObject();
     };
 
     this.configObject = function () {
@@ -95,7 +95,7 @@ function GoPortObject(container_val) {
 
     this.transmitStringData = function (str_val) {
         this.sessionObject().transmitQueue().enQueue(str_val);
-        this.sessionMgrObject().transmitData();
+        //this.sessionMgrObject().transmitData();
     };
 
     this.receiveStringData = function (str_val) {
