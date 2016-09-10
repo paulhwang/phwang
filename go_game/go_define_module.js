@@ -17,7 +17,7 @@ module.exports = {
 
     EMPTY_STONE: function () {return theDefineObject.EMPTY_STONE();},
     BLACK_STONE: function () {return theDefineObject.BLACK_STONE();},
-    WHITE_STONE: function () {return theDefineObject.WHITE_STONE;},
+    WHITE_STONE: function () {return theDefineObject.WHITE_STONE();},
     BOTH_COLOR_STONE: function () {return theDefineObject.BOTH_COLOR_STONE();},
     MARK_DEAD_STONE_DIFF: function () {return theDefineObject.MARK_DEAD_STONE_DIFF();},
     MARK_EMPTY_STONE_DIFF: function () {return theDefineObject.MARK_EMPTY_STONE_DIFF();},
