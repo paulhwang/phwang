@@ -170,7 +170,7 @@ function GoGroupObject(group_list_val) {
             while (j <=  this.maxY()) {
                 if (this.existMatrix(i, j)) {
                     //GO.goLog("GoGroupObject.isCandidateGroup", "(" + x_val + "," + y_val + ") (" + i + "," + j + ")");
-                    if (GO.isNeighborStone(i, j, x_val, y_val)) {
+                    if (this.GO().isNeighborStone(i, j, x_val, y_val)) {
                         return true;
                     }
                 }

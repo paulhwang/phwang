@@ -232,42 +232,42 @@ function GoGameObject(container_val, str_val) {
 
     this.receiveSpecialMoveFromOpponent = function (data_val) {
         this.goLog("receiveSpecialMoveFromOpponent", data_val);
-        if (data_val === GO.FORWARD_MOVE()) {
+        if (data_val === this.GO().FORWARD_MOVE()) {
             this.processForwardMove();
             return;
         }
-        if (data_val === GO.DOUBLE_FORWARD_MOVE()) {
+        if (data_val === this.GO().DOUBLE_FORWARD_MOVE()) {
             this.processDoubleForwardMove();
             return;
         }
-        if (data_val === GO.BACKWARD_MOVE()) {
+        if (data_val === this.GO().BACKWARD_MOVE()) {
             this.processBackwardMove();
             return;
         }
-        if (data_val === GO.DOUBLE_BACKWARD_MOVE()) {
+        if (data_val === this.GO().DOUBLE_BACKWARD_MOVE()) {
             this.processDoubleBackwardMove();
             return;
         }
-        if (data_val === GO.PASS_MOVE()) {
+        if (data_val === this.GO().PASS_MOVE()) {
             if (!this.passReceived()) {
                 this.setPassReceived(true);
                 this.processPassMove();
             }
             return;
         }
-        if (data_val === GO.RESIGN_MOVE()) {
+        if (data_val === this.GO().RESIGN_MOVE()) {
             this.processResignMove();
             return;
         }
-        if (data_val === GO.BACK_TO_PLAY_MOVE()) {
+        if (data_val === this.GO().BACK_TO_PLAY_MOVE()) {
             this.processBackToPlayMove();
             return;
         }
-        if (data_val === GO.CONFIRM_MOVE()) {
+        if (data_val === this.GO().CONFIRM_MOVE()) {
             this.processConfirmMove();
             return;
         }
-        if (data_val === GO.PLAY_ANOTHER_GAME_MOVE()) {
+        if (data_val === this.GO().PLAY_ANOTHER_GAME_MOVE()) {
             this.processPlayAnotherGameMove();
             return;
         }
