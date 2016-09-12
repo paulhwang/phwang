@@ -60,7 +60,7 @@ function GoBoardObject(container_val) {
     };
 
     this.addStoneToMarkedBoard = function (x_val, y_val, color_val) {
-        if (!GO.isValidCoordinates(x_val, y_val, this.configObject().boardSize())) {
+        if (!this.GO().isValidCoordinates(x_val, y_val, this.configObject().boardSize())) {
             this.goAbend("addStoneToMarkedBoard", "x=" + x_val + " y=" + y_val);
             return;
         }
@@ -69,7 +69,7 @@ function GoBoardObject(container_val) {
     };
 
     this.removeStoneFromMarkedBoard = function (x_val, y_val) {
-        if (!GO.isValidCoordinates(x_val, y_val, this.configObject().boardSize())) {
+        if (!this.GO().isValidCoordinates(x_val, y_val, this.configObject().boardSize())) {
             this.goAbend("addStoneToMarkedBoard", "x=" + x_val + " y=" + y_val);
             return;
         }

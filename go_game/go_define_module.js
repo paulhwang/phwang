@@ -5,15 +5,15 @@
  */
 
 module.exports = {
-    FORWARD_MOVE: function () {return this.FORWARD_MOVE();},
-    BACKWARD_MOVE: function () {return this.BACKWARD_MOVE();},
-    DOUBLE_FORWARD_MOVE: function () {return this.DOUBLE_FORWARD_MOVE();},
-    DOUBLE_BACKWARD_MOVE: function () {return this.DOUBLE_BACKWARD_MOVE();},
-    PASS_MOVE: function () {return this.PASS_MOVE();},
-    RESIGN_MOVE: function () {return this.RESIGN_MOVE();},
-    BACK_TO_PLAY_MOVE: function () {return this.BACK_TO_PLAY_MOVE();},
-    CONFIRM_MOVE: function () {return this.CONFIRM_MOVE();},
-    PLAY_ANOTHER_GAME_MOVE: function () {return this.PLAY_ANOTHER_GAME_MOVE();},
+    FORWARD_MOVE: function () {return theDefineObject.FORWARD_MOVE();},
+    BACKWARD_MOVE: function () {return theDefineObject.BACKWARD_MOVE();},
+    DOUBLE_FORWARD_MOVE: function () {return theDefineObject.DOUBLE_FORWARD_MOVE();},
+    DOUBLE_BACKWARD_MOVE: function () {return theDefineObject.DOUBLE_BACKWARD_MOVE();},
+    PASS_MOVE: function () {return theDefineObject.PASS_MOVE();},
+    RESIGN_MOVE: function () {return theDefineObject.RESIGN_MOVE();},
+    BACK_TO_PLAY_MOVE: function () {return theDefineObject.BACK_TO_PLAY_MOVE();},
+    CONFIRM_MOVE: function () {return theDefineObject.CONFIRM_MOVE();},
+    PLAY_ANOTHER_GAME_MOVE: function () {return theDefineObject.PLAY_ANOTHER_GAME_MOVE();},
 
     EMPTY_STONE: function () {return theDefineObject.EMPTY_STONE();},
     BLACK_STONE: function () {return theDefineObject.BLACK_STONE();},
@@ -32,7 +32,7 @@ module.exports = {
     },
 
     isNeighborStone: function (x1_val, y1_val, x2_val, y2_val) {
-    	return theDefineObject.getOppositeColor(x1_val, y1_val, x2_val, y2_val);
+        return theDefineObject.isNeighborStone(x1_val, y1_val, x2_val, y2_val);
     },
 
     isValidCoordinates: function (x_val, y_val, board_size_val) {
@@ -103,6 +103,7 @@ function GoDefineObject () {
 
     this.goAbend = function (s1_val, s2_val) {
         console.log("goAbend: " + s1_val + "() " + s2_val);
+        this.doCrash();
     };
 
     this.getOppositeColor = function (color_val) {

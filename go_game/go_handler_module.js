@@ -54,7 +54,7 @@ function GoHandlerObject(container_val) {
 
     this.aMoveIsPlayed = function (str_val) {
         //this.goLog("aMoveIsPlayed", str_val);
-        this.gameObject().decrementOutstandingUiClick();
+        //this.gameObject().decrementOutstandingUiClick();
         var move = this.moveModule().malloc(str_val, 0, 0, 0, 0, this.containerObject());
         this.gameObject().addNewMoveAndFight(move);
         ////////////////////////this.uiObject().drawBoard(this.engineObject());
@@ -65,7 +65,7 @@ function GoHandlerObject(container_val) {
         var board = this.boardModule().malloc(this.containerObject());
         board.decodeBoard(str_val);
         this.boardObject().compareBoards(board);
-        this.uiObject().drawBoard(this.engineObject());
+        //this.uiObject().drawBoard(this.engineObject());
     };
 
     this.boardUpdate = function (str_val) {
@@ -76,7 +76,7 @@ function GoHandlerObject(container_val) {
     this.aSpecialMoveIsPlayed = function (special_str) {
         //GO.goLog("GoHandlerObject.aSpecialMoveIsPlayed", special_str);
         this.gameObject().receiveSpecialMoveFromOpponent(special_str);
-        this.uiObject().drawBoard(this.engineObject());
+        //this.uiObject().drawBoard(this.engineObject());
     };
 
     this.goAbend = function (str1_val, str2_val) {

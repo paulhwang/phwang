@@ -200,15 +200,16 @@ function GoEngineObject(container_object_val) {
         var group = this.insertStoneToGroupList(move_val);
         this.boardObject().addStoneToBoard(move_val.xX(), move_val.yY(), move_val.myColor());
         var dead_count = this.killOtherColorGroups(move_val, group);
+        this.goLog("goEnterWar", "dead_count=" + dead_count);
 
         if (!group.groupHasAir()) {
             this.removeDeadGroup(group);
         }
 
         if (dead_count !== 0) {
-            if (move_val.myColor() === GO.BLACK_STONE()) {
+            if (move_val.myColor() === this.GO().BLACK_STONE()) {
                 this.addBlackCaptureStones(dead_count);
-            } else if (move_val.myColor() === GO.WHITE_STONE()) {
+            } else if (move_val.myColor() === this.GO().WHITE_STONE()) {
                this.addWhiteCaptureStones(dead_count);
             } else {
                 this.goAbend("enterWar", "color=" + move_val.myColor());
@@ -302,7 +303,7 @@ function GoEngineObject(container_object_val) {
 
     this.removeDeadGroup = function (group) {
         group.removeDeadStoneFromBoard();
-        if (group.myColor() === GO.BLACK_STONE()) {
+        if (group.myColor() === this.GO().BLACK_STONE()) {
             this.blackGroupList().removeOneDeadGroup(group);
         } else {
             this.whiteGroupList().removeOneDeadGroup(group);
@@ -326,7 +327,7 @@ function GoEngineObject(container_object_val) {
     };
 
     this.isValidMoveOnBoard = function (x_val, y_val) {
-        if (this.boardObject().boardArray(x_val, y_val) !== GO.EMPTY_STONE()) {
+        if (this.boardObject().boardArray(x_val, y_val) !== this.GO().EMPTY_STONE()) {
             return false;
         }
 
@@ -340,7 +341,7 @@ function GoEngineObject(container_object_val) {
     this.getGroupByCoordinate = function (x_val, y_val, color_val) {
         //goDebug("GoEngineObject.getGroupByCoordinate", color_val);
         var g_list;
-        if ((color_val === GO.BLACK_STONE()) || (color_val === GO.MARKED_DEAD_BLACK_STONE())) {
+        if ((color_val === this.GO().BLACK_STONE()) || (color_val === this.GO().MARKED_DEAD_BLACK_STONE())) {
             g_list = this.blackGroupList();
         } else {
             g_list = this.whiteGroupList();
@@ -377,7 +378,7 @@ function GoEngineObject(container_object_val) {
     };
 
     this.markDeadGroup = function (x_val, y_val) {
-        if (this.boardObject().boardArray(x_val, y_val) === GO.EMPTY_STONE()) {
+        if (this.boardObject().boardArray(x_val, y_val) === this.GO().EMPTY_STONE()) {
             return;
         }
 
@@ -526,7 +527,7 @@ function GoEngineObject(container_object_val) {
         this.resetEmptyGroupLists();
         for (i = 0; i < this.boardSize(); i++) {
             for (j = 0; j < this.boardSize(); j++) {
-                if (this.boardObject().boardArray(i, j) === GO.EMPTY_STONE()) {
+                if (this.boardObject().boardArray(i, j) === this.GO().EMPTY_STONE()) {
                     if (!this.emptyGroupList().stoneExistInGroupList(i, j)) {
                         this.emptyGroupList().insertStoneToEmptyGroupList(i, j, false);
                     }
@@ -553,12 +554,12 @@ function GoEngineObject(container_object_val) {
         while (i < this.emptyGroupList().groupCount()) {
             group = this.emptyGroupList().listArray(i);
             color = group.scoreOneEmptyGroup();
-            if (color === GO.BLACK_STONE()) {
+            if (color === this.GO().BLACK_STONE()) {
                 this.goLog("scoreEmptyGroups", "black");
                 this.emptyGroupList().removeGroupFromGroupList(group);
                 this.blackEmptyGroupList().insertGroupToGroupList(group);
 
-            } else if (color === GO.WHITE_STONE()) {
+            } else if (color === this.GO().WHITE_STONE()) {
                 this.goLog("scoreEmptyGroups", "white");
                 this.emptyGroupList().removeGroupFromGroupList(group);
                 this.whiteEmptyGroupList().insertGroupToGroupList(group);

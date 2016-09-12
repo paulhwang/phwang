@@ -122,10 +122,10 @@ function GoGameObject(container_val, str_val) {
     };
 
     this.reverseNextColor________ = function () {
-        if (this.nextColor_() === GO.BLACK_STONE_()) {
-            this.nextColor__(GO.WHITE_STONE_());
-        } else if (this.nextColor_() === GO.WHITE_STONE_()) {
-            this.nextColor__(GO.BLACK_STONE_());
+        if (this.nextColor_() === this.GO().BLACK_STONE_()) {
+            this.nextColor__(this.GO().WHITE_STONE_());
+        } else if (this.nextColor_() === this.GO().WHITE_STONE_()) {
+            this.nextColor__(this.GO().BLACK_STONE_());
         } else {
             this.goAbend("renewNextColor", "");
         }
@@ -278,7 +278,7 @@ function GoGameObject(container_val, str_val) {
         if (!this.configObject().playBothSides()) {
             this.processDoubleBackwardMove();
         }
-        this.portObject().transmitSpecialMoveData(GO.DOUBLE_BACKWARD_MOVE());
+        this.portObject().transmitSpecialMoveData(this.GO().DOUBLE_BACKWARD_MOVE());
     };
 
     this.processDoubleBackwardMove = function () {
@@ -296,7 +296,7 @@ function GoGameObject(container_val, str_val) {
         if (!this.configObject().playBothSides()) {
             this.processBackwardMove();
         }
-        this.portObject().transmitSpecialMoveData(GO.BACKWARD_MOVE());
+        this.portObject().transmitSpecialMoveData(this.GO().BACKWARD_MOVE());
     };
 
     this.processBackwardMove = function () {
@@ -313,7 +313,7 @@ function GoGameObject(container_val, str_val) {
         if (!this.configObject().playBothSides()) {
             this.processForwardMove();
         }
-        this.portObject().transmitSpecialMoveData(GO.FORWARD_MOVE());
+        this.portObject().transmitSpecialMoveData(this.GO().FORWARD_MOVE());
     };
 
     this.processForwardMove = function () {
@@ -333,7 +333,7 @@ function GoGameObject(container_val, str_val) {
         if (!this.configObject().playBothSides()) {
             this.processDoubleForwardMove();
         }
-        this.portObject().transmitSpecialMoveData(GO.DOUBLE_FORWARD_MOVE());
+        this.portObject().transmitSpecialMoveData(this.GO().DOUBLE_FORWARD_MOVE());
     };
 
     this.processDoubleForwardMove = function () {
@@ -355,11 +355,11 @@ function GoGameObject(container_val, str_val) {
             if (!this.passXmitted()) {
                 this.setPassXmitted(true);
                 this.processPassMove();
-                this.portObject().transmitSpecialMoveData(GO.PASS_MOVE());
+                this.portObject().transmitSpecialMoveData(this.GO().PASS_MOVE());
             }
         } else {
             if (!this.passReceived()) {
-                this.portObject().transmitSpecialMoveData(GO.PASS_MOVE());
+                this.portObject().transmitSpecialMoveData(this.GO().PASS_MOVE());
             } else {
                 if (!this.passXmitted()) {
                     this.setPassXmitted(true);
@@ -372,7 +372,7 @@ function GoGameObject(container_val, str_val) {
     this.processPassMove = function () {
         this.goLog(".processPassMove", "");
 
-        this.setNextColor(GO.getOppositeColor(this.nextColor()));
+        this.setNextColor(this.GO().getOppositeColor(this.nextColor()));
 
         if (this.gameIsOver()) {
             this.engineObject().resetMarkedGroupLists();
@@ -401,7 +401,7 @@ function GoGameObject(container_val, str_val) {
         if (!this.configObject().playBothSides()) {
             this.processConfirmMove();
         }
-        this.portObject().transmitSpecialMoveData(GO.CONFIRM_MOVE());
+        this.portObject().transmitSpecialMoveData(this.GO().CONFIRM_MOVE());
     };
 
     this.processConfirmMove = function () {
@@ -419,7 +419,7 @@ function GoGameObject(container_val, str_val) {
         if (!this.configObject().playBothSides()) {
             this.processResignMove();
         }
-        this.portObject().transmitSpecialMoveData(GO.RESIGN_MOVE());
+        this.portObject().transmitSpecialMoveData(this.GO().RESIGN_MOVE());
     };
 
     this.processResignMove = function () {
@@ -432,7 +432,7 @@ function GoGameObject(container_val, str_val) {
         if (!this.configObject().playBothSides()) {
             this.processResignMove();
         }
-        this.portObject().transmitSpecialMoveData(GO.PLAY_ANOTHER_GAME_MOVE());
+        this.portObject().transmitSpecialMoveData(this.GO().PLAY_ANOTHER_GAME_MOVE());
     };
 
     this.processPlayAnotherGameMove = function () {
@@ -445,7 +445,7 @@ function GoGameObject(container_val, str_val) {
         if (!this.configObject().playBothSides()) {
             this.processResignMove();
         }
-        this.portObject().transmitSpecialMoveData(GO.BACK_TO_PLAY_MOVE());
+        this.portObject().transmitSpecialMoveData(this.GO().BACK_TO_PLAY_MOVE());
     };
 
     this.processBackToPlayMove = function () {
@@ -467,7 +467,7 @@ function GoGameObject(container_val, str_val) {
         while (i < this.totalMoves()) {
             move = this.movesArray(i);
             this.engineObject().enterWar(move);
-            this.setNextColor(GO.getOppositeColor(move.myColor()));
+            this.setNextColor(this.GO().getOppositeColor(move.myColor()));
             i += 1;
         }
     };
@@ -486,9 +486,9 @@ function GoGameObject(container_val, str_val) {
     };
 
     this.initOutstandingUiClick = function () {
-        if (this.configObject().myColor() === GO.BLACK_STONE()) {
+        if (this.configObject().myColor() === this.GO().BLACK_STONE()) {
             this.theOutstandingUiClick = 0;
-        } else if (this.configObject().myColor() === GO.WHITE_STONE()) {
+        } else if (this.configObject().myColor() === this.GO().WHITE_STONE()) {
             this.theOutstandingUiClick = 1;
         } else {
             this.abend("GoGameObject", "color=" + this.configObject().myColor());
@@ -589,7 +589,7 @@ function GoGameObject(container_val, str_val) {
         var total_moves1;
         var max_moves1;
 
-        GO.goLog("GoGameObject.decodeMoveList", str_val);
+        this.GO().goLog("GoGameObject.decodeMoveList", str_val);
 
         //this.configObject().myColor__(str_val.charAt(index++) - '0');
         this.configObject().setBoardSize(((str_val.charAt(index++) - '0') * 10) + (str_val.charAt(index++) - '0'));
