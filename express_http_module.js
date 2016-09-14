@@ -368,7 +368,7 @@ function ExpressHttpObject(root_object_val) {
             return;
         }
 
-        //logit("getSessionData", "queue_size=" + queue.queue_size(session.receiveQueue));
+        this.debug(true, "getSessionData", "queue_size=" + session.receiveQueue().size());
         var data = session.receiveQueue().deQueue();
         var data1 = session.receiveRing().deQueue();
         if (data !== data1) {
@@ -380,7 +380,7 @@ function ExpressHttpObject(root_object_val) {
             return;
         }
 
-        session.topicObject().receiveStringData(data);
+        //session.topicObject().receiveStringData(data);
         var res_data = session.transmitQueue().deQueue();
         this.logit("getSessionData", "res_data=" + res_data);
 
@@ -393,6 +393,7 @@ function ExpressHttpObject(root_object_val) {
 
         this.debug(false, "getSessionData", "ajax_id=" + req.headers.ajax_id);
         this.logit("getSessionData", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.his_name + "=>" + req.headers.my_name + " {" + data + "}");
+        this.logit("getSessionData", json_str);
         res.type('application/json');
         res.send(json_str);
     };
@@ -404,6 +405,7 @@ function ExpressHttpObject(root_object_val) {
 
         var session_id = Number(req.headers.session_id);
         var xmt_seq = Number(req.headers.xmt_seq);
+        var topic;
         var his_session;
 
         var link = this.getLink(req, res);
@@ -418,8 +420,9 @@ function ExpressHttpObject(root_object_val) {
             this.abend("putSessionData", "null my_session" + " session_id=" + req.headers.session_id + " my_name=" + req.headers.my_name + " his_name=" + req.headers.his_name);
             return;
         }
+        topic = my_session.topicObject();
 
-        this.logit("putSessionData", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.my_name + "=>" + req.headers.his_name + " {" + req.headers.data + "} " + req.headers.xmt_seq + "=>" + my_session.up_seq);
+        this.debug(true, "putSessionData", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.my_name + "=>" + req.headers.his_name + " {" + req.headers.data + "} " + req.headers.xmt_seq + "=>" + my_session.up_seq);
 
         if (req.headers.my_name === req.headers.his_name) {
             his_session = my_session;
@@ -433,11 +436,13 @@ function ExpressHttpObject(root_object_val) {
         }
 
         if (xmt_seq === my_session.up_seq) {
+            topic.enqueAndPocessReceiveData(req.headers.data);
             his_session.receiveQueue().enQueue(req.headers.data);
             his_session.receiveRing().enQueue(req.headers.data);
             my_session.up_seq += 1;
         } else if (xmt_seq < my_session.up_seq) {
             if (xmt_seq === 0) {
+                topic.enqueAndPocessReceiveData(req.headers.data);
                 his_session.receiveQueue().enQueue(req.headers.data);
                 his_session.receiveRing().enQueue(req.headers.data);
                 my_session.up_seq = 1;
@@ -449,7 +454,7 @@ function ExpressHttpObject(root_object_val) {
             this.logit("***abend: putSessionData", req.headers.data + " post seq=" + xmt_seq + " dropped");
         }
 
-        //logit("putSessionData", "queue_size=" + queue.queue_size(my_session.receiveQueue));
+        this.debug(true, "putSessionData", "queue_size=" + his_session.receiveQueue().size());
         res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
     };
 

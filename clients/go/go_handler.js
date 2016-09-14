@@ -40,10 +40,11 @@ function GoHandlerObject(container_val) {
     };
 
     this.updataBoard = function (str_val) {
-        //this.goLog("aMoveIsPlayed", str_val);
+        this.goLog("updataBoard", str_val);
         var board = new GoBoardObject(this.containerObject());
         board.decodeBoard(str_val);
-        this.boardObject().compareBoards(board);
+        //this.boardObject().compareBoards(board);
+        this.boardObject().decodeBoard(str_val);
         this.uiObject().drawBoard(this.engineObject());
     };
 

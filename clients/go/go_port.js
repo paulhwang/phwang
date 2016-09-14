@@ -65,9 +65,9 @@ function GoPortObject(container_val) {
     };
 
     this.transmitMoveData = function (move_val) {
-        //this.goLog("transmitMoveData", "(" + move_val.xX_() + "," + move_val.yY_() + ") color=" +  move_val.myColor_() + " turn=" +  move_val.turnIndex_());
+        //this.logit("transmitMoveData", "(" + move_val.xX_() + "," + move_val.yY_() + ") color=" +  move_val.myColor_() + " turn=" +  move_val.turnIndex_());
         var data = this.GO_PROTOCOL_CODE_MOVE_DATA + move_val.encodeMove();
-        //this.goLog("transmitMoveData", "data=" + data);
+        this.logit("transmitMoveData", "data=" + data);
         this.transmitStringData(data);
     };
 
@@ -79,8 +79,8 @@ function GoPortObject(container_val) {
 
     this.thansmitBoardData = function (board_val) {
         //this.goLog("transmitBoardData", "data=" + board_val);
-        var data = this.GO_PROTOCOL_CODE_BOARD_DATA + board_val.encodeBoard();
-        this.transmitStringData(data);
+        //var data = this.GO_PROTOCOL_CODE_BOARD_DATA + board_val.encodeBoard();
+        //this.transmitStringData(data);
     };
 
     this.transmitStringData = function (str_val) {
@@ -88,8 +88,9 @@ function GoPortObject(container_val) {
         this.sessionMgrObject().transmitData();
     };
 
-    this.receiveStringData = function (str_val) {
+    this.receiveStringData = function (str_val, res_data_val) {
         //this.logit("receiveStringData", str_val);
+        //this.logit("receiveStringData", res_data_val);
 
         if (str_val == null) {
             this.abend("receiveStringData", "null input");
@@ -102,7 +103,10 @@ function GoPortObject(container_val) {
         //this.goLog("receiveStringData", data);
 
         if (code == this.GO_PROTOCOL_CODE_MOVE_DATA) {
-            this.GoHandlerObject().aMoveIsPlayed(data);
+            //this.GoHandlerObject().aMoveIsPlayed(data);
+
+            data = res_data_val.slice(this.GO_PROTOCOL_CODE_SIZE);
+            this.GoHandlerObject().updataBoard(data);
             return;
         }
 

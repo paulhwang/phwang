@@ -42,14 +42,14 @@ function GoGameObject(container_val, str_val) {
 
     this.incrementOutstandingUiClick = function () {
         if (this.outstandingUiClick() !== 0) {
-            this.abend("incrementOutstandingUiClick", " " + this.outstandingUiClick());
+            //this.abend("incrementOutstandingUiClick", " " + this.outstandingUiClick());
         }
         this.theOutstandingUiClick += 1;
     };
 
     this.decrementOutstandingUiClick = function () {
         if (this.outstandingUiClick() !== 1) {
-            this.abend("decrementOutstandingUiClick", " " + this.outstandingUiClick());
+            //this.abend("decrementOutstandingUiClick", " " + this.outstandingUiClick());
         }
         this.theOutstandingUiClick -= 1;
     };
@@ -146,7 +146,7 @@ function GoGameObject(container_val, str_val) {
     };
 
     this.enterGameFromUi = function (x_val, y_val) {
-        //this.goLog("GoGameObject.enterGameFromUi", "(" + x_val + "," + y_val + ")");
+        this.goLog("GoGameObject.enterGameFromUi", "(" + x_val + "," + y_val + ")");
 
         if (this.gameIsOver()) {
             this.goLog("enterGameFromUi", "game is over");
@@ -163,7 +163,7 @@ function GoGameObject(container_val, str_val) {
         }
 
         if (this.outstandingUiClick() !== 0) {
-            return;
+            //return;
         }
         this.incrementOutstandingUiClick();
 
@@ -172,10 +172,14 @@ function GoGameObject(container_val, str_val) {
             this.addNewMoveAndFight(move);
         }
         this.portObject().transmitMoveData(move);
+
+        if (this.configObject().playBothSides()) {
+            this.setNextColor(GO.getOppositeColor(this.nextColor()));
+        }
     };
 
     this.addNewMoveAndFight = function (move_val) {
-        //this.goLog("addNewMoveAndFight", "");
+        this.goLog("addNewMoveAndFight", "");
 
         if (this.gameIsOver()) {
             this.goLog("addNewMoveAndFight", "two pass have entered");

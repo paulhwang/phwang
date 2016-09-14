@@ -45,6 +45,10 @@ function GoContainerObject(session_object_val) {
         return this.theBoardObject;
     };
 
+    this.setBoardObject = function (val) {
+        this.theBoardObject = val;
+    };
+
     this.engineObject = function () {
         return this.theEngineObject;
     };
@@ -103,9 +107,9 @@ function GoContainerObject(session_object_val) {
 
     this.startGoGame = function () {
         this.gameObject().processTheWholeMoveList();
-        this.sessionObject().setupClientReceiveCallback(function (container_val, data_val) {
+        this.sessionObject().setupClientReceiveCallback(function (container_val, data_val, res_data_val) {
             //console.log("ajaxReceiveCallBack" + port_val.objectName());
-            container_val.portObject().receiveStringData(data_val);
+            container_val.portObject().receiveStringData(data_val, res_data_val);
         }, this);
     };
 

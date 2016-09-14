@@ -208,7 +208,7 @@ function AjaxObject(root_object_val) {
                 }
                 var callback_info = this0.getCallbackInfo(json.command, json.ajax_id);
                 if (callback_info) {
-                    callback_info.func(json.data, callback_info.param1, callback_info.param2, callback_info.param3);
+                    callback_info.func(json.data, json.res_data, callback_info.param1, callback_info.param2, callback_info.param3);
                 }
                 this0.decrementOustandingRequestCount();
                 this0.ajaxJob(request_val);
