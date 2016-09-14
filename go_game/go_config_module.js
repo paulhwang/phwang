@@ -148,4 +148,5 @@ function GoConfigObject(container_val) {
     };
 
     this.theBoardSize = 19;
+    this.theHandicapPoint = 0;
 }
