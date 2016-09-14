@@ -234,18 +234,22 @@ function GoGameObject(container_val, str_val) {
         this.goLog("receiveSpecialMoveFromOpponent", data_val);
         if (data_val === this.GO().FORWARD_MOVE()) {
             this.processForwardMove();
+            this.portObject().thansmitBoardData(this.boardObject());
             return;
         }
         if (data_val === this.GO().DOUBLE_FORWARD_MOVE()) {
             this.processDoubleForwardMove();
+            this.portObject().thansmitBoardData(this.boardObject());
             return;
         }
         if (data_val === this.GO().BACKWARD_MOVE()) {
             this.processBackwardMove();
+            this.portObject().thansmitBoardData(this.boardObject());
             return;
         }
         if (data_val === this.GO().DOUBLE_BACKWARD_MOVE()) {
             this.processDoubleBackwardMove();
+            this.portObject().thansmitBoardData(this.boardObject());
             return;
         }
         if (data_val === this.GO().PASS_MOVE()) {
