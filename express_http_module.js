@@ -317,7 +317,7 @@ function ExpressHttpObject(root_object_val) {
             return;
         }
 
-        this.debug(false, "setupSession", "(" + req.headers.link_id + "," + session.sessionId() + "," + session.hisSession().sessionId() + ") " + req.headers.my_name + "=>" + req.headers.his_name);
+        this.debug(true, "setupSession", "(" + req.headers.link_id + "," + session.sessionId() + "," + session.hisSession().sessionId() + ") " + req.headers.my_name + "=>" + req.headers.his_name + " data=" + req.headers.data);
 
         var session_id_str = "" + session.hisSession().sessionId();
         var data = JSON.stringify({
@@ -400,8 +400,8 @@ function ExpressHttpObject(root_object_val) {
 
     this.putSessionData = function (req, res) {
         //console.log(req.headers);
-        this.debug(false, "putSessionData ", "ajax_id=" + req.headers.ajax_id);
-        this.debug(false, "putSessionData ", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.his_name + "=>" + req.headers.my_name + " {" + req.headers.data + "}");
+        this.debug(true, "putSessionData ", "ajax_id=" + req.headers.ajax_id);
+        this.debug(true, "putSessionData ", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.his_name + "=>" + req.headers.my_name + " {" + req.headers.data + "}");
 
         var session_id = Number(req.headers.session_id);
         var xmt_seq = Number(req.headers.xmt_seq);
