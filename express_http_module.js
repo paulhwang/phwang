@@ -319,6 +319,10 @@ function ExpressHttpObject(root_object_val) {
 
         this.debug(true, "setupSession", "(" + req.headers.link_id + "," + session.sessionId() + "," + session.hisSession().sessionId() + ") " + req.headers.my_name + "=>" + req.headers.his_name + " data=" + req.headers.data);
 
+        if (req.headers.data !== null) {
+            session.topicObject().processSetupLinkData(req.headers.data);
+        }
+
         var session_id_str = "" + session.hisSession().sessionId();
         var data = JSON.stringify({
                         order: "setup_session",

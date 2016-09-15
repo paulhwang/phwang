@@ -121,6 +121,15 @@ function GoConfigObject(container_val) {
         return true;
     };
 
+    this.createConfig = function (json_data_val) {
+        this.debug(true, "creataConfig", "data=" + json_data_val);
+        var json = JSON.parse(json_data_val);
+        this.setBoardSize(json.board_size);
+        this.setMyColor_(json.color);
+        this.setKomiPoint(json.komi);
+        this.setHandicapPoint(json.handicap);
+    };
+
     this.createTwoBoardOpponentConfig = function () {
         var config = new GoConfigObject(this.opponentName());
         config.theOpponentName = this.myName();
@@ -137,6 +146,12 @@ function GoConfigObject(container_val) {
 
     this.isValidCoordinate = function (coordinate_val) {
         return (0 <= coordinate_val) && (coordinate_val < this.boardSize());
+    };
+
+    this.debug = function (debug_val, str1_val, str2_val) {
+        if (debug_val) {
+            this.logit(str1_val, "==" + str2_val);
+        }
     };
 
     this.abend = function (str1_val, str2_val) {

@@ -64,6 +64,13 @@ function topicObject (session_val) {
         this.utilModule().logit(this.objectName() + "." + str1_val, str2_val);
     };
 
+    this.processSetupLinkData = function (json_data_val) {
+        this.debug(true, "processSetupLinkData", "data=" + json_data_val);
+        var json = JSON.parse(json_data_val);
+        if (json.command === "config") {
+            this.goContainerObject().configObject().createConfig(json.data);
+        }
+    };
     this.processReceiveData = function () {
         while (true) {
             var data = this.receiveQueue().deQueue();
