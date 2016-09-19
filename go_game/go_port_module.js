@@ -96,7 +96,7 @@ function GoPortObject(container_val) {
         var board_data = this.GO_PROTOCOL_CODE_BOARD_DATA + this.boardObject().encodeBoard();
         var json_data = JSON.stringify({
                         board_data: board_data,
-                        next_color: 1,
+                        next_color: this.gameObject().nextColor(),
                     });
         this.transmitStringData(json_data);
     };

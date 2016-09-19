@@ -103,7 +103,7 @@ function GoBoardObject(container_val) {
     };
 
     this.decodeBoard = function (str_val) {
-        this.logit("decodeBoard", "input=" + str_val);
+        //this.logit("decodeBoard", "input=" + str_val);
         var index = 0;
         var i, j;
 
