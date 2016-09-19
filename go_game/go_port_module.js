@@ -93,8 +93,12 @@ function GoPortObject(container_val) {
 
     this.thansmitBoardData = function () {
         //this.goLog("transmitBoardData", "data=" + board_val);
-        var data = this.GO_PROTOCOL_CODE_BOARD_DATA + this.boardObject().encodeBoard();
-        this.transmitStringData(data);
+        var board_data = this.GO_PROTOCOL_CODE_BOARD_DATA + this.boardObject().encodeBoard();
+        var json_data = JSON.stringify({
+                        board_data: board_data,
+                        next_color: 1,
+                    });
+        this.transmitStringData(json_data);
     };
 
     this.transmitStringData = function (str_val) {
