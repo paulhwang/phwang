@@ -211,7 +211,7 @@ function GoGameObject(container_val, str_val) {
 
         this.insertMoveToMoveList(move_val);
         this.engineObject().enterWar(move_val);
-        this.portObject().thansmitBoardData(this.boardObject());
+        this.portObject().thansmitBoardData();
         this.setNextColor(this.GO().getOppositeColor(move_val.myColor()));
     };
 
@@ -234,22 +234,22 @@ function GoGameObject(container_val, str_val) {
         this.goLog("receiveSpecialMoveFromOpponent", data_val);
         if (data_val === this.GO().FORWARD_MOVE()) {
             this.processForwardMove();
-            this.portObject().thansmitBoardData(this.boardObject());
+            this.portObject().thansmitBoardData();
             return;
         }
         if (data_val === this.GO().DOUBLE_FORWARD_MOVE()) {
             this.processDoubleForwardMove();
-            this.portObject().thansmitBoardData(this.boardObject());
+            this.portObject().thansmitBoardData();
             return;
         }
         if (data_val === this.GO().BACKWARD_MOVE()) {
             this.processBackwardMove();
-            this.portObject().thansmitBoardData(this.boardObject());
+            this.portObject().thansmitBoardData();
             return;
         }
         if (data_val === this.GO().DOUBLE_BACKWARD_MOVE()) {
             this.processDoubleBackwardMove();
-            this.portObject().thansmitBoardData(this.boardObject());
+            this.portObject().thansmitBoardData();
             return;
         }
         if (data_val === this.GO().PASS_MOVE()) {
@@ -257,6 +257,7 @@ function GoGameObject(container_val, str_val) {
                 this.setPassReceived(true);
                 this.processPassMove();
             }
+            this.portObject().thansmitBoardData();
             return;
         }
         if (data_val === this.GO().RESIGN_MOVE()) {

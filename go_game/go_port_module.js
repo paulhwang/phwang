@@ -54,6 +54,10 @@ function GoPortObject(container_val) {
         return this.containerObject().configObject();
     };
 
+    this.boardObject = function () {
+        return this.containerObject().boardObject();
+    };
+
     this.gameObject = function () {
         return this.containerObject().gameObject();
     };
@@ -87,9 +91,9 @@ function GoPortObject(container_val) {
         this.transmitStringData(data);
     };
 
-    this.thansmitBoardData = function (board_val) {
+    this.thansmitBoardData = function () {
         //this.goLog("transmitBoardData", "data=" + board_val);
-        var data = this.GO_PROTOCOL_CODE_BOARD_DATA + board_val.encodeBoard();
+        var data = this.GO_PROTOCOL_CODE_BOARD_DATA + this.boardObject().encodeBoard();
         this.transmitStringData(data);
     };
 

@@ -60,17 +60,12 @@ function GoHandlerObject(container_val) {
         ////////////////////////this.uiObject().drawBoard(this.engineObject());
     };
 
-    this.updataBoard = function (str_val) {
-        //this.goLog("aMoveIsPlayed", str_val);
+    this.updateBoard______ = function (str_val) {
+        //this.goLog("updateBoard", str_val);
         var board = this.boardModule().malloc(this.containerObject());
         board.decodeBoard(str_val);
         this.boardObject().compareBoards(board);
         //this.uiObject().drawBoard(this.engineObject());
-    };
-
-    this.boardUpdate = function (str_val) {
-        this.goLog("boardUpdate", str_val);
-
     };
 
     this.aSpecialMoveIsPlayed = function (special_str) {
