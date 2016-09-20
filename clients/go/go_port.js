@@ -109,7 +109,7 @@ function GoPortObject(container_val) {
         }
 
         if (res_next_color !== null) {
-
+            this.gameObject().setNextColor(res_next_color);
         }
 
 /*
