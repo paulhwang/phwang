@@ -89,7 +89,7 @@ function GoPortObject(container_val) {
     };
 
     this.receiveStringData = function (str_val, res_json_val) {
-        this.logit("receiveStringData", "req_data=" + str_val);
+        //this.logit("receiveStringData", "req_data=" + str_val);
         this.logit("receiveStringData", "res_json_data=" + res_json_val);
 
         if (str_val == null) {
@@ -97,12 +97,22 @@ function GoPortObject(container_val) {
             return;
         }
 
-        var req_code = str_val.slice(0, this.GO_PROTOCOL_CODE_SIZE);
-        var req_data = str_val.slice(this.GO_PROTOCOL_CODE_SIZE);
+        //var req_code = str_val.slice(0, this.GO_PROTOCOL_CODE_SIZE);
+        //var req_data = str_val.slice(this.GO_PROTOCOL_CODE_SIZE);
         var res_data = JSON.parse(res_json_val);
         var res_board_data = res_data.board_data;
-        var board_data = res_board_data.slice(this.GO_PROTOCOL_CODE_SIZE);
+        var res_next_color = res_data.next_color;
 
+        if (res_board_data !== null) {
+            var board_data = res_board_data.slice(this.GO_PROTOCOL_CODE_SIZE);
+            this.GoHandlerObject().updataBoard(board_data);
+        }
+
+        if (res_next_color !== null) {
+
+        }
+
+/*
         if (req_code == this.GO_PROTOCOL_CODE_MOVE_DATA) {
             //this.GoHandlerObject().aMoveIsPlayed(data);
             this.GoHandlerObject().updataBoard(board_data);
@@ -119,6 +129,7 @@ function GoPortObject(container_val) {
             this.GoHandlerObject().updataBoard(board_data);
             return;
         }
+        */
     };
 
     this.abend = function (str1_val, str2_val) {
