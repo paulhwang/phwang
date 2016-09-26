@@ -86,6 +86,7 @@ function GoPortObject(container_val) {
         return this.theTransmitQueue;
     };
 
+/*
     this.transmitMoveData = function (move_val) {
         //this.goLog("transmitMoveData", "(" + move_val.xX_() + "," + move_val.yY_() + ") color=" +  move_val.myColor_() + " turn=" +  move_val.turnIndex_());
         var data = this.GO_PROTOCOL_CODE_MOVE_DATA + move_val.encodeMove();
@@ -98,6 +99,7 @@ function GoPortObject(container_val) {
         var data = this.GO_PROTOCOL_CODE_SPECIAL_MOVE + special_val;
         this.transmitStringData(data);
     };
+*/
 
     this.thansmitBoardData = function () {
         //this.goLog("transmitBoardData", "data=" + board_val);
@@ -107,10 +109,10 @@ function GoPortObject(container_val) {
                         next_color: this.gameObject().nextColor(),
                         last_dead_stone: this.engineObject().lastDeadStone(),
                     });
-        this.transmitStringData(json_data);
+        this.transmitData(json_data);
     };
 
-    this.transmitStringData = function (data_val) {
+    this.transmitData = function (data_val) {
         this.topicObject().enqueueTransmitData(data_val);
         this.topicObject().processTransmitData();
     };
