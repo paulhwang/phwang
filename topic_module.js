@@ -71,6 +71,7 @@ function topicObject (session_val) {
             this.goContainerObject().configObject().createConfig(json.data);
         }
     };
+
     this.processReceiveData = function () {
         while (true) {
             var data = this.receiveQueue().deQueue();

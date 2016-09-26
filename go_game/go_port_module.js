@@ -129,11 +129,6 @@ function GoPortObject(container_val) {
             return;
         }
 
-        if (code == this.GO_PROTOCOL_CODE_BOARD_DATA) {
-            this.GoHandlerObject().updataBoard(data);
-            return;
-        }
-
         if (code == this.GO_PROTOCOL_CODE_SPECIAL_MOVE) {
             this.GoHandlerObject().aSpecialMoveIsPlayed(data);
             return;
