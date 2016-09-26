@@ -101,16 +101,19 @@ function GoPortObject(container_val) {
         //var req_data = str_val.slice(this.GO_PROTOCOL_CODE_SIZE);
         var res_data = JSON.parse(res_json_val);
 
+        /* board data */
         if (res_data.board_data !== undefined) {
             var board_data = res_data.board_data.slice(this.GO_PROTOCOL_CODE_SIZE);
             this.GoHandlerObject().updataBoard(board_data);
         }
 
+        /* next color */
         if (res_data.next_color !== undefined) {
             this.gameObject().setNextColor(res_data.next_color);
         }
 
-       if (res_data.last_data_stone !== undefined) {
+        /* last dead stone */
+        if (res_data.last_data_stone !== undefined) {
             this.gameObject().setValidLastDeadInfo(true);
             this.gameObject().setLastDeadX(Number(res_data.last_data_stone.slice(0, 2)));
             this.gameObject().setLastDeadY(Number(res_data.last_data_stone.slice(2, 4)));
