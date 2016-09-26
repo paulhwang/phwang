@@ -36,6 +36,30 @@ function GoGameObject(container_val, str_val) {
         return this.containerObject().portObject();
     };
 
+    this.lastDeadX = function () {
+        return this.theLastDeadX;
+    };
+
+    this.setLastDeadX = function (val) {
+        this.theLastDeadX = val;
+    };
+
+    this.lastDeadY = function () {
+        return this.theLastDeadY;
+    };
+
+    this.setLastDeadY = function (val) {
+        this.theLastDeadY = val;
+    };
+
+    this.validLastDeadInfo = function () {
+        return this.theValidLastDeadInfo;
+    };
+
+    this.setValidLastDeadInfo = function (val) {
+        this.theValidLastDeadInfo = val;
+    };
+
     this.outstandingUiClick = function () {
         return this.theOutstandingUiClick;
     };
@@ -158,7 +182,7 @@ function GoGameObject(container_val, str_val) {
             this.resetBothPasses();
         }
 
-        if (!this.engineObject().isValidMoveOnBoard(x_val, y_val)) {
+        if (!this.isValidMoveOnBoard(x_val, y_val)) {
             return;
         }
 
@@ -626,10 +650,29 @@ function GoGameObject(container_val, str_val) {
         this.thePassReceived = false;
     };
 
+    this.isValidMoveOnBoard = function (x_val, y_val) {
+        if (this.boardObject().boardArray(x_val, y_val) !== GO.EMPTY_STONE()) {
+            return false;
+        }
+
+        if (this.validLastDeadInfo() && (x_val === this.lastDeadX()) && (y_val === this.lastDeadY())) {
+            return false;
+        }
+
+        return true;
+    };
+
     this.theOutstandingUiClick = 0;
     this.resetGameObjectData();
     //str_val = this.containerObject().restoreLastGame();
     if (str_val) {
         //this.decodeMoveList(str_val);
     }
+
+    this.theLastDeadX = 0;
+    this.theLastDeadY = 0;
+    this.theValidLastDeadInfo = false;
+
+    this.theBlackCaptureStones = 0;
+    this.theWhiteCaptureStones = 0;
 }

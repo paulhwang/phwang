@@ -79,30 +79,6 @@ function GoEngineObject(container_object_val) {
         return this.boardObject().boardArray();
     };
 
-    this.lastDeadX = function () {
-        return this.theLastDeadX;
-    };
-
-    this.setLastDeadX = function (val) {
-        this.theLastDeadX = val;
-    };
-
-    this.lastDeadY = function () {
-        return this.theLastDeadY;
-    };
-
-    this.setLastDeadY = function (val) {
-        this.theLastDeadY = val;
-    };
-
-    this.validLastDeadInfo = function () {
-        return this.theValidLastDeadInfo;
-    };
-
-    this.setValidLastDeadInfo = function (val) {
-        this.theValidLastDeadInfo = val;
-    };
-
     this.blackLandScore = function () {
         return this.blackEmptyGroupList().totalStoneCount();
     };
@@ -291,18 +267,6 @@ function GoEngineObject(container_object_val) {
         if (!group_val.existMatrix(group_val.maxX(), group_val.maxY())) {
             this.goAbend("markLastDeadInfo", "exist_matrix");
         }
-    };
-
-    this.isValidMoveOnBoard = function (x_val, y_val) {
-        if (this.boardObject().boardArray(x_val, y_val) !== GO.EMPTY_STONE()) {
-            return false;
-        }
-
-        if (this.validLastDeadInfo() && (x_val === this.lastDeadX()) && (y_val === this.lastDeadY())) {
-            return false;
-        }
-
-        return true;
     };
 
     this.getGroupByCoordinate = function (x_val, y_val, color_val) {
@@ -592,13 +556,6 @@ function GoEngineObject(container_object_val) {
         this.theGroupListArray[2] = new GoGroupListObject(this, 2, GO.WHITE_STONE(), false, null, null);
         this.resetMarkedGroupLists();
         this.resetEmptyGroupLists();
-
-        this.theLastDeadX = 0;
-        this.theLastDeadY = 0;
-        this.theValidLastDeadInfo = false;
-
-        this.theBlackCaptureStones = 0;
-        this.theWhiteCaptureStones = 0;
     };
 
     this.theObjectName = "GoEngineObject";
