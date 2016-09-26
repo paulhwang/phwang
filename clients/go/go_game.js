@@ -436,6 +436,7 @@ function GoGameObject(container_val, str_val) {
         }
     };
 
+/*
     this.processTheWholeMoveList = function () {
         this.boardObject().resetBoardObjectData();
         this.resetGameObjectPartialData();
@@ -450,6 +451,7 @@ function GoGameObject(container_val, str_val) {
             i += 1;
         }
     };
+*/
 
     this.isMyTurn = function () {
         if (this.configObject().playBothSides()) {
