@@ -74,10 +74,6 @@ function goContainerObject (topic_object_val) {
         return this.theTopicObject;
     };
 
-    this.sessionObject = function () {
-        return this.topicObject().sessionObject();
-    };
-
     this.rootObject = function () {
         return this.sessionObject().rootObject();
     };
@@ -151,11 +147,25 @@ function goContainerObject (topic_object_val) {
     };
 
     this.goLog = function (s1_val, s2_val) {
-        this.utilModule().utilLogit(this.sessionObject().sessionId() + s1_val, s2_val);
+        if (this.topicObject().sessionArrayLength === 1) {
+            this.utilModule().utilLogit(this.topicObject().sessionArray(0).sessionId() + "<=>" +
+                                        this.topicObject().sessionArray(0).sessionId() + " " + s1_val, s2_val);
+        }
+        else {
+            this.utilModule().utilLogit(this.topicObject().sessionArray(0).sessionId() + "<=>" +
+                                        this.topicObject().sessionArray(1).sessionId() + " " + s1_val, s2_val);
+        }
     };
 
     this.goAbend = function (s1_val, s2_val) {
-        this.utilModule().utilAbend(this.sessionObject().sessionId() + s1_val, s2_val);
+        if (this.topicObject().sessionArrayLength === 1) {
+            this.utilModule().utilAbend(this.topicObject().sessionArray(0).sessionId() + "<=>" +
+                                        this.topicObject().sessionArray(0).sessionId() + " " + s1_val, s2_val);
+        }
+        else {
+            this.utilModule().utilAbend(this.topicObject().sessionArray(0).sessionId() + "<=>" +
+                                        this.topicObject().sessionArray(1).sessionId() + " " + s1_val, s2_val);
+        }
     };
 
     this.startGoGame = function () {
