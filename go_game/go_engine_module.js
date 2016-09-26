@@ -111,35 +111,11 @@ function GoEngineObject(container_object_val) {
         return this.boardObject().boardArray();
     };
 
-    this.lastDeadX = function () {
-        return this.theLastDeadX;
-    };
-
-    this.setLastDeadX = function (val) {
-        this.theLastDeadX = val;
-    };
-
-    this.lastDeadY = function () {
-        return this.theLastDeadY;
-    };
-
-    this.setLastDeadY = function (val) {
-        this.theLastDeadY = val;
-    };
-
-    this.validLastDeadInfo = function () {
-        return this.theValidLastDeadInfo;
-    };
-
     this.lastDeadStone = function () {
         return this.theLastDeadStone;
     };
 
-    this.setValidLastDeadInfo111 = function (x_val, y_val) {
-        this.theValidLastDeadInfo = true;
-        this.theLastDeadX = x_val;
-        this.theLastDeadY = y_val;
-
+    this.setLastDeadStone = function (x_val, y_val) {
         this.theLastDeadStone = "";
         if (x_val < 10) {
            this.theLastDeadStone = this.theLastDeadStone + 0;
@@ -152,8 +128,7 @@ function GoEngineObject(container_object_val) {
         this.theLastDeadStone = this.theLastDeadStone + y_val;
     };
 
-    this.clearValidLastDeadInfo = function () {
-        this.theValidLastDeadInfo = false;
+    this.clearLastDeadStone = function () {
         this.theLastDeadStone = null;
     };
 
@@ -284,7 +259,7 @@ function GoEngineObject(container_object_val) {
 
     this.killOtherColorGroups = function (move_val, group_val) {
         var count;
-        this.clearValidLastDeadInfo();
+        this.clearLastDeadStone();
         count = this.killOtherColorGroup(group_val, move_val.xX() - 1, move_val.yY());
         count += this.killOtherColorGroup(group_val, move_val.xX() + 1, move_val.yY());
         count += this.killOtherColorGroup(group_val, move_val.xX(), move_val.yY() - 1);
@@ -333,9 +308,7 @@ function GoEngineObject(container_object_val) {
     };
 
     this.markLastDeadInfo = function (group_val) {
-        this.setValidLastDeadInfo111(group_val.maxX(), group_val.maxY());
-        this.setLastDeadX(group_val.maxX());
-        this.setLastDeadY(group_val.maxY());
+        this.setLastDeadStone(group_val.maxX(), group_val.maxY());
 
         if (group_val.maxX() !== group_val.minX()) {
             this.goAbend("markLastDeadInfo", "x: " + group_val.maxX() + "!=" + group_val.minX() + " count=" + group_val.stoneCount());
@@ -648,10 +621,7 @@ function GoEngineObject(container_object_val) {
         this.resetMarkedGroupLists();
         this.resetEmptyGroupLists();
 
-        this.theLastDeadX = 0;
-        this.theLastDeadY = 0;
-        this.theValidLastDeadInfo = false;
-        this.theLastDeadStone = null;
+       this.theLastDeadStone = null;
 
         this.theBlackCaptureStones = 0;
         this.theWhiteCaptureStones = 0;
