@@ -113,7 +113,7 @@ function GoPortObject(container_val) {
         }
 
         /* last dead stone */
-        this.logit("receiveStringData", "(res_data.last_dead_stone=" + res_data.last_dead_stone);
+        //this.logit("receiveStringData", "res_data.last_dead_stone=" + res_data.last_dead_stone);
         if (res_data.last_dead_stone !== null) {
             this.gameObject().setValidLastDeadInfo(true);
             this.gameObject().setLastDeadX(Number(res_data.last_dead_stone.slice(0, 2)));

@@ -20,10 +20,6 @@ function GoGameObject(container_val, str_val) {
         return this.containerObject().boardObject();
     };
 
-    this.engineObject = function () {
-        return this.containerObject().engineObject();
-    };
-
     this.uiObject = function () {
         return this.containerObject().uiObject();
     };
@@ -192,28 +188,11 @@ function GoGameObject(container_val, str_val) {
         this.incrementOutstandingUiClick();
 
         var move = new GoMoveObject(null, x_val, y_val, this.nextColor(), this.totalMoves(), this.containerObject());
-        if (!this.configObject().playBothSides()) {
-            this.addNewMoveAndFight(move);
-        }
         this.portObject().transmitMoveData(move);
 
         if (this.configObject().playBothSides()) {
             this.setNextColor(GO.getOppositeColor(this.nextColor()));
         }
-    };
-
-    this.addNewMoveAndFight = function (move_val) {
-        this.goLog("addNewMoveAndFight", "");
-
-        if (this.gameIsOver()) {
-            this.goLog("addNewMoveAndFight", "two pass have entered");
-            return;
-        }
-
-        this.insertMoveToMoveList(move_val);
-        this.engineObject().enterWar(move_val);
-        this.portObject().thansmitBoardData(this.boardObject());
-        this.setNextColor(GO.getOppositeColor(move_val.myColor()));
     };
 
     this.addNewMoveWithoutFight = function (x_val, y_val, color_val, turn_val) {
