@@ -5,9 +5,9 @@
  */
 
 module.exports = {
-    malloc: function (session_mgr_val, my_name_val, his_name_val, session_id_val) {
+    malloc: function (session_mgr_val, my_name_val, his_name_val, session_id_val, topic_val) {
         session = new SessionEntryObject();
-        session.resetIt(session_mgr_val, my_name_val, his_name_val, session_id_val);
+        session.resetIt(session_mgr_val, my_name_val, his_name_val, session_id_val, topic_val);
         return session;
     },
 };
@@ -94,7 +94,7 @@ function SessionEntryObject() {
         return this.theSessionMgrObject;
     };
 
-    this.resetIt = function (session_mgr_val, my_name_val, his_name_val, session_id_val) {
+    this.resetIt = function (session_mgr_val, my_name_val, his_name_val, session_id_val, topic_val) {
         this.theSessionMgrObject = session_mgr_val;
         this.theSessionId = session_id_val;
         this.theMyName = my_name_val;
@@ -105,7 +105,7 @@ function SessionEntryObject() {
         this.theReceiveQueue = this.queueModule().malloc();
         this.theTransmitQueue = this.queueModule().malloc();
         this.theReceiveRing = this.ringModule().malloc();
-        this.theTopicObject = this.topicModule().malloc();
+        this.theTopicObject = topic_val;
         this.topicObject().addAdditionalSession(this);
     };
 

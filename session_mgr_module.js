@@ -34,6 +34,8 @@ module.exports = {
 
 function SessionMgrObject(root_object_val) {
     "use strict";
+    this.theTopicModule = require("./topic_module.js");
+
     this.theRootObject = root_object_val;
 
     this.objectName = function () {
@@ -50,6 +52,10 @@ function SessionMgrObject(root_object_val) {
 
     this.queueModule = function () {
         return this.rootObject().queueModule();
+    };
+
+    this.topicModule = function () {
+        return this.theTopicModule;
     };
 
     this.sessionModule = function () {
@@ -103,8 +109,9 @@ function SessionMgrObject(root_object_val) {
     this.searchAndCreate = function (my_name_val, his_name_val, session_id_val) {
         var session = this.searchIt(my_name_val, his_name_val, session_id_val);
         if (!session) {
-            session = this.mallocIt(my_name_val, his_name_val);
-            var his_session = this.mallocIt(his_name_val, my_name_val);
+            var topic = this.topicModule().malloc();
+            session = this.mallocIt(my_name_val, his_name_val, topic);
+            var his_session = this.mallocIt(his_name_val, my_name_val, topic);
             session.setHisSession(his_session);
             his_session.setHisSession(session);
             this.sessionQueue().enQueue(session);
@@ -113,14 +120,14 @@ function SessionMgrObject(root_object_val) {
         return session;
     };
 
-    this.mallocIt = function (my_name_val, his_name_val) {
+    this.mallocIt = function (my_name_val, his_name_val, topic_val) {
         var entry;
 
         if (!this.poolHead()) {
-            entry = this.sessionModule().malloc(this, my_name_val, his_name_val, this.globalSessionId());
+            entry = this.sessionModule().malloc(this, my_name_val, his_name_val, this.globalSessionId(), topic_val);
         } else {
             entry = this.poolHead();
-            entry.resetIt(my_name_val, his_name_val, this.globalSessionId());
+            entry.resetIt(my_name_val, his_name_val, this.globalSessionId(), topic_val);
             this.setHead(entry.next());
             this.decrementPoolSize();
         }
