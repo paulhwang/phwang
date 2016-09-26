@@ -118,7 +118,7 @@ function GoContainerObject(session_object_val) {
         this.startGoGame();
         this.rootObject().htmlObject().createPlayHolders();
         this.uiObject().initElements();
-        this.uiObject().drawBoard(this.engineObject());
+        this.uiObject().drawBoard();
 
         $("canvas").on("click", function(event) {
             this0.uiObject().uiClickApi(event.clientX, event.clientY);

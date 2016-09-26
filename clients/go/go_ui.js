@@ -90,7 +90,7 @@ function GoUiObject(container_val) {
 
     this.uiClickApi = function (event_x, event_y) {
         this.uiClick(event_x, event_y);
-        this.drawBoard(this.engineObject());
+        this.drawBoard();
         this.setEncodedMoveList(this.gameObject().encodeMoveList(true));
         this.gameObject().saveLastGame();
         //console.log("aa" + this.encodedMoveList_());
@@ -129,49 +129,49 @@ function GoUiObject(container_val) {
 
             if ((event_x - this.canvasElement().getBoundingClientRect().left) < arrow_len * 2.5) {
                 this.gameObject().processDoubleBackwardMoveFromUi();
-                this.drawBoard(this.containerObject().engineObject());
+                this.drawBoard();
                 return;
             }
             if ((event_x - this.canvasElement().getBoundingClientRect().left) < arrow_len * 4.5) {
                 this.gameObject().processBackwardMoveFromUi();
-                this.drawBoard(this.containerObject().engineObject());
+                this.drawBoard();
                 return;
             }
             if ((event_x - this.canvasElement().getBoundingClientRect().left) < arrow_len * 6.5) {
                 this.gameObject().processForwardMoveFromUi();
-                this.drawBoard(this.containerObject().engineObject());
+                this.drawBoard();
                 return;
             }
             if ((event_x - this.canvasElement().getBoundingClientRect().left) < arrow_len * 8.5) {
                 this.gameObject().processDoubleForwardMoveFromUi();
-                this.drawBoard(this.containerObject().engineObject());
+                this.drawBoard();
                 return;
             }
             if ((event_x - this.canvasElement().getBoundingClientRect().left) < arrow_len * 10.5) {
                 if (this.gameObject().isMyTurn()) {
                     this.gameObject().processPassMoveFromUi();
-                    this.drawBoard(this.containerObject().engineObject());
+                    this.drawBoard();
                 }
                 return;
             }
             if ((event_x - this.canvasElement().getBoundingClientRect().left) < arrow_len * 12.5) {
                 this.gameObject().processConfirmMoveFromUi();
-                this.drawBoard(this.containerObject().engineObject());
+                this.drawBoard();
                 return;
             }
             if ((event_x - this.canvasElement().getBoundingClientRect().left) < arrow_len * 14.5) {
                 this.gameObject().processResignMoveFromUi();
-                this.drawBoard(this.containerObject().engineObject());
+                this.drawBoard();
                 return;
             }
             if ((event_x - this.canvasElement().getBoundingClientRect().left) < arrow_len * 16.5) {
                 this.gameObject().processPlayAnotherGameMoveFromUi();
-                this.drawBoard(this.containerObject().engineObject());
+                this.drawBoard();
                 return;
             }
             if ((event_x - this.canvasElement().getBoundingClientRect().left) < arrow_len * 18.5) {
                 this.gameObject().processBackToPlayMoveFromUi();
-                this.drawBoard(this.containerObject().engineObject());
+                this.drawBoard();
                 return;
             }
             return;
@@ -190,7 +190,7 @@ function GoUiObject(container_val) {
         }
 
         this.gameObject().enterGameFromUi(x, y);
-        this.drawBoard(this.engineObject());
+        this.drawBoard();
     };
 
     this.uiMouseMove = function (event_x, event_y) {
