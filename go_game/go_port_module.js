@@ -70,10 +70,6 @@ function GoPortObject(container_val) {
         return this.containerObject().topicObject();
     };
 
-    this.sessionObject = function () {
-        return this.containerObject().sessionObject();
-    };
-
     this.GoHandlerObject = function () {
         return this.containerObject().handlerObject();
     };
