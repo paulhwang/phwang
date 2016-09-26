@@ -64,6 +64,20 @@ function topicObject (session_val) {
         this.utilModule().logit(this.objectName() + "." + str1_val, str2_val);
     };
 
+    this.enqueueTransmitData = function (data_val) {
+        this.transmitQueue().enQueue(data_val);
+    };
+
+    this.processTransmitData = function () {
+        while (true) {
+            var data = this.transmitQueue().deQueue();
+            if (!data) {
+                return;
+            }
+            this.sessionObject().transmitQueue().enQueue(data);
+        }
+    };
+
     this.processSetupLinkData = function (json_data_val) {
         this.debug(true, "processSetupLinkData", "data=" + json_data_val);
         var json = JSON.parse(json_data_val);

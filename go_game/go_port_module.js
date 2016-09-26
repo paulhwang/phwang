@@ -66,6 +66,10 @@ function GoPortObject(container_val) {
         return this.containerObject().engineObject();
     };
 
+    this.topicObject = function () {
+        return this.containerObject().topicObject();
+    };
+
     this.sessionObject = function () {
         return this.containerObject().sessionObject();
     };
@@ -106,9 +110,9 @@ function GoPortObject(container_val) {
         this.transmitStringData(json_data);
     };
 
-    this.transmitStringData = function (str_val) {
-        this.sessionObject().transmitQueue().enQueue(str_val);
-        //this.sessionMgrObject().transmitData();
+    this.transmitStringData = function (data_val) {
+        this.topicObject().enqueueTransmitData(data_val);
+        this.topicObject().processTransmitData();
     };
 
     this.receiveStringData = function (str_val) {
