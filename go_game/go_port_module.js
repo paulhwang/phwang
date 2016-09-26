@@ -62,6 +62,10 @@ function GoPortObject(container_val) {
         return this.containerObject().gameObject();
     };
 
+    this.engineObject = function () {
+        return this.containerObject().engineObject();
+    };
+
     this.sessionObject = function () {
         return this.containerObject().sessionObject();
     };
@@ -97,6 +101,7 @@ function GoPortObject(container_val) {
         var json_data = JSON.stringify({
                         board_data: board_data,
                         next_color: this.gameObject().nextColor(),
+                        last_dead_stone: this.engineObject().lastDeadStone(),
                     });
         this.transmitStringData(json_data);
     };

@@ -131,8 +131,30 @@ function GoEngineObject(container_object_val) {
         return this.theValidLastDeadInfo;
     };
 
-    this.setValidLastDeadInfo = function (val) {
-        this.theValidLastDeadInfo = val;
+    this.lastDeadStone = function () {
+        return this.theLastDeadStone;
+    };
+
+    this.setValidLastDeadInfo111 = function (x_val, y_val) {
+        this.theValidLastDeadInfo = true;
+        this.theLastDeadX = x_val;
+        this.theLastDeadY = y_val;
+
+        this.theLastDeadStone = "";
+        if (x_val < 10) {
+           this.theLastDeadStone = this.theLastDeadStone + 0;
+        }
+        this.theLastDeadStone = this.theLastDeadStone + x_val;
+
+        if (y_val < 10) {
+            this.theLastDeadStone = this.theLastDeadStone + 0;
+        }
+        this.theLastDeadStone = this.theLastDeadStone + y_val;
+    };
+
+    this.clearValidLastDeadInfo = function () {
+        this.theValidLastDeadInfo = false;
+        this.theLastDeadStone = null;
     };
 
     this.blackLandScore = function () {
@@ -262,7 +284,7 @@ function GoEngineObject(container_object_val) {
 
     this.killOtherColorGroups = function (move_val, group_val) {
         var count;
-        this.setValidLastDeadInfo(false);
+        this.clearValidLastDeadInfo();
         count = this.killOtherColorGroup(group_val, move_val.xX() - 1, move_val.yY());
         count += this.killOtherColorGroup(group_val, move_val.xX() + 1, move_val.yY());
         count += this.killOtherColorGroup(group_val, move_val.xX(), move_val.yY() - 1);
@@ -311,7 +333,7 @@ function GoEngineObject(container_object_val) {
     };
 
     this.markLastDeadInfo = function (group_val) {
-        this.setValidLastDeadInfo(true);
+        this.setValidLastDeadInfo111(group_val.maxX(), group_val.maxY());
         this.setLastDeadX(group_val.maxX());
         this.setLastDeadY(group_val.maxY());
 
@@ -629,6 +651,7 @@ function GoEngineObject(container_object_val) {
         this.theLastDeadX = 0;
         this.theLastDeadY = 0;
         this.theValidLastDeadInfo = false;
+        this.theLastDeadStone = null;
 
         this.theBlackCaptureStones = 0;
         this.theWhiteCaptureStones = 0;
