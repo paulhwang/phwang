@@ -189,12 +189,13 @@ function GoGameObject(container_val, str_val) {
 
         var move = new GoMoveObject(null, x_val, y_val, this.nextColor(), this.totalMoves(), this.containerObject());
         this.portObject().transmitMoveData(move);
-
+/*
         if (this.configObject().playBothSides()) {
             this.setNextColor(GO.getOppositeColor(this.nextColor()));
         }
+*/
     };
-
+/*
     this.addNewMoveWithoutFight = function (x_val, y_val, color_val, turn_val) {
         if (turn_val !== this.totalMoves()) {
             this.goAbend("addNewMoveWithoutFight", "turn=" + turn_val + " " + this.totalMoves());
@@ -209,6 +210,7 @@ function GoGameObject(container_val, str_val) {
         this.incrementTotalMoves();
         this.setMaxMove(this.totalMoves());
     };
+*/
 
     this.receiveSpecialMoveFromOpponent = function (data_val) {
         this.goLog("receiveSpecialMoveFromOpponent", data_val);
