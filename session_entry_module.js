@@ -38,6 +38,10 @@ function SessionEntryObject() {
         return this.theTopicModule;
     };
 
+    this.topicObject = function () {
+        return this.theTopicObject;
+    };
+
     this.sessionId = function () {
         return this.theSessionId;
     };
@@ -101,7 +105,8 @@ function SessionEntryObject() {
         this.theReceiveQueue = this.queueModule().malloc();
         this.theTransmitQueue = this.queueModule().malloc();
         this.theReceiveRing = this.ringModule().malloc();
-        this.theTopicObject = this.topicModule().malloc(this);
+        this.theTopicObject = this.topicModule().malloc();
+        this.topicObject().addAdditionalSession(this);
     };
 
     this.debug = function (debug_val, str1_val, str2_val) {

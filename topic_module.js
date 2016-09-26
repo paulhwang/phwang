@@ -10,16 +10,11 @@ module.exports = {
     },
 };
 
-function topicObject (session_val) {
+function topicObject () {
     "use strict";
     this.theUtilModule = require("./util_module.js");
     this.theQueueModule = require("./queue_module.js");
     this.theGoContainerModule = require("./go_game/go_container_module.js")
-
-    this.theSessionArray = [2];
-    this.theSessionArray[0] = session_val;
-    this.theSessionArrayLength = 1;
-    this.theSessionObject =  this.theSessionArray[0];
 
     this.objectName = function () {
         return "topicObject";
@@ -38,7 +33,7 @@ function topicObject (session_val) {
     };
 
     this.sessionObject = function () {
-        return this.theSessionObject;
+        return this.sessionArray(0);
     };
 
     this.goContainerObject = function () {
@@ -51,6 +46,10 @@ function topicObject (session_val) {
 
     this.sessionArrayLength = function () {
         return this.theSessionArrayLength;
+    };
+
+    this.incrementSessionArrayLength = function () {
+        this.theSessionArrayLength += 1;
     };
 
     this.receiveQueue = function () {
@@ -73,6 +72,11 @@ function topicObject (session_val) {
 
     this.logit = function (str1_val, str2_val) {
         this.utilModule().logit(this.objectName() + "." + str1_val, str2_val);
+    };
+
+    this.addAdditionalSession = function (session_val) {
+        this.theSessionArray[this.sessionArrayLength()] = session_val;
+        this.incrementSessionArrayLength();
     };
 
     this.enqueueTransmitData = function (data_val) {
@@ -124,6 +128,8 @@ function topicObject (session_val) {
 
     this.logit(this.objectName(), "aaa");
 
+    this.theSessionArray = [2];
+    this.theSessionArrayLength = 0;
     this.theGoContainerObject = this.goContainerModule().malloc(this);
     this.theReceiveQueue = this.queueModule().malloc();
     this.theTransmitQueue = this.queueModule().malloc();
