@@ -31,50 +31,6 @@ function GoEngineObject(container_object_val) {
         return this.configObject().boardSize();
     };
 
-    this.groupListArray = function (index_val) {
-        return this.theGroupListArray[index_val];
-    };
-
-    this.resetMarkedGroupLists = function () {
-        this.theGroupListArray[3] = new GoGroupListObject(this, 3, GO.BLACK_STONE(), true, "black", "gray");
-        this.theGroupListArray[4] = new GoGroupListObject(this, 4, GO.WHITE_STONE(), true, "white", "gray");
-        this.boardObject().resetMarkedBoardObjectData();
-   };
-
-    this.resetEmptyGroupLists = function () {
-        this.theGroupListArray[0] = new GoGroupListObject(this, 0, GO.EMPTY_STONE(), false, null, null);
-        this.theGroupListArray[5] = new GoGroupListObject(this, 5, GO.EMPTY_STONE(), false, null, "black");
-        this.theGroupListArray[6] = new GoGroupListObject(this, 6, GO.EMPTY_STONE(), false, null, "white");
-   };
-
-    this.emptyGroupList = function () {
-        return this.theGroupListArray[0];
-    };
-
-    this.blackGroupList = function () {
-        return this.theGroupListArray[1];
-    };
-
-    this.whiteGroupList = function () {
-        return this.theGroupListArray[2];
-    };
-
-    this.blackDeadGroupList = function () {
-        return this.theGroupListArray[3];
-    };
-
-    this.whiteDeadGroupList = function () {
-        return this.theGroupListArray[4];
-    };
-
-    this.blackEmptyGroupList = function () {
-        return this.theGroupListArray[5];
-    };
-
-    this.whiteEmptyGroupList = function () {
-        return this.theGroupListArray[6];
-    };
-
     this.boardArray = function () {
         return this.boardObject().boardArray();
     };
@@ -549,17 +505,7 @@ function GoEngineObject(container_object_val) {
     this.goLog = function (str1_val, str2_val) {
         return this.containerObject().goLog(this.objectName() + "." + str1_val, str2_val);
     };
-
-    this.resetEngineObjectData = function () {
-        this.theGroupListArray = [7];
-        this.theGroupListArray[1] = new GoGroupListObject(this, 1, GO.BLACK_STONE(), false, null, null);
-        this.theGroupListArray[2] = new GoGroupListObject(this, 2, GO.WHITE_STONE(), false, null, null);
-        this.resetMarkedGroupLists();
-        this.resetEmptyGroupLists();
-    };
-
     this.theObjectName = "GoEngineObject";
     this.theContainerObject = container_object_val;
-    this.resetEngineObjectData();
 }
 1

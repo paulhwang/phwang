@@ -459,7 +459,6 @@ function GoGameObject(container_val, str_val) {
 
     this.processTheWholeMoveList = function () {
         this.boardObject().resetBoardObjectData();
-        this.engineObject().resetEngineObjectData();
         this.resetGameObjectPartialData();
 
         this.goLog("processTheWholeMoveLst", "totalMoves=" + this.totalMoves());
