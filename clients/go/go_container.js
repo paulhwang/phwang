@@ -49,10 +49,6 @@ function GoContainerObject(session_object_val) {
         this.theBoardObject = val;
     };
 
-    this.engineObject = function () {
-        return this.theEngineObject;
-    };
-
     this.gameObject = function () {
         return this.theGameObject;
     };
@@ -153,7 +149,6 @@ function GoContainerObject(session_object_val) {
     this.theConfigObject = new GoConfigObject(this);
     this.theUiObject = new GoUiObject(this);
     this.theBoardObject = new GoBoardObject(this);
-    this.theEngineObject = new GoEngineObject(this);
     this.theGameObject = new GoGameObject(this, this.lastGame());
     this.theHandlerObject = new GoHandlerObject(this);
     this.thePortObject = new GoPortObject(this);

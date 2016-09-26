@@ -28,10 +28,6 @@ function GoUiObject(container_val) {
         return this.containerObject().boardObject();
     };
 
-    this.engineObject = function () {
-        return this.containerObject().engineObject();
-    };
-
     this.configObject = function () {
         return this.containerObject().configObject();
     };
@@ -184,7 +180,7 @@ function GoUiObject(container_val) {
         }
 
         this.logit("uiClick", this.canvasId() + "(" + x + "," + y + ")");
-        if (!this.gameObject().isMyTurn(this.containerObject().engineObject())) {
+        if (!this.gameObject().isMyTurn()) {
             this.logit("uiClick", "not my turn");
             return;
         }
@@ -557,8 +553,8 @@ function GoUiObject(container_val) {
     };
 
     this.drawScore = function () {
-        this.blackScoreElement().textContent = this.engineObject().blackScoreString();
-        this.whiteScoreElement().textContent = this.engineObject().whiteScoreString();
+        /////////this.blackScoreElement().textContent = this.engineObject().blackScoreString();
+        /////////////this.whiteScoreElement().textContent = this.engineObject().whiteScoreString();
     };
 
     this.abend = function (str1_val, str2_val) {

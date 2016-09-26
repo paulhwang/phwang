@@ -27,10 +27,6 @@ function GoHandlerObject(container_val) {
         return this.containerObject().uiObject();
     };
 
-    this.engineObject = function () {
-        return this.containerObject().engineObject();
-    };
-
     this.aMoveIsPlayed = function (str_val) {
         //this.goLog("aMoveIsPlayed", str_val);
         this.gameObject().decrementOutstandingUiClick();
@@ -42,7 +38,7 @@ function GoHandlerObject(container_val) {
     this.updataBoard = function (str_val) {
         //this.goLog("updataBoard", str_val);
         this.boardObject().decodeBoard(str_val);
-        this.uiObject().drawBoard(this.engineObject());
+        this.uiObject().drawBoard();
     };
 
     this.boardUpdate = function (str_val) {
@@ -53,7 +49,7 @@ function GoHandlerObject(container_val) {
     this.aSpecialMoveIsPlayed = function (special_str) {
         //GO.goLog("GoHandlerObject.aSpecialMoveIsPlayed", special_str);
         this.gameObject().receiveSpecialMoveFromOpponent(special_str);
-        this.uiObject().drawBoard(this.engineObject());
+        this.uiObject().drawBoard();
     };
 
     this.goAbend = function (str1_val, str2_val) {
