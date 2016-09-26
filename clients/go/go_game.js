@@ -436,11 +436,10 @@ function GoGameObject(container_val, str_val) {
         }
     };
 
-/*
     this.processTheWholeMoveList = function () {
         this.boardObject().resetBoardObjectData();
         this.resetGameObjectPartialData();
-
+/*
         this.goLog("processTheWholeMoveLst", "totalMoves=" + this.totalMoves());
         var move;
         var i = 0;
@@ -450,8 +449,8 @@ function GoGameObject(container_val, str_val) {
             this.setNextColor(GO.getOppositeColor(move.myColor()));
             i += 1;
         }
-    };
 */
+    };
 
     this.isMyTurn = function () {
         if (this.configObject().playBothSides()) {
