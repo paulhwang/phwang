@@ -16,7 +16,10 @@ function topicObject (session_val) {
     this.theQueueModule = require("./queue_module.js");
     this.theGoContainerModule = require("./go_game/go_container_module.js")
 
-    this.theSessionObject = session_val;
+    this.theSessionArray = [2];
+    this.theSessionArray[0] = session_val;
+    this.theSessionArrayLength = 1;
+    this.theSessionObject =  this.theSessionArray[0];
 
     this.objectName = function () {
         return "topicObject";
@@ -40,6 +43,14 @@ function topicObject (session_val) {
 
     this.goContainerObject = function () {
         return this.theGoContainerObject;
+    };
+
+    this.sessionArray = function (index_val) {
+        return this.theSessionArray[index_val];
+    };
+
+    this.sessionArrayLength = function () {
+        return this.theSessionArrayLength;
     };
 
     this.receiveQueue = function () {
@@ -74,7 +85,12 @@ function topicObject (session_val) {
             if (!data) {
                 return;
             }
-            this.sessionObject().transmitQueue().enQueue(data);
+
+            var i = 0;
+            while (i < this.sessionArrayLength()) {
+                this.sessionArray(i).transmitQueue().enQueue(data);
+                i += 1;
+            }
         }
     };
 
