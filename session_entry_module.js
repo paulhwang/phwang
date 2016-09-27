@@ -138,11 +138,18 @@ function SessionEntryObject() {
     this.enqueueReceiveData = function (data_val) {
         this.debug(true, "enqueueReceiveData", data_val);
         this.receiveQueue().enQueue(data_val);
+        this.receiveRing().enQueue(data_val);
     };
 
     this.dequeueReceiveData = function () {
         var data = this.receiveQueue().deQueue();
         this.debug(true, "dequeueReceiveData", data);
+
+        var data1 = this.receiveRing().deQueue();
+        if (data !== data1) {
+            this.abend("dequeueReceiveData", "queue and ring not match");
+        }
+
         return data;
     };
 }

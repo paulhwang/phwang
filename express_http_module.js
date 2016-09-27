@@ -7,7 +7,6 @@
 //var util = require("./util_module.js");
 var root = require("./root_module.js");
 var queue = require("./queue_module.js");
-var ring = require("./ring_module.js");
 var link_entry = require("./link_entry_module.js");
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -374,10 +373,6 @@ function ExpressHttpObject(root_object_val) {
 
         this.debug(true, "getSessionData", "queue_size=" + session.receiveQueue().size());
         var data = session.dequeueReceiveData();
-        var data1 = session.receiveRing().deQueue();
-        if (data !== data1) {
-            this.logit("*****Abend: getSessionData", "queue and ring not match");
-        }
         if (!data) {
             this.debug(false, "getSessionData", "null data");
             res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
@@ -441,14 +436,12 @@ function ExpressHttpObject(root_object_val) {
 
         if (xmt_seq === my_session.up_seq) {
             topic.enqueAndPocessReceiveData(req.headers.data);
-            his_session.receiveQueue().enQueue(req.headers.data);
-            his_session.receiveRing().enQueue(req.headers.data);
+            his_session.enqueueReceiveData(req.headers.data);
             my_session.up_seq += 1;
         } else if (xmt_seq < my_session.up_seq) {
             if (xmt_seq === 0) {
                 topic.enqueAndPocessReceiveData(req.headers.data);
-                his_session.receiveQueue().enQueue(req.headers.data);
-                his_session.receiveRing().enQueue(req.headers.data);
+                his_session.enqueueReceiveData(req.headers.data);
                 my_session.up_seq = 1;
                 this.logit("putSessionData", req.headers.data + " post " + xmt_seq + " reset");
             } else {
