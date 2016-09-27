@@ -373,7 +373,7 @@ function ExpressHttpObject(root_object_val) {
         }
 
         this.debug(true, "getSessionData", "queue_size=" + session.receiveQueue().size());
-        var data = session.receiveQueue().deQueue();
+        var data = session.dequeueReceiveData();
         var data1 = session.receiveRing().deQueue();
         if (data !== data1) {
             this.logit("*****Abend: getSessionData", "queue and ring not match");
@@ -385,7 +385,7 @@ function ExpressHttpObject(root_object_val) {
         }
 
         //session.topicObject().receiveStringData(data);
-        var res_data = session.transmitQueue().deQueue();
+        var res_data = session.dequeueTransmitData();
         this.logit("getSessionData", "res_data=" + res_data);
 
         var json_str = JSON.stringify({
