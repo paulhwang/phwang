@@ -111,6 +111,27 @@ function GoEngineObject(container_object_val) {
         return this.boardObject().boardArray();
     };
 
+    this.deadStoneCount = function () {
+        return this.theDeadStoneCount;
+    };
+
+    this.setDeadStoneCount = function (x_val, y_val) {
+        this.theDeadStoneCount = "";
+        if (x_val < 10) {
+           this.theDeadStoneCount = this.theDeadStoneCount + 0;
+        }
+        this.theDeadStoneCount = this.theDeadStoneCount + x_val;
+
+        if (y_val < 10) {
+            this.theDeadStoneCount = this.theDeadStoneCount + 0;
+        }
+        this.theDeadStoneCount = this.theDeadStoneCount + y_val;
+    };
+
+    this.clearDeadStoneCount = function () {
+        this.theDeadStoneCount = null;
+    };
+
     this.lastDeadStone = function () {
         return this.theLastDeadStone;
     };
@@ -621,6 +642,7 @@ function GoEngineObject(container_object_val) {
         this.resetMarkedGroupLists();
         this.resetEmptyGroupLists();
 
+       this.theDeadStoneCount = null;
        this.theLastDeadStone = null;
 
         this.theBlackCaptureStones = 0;
