@@ -131,7 +131,7 @@ function SessionEntryObject() {
 
     this.dequeueTransmitData = function () {
         var data = this.transmitQueue().deQueue();
-        this.debug(true, "dequeueTransmitData", data);
+        this.debug(false, "dequeueTransmitData", data);
         return data;
     };
 

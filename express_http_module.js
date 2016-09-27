@@ -371,22 +371,17 @@ function ExpressHttpObject(root_object_val) {
             return;
         }
 
-        this.debug(true, "getSessionData", "queue_size=" + session.receiveQueue().size());
-        var data = session.dequeueReceiveData();
-        if (!data) {
-            this.debug(false, "getSessionData", "null data");
+        var res_data = session.dequeueTransmitData();
+        if (!res_data) {
+            this.debug(false, "getSessionData", "no data");
             res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
             return;
         }
-
-        //session.topicObject().receiveStringData(data);
-        var res_data = session.dequeueTransmitData();
         this.logit("getSessionData", "res_data=" + res_data);
 
         var json_str = JSON.stringify({
                         command: req.headers.command,
                         ajax_id: req.headers.ajax_id,
-                        //data: data,
                         res_data: res_data,
                     });
 
