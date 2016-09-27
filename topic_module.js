@@ -67,11 +67,11 @@ function topicObject () {
     };
 
     this.abend = function (str1_val, str2_val) {
-        this.utilModule().abend(this.objectName() + "." + str1_val, str2_val);
+        this.utilModule().utilAbend(this.objectName() + "." + str1_val, str2_val);
     };
 
     this.logit = function (str1_val, str2_val) {
-        this.utilModule().logit(this.objectName() + "." + str1_val, str2_val);
+        this.utilModule().utilLogit(this.objectName() + "." + str1_val, str2_val);
     };
 
     this.addAdditionalSession = function (session_val) {
@@ -80,6 +80,7 @@ function topicObject () {
     };
 
     this.enqueueTransmitData = function (data_val) {
+        this.debug(true, "enqueueTransmitData", data_val);
         this.transmitQueue().enQueue(data_val);
     };
 
@@ -92,7 +93,7 @@ function topicObject () {
 
             var i = 0;
             while (i < this.sessionArrayLength()) {
-                this.sessionArray(i).transmitQueue().enQueue(data);
+                this.sessionArray(i).enqueueTransmitData(data);
                 i += 1;
             }
         }
