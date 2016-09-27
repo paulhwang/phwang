@@ -116,8 +116,8 @@ function SessionObject(root_object_val) {
         this.theClientObject = client_val;
     };
 
-    this.receiveData = function (str_vall, res_data_val) {
-        this.clientReceiveCallbackFunc()(this.clientObject(), str_vall, res_data_val);
+    this.receiveData = function (res_data_val) {
+        this.clientReceiveCallbackFunc()(this.clientObject(), res_data_val);
     };
 
     this.utilObject = function () {
@@ -224,11 +224,9 @@ function SessionObject(root_object_val) {
 }
 
 function ajaxGetSessionDataCallback (data_val, res_data_val, session_val) {
-    if (data_val) {
-        //session_val.debug(true, "ajaxGetSessionDataCallback", "data=" + data_val);
-        //session_val.debug(true, "ajaxGetSessionDataCallback", "res_data=" + res_data_val);
-        session_val.logit("ajaxGetSessionDataCallback", "data=" + data_val);
-        session_val.receiveData(data_val, res_data_val);
+    if (res_data_val) {
+        session_val.debug(true, "ajaxGetSessionDataCallback", "res_data=" + res_data_val);
+        session_val.receiveData(res_data_val);
     }
     session_val.ajaxObject().getSessionData(session_val.ajaxId(), session_val);
 }

@@ -386,12 +386,12 @@ function ExpressHttpObject(root_object_val) {
         var json_str = JSON.stringify({
                         command: req.headers.command,
                         ajax_id: req.headers.ajax_id,
-                        data: data,
+                        //data: data,
                         res_data: res_data,
                     });
 
         this.debug(false, "getSessionData", "ajax_id=" + req.headers.ajax_id);
-        this.logit("getSessionData", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.his_name + "=>" + req.headers.my_name + " {" + data + "}");
+        this.logit("getSessionData", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.his_name + "=>" + req.headers.my_name + " {" + res_data + "}");
         this.logit("getSessionData", json_str);
         res.type('application/json');
         res.send(json_str);

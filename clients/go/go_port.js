@@ -88,17 +88,14 @@ function GoPortObject(container_val) {
         this.sessionMgrObject().transmitData();
     };
 
-    this.receiveStringData = function (str_val, res_json_val) {
-        //this.logit("receiveStringData", "req_data=" + str_val);
+    this.receiveStringData = function (res_json_val) {
         this.logit("receiveStringData", "res_json_data=" + res_json_val);
 
-        if (str_val == null) {
-            this.abend("receiveStringData", "null input");
+        if (res_json_val == null) {
+            this.abend("receiveStringData", "null res_json_val");
             return;
         }
 
-        //var req_code = str_val.slice(0, this.GO_PROTOCOL_CODE_SIZE);
-        //var req_data = str_val.slice(this.GO_PROTOCOL_CODE_SIZE);
         var res_data = JSON.parse(res_json_val);
 
         /* board data */
