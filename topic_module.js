@@ -84,9 +84,26 @@ function topicObject () {
         this.transmitQueue().enQueue(data_val);
     };
 
+    this.dequeueTransmitData = function () {
+        var data = this.transmitQueue().deQueue();
+        this.debug(true, "dequeueTransmitData", data);
+        return data;
+    };
+
+    this.enqueueReceiveData = function (data_val) {
+        this.debug(true, "enqueueReceiveData", data_val);
+        this.receiveQueue().enQueue(data_val);
+    };
+
+    this.dequeueReceiveData = function () {
+        var data = this.receiveQueue().deQueue();
+        this.debug(true, "dequeueReceiveData", data);
+        return data;
+    };
+
     this.processTransmitData = function () {
         while (true) {
-            var data = this.transmitQueue().deQueue();
+            var data = this.dequeueTransmitData();
             if (!data) {
                 return;
             }
@@ -109,7 +126,7 @@ function topicObject () {
 
     this.processReceiveData = function () {
         while (true) {
-            var data = this.receiveQueue().deQueue();
+            var data = this.dequeueReceiveData();
             if (!data) {
                 return;
             }
@@ -118,8 +135,8 @@ function topicObject () {
     };
 
     this.enqueAndPocessReceiveData = function (data_val) {
-        this.debug(true, "processReceiveData", data_val);
-        this.receiveQueue().enQueue(data_val);
+        this.debug(true, "enqueAndPocessReceiveData", data_val);
+        this.enqueueReceiveData(data_val);
         this.processReceiveData();
     };
 

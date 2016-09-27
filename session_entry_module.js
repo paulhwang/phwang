@@ -128,4 +128,21 @@ function SessionEntryObject() {
         this.debug(true, "enqueueTransmitData", data_val);
         this.transmitQueue().enQueue(data_val);
     };
+
+    this.dequeueTransmitData = function () {
+        var data = this.transmitQueue().deQueue();
+        this.debug(true, "dequeueTransmitData", data);
+        return data;
+    };
+
+    this.enqueueReceiveData = function (data_val) {
+        this.debug(true, "enqueueReceiveData", data_val);
+        this.receiveQueue().enQueue(data_val);
+    };
+
+    this.dequeueReceiveData = function () {
+        var data = this.receiveQueue().deQueue();
+        this.debug(true, "dequeueReceiveData", data);
+        return data;
+    };
 }
