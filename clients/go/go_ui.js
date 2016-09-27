@@ -553,8 +553,8 @@ function GoUiObject(container_val) {
     };
 
     this.drawScore = function () {
-        /////////this.blackScoreElement().textContent = this.engineObject().blackScoreString();
-        /////////////this.whiteScoreElement().textContent = this.engineObject().whiteScoreString();
+        this.blackScoreElement().textContent = this.gameObject().blackScoreString();
+        this.whiteScoreElement().textContent = this.gameObject().whiteScoreString();
     };
 
     this.abend = function (str1_val, str2_val) {

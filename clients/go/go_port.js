@@ -119,6 +119,13 @@ function GoPortObject(container_val) {
             this.gameObject().setValidLastDeadInfo(false);
         }
 
+        /* capture count */
+        if (res_data.capture_count !== null) {
+            this.gameObject().setBlackCaptureStones(Number(res_data.capture_count.slice(0, 3)));
+            this.gameObject().setWhiteCaptureStones(Number(res_data.capture_count.slice(3, 6)));
+            //this.logit("receiveStringData", "res_data.capture_count=(" + this.gameObject().blackCaptureStones() + "," + this.gameObject().whiteCaptureStones()  + ")");
+       }
+
 
 /*
         if (req_code == this.GO_PROTOCOL_CODE_MOVE_DATA) {

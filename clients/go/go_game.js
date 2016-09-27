@@ -32,6 +32,22 @@ function GoGameObject(container_val, str_val) {
         return this.containerObject().portObject();
     };
 
+    this.blackCaptureStones = function () {
+        return this.theBlackCaptureStones;
+    };
+
+    this.whiteCaptureStones = function () {
+        return this.theWhiteCaptureStones;
+    };
+
+    this.setBlackCaptureStones = function (count_val) {
+        this.theBlackCaptureStones = count_val;
+    };
+
+    this.setWhiteCaptureStones = function (count_val) {
+        this.theWhiteCaptureStones = count_val;
+    };
+
     this.lastDeadX = function () {
         return this.theLastDeadX;
     };
@@ -643,6 +659,31 @@ function GoGameObject(container_val, str_val) {
         return true;
     };
 
+    this.blackScoreString = function () {
+        if (!this.gameIsOver()) {
+            return "Black: " + this.blackCaptureStones();
+        }
+        else {
+            return "Black: " + this.blackScore() + " ("
+                    + this.blackCaptureStones() + " + "
+                    + this.blackLandScore() + " + "
+                    + this.whiteDeadGroupList().totalStoneCount() + " x 2 + "
+                    + this.configObject().realKomiPoint() + ")";
+        }
+    };
+
+    this.whiteScoreString = function () {
+        if (!this.gameIsOver()) {
+            return "White: " + this.whiteCaptureStones();
+        }
+        else {
+            return "White: " + this.whiteScore() + " ("
+                    + this.whiteCaptureStones() + " + "
+                    + this.whiteLandScore() + " + "
+                    + this.blackDeadGroupList().totalStoneCount() + " x 2)";
+        }
+    };
+
     this.theOutstandingUiClick = 0;
     this.resetGameObjectData();
     //str_val = this.containerObject().restoreLastGame();
@@ -650,10 +691,10 @@ function GoGameObject(container_val, str_val) {
         //this.decodeMoveList(str_val);
     }
 
+    this.theBlackCaptureStones = 0;
+    this.theWhiteCaptureStones = 0;
+
     this.theLastDeadX = 0;
     this.theLastDeadY = 0;
     this.theValidLastDeadInfo = false;
-
-    this.theBlackCaptureStones = 0;
-    this.theWhiteCaptureStones = 0;
 }
