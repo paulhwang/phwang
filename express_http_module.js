@@ -404,7 +404,6 @@ function ExpressHttpObject(root_object_val) {
 
         var session_id = Number(req.headers.session_id);
         var xmt_seq = Number(req.headers.xmt_seq);
-        var topic;
 
         var link = this.getLink(req, res);
         if (!link) {
@@ -418,19 +417,18 @@ function ExpressHttpObject(root_object_val) {
             this.abend("putSessionData", "null my_session" + " session_id=" + req.headers.session_id + " my_name=" + req.headers.my_name + " his_name=" + req.headers.his_name);
             return;
         }
-        topic = my_session.topicObject();
 
         this.debug(true, "putSessionData", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.my_name + "=>" + req.headers.his_name + " {" + req.headers.data + "} " + req.headers.xmt_seq + "=>" + my_session.up_seq);
 
         var his_session = my_session.hisSession();
 
         if (xmt_seq === my_session.up_seq) {
-            topic.enqueAndPocessReceiveData(req.headers.data);
+            my_session.topicObject().enqueAndPocessReceiveData(req.headers.data);
             his_session.enqueueReceiveData(req.headers.data);
             my_session.up_seq += 1;
         } else if (xmt_seq < my_session.up_seq) {
             if (xmt_seq === 0) {
-                topic.enqueAndPocessReceiveData(req.headers.data);
+                my_session.topicObject().enqueAndPocessReceiveData(req.headers.data);
                 his_session.enqueueReceiveData(req.headers.data);
                 my_session.up_seq = 1;
                 this.logit("putSessionData", req.headers.data + " post " + xmt_seq + " reset");
