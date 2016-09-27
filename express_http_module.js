@@ -434,6 +434,19 @@ function ExpressHttpObject(root_object_val) {
             }
         }
 
+        //his_session = my_session.hisSession();
+        this.debug(true, "putSessionData", "***hisSession=" + his_session.myName());
+        this.debug(true, "putSessionData", "***hisSession=" + his_session.hisName());
+        this.debug(true, "putSessionData", "***hisSession=" + his_session.hisSession().hisName());
+        this.debug(true, "putSessionData", "***hisSession=" + his_session.hisSession().sessionId());
+        this.debug(true, "putSessionData", "***hisSession=" + his_session.sessionId());
+        this.debug(true, "putSessionData", "***hisSession=" + my_session.hisSession().sessionId());
+        this.debug(true, "putSessionData", "***hisSession=" + my_session.sessionId());
+        if (his_session !== my_session.hisSession()) {
+          //this.abend(true, "putSessionData", "***hisSession=" + his_session.hisSession().hisName());
+
+        }
+
         if (xmt_seq === my_session.up_seq) {
             topic.enqueAndPocessReceiveData(req.headers.data);
             his_session.enqueueReceiveData(req.headers.data);

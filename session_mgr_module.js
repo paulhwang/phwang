@@ -111,11 +111,18 @@ function SessionMgrObject(root_object_val) {
         if (!session) {
             var topic = this.topicModule().malloc();
             session = this.mallocIt(my_name_val, his_name_val, topic);
-            var his_session = this.mallocIt(his_name_val, my_name_val, topic);
-            session.setHisSession(his_session);
-            his_session.setHisSession(session);
             this.sessionQueue().enQueue(session);
-            this.sessionQueue().enQueue(his_session);
+
+            //if (my_name_val === his_name_val) {
+            if (false) {
+                session.setHisName(his_name_val);
+                session.setHisSession(session);
+            } else {
+                var his_session = this.mallocIt(his_name_val, my_name_val, topic);
+                session.setHisSession(his_session);
+                his_session.setHisSession(session);
+                this.sessionQueue().enQueue(his_session);
+            }
         }
         return session;
     };
