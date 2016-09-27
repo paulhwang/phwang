@@ -365,12 +365,6 @@ function ExpressHttpObject(root_object_val) {
             return;
         }
 
-        if (session.receiveQueue().size() === 0) {
-            this.debug(false, "getSessionData", "empty queue");
-            res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-            return;
-        }
-
         var res_data = session.dequeueTransmitData();
         if (!res_data) {
             this.debug(false, "getSessionData", "no data");
@@ -415,16 +409,12 @@ function ExpressHttpObject(root_object_val) {
 
         this.debug(true, "putSessionData", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.my_name + "=>" + req.headers.his_name + " {" + req.headers.data + "} " + req.headers.xmt_seq + "=>" + my_session.up_seq);
 
-        var his_session = my_session.hisSession();
-
         if (xmt_seq === my_session.up_seq) {
             my_session.topicObject().enqueAndPocessReceiveData(req.headers.data);
-            his_session.enqueueReceiveData(req.headers.data);
             my_session.up_seq += 1;
         } else if (xmt_seq < my_session.up_seq) {
             if (xmt_seq === 0) {
                 my_session.topicObject().enqueAndPocessReceiveData(req.headers.data);
-                his_session.enqueueReceiveData(req.headers.data);
                 my_session.up_seq = 1;
                 this.logit("putSessionData", req.headers.data + " post " + xmt_seq + " reset");
             } else {
@@ -434,7 +424,7 @@ function ExpressHttpObject(root_object_val) {
             this.logit("***abend: putSessionData", req.headers.data + " post seq=" + xmt_seq + " dropped");
         }
 
-        this.debug(true, "putSessionData", "queue_size=" + his_session.receiveQueue().size());
+        this.debug(true, "putSessionData", "queue_size=" + my_session.receiveQueue().size());
         res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
     };
 
