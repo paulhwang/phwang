@@ -104,7 +104,7 @@ function GoPortObject(container_val) {
                         board_data: board_data,
                         next_color: this.gameObject().nextColor(),
                         last_dead_stone: this.engineObject().lastDeadStone(),
-                        dead_stone_count: this.engineObject().deadStoneCount(),
+                        dead_stone_count: this.engineObject().captureCount(),
                     });
         this.transmitData(json_data);
     };

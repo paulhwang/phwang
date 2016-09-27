@@ -111,25 +111,31 @@ function GoEngineObject(container_object_val) {
         return this.boardObject().boardArray();
     };
 
-    this.deadStoneCount = function () {
-        return this.theDeadStoneCount;
+    this.captureCount = function () {
+        return this.theCaptureCount;
     };
 
-    this.setDeadStoneCount = function (x_val, y_val) {
-        this.theDeadStoneCount = "";
-        if (x_val < 10) {
-           this.theDeadStoneCount = this.theDeadStoneCount + 0;
+    this.setCaptureCount = function () {
+        this.theCaptureCount = "";
+        if (this.blackCaptureStones() < 100) {
+           this.theCaptureCount = this.theCaptureCount + 0;
         }
-        this.theDeadStoneCount = this.theDeadStoneCount + x_val;
+        if (this.blackCaptureStones() < 10) {
+           this.theCaptureCount = this.theCaptureCount + 0;
+        }
+        this.theCaptureCount = this.theCaptureCount + this.blackCaptureStones();
 
-        if (y_val < 10) {
-            this.theDeadStoneCount = this.theDeadStoneCount + 0;
+        if (this.whiteCaptureStones() < 100) {
+            this.theCaptureCount = this.theCaptureCount + 0;
         }
-        this.theDeadStoneCount = this.theDeadStoneCount + y_val;
+        if (this.whiteCaptureStones() < 10) {
+            this.theCaptureCount = this.theCaptureCount + 0;
+        }
+        this.theCaptureCount = this.theCaptureCount + this.whiteCaptureStones();
     };
 
-    this.clearDeadStoneCount = function () {
-        this.theDeadStoneCount = null;
+    this.clearCaptureCount = function () {
+        this.theCaptureCount = null;
     };
 
     this.lastDeadStone = function () {
@@ -171,10 +177,12 @@ function GoEngineObject(container_object_val) {
 
     this.addBlackCaptureStones = function (count_val) {
         this.theBlackCaptureStones += count_val;
+        this.setCaptureCount();
     };
 
     this.addWhiteCaptureStones = function (count_val) {
         this.theWhiteCaptureStones += count_val;
+        this.setCaptureCount();
     };
 
     this.blackScore = function () {
@@ -642,7 +650,7 @@ function GoEngineObject(container_object_val) {
         this.resetMarkedGroupLists();
         this.resetEmptyGroupLists();
 
-       this.theDeadStoneCount = null;
+       this.theCaptureCount = null;
        this.theLastDeadStone = null;
 
         this.theBlackCaptureStones = 0;
