@@ -405,7 +405,6 @@ function ExpressHttpObject(root_object_val) {
         var session_id = Number(req.headers.session_id);
         var xmt_seq = Number(req.headers.xmt_seq);
         var topic;
-        var his_session;
 
         var link = this.getLink(req, res);
         if (!link) {
@@ -423,7 +422,7 @@ function ExpressHttpObject(root_object_val) {
 
         this.debug(true, "putSessionData", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.my_name + "=>" + req.headers.his_name + " {" + req.headers.data + "} " + req.headers.xmt_seq + "=>" + my_session.up_seq);
 
-        his_session = my_session.hisSession();
+        var his_session = my_session.hisSession();
 
         if (xmt_seq === my_session.up_seq) {
             topic.enqueAndPocessReceiveData(req.headers.data);
