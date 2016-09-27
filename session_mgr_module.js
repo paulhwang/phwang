@@ -113,8 +113,7 @@ function SessionMgrObject(root_object_val) {
             session = this.mallocIt(my_name_val, his_name_val, topic);
             this.sessionQueue().enQueue(session);
 
-            //if (my_name_val === his_name_val) {
-            if (false) {
+            if (my_name_val === his_name_val) {
                 session.setHisName(his_name_val);
                 session.setHisSession(session);
             } else {

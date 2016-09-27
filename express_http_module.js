@@ -423,29 +423,7 @@ function ExpressHttpObject(root_object_val) {
 
         this.debug(true, "putSessionData", "(" + req.headers.link_id + "," + req.headers.session_id + ") "  + req.headers.my_name + "=>" + req.headers.his_name + " {" + req.headers.data + "} " + req.headers.xmt_seq + "=>" + my_session.up_seq);
 
-        if (req.headers.my_name === req.headers.his_name) {
-            his_session = my_session;
-        } else {
-            var his_session = this.sessionMgrObject().searchIt(req.headers.his_name, req.headers.my_name, my_session.hisSession().sessionId());
-            if (!his_session) {
-                res.send(this.jsonStingifyData(req.headers.command, req.headers.ajax_id, null));
-                this.abend("putSessionData", "null his_session" + " session_id=" + req.headers.session_id + " my_name=" + req.headers.my_name + " his_name=" + req.headers.his_name);
-                return;
-            }
-        }
-
-        //his_session = my_session.hisSession();
-        this.debug(true, "putSessionData", "***hisSession=" + his_session.myName());
-        this.debug(true, "putSessionData", "***hisSession=" + his_session.hisName());
-        this.debug(true, "putSessionData", "***hisSession=" + his_session.hisSession().hisName());
-        this.debug(true, "putSessionData", "***hisSession=" + his_session.hisSession().sessionId());
-        this.debug(true, "putSessionData", "***hisSession=" + his_session.sessionId());
-        this.debug(true, "putSessionData", "***hisSession=" + my_session.hisSession().sessionId());
-        this.debug(true, "putSessionData", "***hisSession=" + my_session.sessionId());
-        if (his_session !== my_session.hisSession()) {
-          //this.abend(true, "putSessionData", "***hisSession=" + his_session.hisSession().hisName());
-
-        }
+        his_session = my_session.hisSession();
 
         if (xmt_seq === my_session.up_seq) {
             topic.enqueAndPocessReceiveData(req.headers.data);

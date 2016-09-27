@@ -147,7 +147,7 @@ function goContainerObject (topic_object_val) {
     };
 
     this.goLog = function (s1_val, s2_val) {
-        if (this.topicObject().sessionArrayLength === 1) {
+        if (this.topicObject().sessionArrayLength() === 1) {
             this.utilModule().utilLogit(this.topicObject().sessionArray(0).sessionId() + "<=>" +
                                         this.topicObject().sessionArray(0).sessionId() + " " + s1_val, s2_val);
         }
@@ -158,7 +158,7 @@ function goContainerObject (topic_object_val) {
     };
 
     this.goAbend = function (s1_val, s2_val) {
-        if (this.topicObject().sessionArrayLength === 1) {
+        if (this.topicObject().sessionArrayLength() === 1) {
             this.utilModule().utilAbend(this.topicObject().sessionArray(0).sessionId() + "<=>" +
                                         this.topicObject().sessionArray(0).sessionId() + " " + s1_val, s2_val);
         }
