@@ -77,12 +77,6 @@ function GoPortObject(container_val) {
         this.transmitStringData(data);
     };
 
-    this.thansmitBoardData = function (board_val) {
-        //this.goLog("transmitBoardData", "data=" + board_val);
-        //var data = this.GO_PROTOCOL_CODE_BOARD_DATA + board_val.encodeBoard();
-        //this.transmitStringData(data);
-    };
-
     this.transmitStringData = function (str_val) {
         this.sessionObject().transmitQueue().enQueue(str_val);
         this.sessionMgrObject().transmitData();
@@ -125,26 +119,6 @@ function GoPortObject(container_val) {
             this.gameObject().setWhiteCaptureStones(Number(res_data.capture_count.slice(3, 6)));
             //this.logit("receiveStringData", "res_data.capture_count=(" + this.gameObject().blackCaptureStones() + "," + this.gameObject().whiteCaptureStones()  + ")");
        }
-
-
-/*
-        if (req_code == this.GO_PROTOCOL_CODE_MOVE_DATA) {
-            //this.GoHandlerObject().aMoveIsPlayed(data);
-            this.GoHandlerObject().updataBoard(board_data);
-            return;
-        }
-
-        if (req_code == this.GO_PROTOCOL_CODE_BOARD_DATA) {
-            this.GoHandlerObject().updataBoard(data);
-            return;
-        }
-
-        if (req_code == this.GO_PROTOCOL_CODE_SPECIAL_MOVE) {
-            //this.GoHandlerObject().aSpecialMoveIsPlayed(data);
-            this.GoHandlerObject().updataBoard(board_data);
-            return;
-        }
-        */
     };
 
     this.abend = function (str1_val, str2_val) {
