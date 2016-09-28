@@ -131,25 +131,12 @@ function GoGameObject(container_val, str_val) {
         }
     };
 
-    this.passXmitted = function () {
-        return this.thePassXmitted;
-    };
-
-    this.setPassXmitted = function (data_val) {
-        this.thePassXmitted = data_val;
-    };
-
     this.passReceived = function () {
         return this.thePassReceived;
     };
 
     this.setPassReceived = function (data_val) {
         this.thePassReceived = data_val;
-    };
-
-    this.resetBothPasses = function () {
-        this.thePassXmitted = false;
-        this.thePassReceived = false;
     };
 
     this.gameIsOver = function () {
@@ -655,7 +642,6 @@ function GoGameObject(container_val, str_val) {
 
     this.resetGameObjectPartialData = function () {
         this.theNextColor = this.GO().BLACK_STONE();
-        this.thePassXmitted = false;
         this.thePassReceived = false;
         this.theGameIsOver = false;
     };

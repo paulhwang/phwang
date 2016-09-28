@@ -140,14 +140,6 @@ function GoGameObject(container_val, str_val) {
         }
     };
 
-    this.passXmitted = function () {
-        return this.thePassXmitted;
-    };
-
-    this.setPassXmitted = function (data_val) {
-        this.thePassXmitted = data_val;
-    };
-
     this.passReceived = function () {
         return this.thePassReceived;
     };
@@ -156,9 +148,12 @@ function GoGameObject(container_val, str_val) {
         this.thePassReceived = data_val;
     };
 
-    this.resetBothPasses = function () {
-        this.thePassXmitted = false;
-        this.thePassReceived = false;
+    this.gameIsOver = function () {
+        return this.theGameIsOver;
+    };
+
+    this.setGameIsOver = function (val) {
+        this.theGameIsOver = val;
     };
 
     this.gameIsOver = function () {
@@ -191,7 +186,7 @@ function GoGameObject(container_val, str_val) {
             this.displayResult();
             return;
         } else {
-            this.resetBothPasses();
+            //this.resetBothPasses();
         }
 
         if (!this.isValidMoveOnBoard(x_val, y_val)) {
@@ -643,8 +638,8 @@ function GoGameObject(container_val, str_val) {
 
     this.resetGameObjectPartialData = function () {
         this.theNextColor = GO.BLACK_STONE();
-        this.thePassXmitted = false;
         this.thePassReceived = false;
+        this.theGameIsOver = false;
     };
 
     this.isValidMoveOnBoard = function (x_val, y_val) {
