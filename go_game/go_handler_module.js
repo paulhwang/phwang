@@ -54,10 +54,12 @@ function GoHandlerObject(container_val) {
 
     this.aMoveIsPlayed = function (str_val) {
         //this.goLog("aMoveIsPlayed", str_val);
-        //this.gameObject().decrementOutstandingUiClick();
         var move = this.moveModule().malloc(str_val, 0, 0, 0, 0, this.containerObject());
-        this.gameObject().addNewMoveAndFight(move);
-        ////////////////////////this.uiObject().drawBoard(this.engineObject());
+        if (this.gameObject().gameIsOver()) {
+
+        } else {
+            this.gameObject().addNewMoveAndFight(move);
+        }
     };
 
     this.updateBoard______ = function (str_val) {

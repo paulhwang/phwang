@@ -232,7 +232,7 @@ function GoUiObject(container_val) {
         this.drawStones();
         if (this.gameObject().gameIsOver()) {
             this.drawMarkedStones();
-            this.drawLandMarks();
+            //////////////////this.drawLandMarks();
         }
         this.drawCandidateStone();
         this.drawScore();

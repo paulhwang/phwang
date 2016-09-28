@@ -171,10 +171,14 @@ function GoGameObject(container_val, str_val) {
         this.goLog("GoGameObject.enterGameFromUi", "(" + x_val + "," + y_val + ")");
 
         if (this.gameIsOver()) {
+            /*
             this.goLog("enterGameFromUi", "game is over");
             this.engineObject().markDeadGroup(x_val, y_val);
             this.engineObject().abendEngine();
             this.displayResult();
+            */
+            var move = new GoMoveObject(null, x_val, y_val, GO.THE_MARK_DEAD_STONE_DIFF, this.totalMoves(), this.containerObject());
+            this.portObject().transmitMoveData(move);
             return;
         } else {
             //this.resetBothPasses();
@@ -595,6 +599,7 @@ function GoGameObject(container_val, str_val) {
         if (!this.gameIsOver()) {
             return "Black: " + this.blackCaptureStones();
         }
+        /*
         else {
             return "Black: " + this.blackScore() + " ("
                     + this.blackCaptureStones() + " + "
@@ -602,18 +607,21 @@ function GoGameObject(container_val, str_val) {
                     + this.whiteDeadGroupList().totalStoneCount() + " x 2 + "
                     + this.configObject().realKomiPoint() + ")";
         }
+        */
     };
 
     this.whiteScoreString = function () {
         if (!this.gameIsOver()) {
             return "White: " + this.whiteCaptureStones();
         }
+        /*
         else {
             return "White: " + this.whiteScore() + " ("
                     + this.whiteCaptureStones() + " + "
                     + this.whiteLandScore() + " + "
                     + this.blackDeadGroupList().totalStoneCount() + " x 2)";
         }
+        */
     };
 
     this.theOutstandingUiClick = 0;
