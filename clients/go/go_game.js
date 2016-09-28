@@ -140,25 +140,12 @@ function GoGameObject(container_val, str_val) {
         }
     };
 
-    this.passReceived = function () {
-        return this.thePassReceived;
-    };
-
-    this.setPassReceived = function (data_val) {
-        this.thePassReceived = data_val;
-    };
-
     this.gameIsOver = function () {
         return this.theGameIsOver;
     };
 
     this.setGameIsOver = function (val) {
         this.theGameIsOver = val;
-    };
-
-    this.gameIsOver = function () {
-        //this.goLog("gameIsOver_1", "t:" + this.passXmitted + " r:" + this.passReceived);
-        return this.thePassXmitted && this.thePassReceived;
     };
 
     this.getLastMove = function () {
@@ -344,22 +331,7 @@ function GoGameObject(container_val, str_val) {
 
     this.processPassMoveFromUi = function () {
         this.goLog("processPassMoveFromUi", "");
-        if (!this.configObject().playBothSides()) {
-            if (!this.passXmitted()) {
-                this.setPassXmitted(true);
-                this.processPassMove();
-                this.portObject().transmitSpecialMoveData(GO.PASS_MOVE());
-            }
-        } else {
-            if (!this.passReceived()) {
-                this.portObject().transmitSpecialMoveData(GO.PASS_MOVE());
-            } else {
-                if (!this.passXmitted()) {
-                    this.setPassXmitted(true);
-                    this.processPassMove();
-                }
-            }
-        }
+        this.portObject().transmitSpecialMoveData(GO.PASS_MOVE());
     };
 
     this.processPassMove = function () {
@@ -638,7 +610,6 @@ function GoGameObject(container_val, str_val) {
 
     this.resetGameObjectPartialData = function () {
         this.theNextColor = GO.BLACK_STONE();
-        this.thePassReceived = false;
         this.theGameIsOver = false;
     };
 
