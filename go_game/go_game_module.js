@@ -135,16 +135,24 @@ function GoGameObject(container_val, str_val) {
         return this.thePassReceived;
     };
 
-    this.setPassReceived = function (data_val) {
-        this.thePassReceived = data_val;
+    this.setPassReceived = function () {
+        this.thePassReceived = true;
+    };
+
+    this.clearPassReceived = function () {
+        this.thePassReceived = false;
     };
 
     this.gameIsOver = function () {
         return this.theGameIsOver;
     };
 
-    this.setGameIsOver = function (val) {
-        this.theGameIsOver = val;
+    this.setGameIsOver = function () {
+        this.theGameIsOver = true;
+    };
+
+    this.clearGameIsOver = function () {
+        this.theGameIsOver = false;
     };
 
     this.getLastMove = function () {
@@ -199,7 +207,7 @@ function GoGameObject(container_val, str_val) {
             return;
         }
 
-        this.setPassReceived(false);
+        this.clearPassReceived();
         this.insertMoveToMoveList(move_val);
         this.engineObject().enterWar(move_val);
         this.setNextColor(this.GO().getOppositeColor(move_val.myColor()));
@@ -276,7 +284,7 @@ function GoGameObject(container_val, str_val) {
 
     this.processDoubleBackwardMove = function () {
         //goDebug("goProcessBackwardMoveFromUi", "");
-        this.resetBothPasses();
+        this.clearPassReceived();
         if (this.totalMoves() <= this.configObject().handicapPoint()) {
             return;
         }
@@ -294,7 +302,7 @@ function GoGameObject(container_val, str_val) {
 
     this.processBackwardMove = function () {
         this.goLog("processBackwardMove", "");
-        this.resetBothPasses();
+        this.clearPassReceived();
         if (this.totalMoves() <= this.configObject().handicapPoint()) {
             return;
         }
@@ -310,7 +318,7 @@ function GoGameObject(container_val, str_val) {
     };
 
     this.processForwardMove = function () {
-        this.resetBothPasses();
+        this.clearPassReceived();
         if (this.totalMoves() > this.maxMove()) {
             this.goAbend("processForwardMove", "totalMoves=" + this.totalMoves_() + " maxMove=" + this.naxMove_());
             return;
@@ -330,7 +338,7 @@ function GoGameObject(container_val, str_val) {
     };
 
     this.processDoubleForwardMove = function () {
-        this.resetBothPasses();
+        this.clearPassReceived();
         if (this.totalMoves() > this.maxMove()) {
             this.goAbend("processDoubleForwardMove", "totalMoves=" + this.totalMoves() + " maxMove=" + this.maxMove_());
             return;
@@ -366,12 +374,12 @@ function GoGameObject(container_val, str_val) {
         this.goLog(".processPassMove", "");
 
         if (!this.passReceived()) {
-            this.setPassReceived(true);
+            this.setPassReceived();
             this.setNextColor(this.GO().getOppositeColor(this.nextColor()));
             return;
         }
 
-        this.setGameIsOver(true);
+        this.setGameIsOver();
 
         this.engineObject().resetMarkedGroupLists();
         this.displayResult();
