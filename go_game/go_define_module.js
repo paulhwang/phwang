@@ -66,9 +66,9 @@ function GoDefineObject () {
     this.THE_EMPTY_STONE = 0;
     this.THE_BLACK_STONE = 1;
     this.THE_WHITE_STONE = 2;
-    this.THE_BOTH_COLOR_STONE = 4;
-    this.THE_MARK_DEAD_STONE_DIFF = 8;
-    this.THE_MARK_EMPTY_STONE_DIFF = 16;
+    //this.THE_BOTH_COLOR_STONE = 2;
+    this.THE_MARK_DEAD_STONE_DIFF = 4;
+    this.THE_MARK_EMPTY_STONE_DIFF = 6;
 
     this.THE_MARKED_DEAD_BLACK_STONE  = (this.THE_BLACK_STONE + this.THE_MARK_DEAD_STONE_DIFF);
     this.THE_MARKED_DEAD_WHITE_STONE  = (this.THE_WHITE_STONE + this.THE_MARK_DEAD_STONE_DIFF);
@@ -88,7 +88,7 @@ function GoDefineObject () {
     this.EMPTY_STONE = function () {return this.THE_EMPTY_STONE;};
     this.BLACK_STONE = function () {return this.THE_BLACK_STONE;};
     this.WHITE_STONE = function () {return this.THE_WHITE_STONE;};
-    this.BOTH_COLOR_STONE = function () {return this.THE_BOTH_COLOR_STONE;};
+    //this.BOTH_COLOR_STONE = function () {return this.THE_BOTH_COLOR_STONE;};
     this.MARK_DEAD_STONE_DIFF = function () {return this.THE_MARK_DEAD_STONE_DIFF;};
     this.MARK_EMPTY_STONE_DIFF = function () {return this.THE_MARK_EMPTY_STONE_DIFF;};
 

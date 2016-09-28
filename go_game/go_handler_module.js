@@ -49,6 +49,10 @@ function GoHandlerObject(container_val) {
         return this.containerObject().gameObject();
     };
 
+    this.portObject = function () {
+        return this.containerObject().portObject();
+    };
+
     this.uiObject = function () {
         return this.containerObject().uiObject();
     };
@@ -67,10 +71,15 @@ function GoHandlerObject(container_val) {
             y += (str_val.charAt(index++) - '0');
             if ((str_val.charAt(index++) - '0') !== this.GO().MARK_DEAD_STONE_DIFF()) {
                 this.abend("aMoveIsPlayed", "game is over");
+                return;
             }
+            this.engineObject().markDeadGroup(x, y);
+            this.engineObject().abendEngine();
+            this.portObject().thansmitBoardData();
         } else {
             var move = this.moveModule().malloc(str_val, 0, 0, 0, 0, this.containerObject());
             this.gameObject().addNewMoveAndFight(move);
+            this.portObject().thansmitBoardData();
         }
     };
 
