@@ -209,6 +209,7 @@ function GoGameObject(container_val, str_val) {
             return;
         }
 
+        this.setPassReceived(false);
         this.insertMoveToMoveList(move_val);
         this.engineObject().enterWar(move_val);
         this.setNextColor(this.GO().getOppositeColor(move_val.myColor()));
