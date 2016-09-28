@@ -274,14 +274,6 @@ function GoGameObject(container_val, str_val) {
         }
     };
 
-    this.processDoubleBackwardMoveFromUi = function () {
-        //goDebug("goProcessBackwardMoveFromUi", "");
-        if (!this.configObject().playBothSides()) {
-            this.processDoubleBackwardMove();
-        }
-        this.portObject().transmitSpecialMoveData(this.GO().DOUBLE_BACKWARD_MOVE());
-    };
-
     this.processDoubleBackwardMove = function () {
         //goDebug("goProcessBackwardMoveFromUi", "");
         this.clearPassReceived();
@@ -292,14 +284,6 @@ function GoGameObject(container_val, str_val) {
         this.processTheWholeMoveList();
     };
 
-    this.processBackwardMoveFromUi = function () {
-        this.goLog("processBackwardMoveFromUi", "");
-        if (!this.configObject().playBothSides()) {
-            this.processBackwardMove();
-        }
-        this.portObject().transmitSpecialMoveData(this.GO().BACKWARD_MOVE());
-    };
-
     this.processBackwardMove = function () {
         this.goLog("processBackwardMove", "");
         this.clearPassReceived();
@@ -308,13 +292,6 @@ function GoGameObject(container_val, str_val) {
         }
         this.decrementTotalMoves();
         this.processTheWholeMoveList();
-    };
-
-    this.processForwardMoveFromUi = function () {
-        if (!this.configObject().playBothSides()) {
-            this.processForwardMove();
-        }
-        this.portObject().transmitSpecialMoveData(this.GO().FORWARD_MOVE());
     };
 
     this.processForwardMove = function () {
@@ -330,13 +307,6 @@ function GoGameObject(container_val, str_val) {
         this.processTheWholeMoveList();
     };
 
-    this.processDoubleForwardMoveFromUi = function () {
-        if (!this.configObject().playBothSides()) {
-            this.processDoubleForwardMove();
-        }
-        this.portObject().transmitSpecialMoveData(this.GO().DOUBLE_FORWARD_MOVE());
-    };
-
     this.processDoubleForwardMove = function () {
         this.clearPassReceived();
         if (this.totalMoves() > this.maxMove()) {
@@ -348,26 +318,6 @@ function GoGameObject(container_val, str_val) {
         }
         this.setTotalMoves(this.maxMove());
         this.processTheWholeMoveList();
-    };
-
-    this.processPassMoveFromUi = function () {
-        this.goLog("processPassMoveFromUi", "");
-        if (!this.configObject().playBothSides()) {
-            if (!this.passXmitted()) {
-                this.setPassXmitted(true);
-                this.processPassMove();
-                this.portObject().transmitSpecialMoveData(this.GO().PASS_MOVE());
-            }
-        } else {
-            if (!this.passReceived()) {
-                this.portObject().transmitSpecialMoveData(this.GO().PASS_MOVE());
-            } else {
-                if (!this.passXmitted()) {
-                    this.setPassXmitted(true);
-                    this.processPassMove();
-                }
-            }
-        }
     };
 
     this.processPassMove = function () {
