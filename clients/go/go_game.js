@@ -144,8 +144,12 @@ function GoGameObject(container_val, str_val) {
         return this.theGameIsOver;
     };
 
-    this.setGameIsOver = function (val) {
-        this.theGameIsOver = val;
+    this.setGameIsOver = function () {
+        this.theGameIsOver = true;
+    };
+
+    this.clearGameIsOver = function () {
+        this.theGameIsOver = false;
     };
 
     this.getLastMove = function () {

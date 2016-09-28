@@ -92,18 +92,15 @@ function GoPortObject(container_val) {
 
         var res_data = JSON.parse(res_json_val);
 
-        /* board data */
         if (res_data.board_data !== null) {
             var board_data = res_data.board_data.slice(this.GO_PROTOCOL_CODE_SIZE);
             this.GoHandlerObject().updataBoard(board_data);
         }
 
-        /* next color */
         if (res_data.next_color !== null) {
             this.gameObject().setNextColor(res_data.next_color);
         }
 
-        /* last dead stone */
         //this.logit("receiveStringData", "res_data.last_dead_stone=" + res_data.last_dead_stone);
         if (res_data.last_dead_stone !== null) {
             this.gameObject().setValidLastDeadInfo(true);
@@ -113,12 +110,19 @@ function GoPortObject(container_val) {
             this.gameObject().setValidLastDeadInfo(false);
         }
 
-        /* capture count */
         if (res_data.capture_count !== null) {
             this.gameObject().setBlackCaptureStones(Number(res_data.capture_count.slice(0, 3)));
             this.gameObject().setWhiteCaptureStones(Number(res_data.capture_count.slice(3, 6)));
             //this.logit("receiveStringData", "res_data.capture_count=(" + this.gameObject().blackCaptureStones() + "," + this.gameObject().whiteCaptureStones()  + ")");
-       }
+        }
+
+        if (res_data.game_is_over === false) {
+            this.gameObject().clearGameIsOver();
+        } else if (res_data.game_is_over === true) {
+            this.gameObject().setGameIsOver();
+        } else {
+            this.abend("receiveStringData", "game_is_over");
+        }
     };
 
     this.abend = function (str1_val, str2_val) {
