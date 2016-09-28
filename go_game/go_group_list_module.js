@@ -15,6 +15,7 @@ function GoGroupListObject(engine_val, index_val, color_val, dead_val, big_stone
     this.theGoDefineModule = require("./go_define_module.js");
     this.theUtilModule = require("./../util_module.js");
     this.theContainerModule = require("./go_container_module.js");
+    this.theGroupModule = require("./go_group_module.js");
 
     this.objectName = function () {
         return this.theObjectName;
@@ -26,6 +27,10 @@ function GoGroupListObject(engine_val, index_val, color_val, dead_val, big_stone
 
     this.utilModule = function () {
         return this.theUtilModule;
+    };
+
+    this.groupModule = function () {
+        return this.theGroupModule;
     };
 
     this.GO = function () {
@@ -164,7 +169,7 @@ function GoGroupListObject(engine_val, index_val, color_val, dead_val, big_stone
 
         exist_group1 = this.findCandidateGroup(x_val, y_val);
         if (exist_group1 == null) {
-            var new_group1 = new GoGroupObject(this);
+            var new_group1 = this.groupModule().malloc(this);
             new_group1.insertStoneToGroup(x_val, y_val, dead_val);
 
             this.setListArray(this.groupCount(), new_group1);

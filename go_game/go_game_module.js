@@ -153,8 +153,11 @@ function GoGameObject(container_val, str_val) {
     };
 
     this.gameIsOver = function () {
-        //this.goLog("gameIsOver_1", "t:" + this.passXmitted + " r:" + this.passReceived);
-        return this.thePassXmitted && this.thePassReceived;
+        return this.theGameIsOver;
+    };
+
+    this.setGameIsOver = function (val) {
+        this.theGameIsOver = val;
     };
 
     this.getLastMove = function () {
@@ -254,10 +257,7 @@ function GoGameObject(container_val, str_val) {
             return;
         }
         if (data_val === this.GO().PASS_MOVE()) {
-            if (!this.passReceived()) {
-                this.setPassReceived(true);
-                this.processPassMove();
-            }
+            this.processPassMove();
             this.portObject().thansmitBoardData();
             return;
         }
@@ -378,16 +378,20 @@ function GoGameObject(container_val, str_val) {
     this.processPassMove = function () {
         this.goLog(".processPassMove", "");
 
-        this.setNextColor(this.GO().getOppositeColor(this.nextColor()));
-
-        if (this.gameIsOver()) {
-            this.engineObject().resetMarkedGroupLists();
-            this.displayResult();
-            this.goLog("processPassMove", "game is over");
-            this.engineObject().computeScore();
-            this.engineObject().printScore();
-            this.engineObject().abendEngine();
+        if (!this.passReceived()) {
+            this.setPassReceived(true);
+            this.setNextColor(this.GO().getOppositeColor(this.nextColor()));
+            return;
         }
+
+        this.setGameIsOver(true);
+
+        this.engineObject().resetMarkedGroupLists();
+        this.displayResult();
+        this.goLog("processPassMove", "game is over");
+        this.engineObject().computeScore();
+        this.engineObject().printScore();
+        this.engineObject().abendEngine();
     };
 
     this.displayResult = function () {
@@ -653,6 +657,7 @@ function GoGameObject(container_val, str_val) {
         this.theNextColor = this.GO().BLACK_STONE();
         this.thePassXmitted = false;
         this.thePassReceived = false;
+        this.theGameIsOver = false;
     };
 
     this.theOutstandingUiClick = 0;
