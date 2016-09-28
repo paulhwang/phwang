@@ -254,10 +254,6 @@ function GoGameObject(container_val, str_val) {
     };
 
     this.processDoubleBackwardMoveFromUi = function () {
-        //goDebug("goProcessBackwardMoveFromUi", "");
-        if (!this.configObject().playBothSides()) {
-            this.processDoubleBackwardMove();
-        }
         this.portObject().transmitSpecialMoveData(GO.DOUBLE_BACKWARD_MOVE());
     };
 
@@ -272,10 +268,6 @@ function GoGameObject(container_val, str_val) {
     };
 
     this.processBackwardMoveFromUi = function () {
-        this.goLog("processBackwardMoveFromUi", "");
-        if (!this.configObject().playBothSides()) {
-            this.processBackwardMove();
-        }
         this.portObject().transmitSpecialMoveData(GO.BACKWARD_MOVE());
     };
 
@@ -290,9 +282,6 @@ function GoGameObject(container_val, str_val) {
     };
 
     this.processForwardMoveFromUi = function () {
-        if (!this.configObject().playBothSides()) {
-            this.processForwardMove();
-        }
         this.portObject().transmitSpecialMoveData(GO.FORWARD_MOVE());
     };
 
@@ -310,9 +299,6 @@ function GoGameObject(container_val, str_val) {
     };
 
     this.processDoubleForwardMoveFromUi = function () {
-        if (!this.configObject().playBothSides()) {
-            this.processDoubleForwardMove();
-        }
         this.portObject().transmitSpecialMoveData(GO.DOUBLE_FORWARD_MOVE());
     };
 
@@ -330,7 +316,6 @@ function GoGameObject(container_val, str_val) {
     };
 
     this.processPassMoveFromUi = function () {
-        this.goLog("processPassMoveFromUi", "");
         this.portObject().transmitSpecialMoveData(GO.PASS_MOVE());
     };
 
