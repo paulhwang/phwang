@@ -16,6 +16,7 @@ function GoHandlerObject(container_val) {
     //this.theGoContainerModule = require("./go_container_module.js")
     this.theGoMoveModule = require("./go_move_module.js")
     this.theGoBoardModule = require("./go_board_module.js")
+    this.theGoDefineModule = require("./go_define_module.js");
 
     this.theObjectName = "GoHandlerObject";
     this.theContainerObject = container_val;
@@ -30,6 +31,10 @@ function GoHandlerObject(container_val) {
 
     this.boardModule = function () {
         return this.theGoBoardModule;
+    };
+
+    this.GO = function () {
+        return this.theGoDefineModule;
     };
 
     this.containerObject = function () {
@@ -54,10 +59,17 @@ function GoHandlerObject(container_val) {
 
     this.aMoveIsPlayed = function (str_val) {
         //this.goLog("aMoveIsPlayed", str_val);
-        var move = this.moveModule().malloc(str_val, 0, 0, 0, 0, this.containerObject());
         if (this.gameObject().gameIsOver()) {
-
+            var index = 0;
+            var x = (str_val.charAt(index++) - '0') * 10;
+            x += (str_val.charAt(index++) - '0');
+            var y = (str_val.charAt(index++) - '0') * 10;
+            y += (str_val.charAt(index++) - '0');
+            if ((str_val.charAt(index++) - '0') !== this.GO().MARK_DEAD_STONE_DIFF()) {
+                this.abend("aMoveIsPlayed", "game is over");
+            }
         } else {
+            var move = this.moveModule().malloc(str_val, 0, 0, 0, 0, this.containerObject());
             this.gameObject().addNewMoveAndFight(move);
         }
     };
