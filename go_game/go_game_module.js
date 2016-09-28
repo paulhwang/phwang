@@ -265,6 +265,7 @@ function GoGameObject(container_val, str_val) {
         }
         if (data_val === this.GO().CONFIRM_MOVE()) {
             this.processConfirmMove();
+            this.portObject().thansmitBoardData();
             return;
         }
         if (data_val === this.GO().PLAY_ANOTHER_GAME_MOVE()) {

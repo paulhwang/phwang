@@ -115,6 +115,10 @@ function GoEngineObject(container_object_val) {
         return this.theCaptureCount;
     };
 
+    this.finalScoreString = function () {
+        return "Black wins by " + ".5";
+    };
+
     this.setCaptureCount = function () {
         this.theCaptureCount = "";
         if (this.blackCaptureStones() < 100) {
@@ -596,8 +600,8 @@ function GoEngineObject(container_object_val) {
     this.printScore = function () {
         var score1;
 
-        this.goLog("printScore", "Black: " + this.blackScore() + " (" + this.blackCaptureStones() + " + " + this.blackLandScore() + " + " + this.whiteDeadGroupList().totalStoneCount() + "*2)");
-        this.goLog("printScore", "White: " + this.whiteScore() + " (" + this.whiteCaptureStones() + " + " + this.whiteLandScore() + " + " + this.blackDeadGroupList().totalStoneCount() + "*2)");
+        this.goLog("printScore", this.blackScoreString());
+        this.goLog("printScore", this.whiteScoreString());
     /*
     if (this.black_score - this.white_score >= this.configObject().komiPoint_() + 1) {
       score1 = this.black_score - this.white_score - theGame_().komi_() - 1;
