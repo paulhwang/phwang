@@ -88,14 +88,6 @@ function GoGameObject(container_val, str_val) {
         this.theValidLastDeadInfo = val;
     };
 
-    this.maxMove = function () {
-        return this.theMaxMove;
-    };
-
-    this.setMaxMove = function (max_move_val) {
-        this.theMaxMove = max_move_val;
-    };
-
     this.totalMoves = function () {
         return this.theTotalMoves;
     };
@@ -422,7 +414,6 @@ function GoGameObject(container_val, str_val) {
     }
 
     this.resetGameObjectData = function () {
-        this.theMaxMove = 0;
         this.theTotalMoves = 0;
         this.theMovesArray = [];
         this.resetGameObjectPartialData();
