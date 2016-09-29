@@ -560,12 +560,7 @@ function GoGameObject(container_val, str_val) {
         */
     };
 
-    this.theOutstandingUiClick = 0;
     this.resetGameObjectData();
-    //str_val = this.containerObject().restoreLastGame();
-    if (str_val) {
-        //this.decodeMoveList(str_val);
-    }
 
     this.theBlackCaptureStones = 0;
     this.theWhiteCaptureStones = 0;

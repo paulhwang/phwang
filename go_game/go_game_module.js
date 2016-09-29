@@ -63,24 +63,6 @@ function GoGameObject(container_val, str_val) {
         return this.containerObject().portObject();
     };
 
-    this.outstandingUiClick = function () {
-        return this.theOutstandingUiClick;
-    };
-
-    this.incrementOutstandingUiClick = function () {
-        if (this.outstandingUiClick() !== 0) {
-            this.abend("incrementOutstandingUiClick", " " + this.outstandingUiClick());
-        }
-        this.theOutstandingUiClick += 1;
-    };
-
-    this.decrementOutstandingUiClick = function () {
-        if (this.outstandingUiClick() !== 1) {
-            this.abend("decrementOutstandingUiClick", " " + this.outstandingUiClick());
-        }
-        this.theOutstandingUiClick -= 1;
-    };
-
     this.maxMove = function () {
         return this.theMaxMove;
     };
@@ -440,17 +422,6 @@ function GoGameObject(container_val, str_val) {
         }
     };
 
-    this.initOutstandingUiClick = function () {
-        if (this.configObject().myColor() === this.GO().BLACK_STONE()) {
-            this.theOutstandingUiClick = 0;
-        } else if (this.configObject().myColor() === this.GO().WHITE_STONE()) {
-            this.theOutstandingUiClick = 1;
-        } else {
-            this.abend("GoGameObject", "color=" + this.configObject().myColor());
-        }
-        this.logit("initOutstandingUiClick", "value=" + this.outstandingUiClick());
-    };
-
     this.encodeMoveList = function (do_mine_val) {
         var buf = "";
 
@@ -604,10 +575,5 @@ function GoGameObject(container_val, str_val) {
         this.theGameIsOver = false;
     };
 
-    this.theOutstandingUiClick = 0;
     this.resetGameObjectData();
-    //str_val = this.containerObject().restoreLastGame();
-    if (str_val) {
-        //this.decodeMoveList(str_val);
-    }
 }
