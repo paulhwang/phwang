@@ -39,13 +39,17 @@ function GoUiObject(container_val) {
     this.canvasElement = function () {
         return this.theCanvasElement;
     };
-    
+
     this.blackScoreElement = function () {
         return this.theBlackScoreElement;
     };
-    
+
     this.whiteScoreElement = function () {
         return this.theWhiteScoreElement;
+    };
+
+    this.finalScoreElement = function () {
+        return this.theFinalScoreElement;
     };
 
     this.canvasContext = function () {
@@ -554,6 +558,7 @@ function GoUiObject(container_val) {
     this.drawScore = function () {
         this.blackScoreElement().textContent = this.gameObject().blackScoreString();
         this.whiteScoreElement().textContent = this.gameObject().whiteScoreString();
+        //this.finalScoreElement().textContent = this.gameObject().finalScoreString();
     };
 
     this.abend = function (str1_val, str2_val) {

@@ -112,6 +112,14 @@ function GoGameObject(container_val, str_val) {
         this.theNextColor = next_color_val;
     };
 
+    this.finalScoreString = function () {
+        return this.theFinalScoreString;
+    }
+
+    this.setFinalScoreString = function (val) {
+        this.theFinalScoreString = val;
+    }
+
     this.reverseNextColor________ = function () {
         if (this.nextColor_() === GO.BLACK_STONE_()) {
             this.nextColor__(GO.WHITE_STONE_());
@@ -568,4 +576,5 @@ function GoGameObject(container_val, str_val) {
     this.theLastDeadX = 0;
     this.theLastDeadY = 0;
     this.theValidLastDeadInfo = false;
+    this.theFinalScoreString = null;
 }
