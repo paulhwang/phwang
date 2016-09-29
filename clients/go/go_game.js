@@ -48,6 +48,22 @@ function GoGameObject(container_val, str_val) {
         this.theWhiteCaptureStones = count_val;
     };
 
+    this.lastEnteredX = function () {
+        return this.theLastEnteredX;
+    };
+
+    this.setLastEnteredX = function (val) {
+        this.theLastEnteredX = val;
+    };
+
+    this.lastEnteredY = function () {
+        return this.theLastEnteredY;
+    };
+
+    this.setLastEnteredY = function (val) {
+        this.theLastEnteredY = val;
+    };
+
     this.lastDeadX = function () {
         return this.theLastDeadX;
     };
