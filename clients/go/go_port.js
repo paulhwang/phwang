@@ -123,6 +123,18 @@ function GoPortObject(container_val) {
         } else {
             this.abend("receiveStringData", "game_is_over");
         }
+
+        if (res_data.black_score !== null) {
+            this.gameObject().setBlackScoreString(res_data.black_score);
+        }
+
+        if (res_data.white_score !== null) {
+            this.gameObject().setWhiteScoreString(res_data.white_score);
+        }
+
+        if (res_data.final_score !== null) {
+            this.gameObject().setFinalScoreString(res_data.final_score);
+        }
     };
 
     this.abend = function (str1_val, str2_val) {

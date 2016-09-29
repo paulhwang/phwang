@@ -112,8 +112,28 @@ function GoGameObject(container_val, str_val) {
         this.theNextColor = next_color_val;
     };
 
+    this.blackScoreString = function () {
+        return this.theBlackScoreString;
+    }
+
+    this.setBlackScoreString = function (val) {
+        this.theBlackScoreString = val;
+    }
+
+    this.whiteScoreString = function () {
+        return this.theWhiteScoreString;
+    }
+
+    this.setWhiteScoreString = function (val) {
+        this.theWhiteScoreString = val;
+    }
+
     this.finalScoreString = function () {
         return this.theFinalScoreString;
+    }
+
+    this.setFinalScoreString = function (val) {
+        this.theFinalScoreString = val;
     }
 
     this.setFinalScoreString = function (val) {
@@ -539,7 +559,7 @@ function GoGameObject(container_val, str_val) {
         return true;
     };
 
-    this.blackScoreString = function () {
+    this.blackScoreString1111111111111 = function () {
         if (!this.gameIsOver()) {
             return "Black: " + this.blackCaptureStones();
         }
@@ -554,7 +574,7 @@ function GoGameObject(container_val, str_val) {
         */
     };
 
-    this.whiteScoreString = function () {
+    this.whiteScoreString111111111111 = function () {
         if (!this.gameIsOver()) {
             return "White: " + this.whiteCaptureStones();
         }
