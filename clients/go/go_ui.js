@@ -91,10 +91,6 @@ function GoUiObject(container_val) {
     this.uiClickApi = function (event_x, event_y) {
         this.uiClick(event_x, event_y);
         this.drawBoard();
-        this.setEncodedMoveList(this.gameObject().encodeMoveList(true));
-        this.gameObject().saveLastGame();
-        //console.log("aa" + this.encodedMoveList_());
-        //console.log("bb" + localStorage.lastGame);
     };
 
     this.uiClick = function (event_x, event_y) {

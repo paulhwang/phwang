@@ -140,16 +140,6 @@ function GoGameObject(container_val, str_val) {
         this.theFinalScoreString = val;
     }
 
-    this.reverseNextColor________ = function () {
-        if (this.nextColor_() === GO.BLACK_STONE_()) {
-            this.nextColor__(GO.WHITE_STONE_());
-        } else if (this.nextColor_() === GO.WHITE_STONE_()) {
-            this.nextColor__(GO.BLACK_STONE_());
-        } else {
-            this.goAbend("renewNextColor", "");
-        }
-    };
-
     this.gameIsOver = function () {
         return this.theGameIsOver;
     };
@@ -395,73 +385,6 @@ function GoGameObject(container_val, str_val) {
         }
     };
 
-    this.encodeMoveList = function (do_mine_val) {
-        var buf = "";
-
-/*
-    if (do_mine_val) {
-        buf = buf + this.configObject().myColor_();
-    }
-    else {
-        buf = buf + this.configObject().hisColor_();
-    }
-*/
-
-        if (this.configObject().boardSize() < 10) {
-            buf = buf + "0";
-        }
-        buf = buf + this.configObject().boardSize();
-
-        if (this.configObject().handicapPoint() < 10) {
-            buf = buf + "0";
-        }
-        buf += this.configObject().handicapPoint();
-
-        if (this.configObject().komiPoint() < 10) {
-            buf = buf + "0";
-        }
-        buf = buf + this.configObject().komiPoint();
-
-        if (this.totalMoves() < 100) {
-            buf = buf + "0";
-        }
-        if (this.totalMoves() < 10) {
-            buf = buf + "0";
-        }
-        buf = buf + this.totalMoves();
-
-        if (this.maxMove() < 100) {
-            buf = buf + "0";
-        }
-        if (this.maxMove() < 10) {
-            buf = buf + "0";
-        }
-        buf = buf + this.maxMove();
-
-        var turn1 = 0;
-        while (turn1 < this.maxMove()) {
-            buf = buf + this.movesArray(turn1).myColor();
-
-            if (this.movesArray(turn1).xX() < 10) {
-                buf = buf + "0";
-            }
-            buf = buf + this.movesArray(turn1).xX();
-
-            if (this.movesArray(turn1).yY() < 10) {
-                buf = buf + "0";
-            }
-            buf = buf + this.movesArray(turn1).yY();
-
-            if (turn1 !== this.movesArray(turn1).turnIndex()) {
-                this.goAbend("encodeMoveList", "turn=" + turn1 + " " + this.movesArray(turn1).turnIndex());
-            }
-            turn1 += 1;
-        }
-
-        //GO.goLog("GoGameObject.encodeMoveList", buf);
-        return buf;
-    };
-
     this.goAbend = function (str1_val, str2_val) {
         return this.containerObject().goAbend("GoGameObject." + str1_val, str2_val);
     };
@@ -476,59 +399,6 @@ function GoGameObject(container_val, str_val) {
 
     this.logit = function (str1_val, str2_val) {
         return this.containerObject().goLog(this.objectName() + "." + str1_val, str2_val);
-    };
-
-    this.decodeMoveList = function (str_val) {
-        if (!str_val) {
-            //this.goAbend("decodeMoveList", "null input");
-            return;
-        }
-
-        var index = 0;
-        var total_moves1;
-        var max_moves1;
-
-        GO.goLog("GoGameObject.decodeMoveList", str_val);
-
-        //this.configObject().myColor__(str_val.charAt(index++) - '0');
-        this.configObject().setBoardSize(((str_val.charAt(index++) - '0') * 10) + (str_val.charAt(index++) - '0'));
-        this.configObject().setHandicapPoint(((str_val.charAt(index++) - '0') * 10) + (str_val.charAt(index++) - '0'));
-        this.configObject().setKomiPoint(((str_val.charAt(index++) - '0') * 10) + (str_val.charAt(index++) - '0'));
-
-        total_moves1  = (str_val.charAt(index++) - '0') * 100;
-        total_moves1 += (str_val.charAt(index++) - '0') * 10;
-        total_moves1 += (str_val.charAt(index++) - '0');
-
-        max_moves1  = (str_val.charAt(index++) - '0') * 100;
-        max_moves1 += (str_val.charAt(index++) - '0') * 10;
-        max_moves1 += (str_val.charAt(index++) - '0');
-
-        var turn1 = 0;
-        while (turn1 < max_moves1) {
-            var x, y, color;
-
-            color = str_val.charAt(index++) - '0';
-            x  = (str_val.charAt(index++) - '0') * 10;
-            x += (str_val.charAt(index++) - '0');
-            y  = (str_val.charAt(index++) - '0') * 10;
-            y += (str_val.charAt(index++) - '0');
-
-            this.addNewMoveWithoutFight(x, y, color, turn1);
-            turn1 += 1;
-        }
-        if (index !== str_val.length) {
-            this.goAbend("decodeMoveList", "index");
-        }
-
-        if (max_moves1 !== this.maxMove()) {
-            this.goAbend("decodeMoveList", "max_moves " + max_moves1 + " " + this.maxMove_());
-        }
-
-        this.setTotalMoves(total_moves1);
-
-        if (str_val !== this.encodeMoveList(true)) {
-            this.goAbend("decodeMoveList", "not equal");
-        }
     };
 
     this.saveLastGame = function () {
@@ -559,35 +429,6 @@ function GoGameObject(container_val, str_val) {
         return true;
     };
 
-    this.blackScoreString1111111111111 = function () {
-        if (!this.gameIsOver()) {
-            return "Black: " + this.blackCaptureStones();
-        }
-        /*
-        else {
-            return "Black: " + this.blackScore() + " ("
-                    + this.blackCaptureStones() + " + "
-                    + this.blackLandScore() + " + "
-                    + this.whiteDeadGroupList().totalStoneCount() + " x 2 + "
-                    + this.configObject().realKomiPoint() + ")";
-        }
-        */
-    };
-
-    this.whiteScoreString111111111111 = function () {
-        if (!this.gameIsOver()) {
-            return "White: " + this.whiteCaptureStones();
-        }
-        /*
-        else {
-            return "White: " + this.whiteScore() + " ("
-                    + this.whiteCaptureStones() + " + "
-                    + this.whiteLandScore() + " + "
-                    + this.blackDeadGroupList().totalStoneCount() + " x 2)";
-        }
-        */
-    };
-
     this.resetGameObjectData();
 
     this.theBlackCaptureStones = 0;
@@ -596,5 +437,7 @@ function GoGameObject(container_val, str_val) {
     this.theLastDeadX = 0;
     this.theLastDeadY = 0;
     this.theValidLastDeadInfo = false;
+    this.theBlackScoreString = null;
+    this.theWhiteScoreString = null;
     this.theFinalScoreString = null;
 }
