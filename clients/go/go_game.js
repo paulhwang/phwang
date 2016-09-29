@@ -72,24 +72,6 @@ function GoGameObject(container_val, str_val) {
         this.theValidLastDeadInfo = val;
     };
 
-    this.outstandingUiClick = function () {
-        return this.theOutstandingUiClick;
-    };
-
-    this.incrementOutstandingUiClick = function () {
-        if (this.outstandingUiClick() !== 0) {
-            //this.abend("incrementOutstandingUiClick", " " + this.outstandingUiClick());
-        }
-        this.theOutstandingUiClick += 1;
-    };
-
-    this.decrementOutstandingUiClick = function () {
-        if (this.outstandingUiClick() !== 1) {
-            //this.abend("decrementOutstandingUiClick", " " + this.outstandingUiClick());
-        }
-        this.theOutstandingUiClick -= 1;
-    };
-
     this.maxMove = function () {
         return this.theMaxMove;
     };
@@ -171,52 +153,17 @@ function GoGameObject(container_val, str_val) {
         this.goLog("GoGameObject.enterGameFromUi", "(" + x_val + "," + y_val + ")");
 
         if (this.gameIsOver()) {
-            /*
-            this.goLog("enterGameFromUi", "game is over");
-            this.engineObject().markDeadGroup(x_val, y_val);
-            this.engineObject().abendEngine();
-            this.displayResult();
-            */
             var move = new GoMoveObject(null, x_val, y_val, GO.THE_MARK_DEAD_STONE_DIFF, this.totalMoves(), this.containerObject());
             this.portObject().transmitMoveData(move);
             return;
-        } else {
-            //this.resetBothPasses();
         }
 
         if (!this.isValidMoveOnBoard(x_val, y_val)) {
             return;
         }
-
-        if (this.outstandingUiClick() !== 0) {
-            //return;
-        }
-        this.incrementOutstandingUiClick();
-
         var move = new GoMoveObject(null, x_val, y_val, this.nextColor(), this.totalMoves(), this.containerObject());
         this.portObject().transmitMoveData(move);
-/*
-        if (this.configObject().playBothSides()) {
-            this.setNextColor(GO.getOppositeColor(this.nextColor()));
-        }
-*/
     };
-/*
-    this.addNewMoveWithoutFight = function (x_val, y_val, color_val, turn_val) {
-        if (turn_val !== this.totalMoves()) {
-            this.goAbend("addNewMoveWithoutFight", "turn=" + turn_val + " " + this.totalMoves());
-        }
-
-        var move = new GoMoveObject(null, x_val, y_val, color_val, this.totalMoves(), this.containerObject());
-        this.insertMoveToMoveList(move);
-    };
-
-    this.insertMoveToMoveList = function (move_val) {
-        this.setMovesArray(this.totalMoves(), move_val);
-        this.incrementTotalMoves();
-        this.setMaxMove(this.totalMoves());
-    };
-*/
 
     this.receiveSpecialMoveFromOpponent = function (data_val) {
         this.goLog("receiveSpecialMoveFromOpponent", data_val);
@@ -418,17 +365,6 @@ function GoGameObject(container_val, str_val) {
         } else {
             return false;
         }
-    };
-
-    this.initOutstandingUiClick = function () {
-        if (this.configObject().myColor() === GO.BLACK_STONE()) {
-            this.theOutstandingUiClick = 0;
-        } else if (this.configObject().myColor() === GO.WHITE_STONE()) {
-            this.theOutstandingUiClick = 1;
-        } else {
-            this.abend("GoGameObject", "color=" + this.configObject().myColor());
-        }
-        this.logit("initOutstandingUiClick", "value=" + this.outstandingUiClick());
     };
 
     this.encodeMoveList = function (do_mine_val) {

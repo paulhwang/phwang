@@ -186,7 +186,6 @@ function GoUiObject(container_val) {
         }
 
         this.gameObject().enterGameFromUi(x, y);
-        this.drawBoard();
     };
 
     this.uiMouseMove = function (event_x, event_y) {
