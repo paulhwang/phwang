@@ -115,10 +115,6 @@ function GoEngineObject(container_object_val) {
         return this.theCaptureCount;
     };
 
-    this.finalScoreString = function () {
-        return "Black wins by " + ".5";
-    };
-
     this.setCaptureCount = function () {
         this.theCaptureCount = "";
         if (this.blackCaptureStones() < 100) {
@@ -191,12 +187,20 @@ function GoEngineObject(container_object_val) {
 
     this.blackScore = function () {
         return this.blackLandScore() + this.blackCaptureStones()
-                + this.whiteDeadGroupList().totalStoneCount() * 2 + this.configObject().realKomiPoint();
+                + this.whiteDeadGroupList().totalStoneCount() * 2;
     };
 
     this.whiteScore = function () {
         return this.whiteLandScore() + this.whiteCaptureStones()
-                + this.blackDeadGroupList().totalStoneCount() * 2;
+                + this.blackDeadGroupList().totalStoneCount() * 2 + this.configObject().realKomiPoint();
+    };
+
+    this.finalScoreString = function () {
+        if (this.whiteScore() > this.blackScore()) {
+            return "white wins by " + (this.whiteScore() - this.blackScore());
+        } else {
+            return "Black wins by " + (this.blackScore() - this.whiteScore());
+        }
     };
 
     this.blackScoreString = function () {
@@ -207,8 +211,7 @@ function GoEngineObject(container_object_val) {
             return "Black: " + this.blackScore() + " ("
                     + this.blackCaptureStones() + " + "
                     + this.blackLandScore() + " + "
-                    + this.whiteDeadGroupList().totalStoneCount() + " x 2 + "
-                    + this.configObject().realKomiPoint() + ")";
+                    + this.whiteDeadGroupList().totalStoneCount() + " x 2)";
         }
     };
 
@@ -220,7 +223,8 @@ function GoEngineObject(container_object_val) {
             return "White: " + this.whiteScore() + " ("
                     + this.whiteCaptureStones() + " + "
                     + this.whiteLandScore() + " + "
-                    + this.blackDeadGroupList().totalStoneCount() + " x 2)";
+                    + this.blackDeadGroupList().totalStoneCount() + " x 2"
+                    + this.configObject().realKomiPoint() + ")";
         }
     };
 
